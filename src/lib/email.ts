@@ -26,7 +26,41 @@ export async function sendEmail({
   const fromEmail = process.env.EMAIL_FROM || 'AeroInfo <onboarding@resend.dev>';
   const replyTo = process.env.EMAIL_REPLY_TO || 'vireontech@gmail.com';
 
-  // 1. Try Resend if API key is provided
+  // 1. Prioritize Nodemailer SMTP (e.g. Gmail official SMTP) for guaranteed inbox delivery
+  const smtpUser = process.env.SMTP_USER;
+  const smtpPass = process.env.SMTP_PASS;
+  if (smtpUser && smtpPass) {
+    try {
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: smtpUser,
+          pass: smtpPass.replace(/\s+/g, '')
+        }
+      });
+
+      const info = await transporter.sendMail({
+        from: process.env.SMTP_FROM || `AeroInfo <${smtpUser}>`,
+        to,
+        replyTo,
+        subject,
+        text,
+        html,
+        headers: {
+          'X-Entity-Ref-ID': `aeroinfo-${Date.now()}`,
+          'List-Unsubscribe': `<mailto:${replyTo}?subject=Unsubscribe>`
+        }
+      });
+
+      console.info(`✉️ [EMAIL_SENT] Email successfully delivered via Gmail SMTP to ${to} (ID: ${info.messageId})`);
+      return { success: true, provider: 'smtp', messageId: info.messageId };
+    } catch (err: any) {
+      console.error('❌ Failed to send email via SMTP:', err);
+      return { success: false, provider: 'smtp', error: err.message };
+    }
+  }
+
+  // 2. Fallback to Resend if API key is provided
   const resendApiKey = process.env.RESEND_API_KEY;
   if (resendApiKey) {
     try {
@@ -54,37 +88,6 @@ export async function sendEmail({
     } catch (err: any) {
       console.error('❌ Failed to send email via Resend:', err);
       return { success: false, provider: 'resend', error: err.message };
-    }
-  }
-
-  // 2. Try Nodemailer SMTP (e.g. Gmail App Password or custom SMTP)
-  const smtpUser = process.env.SMTP_USER;
-  const smtpPass = process.env.SMTP_PASS;
-  if (smtpUser && smtpPass) {
-    try {
-      const transporter = nodemailer.createTransport({
-        host: process.env.SMTP_HOST || 'smtp.gmail.com',
-        port: Number(process.env.SMTP_PORT) || 465,
-        secure: (process.env.SMTP_PORT || '465') === '465',
-        auth: {
-          user: smtpUser,
-          pass: smtpPass
-        }
-      });
-
-      const info = await transporter.sendMail({
-        from: process.env.SMTP_FROM || `AeroInfo <${smtpUser}>`,
-        to,
-        subject,
-        text,
-        html
-      });
-
-      console.info(`✉️ [EMAIL_SENT] Email successfully delivered via SMTP to ${to} (ID: ${info.messageId})`);
-      return { success: true, provider: 'smtp', messageId: info.messageId };
-    } catch (err: any) {
-      console.error('❌ Failed to send email via SMTP:', err);
-      return { success: false, provider: 'smtp', error: err.message };
     }
   }
 
