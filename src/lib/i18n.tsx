@@ -162,7 +162,7 @@ export const translations: Translations = {
   luggageStorageTitle: { it: 'Deposito Bagagli', en: 'Luggage Storage' },
   smokingAreaTitle: { it: 'Aree Fumatori', en: 'Smoking Areas' },
 
-  // Food & Shopping
+  // Food & Shopping Aggregator for Travelers
   allCategories: { it: 'Tutte le categorie', en: 'All categories' },
   dining: { it: 'Ristoranti', en: 'Restaurants' },
   cafe: { it: 'Bar & Caffè', en: 'Cafes & Coffee' },
@@ -170,9 +170,31 @@ export const translations: Translations = {
   dutyFree: { it: 'Duty-Free', en: 'Duty-Free' },
   shopping: { it: 'Shopping & Moda', en: 'Shopping & Fashion' },
   pharmacy: { it: 'Farmacia & Salute', en: 'Pharmacy & Health' },
+  intentTopPicks: { it: 'Scelti per i Viaggiatori', en: 'Top Traveler Picks' },
+  intentDawn: { it: 'Aperti all\'Alba & H24', en: 'Early Morning & 24H' },
+  intentQuick: { it: 'Al Volo / Grab & Go', en: 'Quick Bites & To-Go' },
+  intentDining: { it: 'Servizio al Tavolo', en: 'Sit-Down Dining' },
+  intentEssentials: { it: 'Farmacia & Duty-Free', en: 'Pharmacy & Duty-Free' },
+  intentBoutiques: { it: 'Galleria Negozi & Moda', en: 'Shops & Fashion Gallery' },
+  aggregatorMetricsDawn: { it: 'Alba & H24 (dalle 05:00)', en: 'Dawn & 24H (from 05:00)' },
+  aggregatorMetricsQuick: { it: 'Pasti Veloci al Gate', en: 'Quick Gate Bites' },
+  aggregatorMetricsSitDown: { it: 'Ristoranti con Sedute', en: 'Sit-Down Restaurants' },
+  aggregatorMetricsHealth: { it: 'Farmacie & Salute', en: 'Pharmacy & Health' },
+  retailBoutiquesSearch: { 
+    it: 'Cerca brand o negozio (es. Armani, Gucci, Boggi, K-Way, Piquadro)...', 
+    en: 'Search brand or shop (e.g. Armani, Gucci, Boggi, K-Way, Piquadro)...' 
+  },
+  retailBoutiquesIntro: { 
+    it: 'Boutique di moda, lusso e accessori concentrate nell\'Area Imbarchi:', 
+    en: 'Fashion, luxury, and accessories boutiques located across airside concourses:' 
+  },
+  retailBoutiquesCount: { it: 'boutique censite', en: 'indexed boutiques' },
+  tableServiceBadge: { it: 'Servizio al Tavolo', en: 'Table Service' },
+  quickBiteBadge: { it: 'Al Volo / Da Asporto', en: 'Grab & Go' },
+  earlyDawnBadge: { it: 'Aperto all\'Alba', en: 'Early Dawn' },
   searchVenuesPlaceholder: { 
-    it: 'Cerca per nome locale, brand o gate (es. Eataly, Venchi, Gucci, Farmacia)...', 
-    en: 'Search by venue name, brand, or gate (e.g. Eataly, Venchi, Gucci, Pharmacy)...' 
+    it: 'Cerca per nome locale, cibo o gate (es. Antico Vinaio, Pizza, Venchi, Farmacia)...', 
+    en: 'Search by venue name, food, or gate (e.g. Antico Vinaio, Pizza, Venchi, Pharmacy)...' 
   },
   noVenuesFound: { 
     it: 'Nessun locale o negozio trovato per questa ricerca.', 

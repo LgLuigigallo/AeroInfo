@@ -128,6 +128,10 @@ export interface VenueItem {
   location: string;
   hours: string;
   is24Hours?: boolean;
+  isEarlyMorning?: boolean; // opens 05:00 or earlier for dawn departures
+  serviceType?: 'table_service' | 'quick_bite' | 'coffee_snack' | 'duty_free' | 'pharmacy' | 'retail';
+  highlightNote_it?: string;
+  highlightNote_en?: string;
   isUnverified?: boolean;
 }
 

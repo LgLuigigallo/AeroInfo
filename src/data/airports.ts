@@ -595,7 +595,12 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi post-sicurezza",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack",
+            "highlightNote_it": "Specialità caffè americano, iced latte e dolci americani al volo.",
+            "highlightNote_en": "Iced coffee, americano, and quick grab-and-go sweet snacks."
       },
       {
             "id": "fco-v-2",
@@ -603,7 +608,10 @@ export const airportsData: Airport[] = [
             "category": "dining",
             "terminal": "Terminal 1 & 3",
             "location": "Terminal 1",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "table_service"
       },
       {
             "id": "fco-v-3",
@@ -611,7 +619,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-4",
@@ -619,7 +630,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi post-sicurezza",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-5",
@@ -627,7 +641,10 @@ export const airportsData: Airport[] = [
             "category": "duty_free",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi post-sicurezza",
-            "hours": "05:30 - 23:00"
+            "hours": "05:30 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "duty_free"
       },
       {
             "id": "fco-v-6",
@@ -635,7 +652,10 @@ export const airportsData: Airport[] = [
             "category": "dining",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi (dopo i controlli)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "table_service"
       },
       {
             "id": "fco-v-7",
@@ -643,7 +663,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-8",
@@ -651,15 +674,25 @@ export const airportsData: Airport[] = [
             "category": "dining",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi (dopo i controlli)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "quick_bite",
+            "highlightNote_it": "Tranci di pizza romana croccante serviti al momento, ideale per pasti veloci.",
+            "highlightNote_en": "Crispy Roman pizza slices served fresh by the cut, perfect for quick gate bites."
       },
       {
             "id": "fco-v-9",
             "name": "All'Antico Vinaio",
-            "category": "shopping",
+            "category": "dining",
             "terminal": "Terminal 1",
             "location": "Gate A21-27",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "quick_bite",
+            "highlightNote_it": "Famose schiacciate toscane espresse farcite al momento. Molto gettonato per pasti da portare a bordo.",
+            "highlightNote_en": "Famous Tuscan stuffed focaccia made fresh. Top pick for meals on board."
       },
       {
             "id": "fco-v-10",
@@ -667,7 +700,10 @@ export const airportsData: Airport[] = [
             "category": "dining",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "table_service"
       },
       {
             "id": "fco-v-11",
@@ -675,7 +711,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1 & 3",
             "location": "Terminal 3",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-12",
@@ -683,15 +722,23 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-13",
             "name": "Beercode",
-            "category": "shopping",
+            "category": "dining",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "quick_bite",
+            "highlightNote_it": "Birreria artigianale con burger gourmet e servizio al tavolo per soste lunghe.",
+            "highlightNote_en": "Craft beer pub with gourmet burgers and sit-down table service."
       },
       {
             "id": "fco-v-14",
@@ -699,7 +746,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-15",
@@ -707,7 +757,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi (dopo i controlli)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-16",
@@ -715,7 +768,12 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1 & 3",
             "location": "Terminal 3",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack",
+            "highlightNote_it": "Pasticceria artigianale, caffetteria e piatti caldi self-service veloci.",
+            "highlightNote_en": "Bakery, espresso bar, and quick warm meals."
       },
       {
             "id": "fco-v-17",
@@ -723,7 +781,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi post-sicurezza",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-18",
@@ -731,15 +792,23 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1 & 3",
             "location": "Terminal 3",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack",
+            "highlightNote_it": "Pizza al taglio d'autore di Gabriele Bonci con impasto a lunga lievitazione.",
+            "highlightNote_en": "Artisanal Roman pizza al taglio by master baker Gabriele Bonci."
       },
       {
             "id": "fco-v-19",
             "name": "Bongustare",
-            "category": "shopping",
+            "category": "dining",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi post-sicurezza",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "quick_bite"
       },
       {
             "id": "fco-v-20",
@@ -747,7 +816,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi post-sicurezza",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-21",
@@ -755,7 +827,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi post-sicurezza",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-22",
@@ -763,7 +838,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-23",
@@ -771,7 +849,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-24",
@@ -779,7 +860,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-25",
@@ -787,7 +871,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi post-sicurezza",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-26",
@@ -795,7 +882,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-27",
@@ -803,7 +893,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi post-sicurezza",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-28",
@@ -811,7 +904,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1 & 3",
             "location": "Terminal",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-29",
@@ -819,7 +915,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 3",
             "location": "Gate E11-24",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-30",
@@ -827,7 +926,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1 & 3",
             "location": "Terminal 3",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-31",
@@ -835,7 +937,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1 & 3",
             "location": "Terminal 1",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-32",
@@ -843,7 +948,12 @@ export const airportsData: Airport[] = [
             "category": "dining",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi (dopo i controlli)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "quick_bite",
+            "highlightNote_it": "Tranci di pizza romana croccante serviti al momento, ideale per pasti veloci.",
+            "highlightNote_en": "Crispy Roman pizza slices served fresh by the cut, perfect for quick gate bites."
       },
       {
             "id": "fco-v-33",
@@ -851,7 +961,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-34",
@@ -859,7 +972,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1",
             "location": "Gate A31-52",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-35",
@@ -867,7 +983,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-36",
@@ -875,7 +994,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-37",
@@ -883,7 +1005,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi (dopo i controlli)",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-38",
@@ -891,7 +1016,10 @@ export const airportsData: Airport[] = [
             "category": "dining",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "table_service"
       },
       {
             "id": "fco-v-39",
@@ -899,7 +1027,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1 & 3",
             "location": "Terminal 1",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-40",
@@ -907,7 +1038,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-41",
@@ -915,7 +1049,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-42",
@@ -923,7 +1060,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 3",
             "location": "Gate E31-44",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-43",
@@ -931,7 +1071,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-44",
@@ -939,7 +1082,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1",
             "location": "Gate A31-52",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-45",
@@ -947,7 +1093,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-46",
@@ -955,7 +1104,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1",
             "location": "Gate A61-83",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-47",
@@ -963,7 +1115,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-48",
@@ -971,7 +1126,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-49",
@@ -979,7 +1137,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi post-sicurezza",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-50",
@@ -987,7 +1148,10 @@ export const airportsData: Airport[] = [
             "category": "dining",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "table_service"
       },
       {
             "id": "fco-v-51",
@@ -995,7 +1159,12 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack",
+            "highlightNote_it": "Piazza del Gusto: pasta fresca, pizza a pala e selezione enogastronomica con sedute.",
+            "highlightNote_en": "Italian gastronomy plaza: fresh pasta, pizza, and regional specialties with sit-down seating."
       },
       {
             "id": "fco-v-52",
@@ -1003,7 +1172,12 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack",
+            "highlightNote_it": "Piazza del Gusto: pasta fresca, pizza a pala e selezione enogastronomica con sedute.",
+            "highlightNote_en": "Italian gastronomy plaza: fresh pasta, pizza, and regional specialties with sit-down seating."
       },
       {
             "id": "fco-v-53",
@@ -1011,7 +1185,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-54",
@@ -1019,7 +1196,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-55",
@@ -1027,7 +1207,10 @@ export const airportsData: Airport[] = [
             "category": "dining",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi post-sicurezza",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "table_service"
       },
       {
             "id": "fco-v-56",
@@ -1035,7 +1218,12 @@ export const airportsData: Airport[] = [
             "category": "pharmacy",
             "terminal": "Terminal 1 & 3",
             "location": "Terminal",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "pharmacy",
+            "highlightNote_it": "Presidio farmaceutico e sanitario autorizzato post-controlli di sicurezza.",
+            "highlightNote_en": "Authorized pharmacy and healthcare dispensary post-security."
       },
       {
             "id": "fco-v-57",
@@ -1043,7 +1231,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-58",
@@ -1051,7 +1242,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-59",
@@ -1059,7 +1253,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-60",
@@ -1067,7 +1264,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-61",
@@ -1075,7 +1275,12 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi (dopo i controlli)",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack",
+            "highlightNote_it": "Wine bar d'eccellenza con etichette Ferrari e cucina gourmet per attese rilassate.",
+            "highlightNote_en": "Premium wine bar with Ferrari sparkling wines and gourmet dining."
       },
       {
             "id": "fco-v-62",
@@ -1083,7 +1288,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi post-sicurezza",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-63",
@@ -1091,7 +1299,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-64",
@@ -1099,7 +1310,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1 & 3",
             "location": "Terminal 1",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-65",
@@ -1107,7 +1321,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1",
             "location": "Gate A21-27",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-66",
@@ -1115,7 +1332,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1 & 3",
             "location": "Terminal • Imbarco",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-67",
@@ -1123,7 +1343,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi post-sicurezza",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-68",
@@ -1131,7 +1354,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi post-sicurezza",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-69",
@@ -1139,7 +1365,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1",
             "location": "Gate A21-27",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-70",
@@ -1147,7 +1376,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-71",
@@ -1155,7 +1387,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi post-sicurezza",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-72",
@@ -1163,7 +1398,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-73",
@@ -1171,7 +1409,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi post-sicurezza",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-74",
@@ -1179,7 +1420,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi post-sicurezza • T3",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-75",
@@ -1187,7 +1431,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 3",
             "location": "Gate E11-24",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-76",
@@ -1195,7 +1442,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1 & 3",
             "location": "Terminal 1",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-77",
@@ -1203,7 +1453,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi post-sicurezza",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-78",
@@ -1211,7 +1464,10 @@ export const airportsData: Airport[] = [
             "category": "dining",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi (dopo i controlli)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "quick_bite"
       },
       {
             "id": "fco-v-79",
@@ -1219,7 +1475,10 @@ export const airportsData: Airport[] = [
             "category": "dining",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "quick_bite"
       },
       {
             "id": "fco-v-80",
@@ -1227,7 +1486,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1 & 3",
             "location": "Terminal 1",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-81",
@@ -1235,7 +1497,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-82",
@@ -1243,7 +1508,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi (dopo i controlli)",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-83",
@@ -1251,7 +1519,10 @@ export const airportsData: Airport[] = [
             "category": "dining",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "quick_bite"
       },
       {
             "id": "fco-v-84",
@@ -1259,7 +1530,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-85",
@@ -1267,7 +1541,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-86",
@@ -1275,7 +1552,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-87",
@@ -1283,7 +1563,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1",
             "location": "Gate A21-27",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-88",
@@ -1291,7 +1574,10 @@ export const airportsData: Airport[] = [
             "category": "dining",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi (dopo i controlli)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "quick_bite"
       },
       {
             "id": "fco-v-89",
@@ -1299,7 +1585,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-90",
@@ -1307,7 +1596,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1 & 3",
             "location": "Terminal 3",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-91",
@@ -1315,7 +1607,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-92",
@@ -1323,7 +1618,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi post-sicurezza",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-93",
@@ -1331,7 +1629,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1",
             "location": "Gate A21-27",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-94",
@@ -1339,7 +1640,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 3",
             "location": "Gate E31-44",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-95",
@@ -1347,7 +1651,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-96",
@@ -1355,7 +1662,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi (dopo i controlli)",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-97",
@@ -1363,7 +1673,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-98",
@@ -1371,7 +1684,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-99",
@@ -1379,7 +1695,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi post-sicurezza",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-100",
@@ -1387,7 +1706,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi post-sicurezza • A/A21-27",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-101",
@@ -1395,7 +1717,12 @@ export const airportsData: Airport[] = [
             "category": "pharmacy",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "pharmacy",
+            "highlightNote_it": "Presidio farmaceutico e sanitario autorizzato post-controlli di sicurezza.",
+            "highlightNote_en": "Authorized pharmacy and healthcare dispensary post-security."
       },
       {
             "id": "fco-v-102",
@@ -1403,7 +1730,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi (dopo i controlli)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-103",
@@ -1411,7 +1741,10 @@ export const airportsData: Airport[] = [
             "category": "duty_free",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "05:30 - 23:00"
+            "hours": "05:30 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "duty_free"
       },
       {
             "id": "fco-v-104",
@@ -1419,7 +1752,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 3",
             "location": "Gate E31-44",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-105",
@@ -1427,7 +1763,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-106",
@@ -1435,7 +1774,10 @@ export const airportsData: Airport[] = [
             "category": "dining",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi (dopo i controlli)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "quick_bite"
       },
       {
             "id": "fco-v-107",
@@ -1443,7 +1785,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi (dopo i controlli)",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-108",
@@ -1451,7 +1796,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1 & 3",
             "location": "Terminal 1",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-109",
@@ -1459,7 +1807,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1",
             "location": "Gate A21-27",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-110",
@@ -1467,7 +1818,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi post-sicurezza",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-111",
@@ -1475,7 +1829,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1 & 3",
             "location": "Terminal • Imbarco",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-112",
@@ -1483,7 +1840,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-113",
@@ -1491,7 +1851,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-114",
@@ -1499,7 +1862,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-115",
@@ -1507,7 +1873,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1 & 3",
             "location": "Terminal 3",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-116",
@@ -1515,7 +1884,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi (dopo i controlli)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-117",
@@ -1523,7 +1895,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1",
             "location": "Gate A21-27",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-118",
@@ -1531,7 +1906,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1 & 3",
             "location": "Area Imbarchi post-sicurezza",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-119",
@@ -1539,7 +1917,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1",
             "location": "Gate A31-52",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-120",
@@ -1547,7 +1928,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-121",
@@ -1555,7 +1939,12 @@ export const airportsData: Airport[] = [
             "category": "dining",
             "terminal": "Terminal 1 & 3",
             "location": "Terminal 1",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "table_service",
+            "highlightNote_it": "Vera pizza napoletana con forno e ampia sala con servizio al tavolo.",
+            "highlightNote_en": "Authentic Neapolitan pizza with traditional oven and sit-down table service."
       },
       {
             "id": "fco-v-122",
@@ -1563,7 +1952,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-123",
@@ -1571,7 +1963,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1 & 3",
             "location": "Terminal 3",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       },
       {
             "id": "fco-v-124",
@@ -1579,7 +1974,10 @@ export const airportsData: Airport[] = [
             "category": "dining",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "quick_bite"
       },
       {
             "id": "fco-v-125",
@@ -1587,7 +1985,10 @@ export const airportsData: Airport[] = [
             "category": "dining",
             "terminal": "Terminal 3",
             "location": "Gate E31-44",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "quick_bite"
       },
       {
             "id": "fco-v-126",
@@ -1595,7 +1996,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-127",
@@ -1603,7 +2007,10 @@ export const airportsData: Airport[] = [
             "category": "duty_free",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "05:30 - 23:00"
+            "hours": "05:30 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "duty_free"
       },
       {
             "id": "fco-v-128",
@@ -1611,7 +2018,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 3",
             "location": "Area Imbarchi E (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-129",
@@ -1619,7 +2029,10 @@ export const airportsData: Airport[] = [
             "category": "shopping",
             "terminal": "Terminal 1 & 3",
             "location": "Terminal 3",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "retail"
       },
       {
             "id": "fco-v-130",
@@ -1627,7 +2040,10 @@ export const airportsData: Airport[] = [
             "category": "dining",
             "terminal": "Terminal 1",
             "location": "Area Imbarchi A (Partenze)",
-            "hours": "06:00 - 22:30"
+            "hours": "06:00 - 22:30",
+            "is24Hours": false,
+            "isEarlyMorning": false,
+            "serviceType": "quick_bite"
       },
       {
             "id": "fco-v-131",
@@ -1635,7 +2051,10 @@ export const airportsData: Airport[] = [
             "category": "cafe",
             "terminal": "Terminal 1 & 3",
             "location": "Terminal 3",
-            "hours": "05:00 - 23:00"
+            "hours": "05:00 - 23:00",
+            "is24Hours": false,
+            "isEarlyMorning": true,
+            "serviceType": "coffee_snack"
       }
     ],
     transports: [
