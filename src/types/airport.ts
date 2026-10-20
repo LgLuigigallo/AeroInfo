@@ -1,0 +1,171 @@
+export type Language = 'it' | 'en';
+
+export type AmenityCategory = 
+  | 'power_charging' 
+  | 'wifi' 
+  | 'water_refill' 
+  | 'quiet_area' 
+  | 'luggage_storage' 
+  | 'smoking_area';
+
+export type VenueCategory = 
+  | 'dining' 
+  | 'cafe' 
+  | 'grab_and_go' 
+  | 'duty_free' 
+  | 'shopping' 
+  | 'pharmacy';
+
+export type TransportType = 
+  | 'train' 
+  | 'metro' 
+  | 'bus' 
+  | 'taxi' 
+  | 'rideshare';
+
+export interface VerifiedField<T = string> {
+  value: T;
+  isUnverified?: boolean;
+  unverifiedNote_it?: string;
+  unverifiedNote_en?: string;
+}
+
+export interface SecurityPolicy {
+  // Scanner type
+  has3DScanners: boolean; // True if EDS-CB C3 scanners installed
+  scannersNote_it: string;
+  scannersNote_en: string;
+  
+  // Liquids
+  liquidsAllowance_it: string;
+  liquidsAllowance_en: string;
+  liquidsMustBeRemoved: boolean; // false if 3D scanners allow leaving in bag
+  liquidsUnverified?: boolean;
+  liquidsNote_it?: string;
+  liquidsNote_en?: string;
+
+  // Electronics (Laptops, Tablets)
+  electronicsInBag: boolean; // true if can stay inside
+  electronicsNote_it: string;
+  electronicsNote_en: string;
+  electronicsUnverified?: boolean;
+
+  // Drones
+  droneAllowedInCabin: boolean;
+  droneAllowedInHold: boolean;
+  dronePolicy_it: string;
+  dronePolicy_en: string;
+  droneUnverified?: boolean;
+  droneNote_it?: string;
+  droneNote_en?: string;
+
+  // Powerbanks & Batteries
+  maxPowerbankWh: number; // typically 100Wh or 160Wh with approval
+  powerbankPolicy_it: string;
+  powerbankPolicy_en: string;
+  powerbankUnverified?: boolean;
+  powerbankNote_it?: string;
+  powerbankNote_en?: string;
+
+  // Official source
+  officialSourceUrl: string;
+  lastVerifiedDate: string;
+}
+
+export interface AirlineTerminalMapping {
+  airlineName: string;
+  iataCode: string;
+  terminal: string;
+  checkInZone?: string;
+  isUnverified?: boolean;
+}
+
+export interface TerminalDetail {
+  id: string;
+  name: string;
+  transferInfo_it: string;
+  transferInfo_en: string;
+  isUnverified?: boolean;
+}
+
+export interface AmenityItem {
+  id: string;
+  category: AmenityCategory;
+  title_it: string;
+  title_en: string;
+  terminal?: string;
+  location_it: string;
+  location_en: string;
+  details_it: string;
+  details_en: string;
+  isUnverified?: boolean;
+  details_it_unverified?: string;
+  details_en_unverified?: string;
+}
+
+export interface VenueItem {
+  id: string;
+  name: string;
+  category: VenueCategory;
+  terminal: string;
+  location: string;
+  hours: string;
+  is24Hours?: boolean;
+  isUnverified?: boolean;
+}
+
+export interface GroundTransportItem {
+  id: string;
+  type: TransportType;
+  name_it: string;
+  name_en: string;
+  duration: string;
+  frequency: string;
+  estimatedCost: string;
+  pickupLocation_it: string;
+  pickupLocation_en: string;
+  details_it: string;
+  details_en: string;
+  isUnverified?: boolean;
+  details_it_unverified?: string;
+  details_en_unverified?: string;
+}
+
+export interface Airport {
+  id: string;
+  iata: string;
+  icao: string;
+  name_it: string;
+  name_en: string;
+  city_it: string;
+  city_en: string;
+  country_it: string;
+  country_en: string;
+  countryCode: string;
+  officialWebsite: string;
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
+  // Difficulty & Friction
+  difficultyRating: 1 | 2 | 3 | 4 | 5; // 1: Very easy, 5: High congestion/difficult
+  difficultyLabel_it: string;
+  difficultyLabel_en: string;
+  averageSecurityWaitMin: number; // minutes
+  recommendedArrivalHours: {
+    domestic: number;
+    international: number;
+  };
+  navigationAdvice_it: string;
+  navigationAdvice_en: string;
+  
+  // Sections
+  securityPolicy: SecurityPolicy;
+  terminals: TerminalDetail[];
+  airlines: AirlineTerminalMapping[];
+  amenities: AmenityItem[];
+  venues: VenueItem[];
+  transports: GroundTransportItem[];
+
+  lastUpdated: string;
+}
