@@ -47,9 +47,9 @@ export async function seedAllAirportsToSupabase(airports: Airport[]): Promise<Se
             difficulty_rating: ap.difficultyRating,
             difficulty_label_it: ap.difficultyLabel_it,
             difficulty_label_en: ap.difficultyLabel_en,
-            avg_security_wait_min: ap.averageSecurityWaitMin,
-            recommended_arrival_domestic: ap.recommendedArrivalHours.domestic,
-            recommended_arrival_intl: ap.recommendedArrivalHours.international,
+            avg_security_wait_min: Math.round(ap.averageSecurityWaitMin),
+            recommended_arrival_domestic: Math.round(ap.recommendedArrivalHours.domestic),
+            recommended_arrival_intl: Math.round(ap.recommendedArrivalHours.international),
             navigation_advice_it: ap.navigationAdvice_it,
             navigation_advice_en: ap.navigationAdvice_en,
             last_verified_at: new Date().toISOString()
@@ -122,7 +122,7 @@ export async function seedAllAirportsToSupabase(airports: Airport[]): Promise<Se
         const airlinesPayload = ap.airlines.map((a) => ({
           airport_id: airportId,
           airline_name: a.airlineName,
-          iata_code: a.iataCode,
+          iata_code: (a.iataCode || '').slice(0, 3),
           terminal: a.terminal,
           check_in_zone: a.checkInZone,
           is_unverified: Boolean(a.isUnverified)
