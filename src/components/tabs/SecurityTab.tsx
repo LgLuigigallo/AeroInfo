@@ -8,11 +8,11 @@ import {
   Radio, 
   CheckCircle2, 
   AlertTriangle, 
-  ExternalLink,
-  ShieldCheck,
-  Check,
-  X,
-  Split
+  ExternalLink, 
+  ShieldCheck, 
+  Check, 
+  X, 
+  Split 
 } from 'lucide-react';
 import { Airport } from '@/types/airport';
 import { useLanguage } from '@/lib/i18n';
@@ -27,32 +27,32 @@ export function SecurityTab({ airport }: SecurityTabProps) {
   const { securityPolicy: sec } = airport;
 
   return (
-    <div className="space-y-6">
-      {/* Top Banner: 3D Scanner Hero Card */}
-      <div className={`p-6 rounded-2xl border transition-all ${
+    <div className="space-y-5">
+      {/* Top Banner: 3D Scanner Regulation Directive */}
+      <div className={`p-5 sm:p-6 rounded-xl border transition-all ${
         sec.has3DScanners
-          ? 'bg-emerald-500/5 border-emerald-500/20 dark:bg-emerald-950/20 dark:border-emerald-800/40'
-          : 'bg-amber-500/5 border-amber-500/20 dark:bg-amber-950/20 dark:border-amber-800/40'
+          ? 'bg-emerald-500/5 border-emerald-500/25 dark:bg-emerald-950/20 dark:border-emerald-800/40'
+          : 'bg-amber-500/5 border-amber-500/25 dark:bg-amber-950/20 dark:border-amber-800/40'
       }`}>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start gap-3.5">
-            <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${
+            <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${
               sec.has3DScanners
-                ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/60 dark:text-emerald-300'
-                : 'bg-amber-100 text-amber-700 dark:bg-amber-900/60 dark:text-amber-300'
+                ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                : 'bg-amber-500/10 text-amber-600 dark:text-amber-400'
             }`}>
               {sec.has3DScanners ? (
-                <ShieldCheck className="w-6 h-6" />
+                <ShieldCheck className="w-5 h-5" />
               ) : (
-                <AlertTriangle className="w-6 h-6" />
+                <AlertTriangle className="w-5 h-5" />
               )}
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-bold tracking-wide uppercase ${
+                <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-mono font-bold tracking-wider uppercase ${
                   sec.has3DScanners
-                    ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200'
-                    : 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200'
+                    ? 'bg-emerald-500/15 text-emerald-800 dark:text-emerald-200'
+                    : 'bg-amber-500/15 text-amber-800 dark:text-amber-200'
                 }`}>
                   {sec.has3DScanners ? t('scanners3DActive') : t('scannersStandard')}
                 </span>
@@ -63,7 +63,7 @@ export function SecurityTab({ airport }: SecurityTabProps) {
                   />
                 )}
               </div>
-              <p className="mt-2 text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed font-medium">
+              <p className="mt-1.5 text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed font-medium">
                 {lang === 'it' ? sec.scannersNote_it : sec.scannersNote_en}
               </p>
             </div>
@@ -73,53 +73,53 @@ export function SecurityTab({ airport }: SecurityTabProps) {
 
       {/* Terminal-by-Terminal Breakdown (When different rules apply per terminal) */}
       {sec.terminalRules && sec.terminalRules.length > 0 && (
-        <div className="space-y-3 p-5 rounded-2xl bg-neutral-50 dark:bg-neutral-850 border border-neutral-200/80 dark:border-neutral-800">
+        <div className="space-y-3 p-4 sm:p-5 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200/80 dark:border-zinc-800">
           <div className="flex items-center gap-2">
             <Split className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-            <h3 className="text-xs font-bold tracking-wider uppercase text-neutral-700 dark:text-neutral-300">
+            <h3 className="text-[11px] font-mono font-bold tracking-wider uppercase text-zinc-700 dark:text-zinc-300">
               {t('terminalRulesTitle')}
             </h3>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {sec.terminalRules.map((rule, idx) => (
               <div 
                 key={idx} 
-                className={`p-4 rounded-xl bg-white dark:bg-neutral-900 border transition-all ${
+                className={`p-3.5 rounded-lg bg-white dark:bg-zinc-900 border transition-all ${
                   rule.has3DScanners
-                    ? 'border-emerald-200/80 dark:border-emerald-900/60'
-                    : 'border-amber-200/80 dark:border-amber-900/60'
+                    ? 'border-emerald-500/30'
+                    : 'border-amber-500/30'
                 }`}
               >
-                <div className="flex items-center justify-between gap-2 mb-2.5">
-                  <span className="font-bold text-neutral-900 dark:text-white text-xs sm:text-sm">
+                <div className="flex items-center justify-between gap-2 mb-2">
+                  <span className="font-bold text-zinc-900 dark:text-white text-xs sm:text-sm">
                     {rule.terminalName}
                   </span>
-                  <span className={`px-2 py-0.5 rounded-full text-[11px] font-bold ${
+                  <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${
                     rule.has3DScanners
-                      ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
-                      : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'
+                      ? 'bg-emerald-500/15 text-emerald-800 dark:text-emerald-300'
+                      : 'bg-amber-500/15 text-amber-800 dark:text-amber-300'
                   }`}>
                     {rule.has3DScanners ? t('terminalRule3DActive') : t('terminalRuleTraditional')}
                   </span>
                 </div>
 
-                <div className="space-y-1.5 text-xs">
+                <div className="space-y-1 text-xs">
                   <div className="flex items-start gap-2">
-                    <span className={`w-2 h-2 rounded-full mt-1 shrink-0 ${rule.liquidsAllowedInBag ? 'bg-emerald-500' : 'bg-amber-500'}`} />
-                    <span className="font-semibold text-neutral-800 dark:text-neutral-200">
+                    <span className={`w-1.5 h-1.5 rounded-full mt-1 shrink-0 ${rule.liquidsAllowedInBag ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                    <span className="font-medium text-zinc-800 dark:text-zinc-200">
                       {lang === 'it' ? rule.bottleAllowance_it : rule.bottleAllowance_en}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className={`w-2 h-2 rounded-full shrink-0 ${rule.electronicsInBag ? 'bg-emerald-500' : 'bg-amber-500'}`} />
-                    <span className="text-neutral-600 dark:text-neutral-400">
+                    <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${rule.electronicsInBag ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                    <span className="text-zinc-600 dark:text-zinc-400">
                       {rule.electronicsInBag ? t('electronicsInBagBadge') : t('electronicsOutBadge')}
                     </span>
                   </div>
                 </div>
 
-                <p className="mt-3 pt-2 text-[11px] text-neutral-500 dark:text-neutral-400 border-t border-neutral-100 dark:border-neutral-800 leading-relaxed">
+                <p className="mt-2.5 pt-2 text-[11px] text-zinc-500 dark:text-zinc-400 border-t border-zinc-100 dark:border-zinc-800 leading-relaxed font-sans">
                   {lang === 'it' ? rule.notes_it : rule.notes_en}
                 </p>
               </div>
@@ -131,13 +131,13 @@ export function SecurityTab({ airport }: SecurityTabProps) {
       {/* Grid: Liquids & Electronics */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Liquids Policy */}
-        <div className="p-5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-2xs space-y-3">
+        <div className="p-4 sm:p-5 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-2xs space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="p-2 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400">
-                <Droplet className="w-5 h-5" />
+              <div className="p-1.5 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400">
+                <Droplet className="w-4 h-4" />
               </div>
-              <h4 className="font-semibold text-neutral-900 dark:text-white text-base">
+              <h4 className="font-bold text-zinc-900 dark:text-white text-sm">
                 {t('liquidsTitle')}
               </h4>
             </div>
@@ -149,37 +149,37 @@ export function SecurityTab({ airport }: SecurityTabProps) {
             )}
           </div>
 
-          <div className={`p-3 rounded-xl flex items-center gap-2 text-xs font-semibold ${
+          <div className={`p-2.5 rounded-lg flex items-center gap-2 text-xs font-semibold ${
             !sec.liquidsMustBeRemoved
-              ? 'bg-emerald-50 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300'
-              : 'bg-amber-50 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300'
+              ? 'bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border border-emerald-500/20'
+              : 'bg-amber-500/10 text-amber-800 dark:text-amber-300 border border-amber-500/20'
           }`}>
             {!sec.liquidsMustBeRemoved ? (
               <>
-                <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
                 <span>{t('liquidsKeepInBag')}</span>
               </>
             ) : (
               <>
-                <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
+                <AlertTriangle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                 <span>{t('liquidsMustRemove')}</span>
               </>
             )}
           </div>
 
-          <p className="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
+          <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
             {lang === 'it' ? sec.liquidsAllowance_it : sec.liquidsAllowance_en}
           </p>
         </div>
 
         {/* Electronics Policy */}
-        <div className="p-5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-2xs space-y-3">
+        <div className="p-4 sm:p-5 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-2xs space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="p-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400">
-                <Laptop className="w-5 h-5" />
+              <div className="p-1.5 rounded-md bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">
+                <Laptop className="w-4 h-4" />
               </div>
-              <h4 className="font-semibold text-neutral-900 dark:text-white text-base">
+              <h4 className="font-bold text-zinc-900 dark:text-white text-sm">
                 {t('electronicsTitle')}
               </h4>
             </div>
@@ -188,25 +188,25 @@ export function SecurityTab({ airport }: SecurityTabProps) {
             )}
           </div>
 
-          <div className={`p-3 rounded-xl flex items-center gap-2 text-xs font-semibold ${
+          <div className={`p-2.5 rounded-lg flex items-center gap-2 text-xs font-semibold ${
             sec.electronicsInBag
-              ? 'bg-emerald-50 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300'
-              : 'bg-amber-50 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300'
+              ? 'bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border border-emerald-500/20'
+              : 'bg-amber-500/10 text-amber-800 dark:text-amber-300 border border-amber-500/20'
           }`}>
             {sec.electronicsInBag ? (
               <>
-                <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
                 <span>{t('electronicsInBagText')}</span>
               </>
             ) : (
               <>
-                <X className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
+                <X className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
                 <span>{t('electronicsOutText')}</span>
               </>
             )}
           </div>
 
-          <p className="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
+          <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
             {lang === 'it' ? sec.electronicsNote_it : sec.electronicsNote_en}
           </p>
         </div>
@@ -215,13 +215,13 @@ export function SecurityTab({ airport }: SecurityTabProps) {
       {/* Grid: Drones & Powerbanks */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Drone Policy */}
-        <div className="p-5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-2xs space-y-3">
+        <div className="p-4 sm:p-5 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-2xs space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="p-2 rounded-xl bg-purple-50 dark:bg-purple-950/50 text-purple-600 dark:text-purple-400">
-                <Radio className="w-5 h-5" />
+              <div className="p-1.5 rounded-md bg-purple-500/10 text-purple-600 dark:text-purple-400">
+                <Radio className="w-4 h-4" />
               </div>
-              <h4 className="font-semibold text-neutral-900 dark:text-white text-base">
+              <h4 className="font-bold text-zinc-900 dark:text-white text-sm">
                 {t('dronesTitle')}
               </h4>
             </div>
@@ -233,36 +233,36 @@ export function SecurityTab({ airport }: SecurityTabProps) {
             )}
           </div>
 
-          <div className="flex items-center gap-2 text-xs">
-            <span className={`px-2.5 py-1 rounded-md font-semibold ${
+          <div className="flex items-center gap-2 text-xs font-mono">
+            <span className={`px-2 py-0.5 rounded font-semibold ${
               sec.droneAllowedInCabin
-                ? 'bg-emerald-50 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300'
-                : 'bg-rose-50 text-rose-800 dark:bg-rose-950/40 dark:text-rose-300'
+                ? 'bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border border-emerald-500/20'
+                : 'bg-rose-500/10 text-rose-800 dark:text-rose-300 border border-rose-500/20'
             }`}>
-              {lang === 'it' ? 'Bagaglio a Mano: CONSENTITO' : 'Cabin Luggage: ALLOWED'}
+              {lang === 'it' ? 'Cabina: AMMESSO' : 'Cabin: ALLOWED'}
             </span>
-            <span className={`px-2.5 py-1 rounded-md font-semibold ${
+            <span className={`px-2 py-0.5 rounded font-semibold ${
               sec.droneAllowedInHold
-                ? 'bg-emerald-50 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300'
-                : 'bg-rose-50 text-rose-800 dark:bg-rose-950/40 dark:text-rose-300'
+                ? 'bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border border-emerald-500/20'
+                : 'bg-rose-500/10 text-rose-800 dark:text-rose-300 border border-rose-500/20'
             }`}>
               {lang === 'it' ? 'Stiva: VIETATO' : 'Hold: FORBIDDEN'}
             </span>
           </div>
 
-          <p className="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
+          <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
             {lang === 'it' ? sec.dronePolicy_it : sec.dronePolicy_en}
           </p>
         </div>
 
         {/* Powerbank Policy */}
-        <div className="p-5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-2xs space-y-3">
+        <div className="p-4 sm:p-5 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-2xs space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="p-2 rounded-xl bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400">
-                <BatteryCharging className="w-5 h-5" />
+              <div className="p-1.5 rounded-md bg-amber-500/10 text-amber-600 dark:text-amber-400">
+                <BatteryCharging className="w-4 h-4" />
               </div>
-              <h4 className="font-semibold text-neutral-900 dark:text-white text-base">
+              <h4 className="font-bold text-zinc-900 dark:text-white text-sm">
                 {t('powerbanksTitle')}
               </h4>
             </div>
@@ -271,21 +271,21 @@ export function SecurityTab({ airport }: SecurityTabProps) {
             )}
           </div>
 
-          <div className="inline-block px-2.5 py-1 rounded-md font-semibold text-xs bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200">
+          <div className="inline-block px-2 py-0.5 rounded font-mono font-semibold text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-zinc-200/60 dark:border-zinc-700/60">
             {lang === 'it' ? `Limite max standard: ${sec.maxPowerbankWh}Wh` : `Standard max limit: ${sec.maxPowerbankWh}Wh`}
           </div>
 
-          <p className="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
+          <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
             {lang === 'it' ? sec.powerbankPolicy_it : sec.powerbankPolicy_en}
           </p>
         </div>
       </div>
 
       {/* Verification footer with official link */}
-      <div className="pt-2 flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs text-neutral-500 dark:text-neutral-400 gap-2 border-t border-neutral-100 dark:border-neutral-800">
+      <div className="pt-3 flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs text-zinc-500 dark:text-zinc-400 gap-2 border-t border-zinc-100 dark:border-zinc-800 font-mono">
         <div className="flex items-center gap-2">
           <span>{t('verifiedDate')}:</span>
-          <span className="font-semibold text-neutral-700 dark:text-neutral-300">
+          <span className="font-semibold text-zinc-700 dark:text-zinc-300">
             {sec.lastVerifiedDate}
           </span>
         </div>
@@ -294,7 +294,7 @@ export function SecurityTab({ airport }: SecurityTabProps) {
           href={sec.officialSourceUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 font-medium text-neutral-900 dark:text-white hover:underline"
+          className="inline-flex items-center gap-1.5 font-sans font-medium text-zinc-900 dark:text-white hover:underline"
         >
           <span>{t('officialSourceLink')}</span>
           <ExternalLink className="w-3.5 h-3.5" />

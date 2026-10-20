@@ -8,40 +8,43 @@ export function Header() {
   const { lang, setLang, t } = useLanguage();
 
   return (
-    <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/80 dark:bg-neutral-950/80 border-b border-neutral-200/80 dark:border-neutral-800/80 transition-colors">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-        {/* Brand */}
+    <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/90 dark:bg-zinc-950/90 border-b border-zinc-200/80 dark:border-zinc-800/80 transition-colors">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-15 flex items-center justify-between gap-4">
+        {/* Brand with Aeronautical Styling */}
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-neutral-900 dark:bg-white flex items-center justify-center text-white dark:text-neutral-900 shadow-xs">
-            <Plane className="w-5 h-5 -rotate-45" />
+          <div className="w-8 h-8 rounded-lg bg-zinc-900 dark:bg-white flex items-center justify-center text-white dark:text-zinc-900 shadow-xs ring-1 ring-zinc-900/10 dark:ring-white/20">
+            <Plane className="w-4 h-4 -rotate-45" />
           </div>
           <div>
-            <span className="font-bold text-lg tracking-tight text-neutral-900 dark:text-white block leading-none">
-              Aero<span className="text-neutral-400 font-light">Info</span>
-            </span>
-            <span className="text-[10px] uppercase font-semibold tracking-wider text-neutral-500 dark:text-neutral-400 block mt-0.5">
+            <div className="flex items-center gap-1.5">
+              <span className="font-extrabold text-base tracking-tight text-zinc-900 dark:text-white leading-none">
+                Aero<span className="text-zinc-400 dark:text-zinc-500 font-light">Info</span>
+              </span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" title="System Online" />
+            </div>
+            <span className="text-[9.5px] uppercase font-mono tracking-widest text-zinc-500 dark:text-zinc-400 block mt-0.5">
               Airport Intelligence
             </span>
           </div>
         </div>
 
         {/* Right Actions: Official Source Tag & Language Switcher */}
-        <div className="flex items-center gap-2.5 sm:gap-3">
-          {/* Official Tag */}
-          <div className="hidden sm:flex items-center gap-1.5 text-xs text-neutral-600 dark:text-neutral-400 font-medium px-2.5 py-1 rounded-full bg-neutral-100 dark:bg-neutral-900 border border-neutral-200/60 dark:border-neutral-800">
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* Official Verification Tag */}
+          <div className="hidden sm:inline-flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-300 font-medium px-2.5 py-1 rounded-md bg-zinc-100/80 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800">
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-            <span>{t('verifiedOfficial')}</span>
+            <span className="font-mono text-[11px] tracking-tight">{t('verifiedOfficial')}</span>
           </div>
 
-          {/* Minimal Language Switcher */}
-          <div className="flex items-center rounded-xl bg-neutral-100 dark:bg-neutral-900 p-0.5 border border-neutral-200 dark:border-neutral-800 text-xs font-semibold">
+          {/* Minimalist Segmented Language Switcher */}
+          <div className="flex items-center rounded-lg bg-zinc-100 dark:bg-zinc-900 p-0.5 border border-zinc-200 dark:border-zinc-800 text-xs font-mono">
             <button
               type="button"
               onClick={() => setLang('it')}
-              className={`px-2.5 py-1 rounded-lg transition-all ${
+              className={`px-2 py-0.5 rounded-md transition-all cursor-pointer ${
                 lang === 'it'
-                  ? 'bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white shadow-xs font-bold'
-                  : 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'
+                  ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white font-bold shadow-xs border border-zinc-200/50 dark:border-zinc-700/50'
+                  : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
               }`}
             >
               IT
@@ -49,10 +52,10 @@ export function Header() {
             <button
               type="button"
               onClick={() => setLang('en')}
-              className={`px-2.5 py-1 rounded-lg transition-all ${
+              className={`px-2 py-0.5 rounded-md transition-all cursor-pointer ${
                 lang === 'en'
-                  ? 'bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white shadow-xs font-bold'
-                  : 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'
+                  ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white font-bold shadow-xs border border-zinc-200/50 dark:border-zinc-700/50'
+                  : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
               }`}
             >
               EN

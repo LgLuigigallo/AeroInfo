@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, X, MapPin, Clock, ArrowRight, Sparkles, CheckCircle2, Loader2, Globe } from 'lucide-react';
+import { Search, X, MapPin, Clock, ArrowRight, Sparkles, CheckCircle2, Loader2, Globe, Command } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 import { Airport } from '@/types/airport';
 import { airportsData, searchAirports } from '@/data/airports';
@@ -43,10 +43,10 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
     }
   }, []);
 
-  // Keyboard shortcut: '/' to focus
+  // Keyboard shortcut: '/' or 'Cmd+K' to focus
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === '/' && document.activeElement !== inputRef.current) {
+      if ((e.key === '/' || (e.key === 'k' && (e.metaKey || e.ctrlKey))) && document.activeElement !== inputRef.current) {
         e.preventDefault();
         inputRef.current?.focus();
         setIsOpen(true);
@@ -161,11 +161,11 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
   const topHubs = ['PRG', 'FCO', 'MXP', 'LIN', 'FRA', 'MUC', 'CDG', 'AMS', 'MAD', 'BCN', 'DUB', 'VIE', 'CPH', 'WAW', 'BUD', 'ATH', 'ZRH'];
 
   return (
-    <div ref={containerRef} className="relative w-full max-w-3xl mx-auto">
-      {/* Search Input Box */}
+    <div ref={containerRef} className="relative w-full max-w-2xl mx-auto">
+      {/* Search Console Input */}
       <div className="relative group">
-        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-neutral-400 group-focus-within:text-neutral-900 dark:group-focus-within:text-white transition-colors">
-          <Search className="w-5 h-5" />
+        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 group-focus-within:text-zinc-900 dark:group-focus-within:text-white transition-colors">
+          <Search className="w-4 h-4" />
         </div>
 
         <input
@@ -178,11 +178,11 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
           }}
           onFocus={() => setIsOpen(true)}
           placeholder={t('searchPlaceholder')}
-          className="w-full pl-11 pr-24 py-3.5 sm:py-4 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white placeholder:text-neutral-400 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-neutral-100 focus:border-transparent shadow-xs transition-all"
+          className="w-full pl-10 pr-22 py-3 rounded-xl bg-white dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 text-sm tracking-tight focus:outline-none focus:ring-2 focus:ring-zinc-900/10 dark:focus:ring-white/10 focus:border-zinc-400 dark:focus:border-zinc-600 shadow-xs transition-all"
         />
 
         {/* Clear or Keyboard Hint */}
-        <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center gap-1.5">
+        <div className="absolute inset-y-0 right-0 pr-3 flex items-center gap-1.5">
           {query ? (
             <button
               type="button"
@@ -190,24 +190,25 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
                 setQuery('');
                 inputRef.current?.focus();
               }}
-              className="p-1 rounded-full text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+              className="p-1 rounded-md text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
             >
-              <X className="w-4 h-4" />
+              <X className="w-3.5 h-3.5" />
             </button>
           ) : (
-            <kbd className="hidden sm:inline-flex items-center px-2 py-0.5 text-[11px] font-mono text-neutral-400 dark:text-neutral-500 bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-md">
-              /
-            </kbd>
+            <div className="hidden sm:flex items-center gap-1 text-[10px] font-mono font-medium text-zinc-400 dark:text-zinc-500 bg-zinc-100 dark:bg-zinc-800/80 px-2 py-0.5 rounded border border-zinc-200/80 dark:border-zinc-700/80">
+              <Command className="w-2.5 h-2.5" />
+              <span>K</span>
+            </div>
           )}
         </div>
       </div>
 
       {/* Autocomplete Dropdown */}
       {isOpen && (
-        <div className="absolute left-0 right-0 mt-2 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-xl z-50 overflow-hidden divide-y divide-neutral-100 dark:divide-neutral-800 animate-in fade-in slide-in-from-top-1 duration-150">
+        <div className="absolute left-0 right-0 mt-2 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-xl z-50 overflow-hidden divide-y divide-zinc-100 dark:divide-zinc-800/80 animate-in fade-in-50 duration-150">
           {/* Query Results */}
           {query.trim().length > 0 ? (
-            <div className="p-2 max-h-80 overflow-y-auto">
+            <div className="p-1.5 max-h-84 overflow-y-auto">
               {results.length > 0 ? (
                 results.map((airport) => {
                   const isSelected = selectedAirport.id === airport.id;
@@ -216,22 +217,22 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
                       key={airport.id}
                       type="button"
                       onClick={() => handleSelect(airport)}
-                      className={`w-full flex items-center justify-between p-3 rounded-xl text-left transition-colors ${
+                      className={`w-full flex items-center justify-between p-2.5 rounded-lg text-left transition-all cursor-pointer ${
                         isSelected
-                          ? 'bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-white'
-                          : 'hover:bg-neutral-50 dark:hover:bg-neutral-800/60 text-neutral-700 dark:text-neutral-200'
+                          ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white'
+                          : 'hover:bg-zinc-50 dark:hover:bg-zinc-800/50 text-zinc-700 dark:text-zinc-200'
                       }`}
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-11 h-9 rounded-lg bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center font-bold text-xs tracking-wider text-neutral-900 dark:text-white border border-neutral-200/60 dark:border-neutral-700/60">
+                        <div className="w-10 h-8 rounded bg-zinc-900 dark:bg-zinc-800 flex items-center justify-center font-mono font-bold text-xs tracking-wider text-white border border-zinc-900 dark:border-zinc-700 shrink-0">
                           {airport.iata}
                         </div>
                         <div>
-                          <div className="font-medium text-sm text-neutral-900 dark:text-white">
+                          <div className="font-semibold text-xs sm:text-sm text-zinc-900 dark:text-white tracking-tight">
                             {lang === 'it' ? airport.name_it : airport.name_en}
                           </div>
-                          <div className="text-xs text-neutral-500 dark:text-neutral-400 flex items-center gap-1 mt-0.5">
-                            <MapPin className="w-3 h-3" />
+                          <div className="text-[11px] text-zinc-500 dark:text-zinc-400 flex items-center gap-1 mt-0.5 font-normal">
+                            <MapPin className="w-3 h-3 text-zinc-400" />
                             <span>
                               {lang === 'it' ? airport.city_it : airport.city_en}, {lang === 'it' ? airport.country_it : airport.country_en}
                             </span>
@@ -240,43 +241,48 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
                       </div>
 
                       <div className="flex items-center gap-2">
-                        {airport.securityPolicy.has3DScanners && (
-                          <span className="hidden sm:inline-block px-2 py-0.5 text-[10px] font-semibold rounded-md bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                        {airport.securityPolicy.has3DScanners ? (
+                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono font-medium rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
+                            <span className="w-1 h-1 rounded-full bg-emerald-500" />
                             Scanner 3D
                           </span>
+                        ) : (
+                          <span className="hidden sm:inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono text-zinc-500 dark:text-zinc-400">
+                            100ml Standard
+                          </span>
                         )}
-                        <ArrowRight className="w-4 h-4 text-neutral-400" />
+                        <ArrowRight className="w-3.5 h-3.5 text-zinc-400" />
                       </div>
                     </button>
                   );
                 })
               ) : existingRequest ? (
                 /* When airport has ALREADY been requested: only allow email subscription */
-                <div className="p-6 text-center space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 mx-auto flex items-center justify-center border border-amber-200/60 dark:border-amber-900/40">
-                    <Clock className="w-6 h-6 animate-pulse" />
+                <div className="p-5 text-center space-y-3.5">
+                  <div className="w-10 h-10 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 mx-auto flex items-center justify-center border border-amber-500/20">
+                    <Clock className="w-5 h-5 animate-pulse" />
                   </div>
 
-                  <div className="space-y-1.5 max-w-md mx-auto">
-                    <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800 text-[11px] font-bold text-amber-800 dark:text-amber-300 mb-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping" />
+                  <div className="space-y-1 max-w-sm mx-auto">
+                    <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20 text-[10px] font-mono font-semibold text-amber-700 dark:text-amber-300 uppercase tracking-wider mb-0.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
                       <span>{t('alreadyRequestedBadge')}</span>
                     </div>
-                    <h4 className="font-bold text-neutral-900 dark:text-white text-base">
+                    <h4 className="font-bold text-zinc-900 dark:text-white text-sm">
                       {t('alreadyRequestedTitle')}: &quot;{existingRequest.query}&quot;
                     </h4>
-                    <p className="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+                    <p className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed">
                       {t('alreadyRequestedDesc')}
                     </p>
                   </div>
 
                   {requestSuccess ? (
-                    <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs font-semibold flex items-center justify-center gap-2 max-w-md mx-auto animate-in fade-in-50">
+                    <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs font-medium flex items-center justify-center gap-2 max-w-sm mx-auto animate-in fade-in-50">
                       <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-500" />
                       <span>{t('subscribeAlertSuccess')}</span>
                     </div>
                   ) : (
-                    <form onSubmit={handleRequestIndexing} className="space-y-2.5 max-w-md mx-auto pt-1">
+                    <form onSubmit={handleRequestIndexing} className="space-y-2 max-w-sm mx-auto pt-1">
                       <div>
                         <input
                           type="email"
@@ -287,10 +293,10 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
                             setEmailValidationError('');
                           }}
                           placeholder={t('requestAirportEmailPlaceholder')}
-                          className="w-full px-3.5 py-2.5 rounded-xl text-xs bg-neutral-50 dark:bg-neutral-850 border border-neutral-200 dark:border-neutral-700 text-neutral-800 dark:text-neutral-200 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:focus:ring-amber-400 transition-all"
+                          className="w-full px-3 py-2 rounded-lg text-xs bg-zinc-50 dark:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 focus:outline-none focus:ring-1 focus:ring-amber-500 transition-all font-mono"
                         />
                         {emailValidationError && (
-                          <p className="text-[11px] text-rose-500 mt-1 text-left font-medium">
+                          <p className="text-[10px] text-rose-500 mt-1 text-left font-medium">
                             {emailValidationError}
                           </p>
                         )}
@@ -298,7 +304,7 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
                       <button
                         type="submit"
                         disabled={isSubmittingRequest}
-                        className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold transition-all shadow-xs cursor-pointer disabled:opacity-50"
+                        className="w-full inline-flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 shadow-xs"
                       >
                         {isSubmittingRequest ? (
                           <>
@@ -317,38 +323,38 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
                 </div>
               ) : (
                 /* When airport is new and not yet requested */
-                <div className="p-6 text-center space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 mx-auto flex items-center justify-center border border-blue-200/60 dark:border-blue-900/40">
-                    <Globe className="w-6 h-6 animate-pulse" />
+                <div className="p-5 text-center space-y-3.5">
+                  <div className="w-10 h-10 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 mx-auto flex items-center justify-center border border-zinc-200 dark:border-zinc-700">
+                    <Globe className="w-5 h-5 text-zinc-500" />
                   </div>
 
-                  <div className="space-y-1.5 max-w-md mx-auto">
-                    <h4 className="font-bold text-neutral-900 dark:text-white text-base">
+                  <div className="space-y-1 max-w-sm mx-auto">
+                    <h4 className="font-bold text-zinc-900 dark:text-white text-sm">
                       {t('requestAirportTitle')}: &quot;{query}&quot;
                     </h4>
-                    <p className="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+                    <p className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed">
                       {t('requestAirportDesc')}
                     </p>
                   </div>
 
                   {requestSuccess ? (
-                    <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs font-semibold flex items-center justify-center gap-2 max-w-md mx-auto animate-in fade-in-50">
+                    <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs font-medium flex items-center justify-center gap-2 max-w-sm mx-auto animate-in fade-in-50">
                       <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-500" />
                       <span>{t('requestAirportSuccess')}</span>
                     </div>
                   ) : (
-                    <form onSubmit={handleRequestIndexing} className="space-y-2.5 max-w-md mx-auto pt-1">
+                    <form onSubmit={handleRequestIndexing} className="space-y-2 max-w-sm mx-auto pt-1">
                       <input
                         type="email"
                         value={requestEmail}
                         onChange={(e) => setRequestEmail(e.target.value)}
                         placeholder={t('requestAirportEmailPlaceholder')}
-                        className="w-full px-3.5 py-2.5 rounded-xl text-xs bg-neutral-50 dark:bg-neutral-850 border border-neutral-200 dark:border-neutral-700 text-neutral-800 dark:text-neutral-200 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-white transition-all"
+                        className="w-full px-3 py-2 rounded-lg text-xs bg-zinc-50 dark:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 focus:outline-none focus:ring-1 focus:ring-zinc-900 dark:focus:ring-white transition-all font-mono"
                       />
                       <button
                         type="submit"
                         disabled={isSubmittingRequest}
-                        className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 hover:bg-neutral-800 dark:hover:bg-neutral-100 text-xs font-bold transition-all shadow-xs cursor-pointer disabled:opacity-50"
+                        className="w-full inline-flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-100 text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 shadow-xs"
                       >
                         {isSubmittingRequest ? (
                           <>
@@ -368,24 +374,24 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
               )}
             </div>
           ) : (
-            /* Recent Searches & Suggestions when query is empty */
-            <div className="p-3">
+            /* Recent Searches & Curated Major Hubs */
+            <div className="p-3 space-y-3">
               {recentSearches.length > 0 && (
-                <div className="mb-3">
-                  <div className="flex items-center justify-between px-2 mb-2">
-                    <span className="text-xs font-semibold text-neutral-400 uppercase tracking-wider flex items-center gap-1.5">
+                <div>
+                  <div className="flex items-center justify-between px-1 mb-1.5">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400 flex items-center gap-1">
                       <Clock className="w-3 h-3" />
                       {t('recentSearches')}
                     </span>
                     <button
                       type="button"
                       onClick={clearRecent}
-                      className="text-xs text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200"
+                      className="text-[10px] text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 cursor-pointer"
                     >
                       {t('clearRecent')}
                     </button>
                   </div>
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className="flex flex-wrap gap-1">
                     {recentSearches.map((code) => {
                       const ap = airportsData.find((a) => a.iata === code);
                       if (!ap) return null;
@@ -394,10 +400,10 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
                           key={code}
                           type="button"
                           onClick={() => handleSelect(ap)}
-                          className="px-3 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-xs font-medium text-neutral-800 dark:text-neutral-200 flex items-center gap-1.5 transition-colors"
+                          className="px-2 py-1 rounded bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-xs font-mono text-zinc-800 dark:text-zinc-200 flex items-center gap-1.5 transition-colors cursor-pointer"
                         >
                           <span className="font-bold">{ap.iata}</span>
-                          <span className="text-neutral-500 dark:text-neutral-400">
+                          <span className="text-zinc-500 dark:text-zinc-400 font-sans text-[11px]">
                             {lang === 'it' ? ap.city_it : ap.city_en}
                           </span>
                         </button>
@@ -407,12 +413,12 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
                 </div>
               )}
 
-              {/* Top Hubs in dropdown */}
+              {/* Major Hubs Grid */}
               <div>
-                <span className="text-xs font-semibold text-neutral-400 uppercase tracking-wider px-2 block mb-2">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400 px-1 block mb-1.5">
                   {t('popularHubs')}
                 </span>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-1">
                   {topHubs.map((code) => {
                     const ap = airportsData.find((a) => a.iata === code);
                     if (!ap) return null;
@@ -421,14 +427,19 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
                         key={code}
                         type="button"
                         onClick={() => handleSelect(ap)}
-                        className="p-2 rounded-xl bg-neutral-50 dark:bg-neutral-800/50 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-left transition-colors border border-neutral-100 dark:border-neutral-800"
+                        className="px-2.5 py-1.5 rounded-md bg-zinc-50 dark:bg-zinc-800/40 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-left transition-colors border border-zinc-200/60 dark:border-zinc-800/80 flex items-center justify-between cursor-pointer group"
                       >
-                        <div className="font-bold text-xs text-neutral-900 dark:text-white">
-                          {ap.iata}
+                        <div className="flex items-center gap-1.5 truncate">
+                          <span className="font-mono font-bold text-xs text-zinc-900 dark:text-white">
+                            {ap.iata}
+                          </span>
+                          <span className="text-[11px] text-zinc-500 dark:text-zinc-400 truncate">
+                            {lang === 'it' ? ap.city_it : ap.city_en}
+                          </span>
                         </div>
-                        <div className="text-[11px] text-neutral-500 dark:text-neutral-400 truncate">
-                          {lang === 'it' ? ap.city_it : ap.city_en}
-                        </div>
+                        {ap.securityPolicy.has3DScanners && (
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" title="Scanner 3D" />
+                        )}
                       </button>
                     );
                   })}
@@ -439,12 +450,12 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
         </div>
       )}
 
-      {/* Quick Access Top Hub Pills (below input) */}
-      <div className="flex items-center gap-1.5 overflow-x-auto py-2.5 scrollbar-none text-xs">
-        <span className="text-neutral-400 font-medium shrink-0 mr-1 hidden sm:inline">
-          {t('popularHubs')}:
+      {/* Flight Departure Strip Hub Chips (below input) */}
+      <div className="flex items-center gap-1.5 overflow-x-auto py-2 scrollbar-none text-xs">
+        <span className="text-zinc-400 font-mono text-[10px] uppercase tracking-wider shrink-0 mr-1 hidden sm:inline">
+          Hub:
         </span>
-        {topHubs.map((code) => {
+        {topHubs.slice(0, 10).map((code) => {
           const ap = airportsData.find((a) => a.iata === code);
           if (!ap) return null;
           const isSelected = selectedAirport.iata === code;
@@ -453,13 +464,13 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
               key={code}
               type="button"
               onClick={() => handleSelect(ap)}
-              className={`shrink-0 px-3 py-1 rounded-full font-medium transition-all ${
+              className={`shrink-0 px-2 py-0.5 rounded text-[11px] font-mono transition-all cursor-pointer ${
                 isSelected
-                  ? 'bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 font-bold shadow-xs'
-                  : 'bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300 hover:border-neutral-400 dark:hover:border-neutral-600'
+                  ? 'bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 font-bold shadow-xs'
+                  : 'bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:border-zinc-300 dark:hover:border-zinc-700'
               }`}
             >
-              {ap.iata} • {lang === 'it' ? ap.city_it : ap.city_en}
+              {ap.iata}
             </button>
           );
         })}

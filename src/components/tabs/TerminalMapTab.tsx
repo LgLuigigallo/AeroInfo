@@ -222,19 +222,19 @@ export function TerminalMapTab({ airport }: TerminalMapTabProps) {
   const officialMapLink = airport.officialMapUrl || currentTerminalMap?.officialInteractiveMapUrl || airport.officialWebsite;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {/* Top Banner & Header */}
-      <div className="p-6 rounded-3xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="p-4 sm:p-5 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="p-2 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400">
-              <Compass className="w-5 h-5" />
+            <span className="p-1.5 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400">
+              <Compass className="w-4 h-4" />
             </span>
-            <h3 className="font-extrabold text-neutral-900 dark:text-white text-lg tracking-tight">
+            <h3 className="font-bold text-zinc-900 dark:text-white text-base tracking-tight">
               {t('mapTitle')}
             </h3>
           </div>
-          <p className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 max-w-2xl leading-relaxed">
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 max-w-2xl leading-relaxed">
             {t('mapSubtitle')}
           </p>
         </div>
@@ -244,22 +244,22 @@ export function TerminalMapTab({ airport }: TerminalMapTabProps) {
             href={officialMapLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 hover:bg-neutral-800 dark:hover:bg-neutral-100 font-semibold text-xs tracking-tight shadow-sm transition-all shrink-0 cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-100 font-semibold text-xs tracking-tight shadow-xs transition-all shrink-0 cursor-pointer font-mono"
           >
             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 dark:text-emerald-600" />
             <span>{t('openOfficialMap')}</span>
-            <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+            <ExternalLink className="w-3 h-3 opacity-70" />
           </a>
         )}
       </div>
 
       {/* Terminal Switcher Bar */}
       {terminals.length > 1 && (
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-2xl bg-neutral-100 dark:bg-neutral-850 border border-neutral-200/80 dark:border-neutral-800">
-          <span className="text-xs font-bold text-neutral-600 dark:text-neutral-400 ml-1">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-2.5 rounded-xl bg-zinc-100/70 dark:bg-zinc-850 border border-zinc-200 dark:border-zinc-800">
+          <span className="text-xs font-mono font-bold text-zinc-600 dark:text-zinc-400 ml-1">
             {t('selectTerminal')}
           </span>
-          <div className="flex flex-wrap items-center gap-1.5">
+          <div className="flex flex-wrap items-center gap-1">
             {terminals.map((term) => {
               const isSelected = selectedTerminalId === term.id;
               return (
@@ -270,10 +270,10 @@ export function TerminalMapTab({ airport }: TerminalMapTabProps) {
                     setSelectedTerminalId(term.id);
                     setSelectedPoiId(null);
                   }}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  className={`px-2.5 py-1 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
                     isSelected
-                      ? 'bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 shadow-xs'
-                      : 'bg-white dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200/70 dark:hover:bg-neutral-700 border border-neutral-200 dark:border-neutral-700'
+                      ? 'bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 shadow-xs'
+                      : 'bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200/70 dark:hover:bg-zinc-700 border border-zinc-200 dark:border-zinc-700'
                   }`}
                 >
                   {lang === 'it' ? term.name_it : term.name_en}
@@ -285,14 +285,14 @@ export function TerminalMapTab({ airport }: TerminalMapTabProps) {
       )}
 
       {/* Category Filter Pills */}
-      <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+      <div className="flex items-center gap-1 overflow-x-auto pb-1 scrollbar-none">
         <button
           type="button"
           onClick={() => setSelectedCategory('all')}
-          className={`px-3 py-1.5 rounded-xl text-xs font-semibold shrink-0 transition-all cursor-pointer ${
+          className={`px-2.5 py-1 rounded-lg text-xs font-mono font-semibold shrink-0 transition-all cursor-pointer ${
             selectedCategory === 'all'
-              ? 'bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 shadow-xs'
-              : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-200 dark:hover:bg-neutral-700'
+              ? 'bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 shadow-xs'
+              : 'bg-zinc-100 dark:bg-zinc-850 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-200/60 dark:border-zinc-800'
           }`}
         >
           {t('filterAll')} ({terminalPois.length})
@@ -300,10 +300,10 @@ export function TerminalMapTab({ airport }: TerminalMapTabProps) {
         <button
           type="button"
           onClick={() => setSelectedCategory('power')}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold shrink-0 transition-all cursor-pointer ${
+          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-mono font-semibold shrink-0 transition-all cursor-pointer ${
             selectedCategory === 'power'
               ? 'bg-amber-500 text-white shadow-xs'
-              : 'bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 hover:bg-amber-100 border border-amber-200/60 dark:border-amber-800/60'
+              : 'bg-amber-500/10 text-amber-800 dark:text-amber-300 hover:bg-amber-500/20 border border-amber-500/20'
           }`}
         >
           <Zap className="w-3.5 h-3.5" />
@@ -312,10 +312,10 @@ export function TerminalMapTab({ airport }: TerminalMapTabProps) {
         <button
           type="button"
           onClick={() => setSelectedCategory('water')}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold shrink-0 transition-all cursor-pointer ${
+          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-mono font-semibold shrink-0 transition-all cursor-pointer ${
             selectedCategory === 'water'
               ? 'bg-cyan-500 text-white shadow-xs'
-              : 'bg-cyan-50 dark:bg-cyan-950/40 text-cyan-800 dark:text-cyan-300 hover:bg-cyan-100 border border-cyan-200/60 dark:border-cyan-800/60'
+              : 'bg-cyan-500/10 text-cyan-800 dark:text-cyan-300 hover:bg-cyan-500/20 border border-cyan-500/20'
           }`}
         >
           <Droplets className="w-3.5 h-3.5" />
@@ -324,10 +324,10 @@ export function TerminalMapTab({ airport }: TerminalMapTabProps) {
         <button
           type="button"
           onClick={() => setSelectedCategory('security')}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold shrink-0 transition-all cursor-pointer ${
+          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-mono font-semibold shrink-0 transition-all cursor-pointer ${
             selectedCategory === 'security'
               ? 'bg-emerald-600 text-white shadow-xs'
-              : 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 hover:bg-emerald-100 border border-emerald-200/60 dark:border-emerald-800/60'
+              : 'bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 hover:bg-emerald-500/20 border border-emerald-500/20'
           }`}
         >
           <ShieldCheck className="w-3.5 h-3.5" />
@@ -336,10 +336,10 @@ export function TerminalMapTab({ airport }: TerminalMapTabProps) {
         <button
           type="button"
           onClick={() => setSelectedCategory('dining')}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold shrink-0 transition-all cursor-pointer ${
+          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-mono font-semibold shrink-0 transition-all cursor-pointer ${
             selectedCategory === 'dining'
               ? 'bg-orange-500 text-white shadow-xs'
-              : 'bg-orange-50 dark:bg-orange-950/40 text-orange-800 dark:text-orange-300 hover:bg-orange-100 border border-orange-200/60 dark:border-orange-800/60'
+              : 'bg-orange-500/10 text-orange-800 dark:text-orange-300 hover:bg-orange-500/20 border border-orange-500/20'
           }`}
         >
           <Utensils className="w-3.5 h-3.5" />
@@ -348,10 +348,10 @@ export function TerminalMapTab({ airport }: TerminalMapTabProps) {
         <button
           type="button"
           onClick={() => setSelectedCategory('shop')}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold shrink-0 transition-all cursor-pointer ${
+          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-mono font-semibold shrink-0 transition-all cursor-pointer ${
             selectedCategory === 'shop'
               ? 'bg-purple-500 text-white shadow-xs'
-              : 'bg-purple-50 dark:bg-purple-950/40 text-purple-800 dark:text-purple-300 hover:bg-purple-100 border border-purple-200/60 dark:border-purple-800/60'
+              : 'bg-purple-500/10 text-purple-800 dark:text-purple-300 hover:bg-purple-500/20 border border-purple-500/20'
           }`}
         >
           <ShoppingBag className="w-3.5 h-3.5" />
@@ -489,24 +489,24 @@ export function TerminalMapTab({ airport }: TerminalMapTabProps) {
 
       {/* Selected Location Details Card (Active Drawer) */}
       {activePoi && (
-        <div className="p-5 sm:p-6 rounded-3xl bg-white dark:bg-neutral-900 border-2 border-blue-500/30 dark:border-blue-500/20 shadow-sm space-y-4 animate-in fade-in-50 duration-150">
+        <div className="p-4 sm:p-5 rounded-xl bg-white dark:bg-zinc-900 border border-blue-500/40 dark:border-blue-500/30 shadow-xs space-y-3 animate-in fade-in-50 duration-150">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div className="flex items-start gap-3.5">
-              <div className={`p-3 rounded-2xl shrink-0 ${getCategoryColor(activePoi.category)}`}>
+            <div className="flex items-start gap-3">
+              <div className={`p-2.5 rounded-lg shrink-0 ${getCategoryColor(activePoi.category)}`}>
                 {getCategoryIcon(activePoi.category)}
               </div>
               <div className="space-y-1">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400">
+                <div className="flex flex-wrap items-center gap-1.5 font-mono text-[10px]">
+                  <span className="font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border border-zinc-200/60 dark:border-zinc-700/60">
                     {activePoi.terminal} {activePoi.zone ? `• ${activePoi.zone}` : ''}
                   </span>
                   {activePoi.availability && (
-                    <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${
+                    <span className={`font-bold px-2 py-0.5 rounded ${
                       activePoi.availability === 'abundant'
-                        ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                        ? 'bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border border-emerald-500/20'
                         : activePoi.availability === 'moderate'
-                        ? 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'
-                        : 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300'
+                        ? 'bg-amber-500/10 text-amber-800 dark:text-amber-300 border border-amber-500/20'
+                        : 'bg-rose-500/10 text-rose-800 dark:text-rose-300 border border-rose-500/20'
                     }`}>
                       {activePoi.availability === 'abundant' 
                         ? (lang === 'it' ? 'Disponibilità Abbondante' : 'Abundant') 
@@ -516,30 +516,30 @@ export function TerminalMapTab({ airport }: TerminalMapTabProps) {
                     </span>
                   )}
                   {activePoi.isVerified && (
-                    <span className="flex items-center gap-1 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
+                    <span className="flex items-center gap-1 font-semibold text-emerald-600 dark:text-emerald-400">
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       <span>{t('verifiedOfficialLocation')}</span>
                     </span>
                   )}
                 </div>
 
-                <h4 className="text-lg font-extrabold text-neutral-900 dark:text-white">
+                <h4 className="text-base font-bold text-zinc-900 dark:text-white">
                   {lang === 'it' ? activePoi.name_it : activePoi.name_en}
                 </h4>
               </div>
             </div>
           </div>
 
-          <div className="p-3.5 rounded-2xl bg-neutral-50 dark:bg-neutral-850 border border-neutral-100 dark:border-neutral-800 space-y-2">
-            <div className="flex items-center gap-2 text-xs font-semibold text-neutral-700 dark:text-neutral-300">
+          <div className="p-3 rounded-lg bg-zinc-50 dark:bg-zinc-850 border border-zinc-200/80 dark:border-zinc-800 space-y-1.5">
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-300">
               <MapPin className="w-3.5 h-3.5 text-blue-500 shrink-0" />
-              <span>{lang === 'it' ? 'Posizione esatta verificata:' : 'Exact verified location:'}</span>
-              <span className="font-bold text-neutral-900 dark:text-white">
+              <span className="font-mono text-[10px] text-zinc-400 uppercase">{lang === 'it' ? 'Posizione esatta:' : 'Exact location:'}</span>
+              <span className="font-bold text-zinc-900 dark:text-white text-xs">
                 {lang === 'it' ? activePoi.location_it : activePoi.location_en}
               </span>
             </div>
 
-            <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
+            <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans">
               {lang === 'it' ? activePoi.details_it : activePoi.details_en}
             </p>
           </div>
@@ -547,43 +547,43 @@ export function TerminalMapTab({ airport }: TerminalMapTabProps) {
       )}
 
       {/* Full Points of Interest Grid for This Terminal */}
-      <div className="space-y-3">
+      <div className="space-y-2.5">
         <div className="flex items-center justify-between">
-          <h4 className="text-sm font-bold tracking-tight text-neutral-900 dark:text-white uppercase text-xs">
+          <h4 className="font-mono font-bold tracking-wider text-zinc-400 uppercase text-[10px]">
             {t('poiListTitle')} ({filteredPois.length})
           </h4>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
           {filteredPois.map((poi) => {
             const isSelected = activePoi?.id === poi.id;
             return (
               <div
                 key={poi.id}
                 onClick={() => setSelectedPoiId(poi.id)}
-                className={`p-4 rounded-2xl border transition-all cursor-pointer text-left space-y-2.5 ${
+                className={`p-3 rounded-xl border transition-all cursor-pointer text-left space-y-2 ${
                   isSelected
-                    ? 'bg-blue-50/50 border-blue-400 dark:bg-blue-950/20 dark:border-blue-700 shadow-xs'
-                    : 'bg-white dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 hover:border-neutral-300 dark:hover:border-neutral-700'
+                    ? 'bg-blue-500/5 border-blue-500/50 dark:bg-blue-950/30 dark:border-blue-500/50 shadow-xs'
+                    : 'bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700'
                 }`}
               >
                 <div className="flex items-start justify-between gap-2">
-                  <div className="flex items-center gap-2.5">
-                    <div className="p-2 rounded-xl bg-neutral-100 dark:bg-neutral-800 shrink-0">
+                  <div className="flex items-center gap-2">
+                    <div className="p-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-800 shrink-0 border border-zinc-200/80 dark:border-zinc-700/80">
                       {getCategoryIcon(poi.category)}
                     </div>
                     <div>
-                      <h5 className="font-bold text-neutral-900 dark:text-white text-xs sm:text-sm leading-snug">
+                      <h5 className="font-bold text-zinc-900 dark:text-white text-xs leading-snug">
                         {lang === 'it' ? poi.name_it : poi.name_en}
                       </h5>
-                      <span className="text-[11px] font-medium text-neutral-400 block">
+                      <span className="text-[10px] font-mono text-zinc-400 block">
                         {poi.zone || poi.terminal}
                       </span>
                     </div>
                   </div>
 
                   {poi.availability && (
-                    <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${
+                    <span className={`w-2 h-2 rounded-full shrink-0 ${
                       poi.availability === 'abundant'
                         ? 'bg-emerald-500'
                         : poi.availability === 'moderate'
@@ -593,7 +593,7 @@ export function TerminalMapTab({ airport }: TerminalMapTabProps) {
                   )}
                 </div>
 
-                <p className="text-[11px] text-neutral-500 dark:text-neutral-400 line-clamp-2 leading-relaxed">
+                <p className="text-[11px] text-zinc-500 dark:text-zinc-400 line-clamp-2 leading-relaxed">
                   {lang === 'it' ? poi.location_it : poi.location_en}
                 </p>
               </div>

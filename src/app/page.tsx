@@ -40,25 +40,31 @@ function MainContent() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50/60 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 flex flex-col font-sans selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-neutral-900">
+    <div className="min-h-screen bg-zinc-50/50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 flex flex-col font-sans selection:bg-zinc-900 selection:text-white dark:selection:bg-white dark:selection:text-zinc-900">
       <Header />
 
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 pt-8 pb-16 space-y-10">
-        {/* Hero & Search Section */}
-        <section className="text-center space-y-4 pt-4 sm:pt-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 dark:bg-neutral-900 border border-neutral-200/80 dark:border-neutral-800 text-xs font-semibold text-neutral-600 dark:text-neutral-400">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>{lang === 'it' ? 'Database Ufficiale Aggiornato' : 'Official Database Updated'}</span>
+      <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-16 space-y-8">
+        {/* Editorial Aviation Briefing Header & Search Console */}
+        <section className="text-center space-y-4 pt-2">
+          {/* Subtle System Status Ticker */}
+          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-[11px] font-mono text-zinc-600 dark:text-zinc-300 shadow-2xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="tracking-tight uppercase">
+              {lang === 'it' ? 'Database Ufficiale • Aggiornamento Continuo 24h' : 'Official Database • 24h Continuous Sync'}
+            </span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-neutral-900 dark:text-white max-w-2xl mx-auto leading-tight">
-            {lang === 'it' ? 'Tutto ciò che devi sapere prima di volare.' : 'Everything you need to know before you fly.'}
-          </h2>
+          <div className="space-y-2">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-zinc-900 dark:text-white max-w-3xl mx-auto leading-tight">
+              {lang === 'it' ? 'Tutto ciò che devi sapere prima di volare.' : 'Everything you need to know before you fly.'}
+            </h1>
 
-          <p className="text-sm sm:text-base text-neutral-500 dark:text-neutral-400 max-w-xl mx-auto">
-            {t('tagline')}
-          </p>
+            <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 max-w-lg mx-auto font-normal leading-relaxed">
+              {t('tagline')}
+            </p>
+          </div>
 
+          {/* Search Console */}
           <div className="pt-2">
             <SearchBar 
               selectedAirport={selectedAirport} 
@@ -67,7 +73,7 @@ function MainContent() {
           </div>
         </section>
 
-        {/* Selected Airport Tabbed Details */}
+        {/* Selected Airport Dossier */}
         <section id="airport-details" className="pt-2">
           <AirportDetail 
             airport={selectedAirport} 

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Zap, Wifi, Droplets, Moon, PackageCheck, Cigarette, MapPin, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Zap, Wifi, Droplets, Moon, PackageCheck, Cigarette, MapPin, AlertCircle } from 'lucide-react';
 import { Airport, AmenityCategory } from '@/types/airport';
 import { useLanguage } from '@/lib/i18n';
 import { UnverifiedBadge } from '@/components/UnverifiedBadge';
@@ -16,19 +16,19 @@ export function AmenitiesTab({ airport }: AmenitiesTabProps) {
   const getAmenityIcon = (cat: AmenityCategory) => {
     switch (cat) {
       case 'power_charging':
-        return <Zap className="w-5 h-5 text-amber-500" />;
+        return <Zap className="w-4 h-4 text-amber-500" />;
       case 'wifi':
-        return <Wifi className="w-5 h-5 text-blue-500" />;
+        return <Wifi className="w-4 h-4 text-blue-500" />;
       case 'water_refill':
-        return <Droplets className="w-5 h-5 text-cyan-500" />;
+        return <Droplets className="w-4 h-4 text-cyan-500" />;
       case 'quiet_area':
-        return <Moon className="w-5 h-5 text-purple-500" />;
+        return <Moon className="w-4 h-4 text-purple-500" />;
       case 'luggage_storage':
-        return <PackageCheck className="w-5 h-5 text-emerald-500" />;
+        return <PackageCheck className="w-4 h-4 text-emerald-500" />;
       case 'smoking_area':
-        return <Cigarette className="w-5 h-5 text-neutral-500" />;
+        return <Cigarette className="w-4 h-4 text-zinc-400" />;
       default:
-        return <Zap className="w-5 h-5 text-neutral-500" />;
+        return <Zap className="w-4 h-4 text-zinc-400" />;
     }
   };
 
@@ -36,7 +36,7 @@ export function AmenitiesTab({ airport }: AmenitiesTabProps) {
     if (!avail) return null;
     if (avail === 'abundant') {
       return (
-        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60">
+        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border border-emerald-500/20">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
           <span>{t('availabilityAbundant')}</span>
         </span>
@@ -44,14 +44,14 @@ export function AmenitiesTab({ airport }: AmenitiesTabProps) {
     }
     if (avail === 'moderate') {
       return (
-        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60">
+        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-amber-500/10 text-amber-800 dark:text-amber-300 border border-amber-500/20">
           <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
           <span>{t('availabilityModerate')}</span>
         </span>
       );
     }
     return (
-      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-rose-50 text-rose-800 dark:bg-rose-950/40 dark:text-rose-300 border border-rose-200 dark:border-rose-800/60">
+      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-rose-500/10 text-rose-800 dark:text-rose-300 border border-rose-500/20">
         <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
         <span>{t('availabilityScarce')}</span>
       </span>
@@ -60,23 +60,23 @@ export function AmenitiesTab({ airport }: AmenitiesTabProps) {
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
         {airport.amenities.map((item) => (
           <div
             key={item.id}
-            className="p-5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-2xs space-y-3.5"
+            className="p-4 sm:p-5 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-2xs space-y-3"
           >
             <div className="flex items-start justify-between gap-3">
               <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-xl bg-neutral-100 dark:bg-neutral-800 shrink-0">
+                <div className="p-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 shrink-0 border border-zinc-200/80 dark:border-zinc-700/80">
                   {getAmenityIcon(item.category)}
                 </div>
                 <div>
-                  <h4 className="font-semibold text-neutral-900 dark:text-white text-sm">
+                  <h4 className="font-bold text-zinc-900 dark:text-white text-sm">
                     {lang === 'it' ? item.title_it : item.title_en}
                   </h4>
                   {item.terminal && (
-                    <span className="text-[11px] font-medium text-neutral-400 block mt-0.5">
+                    <span className="text-[10px] font-mono text-zinc-400 block mt-0.5">
                       {item.terminal}
                     </span>
                   )}
@@ -100,18 +100,18 @@ export function AmenitiesTab({ airport }: AmenitiesTabProps) {
 
             {/* Scarcity / Availability Critical Notice */}
             {(item.scarcityNote_it || item.scarcityNote_en) && (
-              <div className={`p-3 rounded-xl text-xs leading-relaxed border ${
+              <div className={`p-2.5 rounded-lg text-xs leading-relaxed border ${
                 item.availability === 'scarce'
-                  ? 'bg-rose-50/80 text-rose-950 border-rose-200/80 dark:bg-rose-950/30 dark:text-rose-200 dark:border-rose-900/60'
+                  ? 'bg-rose-500/5 text-rose-900 border-rose-500/20 dark:text-rose-200'
                   : item.availability === 'abundant'
-                  ? 'bg-emerald-50/80 text-emerald-950 border-emerald-200/80 dark:bg-emerald-950/30 dark:text-emerald-200 dark:border-emerald-900/60'
-                  : 'bg-amber-50/80 text-amber-950 border-amber-200/80 dark:bg-amber-950/30 dark:text-amber-200 dark:border-amber-900/60'
+                  ? 'bg-emerald-500/5 text-emerald-900 border-emerald-500/20 dark:text-emerald-200'
+                  : 'bg-amber-500/5 text-amber-900 border-amber-500/20 dark:text-amber-200'
               }`}>
-                <div className="flex items-center gap-1.5 font-bold mb-1">
+                <div className="flex items-center gap-1.5 font-bold mb-0.5 text-[11px] font-mono">
                   <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                   <span>{t('scarcityWarning')}</span>
                 </div>
-                <p>
+                <p className="text-[11px]">
                   {lang === 'it' ? item.scarcityNote_it : item.scarcityNote_en}
                 </p>
               </div>
@@ -119,17 +119,17 @@ export function AmenitiesTab({ airport }: AmenitiesTabProps) {
 
             {/* Exact Location Card */}
             <div className="space-y-1.5 text-xs">
-              <div className="p-3 rounded-xl bg-neutral-50 dark:bg-neutral-850 border border-neutral-100 dark:border-neutral-800">
-                <div className="flex items-center gap-1.5 text-neutral-400 font-semibold mb-1 uppercase tracking-wider text-[10px]">
+              <div className="p-2.5 rounded-lg bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200/80 dark:border-zinc-800">
+                <div className="flex items-center gap-1.5 text-zinc-400 font-mono font-bold mb-0.5 uppercase tracking-wider text-[10px]">
                   <MapPin className="w-3 h-3 text-blue-500" />
                   <span>{lang === 'it' ? 'Posizione esatta verificata' : 'Exact Verified Location'}</span>
                 </div>
-                <span className="text-neutral-800 dark:text-neutral-200 font-medium leading-relaxed block">
+                <span className="text-zinc-800 dark:text-zinc-200 font-medium leading-relaxed block text-[11px]">
                   {lang === 'it' ? item.location_it : item.location_en}
                 </span>
               </div>
 
-              <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed pt-1">
+              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed text-[11px] pt-0.5">
                 {lang === 'it' ? item.details_it : item.details_en}
               </p>
             </div>
