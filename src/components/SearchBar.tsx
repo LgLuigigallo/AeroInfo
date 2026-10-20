@@ -20,6 +20,14 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
   const [isSubmittingRequest, setIsSubmittingRequest] = useState(false);
   const [requestSuccess, setRequestSuccess] = useState(false);
   const [requestEmail, setRequestEmail] = useState('');
+  const [emailValidationError, setEmailValidationError] = useState('');
+  const [existingRequest, setExistingRequest] = useState<{
+    id: string;
+    query: string;
+    iata_code?: string;
+    status: string;
+    scheduled_for?: string;
+  } | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -66,6 +74,7 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
   // Update search results
   useEffect(() => {
     setRequestSuccess(false);
+    setEmailValidationError('');
     if (query.trim().length > 0) {
       const filtered = searchAirports(query);
       setResults(filtered);
@@ -74,15 +83,48 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
     }
   }, [query]);
 
+  // Check if uncatalogued airport has already been requested
+  useEffect(() => {
+    setExistingRequest(null);
+    setEmailValidationError('');
+    if (query.trim().length >= 2 && results.length === 0) {
+      const timer = setTimeout(async () => {
+        try {
+          const res = await fetch(`/api/airports/request?query=${encodeURIComponent(query.trim())}`);
+          const data = await res.json();
+          if (data.exists && data.request) {
+            setExistingRequest(data.request);
+          } else {
+            setExistingRequest(null);
+          }
+        } catch {
+          setExistingRequest(null);
+        }
+      }, 250);
+      return () => clearTimeout(timer);
+    }
+  }, [query, results.length]);
+
   const handleRequestIndexing = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!query.trim() || isSubmittingRequest) return;
+
+    // If airport is already requested, email is mandatory to subscribe to alerts
+    if (existingRequest && (!requestEmail.trim() || !requestEmail.includes('@'))) {
+      setEmailValidationError(t('emailRequiredNotice'));
+      return;
+    }
+
     setIsSubmittingRequest(true);
+    setEmailValidationError('');
     try {
       const res = await fetch('/api/airports/request', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: query.trim(), email: requestEmail.trim() || undefined })
+        body: JSON.stringify({
+          query: existingRequest ? existingRequest.query : query.trim(),
+          email: requestEmail.trim() || undefined
+        })
       });
       const data = await res.json();
       if (data.success) {
@@ -208,7 +250,73 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
                     </button>
                   );
                 })
+              ) : existingRequest ? (
+                /* When airport has ALREADY been requested: only allow email subscription */
+                <div className="p-6 text-center space-y-4">
+                  <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 mx-auto flex items-center justify-center border border-amber-200/60 dark:border-amber-900/40">
+                    <Clock className="w-6 h-6 animate-pulse" />
+                  </div>
+
+                  <div className="space-y-1.5 max-w-md mx-auto">
+                    <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800 text-[11px] font-bold text-amber-800 dark:text-amber-300 mb-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping" />
+                      <span>{t('alreadyRequestedBadge')}</span>
+                    </div>
+                    <h4 className="font-bold text-neutral-900 dark:text-white text-base">
+                      {t('alreadyRequestedTitle')}: &quot;{existingRequest.query}&quot;
+                    </h4>
+                    <p className="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+                      {t('alreadyRequestedDesc')}
+                    </p>
+                  </div>
+
+                  {requestSuccess ? (
+                    <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs font-semibold flex items-center justify-center gap-2 max-w-md mx-auto animate-in fade-in-50">
+                      <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-500" />
+                      <span>{t('subscribeAlertSuccess')}</span>
+                    </div>
+                  ) : (
+                    <form onSubmit={handleRequestIndexing} className="space-y-2.5 max-w-md mx-auto pt-1">
+                      <div>
+                        <input
+                          type="email"
+                          required
+                          value={requestEmail}
+                          onChange={(e) => {
+                            setRequestEmail(e.target.value);
+                            setEmailValidationError('');
+                          }}
+                          placeholder={t('requestAirportEmailPlaceholder')}
+                          className="w-full px-3.5 py-2.5 rounded-xl text-xs bg-neutral-50 dark:bg-neutral-850 border border-neutral-200 dark:border-neutral-700 text-neutral-800 dark:text-neutral-200 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-amber-500 dark:focus:ring-amber-400 transition-all"
+                        />
+                        {emailValidationError && (
+                          <p className="text-[11px] text-rose-500 mt-1 text-left font-medium">
+                            {emailValidationError}
+                          </p>
+                        )}
+                      </div>
+                      <button
+                        type="submit"
+                        disabled={isSubmittingRequest}
+                        className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold transition-all shadow-xs cursor-pointer disabled:opacity-50"
+                      >
+                        {isSubmittingRequest ? (
+                          <>
+                            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                            <span>{t('subscribeAlertSubmitting')}</span>
+                          </>
+                        ) : (
+                          <>
+                            <Sparkles className="w-3.5 h-3.5 text-white" />
+                            <span>{t('subscribeAlertBtn')}</span>
+                          </>
+                        )}
+                      </button>
+                    </form>
+                  )}
+                </div>
               ) : (
+                /* When airport is new and not yet requested */
                 <div className="p-6 text-center space-y-4">
                   <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 mx-auto flex items-center justify-center border border-blue-200/60 dark:border-blue-900/40">
                     <Globe className="w-6 h-6 animate-pulse" />

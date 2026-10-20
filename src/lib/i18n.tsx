@@ -39,6 +39,24 @@ export const translations: Translations = {
     en: 'Request submitted successfully! Official information will be verified and published in the catalog.' 
   },
   
+  // Already Requested & Email Subscription
+  alreadyRequestedBadge: { it: 'Verifica già in corso', en: 'Verification in Progress' },
+  alreadyRequestedTitle: { it: 'Aeroporto già in fase di verifica', en: 'Airport Already in Verification' },
+  alreadyRequestedDesc: {
+    it: 'Questo aeroporto è già stato richiesto ed è attualmente in lavorazione per il prossimo aggiornamento programmato. Non è necessario inviare una nuova richiesta: inserisci la tua email per ricevere l\'avviso non appena la scheda ufficiale sarà online.',
+    en: 'This airport has already been requested and is currently being processed for the upcoming scheduled update. No need to request it again: enter your email below to receive an alert when the official profile goes live.'
+  },
+  subscribeAlertBtn: { it: 'Avvisami alla Pubblicazione', en: 'Notify Me When Published' },
+  subscribeAlertSubmitting: { it: 'Iscrizione notifica in corso...', en: 'Subscribing to alert...' },
+  subscribeAlertSuccess: {
+    it: 'Email registrata! Riceverai una notifica non appena la scheda dell\'aeroporto sarà online.',
+    en: 'Email registered! You will receive an alert as soon as the airport profile is live.'
+  },
+  emailRequiredNotice: {
+    it: 'Inserisci un indirizzo email valido per ricevere la notifica.',
+    en: 'Please enter a valid email address to receive notification.'
+  },
+  
   // Verification Badges & Modal
   verifiedOfficial: { it: 'Fonte Ufficiale Certificata', en: 'Official Certified Source' },
   verifiedDate: { it: 'Ultima verifica ufficiale', en: 'Last official verification' },
