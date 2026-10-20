@@ -24,6 +24,7 @@ export async function sendEmail({
   text: string;
 }): Promise<SendEmailResult> {
   const fromEmail = process.env.EMAIL_FROM || 'AeroInfo <onboarding@resend.dev>';
+  const replyTo = process.env.EMAIL_REPLY_TO || 'lg.luigigallo@gmail.com';
 
   // 1. Try Resend if API key is provided
   const resendApiKey = process.env.RESEND_API_KEY;
@@ -33,9 +34,14 @@ export async function sendEmail({
       const res = await resend.emails.send({
         from: fromEmail,
         to,
+        replyTo,
         subject,
         html,
-        text
+        text,
+        headers: {
+          'X-Entity-Ref-ID': `aeroinfo-${Date.now()}`,
+          'List-Unsubscribe': `<mailto:${replyTo}?subject=Unsubscribe>`
+        }
       });
 
       if (res.error) {
