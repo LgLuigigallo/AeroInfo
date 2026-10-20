@@ -11,11 +11,13 @@ import {
   ExternalLink,
   MapPin,
   CheckCircle2,
-  Calendar
+  Calendar,
+  Compass
 } from 'lucide-react';
 import { Airport } from '@/types/airport';
 import { useLanguage } from '@/lib/i18n';
 import { SecurityTab } from './tabs/SecurityTab';
+import { TerminalMapTab } from './tabs/TerminalMapTab';
 import { TerminalsTab } from './tabs/TerminalsTab';
 import { DifficultyTab } from './tabs/DifficultyTab';
 import { AmenitiesTab } from './tabs/AmenitiesTab';
@@ -24,16 +26,18 @@ import { TransportTab } from './tabs/TransportTab';
 
 interface AirportDetailProps {
   airport: Airport;
+  onSelectAirport?: (iata: string) => void;
 }
 
-type TabType = 'security' | 'terminals' | 'difficulty' | 'amenities' | 'food' | 'transport';
+type TabType = 'security' | 'map' | 'terminals' | 'difficulty' | 'amenities' | 'food' | 'transport';
 
-export function AirportDetail({ airport }: AirportDetailProps) {
+export function AirportDetail({ airport, onSelectAirport }: AirportDetailProps) {
   const { lang, t } = useLanguage();
   const [activeTab, setActiveTab] = useState<TabType>('security');
 
   const tabs: { id: TabType; label: string; icon: React.ReactNode }[] = [
     { id: 'security', label: t('tabSecurity'), icon: <ShieldCheck className="w-4 h-4" /> },
+    { id: 'map', label: t('tabMap'), icon: <Compass className="w-4 h-4" /> },
     { id: 'terminals', label: t('tabTerminals'), icon: <Layers className="w-4 h-4" /> },
     { id: 'difficulty', label: t('tabDifficulty'), icon: <Gauge className="w-4 h-4" /> },
     { id: 'amenities', label: t('tabAmenities'), icon: <Zap className="w-4 h-4" /> },
@@ -85,6 +89,36 @@ export function AirportDetail({ airport }: AirportDetailProps) {
           </div>
         </div>
 
+        {/* Multi-Airport City Switcher Banner */}
+        {airport.otherCityAirports && airport.otherCityAirports.length > 0 && (
+          <div className="p-3.5 rounded-2xl bg-neutral-50 dark:bg-neutral-850 border border-neutral-200/80 dark:border-neutral-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+            <div className="flex items-center gap-2 text-xs font-semibold text-neutral-700 dark:text-neutral-300">
+              <span className="w-2 h-2 rounded-full bg-blue-500" />
+              <span>{t('cityMultiAirport')}</span>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              {airport.otherCityAirports.map((other) => (
+                <button
+                  key={other.iata}
+                  type="button"
+                  onClick={() => onSelectAirport?.(other.iata)}
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-white dark:bg-neutral-800 hover:bg-blue-50 hover:border-blue-300 dark:hover:bg-blue-950/40 dark:hover:border-blue-700 text-neutral-800 dark:text-neutral-200 text-xs font-bold transition-all cursor-pointer border border-neutral-200 dark:border-neutral-700 shadow-2xs group"
+                >
+                  <span className="px-1.5 py-0.5 rounded bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-[10px] font-mono group-hover:bg-blue-600">
+                    {other.iata}
+                  </span>
+                  <span>{lang === 'it' ? other.name_it : other.name_en}</span>
+                  {other.distanceInfo && (
+                    <span className="text-[10px] font-normal text-neutral-400">
+                      • {other.distanceInfo}
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Quick Glance Key Pills */}
         <div className="pt-4 border-t border-neutral-100 dark:border-neutral-800 flex flex-wrap items-center gap-2">
           {airport.securityPolicy.has3DScanners ? (
@@ -135,6 +169,7 @@ export function AirportDetail({ airport }: AirportDetailProps) {
       {/* Active Tab Content Area */}
       <div className="min-h-[400px] animate-in fade-in-50 duration-150">
         {activeTab === 'security' && <SecurityTab airport={airport} />}
+        {activeTab === 'map' && <TerminalMapTab airport={airport} />}
         {activeTab === 'terminals' && <TerminalsTab airport={airport} />}
         {activeTab === 'difficulty' && <DifficultyTab airport={airport} />}
         {activeTab === 'amenities' && <AmenitiesTab airport={airport} />}

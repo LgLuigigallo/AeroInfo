@@ -16,6 +16,7 @@ export const airportsData: Airport[] = [
     country_en: 'Czech Republic',
     countryCode: 'CZ',
     officialWebsite: 'https://www.prg.aero',
+    officialMapUrl: 'https://www.prg.aero/en/interactive-map',
     coordinates: { lat: 50.1008, lng: 14.2600 },
     difficultyRating: 2,
     difficultyLabel_it: 'Fluido & Ben Organizzato (Filobus 59 e AE Express)',
@@ -28,6 +29,28 @@ export const airportsData: Airport[] = [
       has3DScanners: true,
       scannersNote_it: 'Al Terminal 2 (voli Schengen verso l\'UE/Italia) sono pienamente operativi i nuovi scanner tomografici 3D CT di ultima generazione. Liquidi, bottiglie e computer possono rimanere nel bagaglio.',
       scannersNote_en: 'Terminal 2 (Schengen flights to EU/Italy) operates next-gen 3D CT scanners. Liquids, drink bottles, and laptops can stay inside your bag.',
+      terminalRules: [
+        {
+          terminalName: 'Terminal 2 (Voli Schengen / UE / Italia)',
+          has3DScanners: true,
+          liquidsAllowedInBag: true,
+          bottleAllowance_it: 'Bottiglie e liquidi nel bagaglio fino a 1L per contenitore senza estrarli',
+          bottleAllowance_en: 'Beverage bottles & liquids in bag up to 1L per container without removal',
+          electronicsInBag: true,
+          notes_it: 'Varchi centralizzati al piano partenze con tomografia computerizzata 3D. Non è richiesta l\'estrazione di beauty-case né di bottiglie.',
+          notes_en: 'Centralized departure screening with 3D CT scanners. No need to unpack liquids, bottles up to 1L, or laptops.'
+        },
+        {
+          terminalName: 'Terminal 1 (Voli Extra-Schengen - UK, USA, ecc.)',
+          has3DScanners: false,
+          liquidsAllowedInBag: false,
+          bottleAllowance_it: 'Limite 100ml in bustina trasparente da 1L da estrarre obbligatoriamente',
+          bottleAllowance_en: 'Standard 100ml limit in 1L resealable clear bag to be removed',
+          electronicsInBag: false,
+          notes_it: 'I controlli di sicurezza si svolgono direttamente al singolo gate d\'imbarco. Scanner tradizionali: estrarre portatili e liquidi.',
+          notes_en: 'Security checks take place directly at individual departure gates. Standard scanners: remove laptops and 100ml liquid pouch.'
+        }
+      ],
       liquidsAllowance_it: 'Terminal 2 (Schengen): I liquidi possono rimanere dentro il bagaglio a mano! È consentito portare bottiglie di liquidi/bevande oltre i 100ml (fino a 1 litro per contenitore). Al Terminal 1 (voli non-Schengen) vige invece la regola dei 100ml con controllo al singolo gate.',
       liquidsAllowance_en: 'Terminal 2 (Schengen): Liquids stay inside carry-on luggage! Bottles over 100ml (up to 1 litre container) are allowed without unpacking. Terminal 1 (non-Schengen) retains 100ml rule at gate checks.',
       liquidsMustBeRemoved: false,
@@ -62,10 +85,61 @@ export const airportsData: Airport[] = [
       { airlineName: 'Emirates', iataCode: 'EK', terminal: 'Terminal 1', checkInZone: 'Banchi T1 Isola 5' }
     ],
     amenities: [
-      { id: 'prg-pwr', category: 'power_charging', title_it: 'Tavoli di lavoro con prese USB e AC 230V', title_en: 'Work desks with USB & 230V AC outlets', terminal: 'Terminal 2 & 1', location_it: 'Lungo i Gate C e D (T2) e lungo i Gate A e B (T1)', location_en: 'Along Concourse C and D (T2) and A and B (T1)', details_it: 'Sedute e banconi dotati di prese universali europee e doppie porte USB per smartphone e laptop.', details_en: 'Seating and high tables with European Schuko sockets and dual USB ports.' },
-      { id: 'prg-wifi', category: 'wifi', title_it: 'Prague Airport Wi-Fi Free', title_en: 'Prague Airport Wi-Fi Free', terminal: 'Tutti i Terminal', location_it: 'Disponibile in tutti i terminal', location_en: 'Available across entire airport', details_it: 'Rete: "prg.aero-free". Wi-Fi gratuito e illimitato senza richiesta di carta o registrazione.', details_en: 'Network: "prg.aero-free". Free unlimited Wi-Fi with no card or payment.' },
-      { id: 'prg-water', category: 'water_refill', title_it: 'Fontanelle di acqua potabile gratuita', title_en: 'Free Drinking Water Fountains', terminal: 'Terminal 1 & 2', location_it: 'Presso i blocchi servizi igienici vicino ai Gate C02, D01 e A04', location_en: 'Next to restrooms near Gates C02, D01 and A04', details_it: 'Distributori con beccuccio verticale per riempire agevolmente le borracce dopo i controlli.', details_en: 'Vertical spout fountains designed for water bottle refills.' },
-      { id: 'prg-relax', category: 'quiet_area', title_it: 'Area Relax & Poltrone Chaise-Longue', title_en: 'Relaxation Area & Chaise-Longues', terminal: 'Terminal 2', location_it: 'Al secondo piano sopra l\'area commerciale', location_en: 'Second floor above commercial plaza', details_it: 'Poltrone ergonomiche in zona tranquilla con vista sulla pista.', details_en: 'Ergonomic lounge recliners in quiet zone overlooking apron.', isUnverified: true, details_it_unverified: 'I viaggiatori consigliano di arrivare prima delle 10:00 per trovare poltrone libere.', details_en_unverified: 'Travelers recommend arriving before 10:00 to secure open recliners.' }
+      { 
+        id: 'prg-pwr', 
+        category: 'power_charging', 
+        title_it: 'Tavoli di lavoro alti con prese Schuko e USB', 
+        title_en: 'High Work Benches with Schuko AC & USB', 
+        terminal: 'Terminal 2 & 1', 
+        location_it: 'Tavoli alti da lavoro tra i Gate C2-C5 e D1-D3 (T2); colonne perimetrali Gate A-B (T1)', 
+        location_en: 'High work benches between Gates C2-C5 and D1-D3 (T2); perimeter pillars at Gates A-B (T1)', 
+        availability: 'scarce',
+        scarcityNote_it: 'ATTENZIONE: Le normali poltroncine d\'attesa blu ai gate NON hanno prese elettriche. Le prese Schuko 230V e USB si trovano ESCLUSIVAMENTE sui tavoli alti in legno tra i Gate C2-C5 (T2) e D1-D3 (T2), e vicino ad alcune colonne contrassegnate. La disponibilità è limitata nelle ore di punta.',
+        scarcityNote_en: 'WARNING: Standard blue gate seating does NOT have power outlets. 230V AC and USB sockets are ONLY available at high wooden worktables between Gates C2-C5 (T2) and D1-D3 (T2), and select marked pillars. Availability is scarce during peak rush.',
+        details_it: 'Banconi alti in legno dotati di prese universali europee 230V e doppie porte USB per la ricarica rapida.', 
+        details_en: 'High wooden counters with European Schuko sockets and dual USB charging ports.' 
+      },
+      { 
+        id: 'prg-wifi', 
+        category: 'wifi', 
+        title_it: 'Prague Airport Wi-Fi Free', 
+        title_en: 'Prague Airport Wi-Fi Free', 
+        terminal: 'Tutti i Terminal', 
+        location_it: 'Disponibile in tutti i terminal', 
+        location_en: 'Available across entire airport', 
+        availability: 'abundant',
+        details_it: 'Rete: "prg.aero-free". Wi-Fi gratuito e illimitato senza richiesta di carta o registrazione.', 
+        details_en: 'Network: "prg.aero-free". Free unlimited Wi-Fi with no card or payment.' 
+      },
+      { 
+        id: 'prg-water', 
+        category: 'water_refill', 
+        title_it: 'Fontanelle di acqua potabile gratuita', 
+        title_en: 'Free Drinking Water Fountains', 
+        terminal: 'Terminal 1 & 2', 
+        location_it: 'Presso i blocchi servizi igienici vicino ai Gate C02, D01 e A04', 
+        location_en: 'Next to restrooms near Gates C02, D01 and A04', 
+        availability: 'moderate',
+        scarcityNote_it: 'Fontanelle con erogatore rapido verticale per riempire agevolmente le borracce dopo i controlli di sicurezza.',
+        scarcityNote_en: 'Fountains with vertical quick spout for easy bottle refills after security checkpoints.',
+        details_it: 'Distributori con beccuccio verticale per riempire agevolmente le borracce dopo i controlli.', 
+        details_en: 'Vertical spout fountains designed for water bottle refills.' 
+      },
+      { 
+        id: 'prg-relax', 
+        category: 'quiet_area', 
+        title_it: 'Area Relax & Poltrone Chaise-Longue', 
+        title_en: 'Relaxation Area & Chaise-Longues', 
+        terminal: 'Terminal 2', 
+        location_it: 'Al secondo piano sopra l\'area commerciale', 
+        location_en: 'Second floor above commercial plaza', 
+        availability: 'scarce',
+        details_it: 'Poltrone ergonomiche in zona tranquilla con vista sulla pista.', 
+        details_en: 'Ergonomic lounge recliners in quiet zone overlooking apron.', 
+        isUnverified: true, 
+        details_it_unverified: 'I viaggiatori consigliano di arrivare prima delle 10:00 per trovare poltrone libere.', 
+        details_en_unverified: 'Travelers recommend arriving before 10:00 to secure open recliners.' 
+      }
     ],
     venues: [
       { id: 'prg-v1', name: 'Pilsner Urquell Original Restaurant', category: 'dining', terminal: 'Terminal 2', location: 'Partenze dopo i controlli', hours: '06:00 - 22:00' },
@@ -77,6 +151,202 @@ export const airportsData: Airport[] = [
       { id: 'prg-tr-1', type: 'bus', name_it: 'Filobus Elettrico 59 (per Metro A Nádraží Veleslavín)', name_en: 'Trolleybus 59 (to Metro A Nádraží Veleslavín)', duration: '17 min', frequency: 'Ogni 3-6 minuti', estimatedCost: '40 CZK (~€1.60)', pickupLocation_it: 'Pensiline bus fronte Terminal 1 e Terminal 2', pickupLocation_en: 'Bus bays outside Terminal 1 and Terminal 2', details_it: 'Nuovissimo filobus elettrico articolato ad altissima frequenza. A Nádraží Veleslavín si sale sulla metro verde A che porta a Malostranská o Můstek (Piazza San Venceslao) in 10 minuti.', details_en: 'Modern high-capacity articulated electric trolleybus. Connects with Green Metro Line A directly to Old Town.' },
       { id: 'prg-tr-2', type: 'bus', name_it: 'Airport Express (AE - Diretto per Stazione Centrale Hlavní Nádraží)', name_en: 'Airport Express (AE - Direct to Main Railway Station)', duration: '30-40 min', frequency: 'Ogni 20-30 minuti', estimatedCost: '100 CZK (~€4.00)', pickupLocation_it: 'Fermata AE fronte Terminal 1', pickupLocation_en: 'AE bus stop outside Terminal 1', details_it: 'Bus espresso no-stop direttamente per la stazione ferroviaria principale di Praga.', details_en: 'Non-stop express coach direct to Prague Main Train Station.' },
       { id: 'prg-tr-3', type: 'taxi', name_it: 'Uber Airport Ufficiale / Taxi Praha', name_en: 'Official Uber Airport / Taxi Praha', duration: '25-35 min', frequency: 'Continuo', estimatedCost: '550-750 CZK (~€22.00-€30.00)', pickupLocation_it: 'Chioschi ufficiali nell\'area arrivi di T1 e T2', pickupLocation_en: 'Official booking kiosks in arrivals halls T1 and T2', details_it: 'Tariffa garantita prenotabile ai totem interattivi o tramite app Uber.', details_en: 'Guaranteed upfront pricing at airport interactive kiosks or Uber app.' }
+    ],
+    terminalMaps: [
+      {
+        terminalId: 'prg-t2',
+        terminalName_it: 'Terminal 2 (Voli Schengen / Italia / UE)',
+        terminalName_en: 'Terminal 2 (Schengen / EU Flights)',
+        officialInteractiveMapUrl: 'https://www.prg.aero/en/interactive-map',
+        concourseShape: 'pier_t',
+        pois: [
+          {
+            id: 'prg-map-t2-sec',
+            category: 'security',
+            name_it: 'Varchi Centralizzati Scanner 3D CT',
+            name_en: 'Centralized 3D CT Security Checkpoint',
+            location_it: 'Piano 2F prima della piazza commerciale',
+            location_en: 'Level 2F before central commercial plaza',
+            terminal: 'Terminal 2',
+            zone: 'Checkpoint Partenze',
+            x: 23,
+            y: 50,
+            availability: 'abundant',
+            details_it: 'Scanner tomografici 3D CT operativi: liquidi, bevande fino a 1L e portatili restano nel bagaglio a mano senza estrarli.',
+            details_en: '3D CT scanners active: liquids, beverage bottles up to 1L and laptops stay inside cabin bag without unpacking.',
+            isVerified: true
+          },
+          {
+            id: 'prg-map-t2-pwr-c',
+            category: 'power',
+            name_it: 'Tavoli alti da lavoro con prese Schuko e USB (Gate C2-C5)',
+            name_en: 'High Work Benches with 230V Schuko & USB (Gates C2-C5)',
+            location_it: 'Lungo il corridoio tra i Gate C2 e C5',
+            location_en: 'Along concourse between Gates C2 and C5',
+            terminal: 'Terminal 2',
+            zone: 'Molo C',
+            x: 75,
+            y: 28,
+            availability: 'scarce',
+            details_it: 'ATTENZIONE: Le normali poltroncine blu ai gate NON hanno prese. Le prese Schuko 230V e USB si trovano ESCLUSIVAMENTE su questi banconi alti in legno da lavoro.',
+            details_en: 'WARNING: Standard blue gate seating does NOT have power outlets. 230V AC and USB sockets are ONLY located on these tall wooden workbenches.',
+            isVerified: true
+          },
+          {
+            id: 'prg-map-t2-pwr-d',
+            category: 'power',
+            name_it: 'Tavoli alti da lavoro con prese Schuko e USB (Gate D1-D3)',
+            name_en: 'High Work Benches with 230V Schuko & USB (Gates D1-D3)',
+            location_it: 'Lungo il corridoio tra i Gate D1 e D3',
+            location_en: 'Along concourse between Gates D1 and D3',
+            terminal: 'Terminal 2',
+            zone: 'Molo D',
+            x: 75,
+            y: 72,
+            availability: 'scarce',
+            details_it: 'Seconda postazione con tavoli alti e prese elettriche. Pochi posti disponibili nelle ore di punta.',
+            details_en: 'Second bank of high desks with power outlets. Fills quickly during rush hours.',
+            isVerified: true
+          },
+          {
+            id: 'prg-map-t2-water-c',
+            category: 'water',
+            name_it: 'Fontanella Acqua Potabile Gratuita (Gate C02)',
+            name_en: 'Free Drinking Water Fountain (Gate C02)',
+            location_it: 'Presso i servizi igienici di fronte al Gate C02',
+            location_en: 'Next to restrooms opposite Gate C02',
+            terminal: 'Terminal 2',
+            zone: 'Molo C',
+            x: 67,
+            y: 32,
+            availability: 'moderate',
+            details_it: 'Distributore con erogatore a getto verticale progettato per riempire rapidamente borracce e bottiglie vuote post-sicurezza.',
+            details_en: 'Vertical jet dispenser designed for rapid refill of empty water bottles post-security.',
+            isVerified: true
+          },
+          {
+            id: 'prg-map-t2-water-d',
+            category: 'water',
+            name_it: 'Fontanella Acqua Potabile Gratuita (Gate D01)',
+            name_en: 'Free Drinking Water Fountain (Gate D01)',
+            location_it: 'Presso i servizi igienici vicino al Gate D01',
+            location_en: 'Next to restrooms near Gate D01',
+            terminal: 'Terminal 2',
+            zone: 'Molo D',
+            x: 67,
+            y: 68,
+            availability: 'moderate',
+            details_it: 'Erogatore gratuito di acqua potabile fresca per borracce.',
+            details_en: 'Free chilled drinking water dispenser for refillable bottles.',
+            isVerified: true
+          },
+          {
+            id: 'prg-map-t2-pilsner',
+            category: 'dining',
+            name_it: 'Pilsner Urquell Original Restaurant',
+            name_en: 'Pilsner Urquell Original Restaurant',
+            location_it: 'Piazza commerciale centrale T2',
+            location_en: 'Central T2 commercial plaza',
+            terminal: 'Terminal 2',
+            zone: 'Piazza Commerciale',
+            x: 42,
+            y: 38,
+            availability: 'abundant',
+            details_it: 'Cucina tipica ceca e birra alla spina appena spillata. Orari: 06:00 - 22:00.',
+            details_en: 'Traditional Czech food and freshly poured draft beer. Hours: 06:00 - 22:00.',
+            isVerified: true
+          },
+          {
+            id: 'prg-map-t2-dutyfree',
+            category: 'shop',
+            name_it: 'Aelia Duty Free Prague',
+            name_en: 'Aelia Duty Free Prague',
+            location_it: 'Subito dopo i filtri di sicurezza',
+            location_en: 'Immediately after security screening',
+            terminal: 'Terminal 2',
+            zone: 'Airside Centrale',
+            x: 35,
+            y: 55,
+            availability: 'abundant',
+            details_it: 'Profumi, cosmetici, liquori (Becherovka), cioccolato e souvenir.',
+            details_en: 'Perfumes, cosmetics, spirits (Becherovka), chocolate, and souvenirs.',
+            isVerified: true
+          },
+          {
+            id: 'prg-map-t2-relax',
+            category: 'lounge',
+            name_it: 'Area Relax & Chaise-Longue Panoramica',
+            name_en: 'Relaxation Area & Runway-View Chaise-Longues',
+            location_it: 'Secondo piano soppalco sopra l\'area commerciale',
+            location_en: 'Second floor mezzanine above commercial plaza',
+            terminal: 'Terminal 2',
+            zone: 'Soppalco Relax',
+            x: 48,
+            y: 22,
+            availability: 'scarce',
+            details_it: 'Poltrone anatomiche reclinabili in zona silenziosa con vista panoramica sulla pista di atterraggio.',
+            details_en: 'Ergonomic lounge recliners in quiet area overlooking apron.',
+            isVerified: true
+          }
+        ]
+      },
+      {
+        terminalId: 'prg-t1',
+        terminalName_it: 'Terminal 1 (Voli Extra-Schengen - UK, USA)',
+        terminalName_en: 'Terminal 1 (Non-Schengen - UK, USA)',
+        officialInteractiveMapUrl: 'https://www.prg.aero/en/interactive-map',
+        concourseShape: 'linear',
+        pois: [
+          {
+            id: 'prg-map-t1-sec',
+            category: 'security',
+            name_it: 'Controlli di Sicurezza ai Singoli Gate A & B',
+            name_en: 'Security Screening at Individual Gates A & B',
+            location_it: 'Direttamente davanti a ciascun gate d\'imbarco prima di salire',
+            location_en: 'Directly at each individual boarding gate prior to boarding',
+            terminal: 'Terminal 1',
+            zone: 'Gates A & B',
+            x: 65,
+            y: 50,
+            availability: 'moderate',
+            details_it: 'ATTENZIONE: Al Terminal 1 i controlli si svolgono al singolo gate d\'imbarco. Scanner convenzionali: estrarre liquidi (max 100ml) e computer portatili.',
+            details_en: 'WARNING: Terminal 1 conducts security checks at individual gates. Standard scanners: unpack liquids (max 100ml) and laptops.',
+            isVerified: true
+          },
+          {
+            id: 'prg-map-t1-pwr',
+            category: 'power',
+            name_it: 'Prese a muro su colonne perimetrali Gate A',
+            name_en: 'Wall Outlets on Perimeter Pillars Gate A',
+            location_it: 'Lungo le vetrate dei Gate A2-A4',
+            location_en: 'Near windows by Gates A2-A4',
+            terminal: 'Terminal 1',
+            zone: 'Molo A',
+            x: 75,
+            y: 35,
+            availability: 'scarce',
+            details_it: 'Poche prese Schuko disponibili nel corridoio centrale prima dell\'accesso al singolo gate d\'imbarco.',
+            details_en: 'Limited Schuko outlets in central corridor before entering gated boarding areas.',
+            isVerified: true
+          },
+          {
+            id: 'prg-map-t1-water',
+            category: 'water',
+            name_it: 'Fontanella Acqua Potabile (Gate A04)',
+            name_en: 'Free Drinking Water Fountain (Gate A04)',
+            location_it: 'Presso i servizi igienici vicino al Gate A04',
+            location_en: 'Next to restrooms near Gate A04',
+            terminal: 'Terminal 1',
+            zone: 'Molo A',
+            x: 55,
+            y: 40,
+            availability: 'moderate',
+            details_it: 'Erogatore gratuito per borracce disponibile nel corridoio principale del T1.',
+            details_en: 'Free bottle refilling station located along main T1 concourse.',
+            isVerified: true
+          }
+        ]
+      }
     ],
     lastUpdated: '2026-10-19'
   },
@@ -96,6 +366,7 @@ export const airportsData: Airport[] = [
     country_en: 'Italy',
     countryCode: 'IT',
     officialWebsite: 'https://www.adr.it/fiumicino',
+    officialMapUrl: 'https://www.adr.it/web/aeroporti-di-roma-it-/mappa-aeroporto',
     coordinates: { lat: 41.8003, lng: 12.2389 },
     difficultyRating: 2,
     difficultyLabel_it: 'Molto Organizzato & Veloce (Skytrax 5-Star)',
@@ -104,10 +375,35 @@ export const airportsData: Airport[] = [
     recommendedArrivalHours: { domestic: 2, international: 3 },
     navigationAdvice_it: 'Aeroporto modernizzato e molto intuitivo. Il Terminal 1 e il Terminal 3 sono connessi internamente. I varchi di sicurezza con scanner 3D sono tra i più rapidi d\'Europa.',
     navigationAdvice_en: 'Modern and very intuitive airport. Terminal 1 and Terminal 3 are internally connected. Security lanes equipped with 3D scanners are among the fastest in Europe.',
+    otherCityAirports: [
+      { iata: 'CIA', name_it: 'Roma Ciampino (G.B. Pastine)', name_en: 'Rome Ciampino', distanceInfo: '15 km da Roma Centro' }
+    ],
     securityPolicy: {
       has3DScanners: true,
       scannersNote_it: 'Terminal 1 e Terminal 3 dotati di scanner tomografici Smiths Detection EDS-CB C3 di ultima generazione.',
       scannersNote_en: 'Terminal 1 and Terminal 3 equipped with state-of-the-art Smiths Detection EDS-CB C3 tomographic scanners.',
+      terminalRules: [
+        {
+          terminalName: 'Terminal 1 (Voli Schengen / ITA Airways, Vueling, EasyJet)',
+          has3DScanners: true,
+          liquidsAllowedInBag: true,
+          bottleAllowance_it: 'Bottiglie e liquidi consentiti nel bagaglio a mano senza limiti di 100ml',
+          bottleAllowance_en: 'Liquids & bottles allowed inside bag with no 100ml restriction',
+          electronicsInBag: true,
+          notes_it: 'Tutti i varchi equipaggiati con scanner 3D Smiths Detection EDS-CB C3. Nulla va estratto dalla borsa.',
+          notes_en: 'All lanes equipped with 3D Smiths Detection EDS-CB C3 scanners. No liquids or devices need to be taken out.'
+        },
+        {
+          terminalName: 'Terminal 3 (Voli Extra-Schengen, Lungo Raggio, Ryanair, Wizz Air)',
+          has3DScanners: true,
+          liquidsAllowedInBag: true,
+          bottleAllowance_it: 'Liquidi e laptop restano nel bagaglio sulle corsie 3D C3 attive',
+          bottleAllowance_en: 'Liquids and laptops stay inside bag on active 3D C3 lanes',
+          electronicsInBag: true,
+          notes_it: 'Varchi principali dotati di scanner 3D C3. Nelle ore di congestione seguire le indicazioni del personale di corsia.',
+          notes_en: 'Main checkpoint equipped with 3D C3 scanners. During peak rushes follow lane staff directions.'
+        }
+      ],
       liquidsAllowance_it: 'Nessun limite di 100ml: è consentito portare contenitori e bottiglie di liquidi oltre 100ml senza doverli estrarre dal bagaglio a mano.',
       liquidsAllowance_en: 'No 100ml limit: liquids and water bottles exceeding 100ml can stay inside carry-on baggage.',
       liquidsMustBeRemoved: false,
@@ -146,10 +442,59 @@ export const airportsData: Airport[] = [
       { airlineName: 'Emirates', iataCode: 'EK', terminal: 'Terminal 3', checkInZone: 'Banchi 430-450' }
     ],
     amenities: [
-      { id: 'fco-pwr-1', category: 'power_charging', title_it: 'Poltrone con ricarica USB e prese AC 230V', title_en: 'Armchairs with USB charging & AC 230V sockets', terminal: 'Terminal 1 & Terminal 3', location_it: 'Gates A01-A80 e Nuova Area Imbarchi E (tutte le sedute fronte gate)', location_en: 'Gates A01-A80 and New Boarding Area E (integrated in gate seating)', details_it: 'Prese universali Schuko e prese USB integrate sotto ogni fila di poltrone.', details_en: 'Universal Schuko power sockets and USB ports integrated under seating rows.' },
-      { id: 'fco-wifi', category: 'wifi', title_it: 'Wi-Fi gratuito illimitato ad alta velocità', title_en: 'Free Unlimited High-Speed Wi-Fi', terminal: 'Tutti i Terminal', location_it: 'Copertura totale in tutte le aree', location_en: 'Full coverage across all areas', details_it: 'Rete: "Airport-Free-WiFi". Nessuna registrazione o limite di tempo, velocità fino a 100Mbps.', details_en: 'Network: "Airport-Free-WiFi". No registration or time limits, speeds up to 100Mbps.' },
-      { id: 'fco-water', category: 'water_refill', title_it: 'Fontanelle acqua potabile per borracce', title_en: 'Free Drinking Water Refill Fountains', terminal: 'Terminal 1 & 3', location_it: 'Presso i servizi igienici vicino ai Gate A27, A61, E18 ed E34', location_en: 'Next to restrooms near Gates A27, A61, E18, and E34', details_it: 'Erogatori gratuiti con acqua refrigerata e indicatore di temperatura.', details_en: 'Free dispensers with chilled drinking water.' },
-      { id: 'fco-quiet', category: 'quiet_area', title_it: 'Area Relax & Poltrone Reclinabili', title_en: 'Relax Zone & Reclining Chairs', terminal: 'Terminal 3', location_it: 'Area Imbarchi E, soppalco superiore (sopra Piazza di Spagna)', location_en: 'Boarding Area E, upper mezzanine (above Piazza di Spagna)', details_it: 'Zona silenziosa con chaise-longue anatomiche e luce soffusa per riposo.', details_en: 'Quiet lounge area with ergonomic chaise-longues and dimmed lighting.', isUnverified: true, details_it_unverified: 'I viaggiatori segnalano che l\'area è molto richiesta durante le prime ore del mattino.', details_en_unverified: 'Travelers report high occupancy during early morning hours.' }
+      { 
+        id: 'fco-pwr-1', 
+        category: 'power_charging', 
+        title_it: 'Poltrone con ricarica USB e prese AC 230V', 
+        title_en: 'Armchairs with USB charging & AC 230V sockets', 
+        terminal: 'Terminal 1 & Terminal 3', 
+        location_it: 'Gates A01-A80 e Nuova Area Imbarchi E (tutte le sedute fronte gate)', 
+        location_en: 'Gates A01-A80 and New Boarding Area E (integrated in gate seating)', 
+        availability: 'abundant',
+        scarcityNote_it: 'Disponibilità eccellente: prese universali Schuko e doppie porte USB integrate sotto ogni fila di poltrone dei nuovi moli A ed E.',
+        scarcityNote_en: 'Excellent availability: universal Schuko and dual USB sockets integrated under every seating row in piers A & E.',
+        details_it: 'Prese universali Schuko e prese USB integrate sotto ogni fila di poltrone.', 
+        details_en: 'Universal Schuko power sockets and USB ports integrated under seating rows.' 
+      },
+      { 
+        id: 'fco-wifi', 
+        category: 'wifi', 
+        title_it: 'Wi-Fi gratuito illimitato ad alta velocità', 
+        title_en: 'Free Unlimited High-Speed Wi-Fi', 
+        terminal: 'Tutti i Terminal', 
+        location_it: 'Copertura totale in tutte le aree', 
+        location_en: 'Full coverage across all areas', 
+        availability: 'abundant',
+        details_it: 'Rete: "Airport-Free-WiFi". Nessuna registrazione o limite di tempo, velocità fino a 100Mbps.', 
+        details_en: 'Network: "Airport-Free-WiFi". No registration or time limits, speeds up to 100Mbps.' 
+      },
+      { 
+        id: 'fco-water', 
+        category: 'water_refill', 
+        title_it: 'Fontanelle acqua potabile per borracce', 
+        title_en: 'Free Drinking Water Refill Fountains', 
+        terminal: 'Terminal 1 & 3', 
+        location_it: 'Presso i servizi igienici vicino ai Gate A27, A61, E18 ed E34', 
+        location_en: 'Next to restrooms near Gates A27, A61, E18, and E34', 
+        availability: 'abundant',
+        details_it: 'Erogatori gratuiti con acqua refrigerata e indicatore di temperatura.', 
+        details_en: 'Free dispensers with chilled drinking water.' 
+      },
+      { 
+        id: 'fco-quiet', 
+        category: 'quiet_area', 
+        title_it: 'Area Relax & Poltrone Reclinabili', 
+        title_en: 'Relax Zone & Reclining Chairs', 
+        terminal: 'Terminal 3', 
+        location_it: 'Area Imbarchi E, soppalco superiore (sopra Piazza di Spagna)', 
+        location_en: 'Boarding Area E, upper mezzanine (above Piazza di Spagna)', 
+        availability: 'moderate',
+        details_it: 'Zona silenziosa con chaise-longue anatomiche e luce soffusa per riposo.', 
+        details_en: 'Quiet lounge area with ergonomic chaise-longues and dimmed lighting.', 
+        isUnverified: true, 
+        details_it_unverified: 'I viaggiatori segnalano che l\'area è molto richiesta durante le prime ore del mattino.', 
+        details_en_unverified: 'Travelers report high occupancy during early morning hours.' 
+      }
     ],
     venues: [
       { id: 'fco-v1', name: 'Eataly', category: 'dining', terminal: 'Terminal 1', location: 'Piazza del Gusto (dopo controlli)', hours: '06:00 - 22:30' },
@@ -163,6 +508,130 @@ export const airportsData: Airport[] = [
     ],
     lastUpdated: '2026-10-19'
   },
+
+  // -------------------------------------------------------------------------
+  // ROMA CIAMPINO (CIA)
+  // -------------------------------------------------------------------------
+  {
+    id: 'cia',
+    iata: 'CIA',
+    icao: 'LIRA',
+    name_it: 'Aeroporto di Roma Ciampino (G.B. Pastine)',
+    name_en: 'Rome Ciampino Airport (G.B. Pastine)',
+    city_it: 'Roma',
+    city_en: 'Rome',
+    country_it: 'Italia',
+    country_en: 'Italy',
+    countryCode: 'IT',
+    officialWebsite: 'https://www.adr.it/ciampino',
+    officialMapUrl: 'https://www.adr.it/web/aeroporti-di-roma-it-/mappa-aeroporto',
+    coordinates: { lat: 41.7994, lng: 12.5949 },
+    difficultyRating: 2,
+    difficultyLabel_it: 'Compatto & Diretto (Poche sedute nei picchi Ryanair)',
+    difficultyLabel_en: 'Compact & Direct (Limited seating at Ryanair peaks)',
+    averageSecurityWaitMin: 15,
+    recommendedArrivalHours: { domestic: 2, international: 2 },
+    navigationAdvice_it: 'Aeroporto secondario di Roma a terminal singolo, hub principale low-cost per Ryanair e Wizz Air. Gli spazi oltre i controlli sono contenuti: nei momenti di picco le sedute e le prese scarseggiano.',
+    navigationAdvice_en: 'Rome secondary single-terminal airport, focused on Ryanair and Wizz Air low-cost flights. Airside spaces are compact: seating and power outlets fill up quickly during peak hours.',
+    otherCityAirports: [
+      { iata: 'FCO', name_it: 'Roma Fiumicino (Leonardo da Vinci)', name_en: 'Rome Fiumicino', distanceInfo: '32 km da Roma Centro' }
+    ],
+    securityPolicy: {
+      has3DScanners: false,
+      scannersNote_it: 'A Ciampino sono operativi varchi di sicurezza con scanner X-ray convenzionali. Non sono presenti scanner tomografici 3D per i liquidi liberi.',
+      scannersNote_en: 'Ciampino operates conventional X-ray screening lanes. Next-gen 3D CT scanners for unrestricted liquids are not installed here.',
+      terminalRules: [
+        {
+          terminalName: 'Terminal Passeggeri Unico',
+          has3DScanners: false,
+          liquidsAllowedInBag: false,
+          bottleAllowance_it: 'Max 100ml per flacone in busta trasparente 1L (estrarre obbligatoriamente)',
+          bottleAllowance_en: 'Max 100ml per container in 1L clear pouch (must be unpacked)',
+          electronicsInBag: false,
+          notes_it: 'Regola tradizionale standard: estrarre tutti i liquidi e i computer portatili o tablet nelle vaschette separate.',
+          notes_en: 'Standard screening rules: unpack all liquids and laptops/tablets into separate bins.'
+        }
+      ],
+      liquidsAllowance_it: 'Tutti i liquidi devono essere contenuti in recipienti di capienza massima non superiore a 100ml ciascuno, inseriti in un sacchetto di plastica trasparente e richiudibile di capacità non superiore a 1 litro (circa 20x20 cm), da estrarre obbligatoriamente dal bagaglio.',
+      liquidsAllowance_en: 'All liquids must be in containers of max 100ml each, placed in one transparent resealable 1-litre plastic bag, and taken out of your luggage.',
+      liquidsMustBeRemoved: true,
+      liquidsUnverified: false,
+      electronicsInBag: false,
+      electronicsNote_it: 'Computer portatili, tablet ed e-reader vanno obbligatoriamente estratti dal bagaglio a mano e posizionati nelle vaschette per il controllo separato.',
+      electronicsNote_en: 'Laptops, tablets, and e-readers must be removed from hand luggage and scanned in separate trays.',
+      electronicsUnverified: false,
+      droneAllowedInCabin: true,
+      droneAllowedInHold: false,
+      dronePolicy_it: 'Droni ammessi esclusivamente nel bagaglio a mano con batterie rimosse e poli protetti da cortocircuito. Vietato il volo sopra l\'Appia Antica e l\'area urbana di Roma.',
+      dronePolicy_en: 'Drones permitted in cabin luggage only with batteries isolated. Drone flight strictly prohibited in Roman urban airspace.',
+      droneUnverified: false,
+      maxPowerbankWh: 100,
+      powerbankPolicy_it: 'Powerbank ammessi solo nel bagaglio a mano fino a 100Wh. Vietati rigorosamente nella stiva.',
+      powerbankPolicy_en: 'Powerbanks up to 100Wh permitted in cabin only. Strictly forbidden in cargo hold.',
+      powerbankUnverified: false,
+      officialSourceUrl: 'https://www.adr.it/cia-norme-di-sicurezza',
+      lastVerifiedDate: '2026-10-20'
+    },
+    terminals: [
+      { id: 'cia-main', name: 'Terminal Unico Partenze', transferInfo_it: 'Terminal passeggeri unico per tutte le partenze e gli arrivi nazionali e internazionali.', transferInfo_en: 'Single passenger terminal serving all domestic and international flights.' }
+    ],
+    airlines: [
+      { airlineName: 'Ryanair', iataCode: 'FR', terminal: 'Terminal Unico', checkInZone: 'Banchi Check-in 01-16' },
+      { airlineName: 'Wizz Air', iataCode: 'W4', terminal: 'Terminal Unico', checkInZone: 'Banchi Check-in 17-24' }
+    ],
+    amenities: [
+      {
+        id: 'cia-pwr',
+        category: 'power_charging',
+        title_it: 'Prese elettriche a muro e colonnine',
+        title_en: 'Wall Outlets & Charging Stations',
+        terminal: 'Terminal Unico',
+        location_it: 'Lungo le pareti perimetrali vicino ai Gate 1-4 e Gate 12',
+        location_en: 'Along perimeter walls near Gates 1-4 and Gate 12',
+        availability: 'scarce',
+        scarcityNote_it: 'ATTENZIONE: Le normali sedute d\'attesa NON dispongono di prese USB o elettriche. Gli unici punti presa sono poche spine Schuko lungo il muro vicino ai Gate 1-4, quasi sempre occupate nei momenti di picco. Si consiglia vivamente un powerbank.',
+        scarcityNote_en: 'WARNING: Standard gate chairs do NOT feature USB or electrical outlets. Sockets are scarce, only found on perimeter walls near Gates 1-4. Bringing a powerbank is highly advised.',
+        details_it: 'Poche prese Schuko lungo le pareti vicino ai primi banchi d\'imbarco.',
+        details_en: 'Limited Schuko sockets along walls near early boarding gates.'
+      },
+      {
+        id: 'cia-wifi',
+        category: 'wifi',
+        title_it: 'Wi-Fi gratuito illimitato ADR',
+        title_en: 'ADR Free Unlimited Wi-Fi',
+        terminal: 'Terminal Unico',
+        location_it: 'Disponibile in tutta l\'aerostazione',
+        location_en: 'Available across terminal',
+        availability: 'abundant',
+        details_it: 'Rete: "Airport-Free-WiFi". Navigazione gratuita senza limiti di tempo.',
+        details_en: 'Network: "Airport-Free-WiFi". Free access with no time limits.'
+      },
+      {
+        id: 'cia-water',
+        category: 'water_refill',
+        title_it: 'Fontanella erogatore acqua potabile',
+        title_en: 'Free Drinking Water Dispenser',
+        terminal: 'Terminal Unico',
+        location_it: 'Accanto ai servizi igienici centrali di fronte al Gate 5',
+        location_en: 'Next to central restrooms opposite Gate 5',
+        availability: 'moderate',
+        scarcityNote_it: 'Una sola fontanella potabile presente nell\'area imbarchi dopo i controlli, utile per riempire borracce vuote prima del volo.',
+        scarcityNote_en: 'Single drinking fountain located post-security opposite Gate 5, convenient for refilling empty bottles.',
+        details_it: 'Erogatore con getto per borracce posizionato nell\'area servizi.',
+        details_en: 'Drinking water dispenser with bottle refill spout.'
+      }
+    ],
+    venues: [
+      { id: 'cia-v1', name: 'Mokà Caffè & Panini', category: 'cafe', terminal: 'Terminal Unico', location: 'Partenze dopo i controlli', hours: '05:30 - 22:30' },
+      { id: 'cia-v2', name: 'Aelia Duty Free Ciampino', category: 'duty_free', terminal: 'Terminal Unico', location: 'Area imbarchi centrale', hours: '05:30 - 22:00' }
+    ],
+    transports: [
+      { id: 'cia-tr-1', type: 'bus', name_it: 'Bus Atral (per Metro A Anagnina)', name_en: 'Atral Bus (to Metro Line A Anagnina)', duration: '15-20 min', frequency: 'Ogni 20-30 minuti', estimatedCost: '€1.20', pickupLocation_it: 'Pensilina bus fronte uscite arrivi', pickupLocation_en: 'Bus bays outside arrivals hall', details_it: 'Opzione più economica: porta al capolinea Anagnina della Metro A per raggiungere Termini in 25 minuti.', details_en: 'Cheapest transit option: connects to Anagnina Metro A terminal into downtown.' },
+      { id: 'cia-tr-2', type: 'bus', name_it: 'Shuttle Bus Terravision / SitBus (Diretto Termini)', name_en: 'Terravision / SitBus Shuttle (Direct to Termini)', duration: '35-45 min', frequency: 'Ogni 30 minuti', estimatedCost: '€6.00', pickupLocation_it: 'Fermata bus navetta piazzale arrivi', pickupLocation_en: 'Shuttle bus stops outside arrivals', details_it: 'Autobus diretto senza fermate intermedie fino alla Stazione Roma Termini.', details_en: 'Non-stop coach direct to Rome Termini central railway station.' },
+      { id: 'cia-tr-3', type: 'taxi', name_it: 'Taxi Ufficiale Roma Capitale (Tariffa Fissa)', name_en: 'Official Rome Taxi (Fixed Fare)', duration: '25-35 min', frequency: 'Continuo', estimatedCost: '€40.00 (Tariffa fissa Mura Aureliane)', pickupLocation_it: 'Banchina taxi ufficiale all\'uscita del terminal', pickupLocation_en: 'Official taxi stand outside terminal', details_it: 'Tariffa fissa garantita di legge per qualsiasi indirizzo entro le Mura Aureliane (inclusi bagagli).', details_en: 'Regulated fixed flat fare to anywhere inside Aurelian Walls (luggage included).' }
+    ],
+    lastUpdated: '2026-10-20'
+  },
   {
     id: 'mxp',
     iata: 'MXP',
@@ -175,18 +644,45 @@ export const airportsData: Airport[] = [
     country_en: 'Italy',
     countryCode: 'IT',
     officialWebsite: 'https://www.milanomalpensa-airport.com',
+    officialMapUrl: 'https://www.milanomalpensa-airport.com/it/guida-per-il-passeggero/mappa-aeroporto',
     coordinates: { lat: 45.6301, lng: 8.7255 },
     difficultyRating: 3,
-    difficultyLabel_it: 'Organizzato ma esteso (Distanze medie)',
-    difficultyLabel_en: 'Well-managed but sprawling (Moderate walk distances)',
+    difficultyLabel_it: 'Organizzato ma esteso (Distanze medie & 2 Terminal separati)',
+    difficultyLabel_en: 'Well-managed but sprawling (Moderate walks & 2 separate terminals)',
     averageSecurityWaitMin: 14,
     recommendedArrivalHours: { domestic: 2, international: 3 },
-    navigationAdvice_it: 'Attenzione al terminal di partenza: il T1 ospita la maggior parte delle compagnie internazionali e tradizionali, mentre il T2 è interamente riservato a EasyJet. I due terminal distano circa 10 minuti di navetta gratuita.',
-    navigationAdvice_en: 'Verify departure terminal: T1 serves major international carriers, while T2 is dedicated entirely to EasyJet. The two terminals are connected by a 10-minute free shuttle.',
+    navigationAdvice_it: 'Attenzione al terminal di partenza: il T1 ospita tutte le compagnie tradizionali e intercontinentali (dotato di scanner 3D C3), mentre il T2 è interamente riservato a EasyJet (scanner tradizionali, estrarre liquidi e PC). I due terminal distano circa 10 minuti di navetta gratuita continua.',
+    navigationAdvice_en: 'Verify your departure terminal: T1 handles major international airlines (equipped with 3D C3 scanners), while T2 is exclusive to EasyJet (traditional scanners, remove liquids and laptops). Free terminal shuttle takes 10 mins.',
+    otherCityAirports: [
+      { iata: 'LIN', name_it: 'Milano Linate', name_en: 'Milan Linate', distanceInfo: '7 km a est da Milano' },
+      { iata: 'BGY', name_it: 'Milano Bergamo Orio al Serio', name_en: 'Milan Bergamo Orio al Serio', distanceInfo: '50 km a nord-est da Milano' }
+    ],
     securityPolicy: {
       has3DScanners: true,
       scannersNote_it: 'Terminal 1 dotato di scanner EDS-CB C3 con corsie intelligenti. Al Terminal 2 sono presenti scanner tradizionali con limite 100ml.',
       scannersNote_en: 'Terminal 1 features EDS-CB C3 smart scanners. Terminal 2 operates traditional scanners with 100ml limit.',
+      terminalRules: [
+        {
+          terminalName: 'Terminal 1 (Voli di Linea, Schengen, Intercontinentali)',
+          has3DScanners: true,
+          liquidsAllowedInBag: true,
+          bottleAllowance_it: 'Liquidi e bottiglie consentiti nel bagaglio senza limiti di 100ml',
+          bottleAllowance_en: 'Liquids and bottles permitted inside bag with no 100ml cap',
+          electronicsInBag: true,
+          notes_it: 'Corsie con scanner tomografici 3D EDS-CB C3. Portatili e bottiglie rimangono all\'interno della valigia.',
+          notes_en: 'Lanes equipped with 3D EDS-CB C3 tomographic scanners. Laptops and bottles stay inside carry-on luggage.'
+        },
+        {
+          terminalName: 'Terminal 2 (Dedicato esclusivamente ad EasyJet)',
+          has3DScanners: false,
+          liquidsAllowedInBag: false,
+          bottleAllowance_it: 'Limite rigoroso 100ml per flacone in sacchetto trasparente da 1L (estrarre obbligatoriamente)',
+          bottleAllowance_en: 'Strict 100ml per container in 1L clear plastic bag (must be unpacked)',
+          electronicsInBag: false,
+          notes_it: 'Scanner convenzionali: obbligo assoluto di estrarre liquidi e computer portatili e disporli nelle vaschette.',
+          notes_en: 'Traditional screening: liquids and laptops must be removed and placed into separate trays.'
+        }
+      ],
       liquidsAllowance_it: 'Al Terminal 1 è possibile trasportare liquidi senza limite di 100ml e senza estrarli. Al Terminal 2 vige l\'obbligo standard dei 100ml in busta trasparente.',
       liquidsAllowance_en: 'At Terminal 1 liquids can exceed 100ml and stay in luggage. Terminal 2 strictly enforces 100ml bag rule.',
       liquidsMustBeRemoved: false,
@@ -218,8 +714,46 @@ export const airportsData: Airport[] = [
       { airlineName: 'Emirates', iataCode: 'EK', terminal: 'Terminal 1', checkInZone: 'Area Check-in 13' }
     ],
     amenities: [
-      { id: 'mxp-pwr', category: 'power_charging', title_it: 'Postazioni di ricarica rapida', title_en: 'Rapid Charging Workstations', terminal: 'Terminal 1', location_it: 'Imbarchi A e B lungo il corridoio centrale', location_en: 'Gates A and B along central corridor', details_it: 'Tavoli alti da lavoro con prese USB e AC 230V.', details_en: 'High work tables equipped with USB & 230V outlets.' },
-      { id: 'mxp-wifi', category: 'wifi', title_it: 'Malpensa Free Wi-Fi', title_en: 'Malpensa Free Wi-Fi', terminal: 'Terminal 1 & 2', location_it: 'Tutte le aree', location_en: 'All areas', details_it: 'Navigazione gratuita.', details_en: 'Free browsing.' }
+      { 
+        id: 'mxp-pwr', 
+        category: 'power_charging', 
+        title_it: 'Postazioni di ricarica rapida e tavoli business', 
+        title_en: 'Rapid Charging Workstations & Business Desks', 
+        terminal: 'Terminal 1 & Terminal 2', 
+        location_it: 'T1: Imbarchi A e B lungo il corridoio centrale; T2: area imbarchi Gate C1-C8', 
+        location_en: 'T1: Gates A and B along central corridor; T2: boarding gates C1-C8', 
+        availability: 'moderate',
+        scarcityNote_it: 'Disponibilità moderata: al T1 ci sono tavoli alti da lavoro con prese Schuko e USB presso i Gate A e B. Al T2 le prese sulle poltrone ordinarie sono rare, presenti solo vicino a poche colonne contrassegnate.',
+        scarcityNote_en: 'Moderate availability: T1 offers high work tables with Schuko & USB at Gates A/B. At T2 outlets on standard seats are rare, only found near marked pillars.',
+        details_it: 'Tavoli alti da lavoro con prese USB e AC 230V.', 
+        details_en: 'High work tables equipped with USB & 230V outlets.' 
+      },
+      { 
+        id: 'mxp-wifi', 
+        category: 'wifi', 
+        title_it: 'Malpensa Free Wi-Fi Illimitato', 
+        title_en: 'Malpensa Free Unlimited Wi-Fi', 
+        terminal: 'Terminal 1 & 2', 
+        location_it: 'Tutte le aree dei terminal', 
+        location_en: 'All terminal areas', 
+        availability: 'abundant',
+        details_it: 'Rete: "MALPENSA FREE WI-FI". Navigazione senza registrazione obbligatoria.', 
+        details_en: 'Network: "MALPENSA FREE WI-FI". Free browsing with no mandatory sign-up.' 
+      },
+      {
+        id: 'mxp-water',
+        category: 'water_refill',
+        title_it: 'Fontanelle acqua potabile per borracce',
+        title_en: 'Free Drinking Water Refill Fountains',
+        terminal: 'Terminal 1 & 2',
+        location_it: 'Presso i blocchi servizi igienici di T1 (Gate A14, B20) e T2 (Gate C04)',
+        location_en: 'Next to restrooms at T1 (Gates A14, B20) and T2 (Gate C04)',
+        availability: 'moderate',
+        scarcityNote_it: 'Distributori d\'acqua potabile gratuiti per riempire borracce situati vicino ai bagni principali.',
+        scarcityNote_en: 'Free drinking water fountains for bottle refills located near main restroom clusters.',
+        details_it: 'Erogatori gratuiti con acqua potabile fresca.',
+        details_en: 'Free dispensers with fresh drinking water.'
+      }
     ],
     venues: [
       { id: 'mxp-v1', name: 'Ferrari Spazio Bollicine', category: 'dining', terminal: 'Terminal 1', location: 'Piazza del Lusso', hours: '06:00 - 22:00' }
@@ -242,6 +776,7 @@ export const airportsData: Airport[] = [
     country_en: 'Italy',
     countryCode: 'IT',
     officialWebsite: 'https://www.milanolinate-airport.com',
+    officialMapUrl: 'https://www.milanolinate-airport.com/it/guida-per-il-passeggero/mappa-aeroporto',
     coordinates: { lat: 45.4451, lng: 9.2767 },
     difficultyRating: 1,
     difficultyLabel_it: 'City Airport Estremamente Rapido (Punteggio 1/5)',
@@ -250,10 +785,26 @@ export const airportsData: Airport[] = [
     recommendedArrivalHours: { domestic: 1.5, international: 2 },
     navigationAdvice_it: 'City airport a soli 7km dal centro di Milano. Il 100% delle corsie è dotato di scanner 3D di ultima generazione e la metropolitana M4 porta direttamente in piazza San Babila in 12 minuti.',
     navigationAdvice_en: 'City airport just 7km from central Milan. 100% of security lanes feature next-gen 3D scanners, and Metro M4 line reaches San Babila square in 12 minutes.',
+    otherCityAirports: [
+      { iata: 'MXP', name_it: 'Milano Malpensa', name_en: 'Milan Malpensa', distanceInfo: '48 km a nord-ovest da Milano' },
+      { iata: 'BGY', name_it: 'Milano Bergamo Orio al Serio', name_en: 'Milan Bergamo Orio al Serio', distanceInfo: '50 km a nord-est da Milano' }
+    ],
     securityPolicy: {
       has3DScanners: true,
       scannersNote_it: 'Il 100% dei varchi di sicurezza a Linate è equipaggiato con tecnologia TAC 3D EDS-CB.',
       scannersNote_en: '100% of security screening lanes at Linate are equipped with 3D CT EDS-CB technology.',
+      terminalRules: [
+        {
+          terminalName: 'Terminal Principale Unico',
+          has3DScanners: true,
+          liquidsAllowedInBag: true,
+          bottleAllowance_it: 'Nessun limite di volume: bottiglie e cosmetici restano nel bagaglio',
+          bottleAllowance_en: 'No volume limit: beverage bottles & cosmetics stay in bag',
+          electronicsInBag: true,
+          notes_it: 'Tutti i varchi operano con tomografia computerizzata 3D. Non occorre separare nulla.',
+          notes_en: 'All lanes operate with 3D computed tomography. No unpacking required.'
+        }
+      ],
       liquidsAllowance_it: 'Nessun limite al volume dei contenitori di liquidi. Non è necessario estrarre bottiglie, profumi o creme dal bagaglio.',
       liquidsAllowance_en: 'No restriction on liquid volume. Bottles, perfumes, and creams can stay inside carry-on.',
       liquidsMustBeRemoved: false,
@@ -282,7 +833,45 @@ export const airportsData: Airport[] = [
       { airlineName: 'Lufthansa', iataCode: 'LH', terminal: 'Terminal Principale', checkInZone: 'Banchi 20-25' }
     ],
     amenities: [
-      { id: 'lin-pwr', category: 'power_charging', title_it: 'Prese e stazioni wireless in ogni seduta', title_en: 'Power outlets & wireless pads on all seats', location_it: 'Tutti i gate imbarchi A01-A24', location_en: 'All boarding gates A01-A24', details_it: 'Poltrone con porte USB Type-C e spine universali integrate.', details_en: 'Seating with USB-C and universal power sockets.' }
+      { 
+        id: 'lin-pwr', 
+        category: 'power_charging', 
+        title_it: 'Prese Schuko, USB-C e wireless su tutte le sedute', 
+        title_en: 'Schuko, USB-C & Wireless Pads on All Seats', 
+        location_it: 'Tutti i gate imbarchi A01-A24', 
+        location_en: 'All boarding gates A01-A24', 
+        availability: 'abundant',
+        scarcityNote_it: 'Disponibilità eccellente: quasi ogni poltroncina e postazione di lavoro nell\'area imbarchi dispone di presa elettrica 230V, USB Type-A/Type-C e ricarica a induzione.',
+        scarcityNote_en: 'Exceptional availability: virtually every gate armchair features 230V Schuko, USB-A/C ports, and Qi induction charging.',
+        details_it: 'Poltrone con porte USB Type-C e spine universali integrate.', 
+        details_en: 'Seating with USB-C and universal power sockets.' 
+      },
+      {
+        id: 'lin-wifi',
+        category: 'wifi',
+        title_it: 'Linate Free Wi-Fi Illimitato',
+        title_en: 'Linate Free Unlimited Wi-Fi',
+        terminal: 'Terminal Principale',
+        location_it: 'Tutte le aree',
+        location_en: 'All areas',
+        availability: 'abundant',
+        details_it: 'Wi-Fi gratuito ad alta velocità senza registrazione complessa.',
+        details_en: 'High-speed free Wi-Fi with no complex registration.'
+      },
+      {
+        id: 'lin-water',
+        category: 'water_refill',
+        title_it: 'Fontanelle acqua potabile per borracce',
+        title_en: 'Free Drinking Water Refill Fountains',
+        terminal: 'Terminal Principale',
+        location_it: 'Presso i servizi igienici dell\'area partenze A08 e A17',
+        location_en: 'Next to restrooms near Gates A08 and A17',
+        availability: 'abundant',
+        scarcityNote_it: 'Erogatori potabili gratuiti con flusso rapido per borracce.',
+        scarcityNote_en: 'Free fast-spout drinking water dispensers for bottle refills.',
+        details_it: 'Erogatori gratuiti con acqua fresca potabile.',
+        details_en: 'Free dispensers with chilled drinking water.'
+      }
     ],
     venues: [
       { id: 'lin-v1', name: 'Michelangelo Restaurant', category: 'dining', terminal: 'Terminal Principale', location: 'Piano 2F prima dei controlli', hours: '12:00 - 21:30' }
@@ -291,6 +880,142 @@ export const airportsData: Airport[] = [
       { id: 'lin-tr-1', type: 'metro', name_it: 'Metropolitana M4 (Linea Blu per San Babila)', name_en: 'Metro Line M4 (Blue Line to San Babila)', duration: '12 min', frequency: 'Ogni 3-4 minuti', estimatedCost: '€2.20', pickupLocation_it: 'Stazione M4 piano -1 direttamente collegata al terminal', pickupLocation_en: 'Level -1 station connected directly to arrivals', details_it: 'Il collegamento metropolitano più comodo d\'Europa con il pieno centro di Milano.', details_en: 'Direct underground metro straight into central Milan (San Babila).' }
     ],
     lastUpdated: '2026-10-18'
+  },
+
+  // -------------------------------------------------------------------------
+  // MILANO BERGAMO ORIO AL SERIO (BGY)
+  // -------------------------------------------------------------------------
+  {
+    id: 'bgy',
+    iata: 'BGY',
+    icao: 'LIME',
+    name_it: 'Aeroporto di Milano Bergamo Orio al Serio (Il Caravaggio)',
+    name_en: 'Milan Bergamo Airport (Orio al Serio / Il Caravaggio)',
+    city_it: 'Milano / Bergamo',
+    city_en: 'Milan / Bergamo',
+    country_it: 'Italia',
+    country_en: 'Italy',
+    countryCode: 'IT',
+    officialWebsite: 'https://www.milanbergamoairport.it',
+    officialMapUrl: 'https://www.milanbergamoairport.it/it/mappa-aeroporto/',
+    coordinates: { lat: 45.6739, lng: 9.7042 },
+    difficultyRating: 3,
+    difficultyLabel_it: 'Intenso & Molto Frequentato (Hub Ryanair n.1 in Italia)',
+    difficultyLabel_en: 'High-frequency & Bustling (Main Italian Ryanair Hub)',
+    averageSecurityWaitMin: 12,
+    recommendedArrivalHours: { domestic: 2, international: 2.5 },
+    navigationAdvice_it: 'Hub primario per Ryanair in Italia, con altissima frequenza di voli. Corsie di sicurezza potenziate con scanner 3D C3 sulle linee centrali. Attenzione nei momenti di picco (mattina presto e tardo pomeriggio): consultare i display per la corsia designata.',
+    navigationAdvice_en: 'Primary Ryanair hub in Italy with dense flight schedules. Enhanced security with 3D C3 scanners on central lanes. Follow digital overhead lane signage during morning and evening rush banks.',
+    otherCityAirports: [
+      { iata: 'MXP', name_it: 'Milano Malpensa', name_en: 'Milan Malpensa', distanceInfo: '50 km a nord-ovest da Milano' },
+      { iata: 'LIN', name_it: 'Milano Linate', name_en: 'Milan Linate', distanceInfo: '50 km a sud-ovest da Bergamo' }
+    ],
+    securityPolicy: {
+      has3DScanners: true,
+      scannersNote_it: 'Nuovi scanner EDS-CB C3 tomografici installati sulle corsie di sicurezza principali: sulle corsie abilitate è possibile lasciare liquidi e computer nella borsa.',
+      scannersNote_en: 'Next-gen EDS-CB C3 computed tomography scanners installed on main security lanes: liquids and laptops stay inside luggage on equipped lanes.',
+      terminalRules: [
+        {
+          terminalName: 'Corsie Sicurezza 3D C3 (Varchi Centrali)',
+          has3DScanners: true,
+          liquidsAllowedInBag: true,
+          bottleAllowance_it: 'Liquidi e bevande restano nel bagaglio a mano senza estrarli',
+          bottleAllowance_en: 'Liquids and beverages stay inside bag without unpacking',
+          electronicsInBag: true,
+          notes_it: 'Corsie ad alta tecnologia: non occorre estrarre portatili, tablet o flaconi.',
+          notes_en: 'High-tech lanes: no need to unpack laptops, tablets, or liquid containers.'
+        },
+        {
+          terminalName: 'Corsie Tradizionali Ausiliarie (Varchi Laterali)',
+          has3DScanners: false,
+          liquidsAllowedInBag: false,
+          bottleAllowance_it: 'Limite 100ml in busta trasparente 1L (estrarre obbligatoriamente)',
+          bottleAllowance_en: 'Standard 100ml limit in 1L clear pouch (unpack into separate tray)',
+          electronicsInBag: false,
+          notes_it: 'Attivate nei picchi di traffico: estrarre computer e sacchetto liquidi.',
+          notes_en: 'Activated during peak queues: unpack electronics and liquid pouch.'
+        }
+      ],
+      liquidsAllowance_it: 'Sui varchi abilitati C3 non occorre estrarre liquidi né bottiglie. Se indirizzati dal personale sulle corsie convenzionali, vige la regola dei 100ml in busta trasparente.',
+      liquidsAllowance_en: 'On C3-enabled lanes liquids and bottles stay inside carry-on. If directed to conventional lanes, standard 100ml clear pouch applies.',
+      liquidsMustBeRemoved: false,
+      liquidsUnverified: false,
+      electronicsInBag: true,
+      electronicsNote_it: 'Sulle corsie 3D C3 i computer e tablet possono rimanere all\'interno dello zaino.',
+      electronicsNote_en: 'On 3D C3 lanes laptops and tablets can remain inside your backpack.',
+      electronicsUnverified: false,
+      droneAllowedInCabin: true,
+      droneAllowedInHold: false,
+      dronePolicy_it: 'Droni ammessi esclusivamente come bagaglio a mano. Batterie rimosse e protette.',
+      dronePolicy_en: 'Drones permitted in cabin luggage only with batteries isolated.',
+      droneUnverified: false,
+      maxPowerbankWh: 100,
+      powerbankPolicy_it: 'Powerbank fino a 100Wh consentiti solo in cabina.',
+      powerbankPolicy_en: 'Powerbanks up to 100Wh permitted in cabin only.',
+      powerbankUnverified: false,
+      officialSourceUrl: 'https://www.milanbergamoairport.it/it/controlli-di-sicurezza/',
+      lastVerifiedDate: '2026-10-20'
+    },
+    terminals: [
+      { id: 'bgy-main', name: 'Terminal Passeggeri Unico', transferInfo_it: 'Aerostazione a due livelli con area partenze Schengen (piano terra) ed extra-Schengen (primo piano).', transferInfo_en: 'Two-level terminal with Schengen departures on ground floor and non-Schengen upstairs.' }
+    ],
+    airlines: [
+      { airlineName: 'Ryanair', iataCode: 'FR', terminal: 'Terminal Unico', checkInZone: 'Banchi Check-in 01-34' },
+      { airlineName: 'Wizz Air', iataCode: 'W4', terminal: 'Terminal Unico', checkInZone: 'Banchi Check-in 35-42' },
+      { airlineName: 'EasyJet', iataCode: 'U2', terminal: 'Terminal Unico', checkInZone: 'Banchi Check-in 43-46' },
+      { airlineName: 'AeroItalia', iataCode: 'XZ', terminal: 'Terminal Unico', checkInZone: 'Banchi Check-in 47-50' }
+    ],
+    amenities: [
+      {
+        id: 'bgy-pwr',
+        category: 'power_charging',
+        title_it: 'Tavoli di lavoro alti con prese e colonnine',
+        title_en: 'High Work Benches & Charging Columns',
+        terminal: 'Terminal Unico',
+        location_it: 'Tavoli alti fronte Gate A1-A5 e nella food court al 1° piano',
+        location_en: 'High work benches near Gates A1-A5 and 1st floor food court',
+        availability: 'moderate',
+        scarcityNote_it: 'Disponibilità moderata: le prese elettriche Schuko e USB si trovano sui banconi di lavoro alti ai Gate A1-A5 e vicino ad alcune colonnine di ricarica. Le file di sedute ordinarie ai gate ne sono prive.',
+        scarcityNote_en: 'Moderate availability: Schuko & USB sockets are placed on tall work counters near Gates A1-A5 and dedicated charging pillars. Standard gate rows have no outlets.',
+        details_it: 'Banconi di lavoro con prese universali e porte USB per la ricarica dei dispositivi.',
+        details_en: 'Work counters equipped with universal sockets and USB ports for device charging.'
+      },
+      {
+        id: 'bgy-wifi',
+        category: 'wifi',
+        title_it: 'Free Wi-Fi Bergamo Airport',
+        title_en: 'Free Wi-Fi Bergamo Airport',
+        terminal: 'Terminal Unico',
+        location_it: 'Disponibile in tutto il terminal',
+        location_en: 'Available across terminal',
+        availability: 'abundant',
+        details_it: 'Rete: "Free Wi-Fi Bergamo Airport". Accesso gratuito illimitato.',
+        details_en: 'Network: "Free Wi-Fi Bergamo Airport". Free unlimited internet.'
+      },
+      {
+        id: 'bgy-water',
+        category: 'water_refill',
+        title_it: 'Fontanelle erogatore acqua potabile gratuita',
+        title_en: 'Free Drinking Water Refill Fountains',
+        terminal: 'Terminal Unico',
+        location_it: 'Presso i servizi igienici vicino ai Gate A e ai Gate B',
+        location_en: 'Next to restrooms near Gates A and Gates B',
+        availability: 'abundant',
+        scarcityNote_it: 'Erogatori gratuiti con beccuccio rapido per riempire borracce vuote dopo i controlli.',
+        scarcityNote_en: 'Free quick-spout fountains for refilling bottles post-security.',
+        details_it: 'Erogatori gratuiti per riempimento borracce.',
+        details_en: 'Free water dispensers for refilling bottles.'
+      }
+    ],
+    venues: [
+      { id: 'bgy-v1', name: 'Vicook Bistrot (Chic Cerea)', category: 'dining', terminal: 'Terminal Unico', location: '1° Piano partenze', hours: '06:00 - 22:00' },
+      { id: 'bgy-v2', name: 'Aelia Duty Free Bergamo', category: 'duty_free', terminal: 'Terminal Unico', location: 'Subito dopo i controlli', hours: '05:00 - 22:30' }
+    ],
+    transports: [
+      { id: 'bgy-tr-1', type: 'bus', name_it: 'Orio Shuttle / Autostradale / Terravision (per Milano Centrale)', name_en: 'Orio Shuttle / Autostradale Coach (to Milan Central)', duration: '50-60 min', frequency: 'Ogni 15-20 minuti', estimatedCost: '€10.00-€12.00', pickupLocation_it: 'Corsie bus 2, 3 e 4 piazzale arrivi', pickupLocation_en: 'Bus bays 2, 3 & 4 outside arrivals', details_it: 'Autobus gran turismo frequenti e diretti per la Stazione di Milano Centrale (fermata piazza Luigi di Savoia).', details_en: 'Frequent direct express motorcoaches straight to Milan Central Station.' },
+      { id: 'bgy-tr-2', type: 'bus', name_it: 'ATB Linea 1 Airport Bus (per Bergamo Stazione e Città Alta)', name_en: 'ATB Line 1 Airport Bus (to Bergamo Station & Città Alta)', duration: '15-25 min', frequency: 'Ogni 20 minuti', estimatedCost: '€2.80', pickupLocation_it: 'Pensilina ATB corsia 1 piazzale arrivi', pickupLocation_en: 'ATB bus stop bay 1 outside arrivals', details_it: 'Bus pubblico urbano per la stazione ferroviaria di Bergamo (15 min) e la splendida Città Alta (25 min).', details_en: 'City bus connecting to Bergamo railway station (15 min) and historic Upper City (25 min).' }
+    ],
+    lastUpdated: '2026-10-20'
   },
 
   // =========================================================================
@@ -965,6 +1690,7 @@ export const airportsData: Airport[] = [
     country_en: 'France',
     countryCode: 'FR',
     officialWebsite: 'https://www.parisaeroport.fr/roissy-charles-de-gaulle',
+    officialMapUrl: 'https://www.parisaeroport.fr/passagers/acces/paris-charles-de-gaulle/plans-des-terminaux',
     coordinates: { lat: 49.0097, lng: 2.5479 },
     difficultyRating: 4,
     difficultyLabel_it: 'Complesso e suddiviso (Navetta CDGVAL richiesta)',
@@ -973,6 +1699,9 @@ export const airportsData: Airport[] = [
     recommendedArrivalHours: { domestic: 2, international: 3.5 },
     navigationAdvice_it: 'Il Terminal 2 è diviso in 7 sub-terminal (2A fino a 2G). Utilizzare il treno automatico gratuito CDGVAL per muoversi tra T1, T2 e T3.',
     navigationAdvice_en: 'Terminal 2 is split into 7 sub-terminals (2A through 2G). Use the free automated train CDGVAL to travel between T1, T2, and T3.',
+    otherCityAirports: [
+      { iata: 'ORY', name_it: 'Parigi Orly', name_en: 'Paris Orly', distanceInfo: '14 km a sud di Parigi' }
+    ],
     securityPolicy: {
       has3DScanners: false,
       scannersNote_it: 'Scanner tradizionali nella maggior parte dei varchi con test pilota di scanner 3D al T1.',
@@ -1005,7 +1734,22 @@ export const airportsData: Airport[] = [
       { airlineName: 'Air France', iataCode: 'AF', terminal: 'Terminal 2E / 2F / 2G', checkInZone: 'Hall partenze 2E/2F' }
     ],
     amenities: [
-      { id: 'cdg-wifi', category: 'wifi', title_it: 'WIFI-AIRPORT Gratuito Illimitato', title_en: 'WIFI-AIRPORT Free Unlimited', location_it: 'Tutto il terminal', location_en: 'Terminal-wide', details_it: 'Accesso gratuito senza limitazioni.', details_en: 'Free unlimited access.' }
+      { 
+        id: 'cdg-pwr', 
+        category: 'power_charging', 
+        title_it: 'Aree di lavoro e ricarica con prese Schuko e USB', 
+        title_en: 'Work & Charging Stations with Schuko & USB', 
+        terminal: 'Terminal 1 & 2', 
+        location_it: 'Presso le lounge di transito e gate T2E, T2F e T1', 
+        location_en: 'Near transit lounges and boarding gates at T2E, T2F, and T1', 
+        availability: 'moderate',
+        scarcityNote_it: 'Disponibilità moderata: i tavoli alti da lavoro e le aree business dispongono di prese elettriche. Le sedute standard dei gate più periferici ne sono sprovviste.',
+        scarcityNote_en: 'Moderate availability: tall workbenches and business corners feature outlets. Standard waiting rows at distant gates have none.',
+        details_it: 'Prese universali Schuko e doppie porte USB nei tavoli di lavoro.', 
+        details_en: 'Universal Schuko sockets and dual USB ports on work stations.' 
+      },
+      { id: 'cdg-wifi', category: 'wifi', title_it: 'WIFI-AIRPORT Gratuito Illimitato', title_en: 'WIFI-AIRPORT Free Unlimited', location_it: 'Tutto il terminal', location_en: 'Terminal-wide', availability: 'abundant', details_it: 'Accesso gratuito senza limitazioni.', details_en: 'Free unlimited access.' },
+      { id: 'cdg-water', category: 'water_refill', title_it: 'Fontanelle acqua potabile per viaggiatori', title_en: 'Free Drinking Water Dispensers', terminal: 'Tutti i Terminal', location_it: 'Presso i servizi igienici post-sicurezza', location_en: 'Near restrooms post-security', availability: 'moderate', details_it: 'Erogatori gratuiti con acqua fresca potabile.', details_en: 'Free dispensers with chilled water.' }
     ],
     venues: [
       { id: 'cdg-v1', name: 'Ladurée Paris', category: 'cafe', terminal: 'Terminal 1 & 2', location: 'Partenze', hours: '06:00 - 22:00' }
@@ -1027,6 +1771,7 @@ export const airportsData: Airport[] = [
     country_en: 'France',
     countryCode: 'FR',
     officialWebsite: 'https://www.parisaeroport.fr/orly',
+    officialMapUrl: 'https://www.parisaeroport.fr/passagers/acces/paris-orly/plans-des-terminaux',
     coordinates: { lat: 48.7262, lng: 2.3652 },
     difficultyRating: 2,
     difficultyLabel_it: 'Connessione Metro 14 Rapida (25 min dal centro)',
@@ -1035,6 +1780,9 @@ export const airportsData: Airport[] = [
     recommendedArrivalHours: { domestic: 2, international: 2.5 },
     navigationAdvice_it: 'La nuova estensione della linea metropolitana M14 collega Orly direttamente a Châtelet nel cuore di Parigi in soli 25 minuti.',
     navigationAdvice_en: 'Line 14 automated metro extension reaches Châtelet in central Paris in just 25 minutes.',
+    otherCityAirports: [
+      { iata: 'CDG', name_it: 'Parigi Charles de Gaulle', name_en: 'Paris Charles de Gaulle', distanceInfo: '25 km a nord-est di Parigi' }
+    ],
     securityPolicy: {
       has3DScanners: false,
       scannersNote_it: 'Scanner tradizionali attivi.',
@@ -1066,7 +1814,21 @@ export const airportsData: Airport[] = [
       { airlineName: 'Transavia', iataCode: 'TO', terminal: 'Orly 3 & 4', checkInZone: 'Hall Orly 3' }
     ],
     amenities: [
-      { id: 'ory-wifi', category: 'wifi', title_it: 'WIFI-AIRPORT Gratuito', title_en: 'WIFI-AIRPORT Free', location_it: 'Tutto il terminal', location_en: 'Terminal-wide', details_it: 'Connessione illimitata.', details_en: 'Free connection.' }
+      { 
+        id: 'ory-pwr', 
+        category: 'power_charging', 
+        title_it: 'Tavoli di ricarica con porte USB e prese', 
+        title_en: 'Charging Benches with USB & Power Outlets', 
+        terminal: 'Orly 1-4', 
+        location_it: 'Area imbarchi fronte Gate B e Gate D', 
+        location_en: 'Boarding lounges near Gates B and D', 
+        availability: 'moderate',
+        scarcityNote_it: 'Disponibilità moderata: prese concentrate su banconi dedicati, assenti sulla maggioranza delle poltroncine di attesa singole.',
+        scarcityNote_en: 'Moderate availability: outlets concentrated on dedicated benches, absent from majority of individual waiting chairs.',
+        details_it: 'Tavoli di ricarica dedicati per tablet e smartphone.', 
+        details_en: 'Dedicated charging desks for mobile devices.' 
+      },
+      { id: 'ory-wifi', category: 'wifi', title_it: 'WIFI-AIRPORT Gratuito', title_en: 'WIFI-AIRPORT Free', location_it: 'Tutto il terminal', location_en: 'Terminal-wide', availability: 'abundant', details_it: 'Connessione illimitata.', details_en: 'Free connection.' }
     ],
     venues: [
       { id: 'ory-v1', name: 'Paul Boulangerie', category: 'cafe', terminal: 'Orly 1-4', location: 'Partenze', hours: '05:30 - 21:30' }
@@ -1464,6 +2226,7 @@ export const airportsData: Airport[] = [
     country_en: 'United Kingdom',
     countryCode: 'GB',
     officialWebsite: 'https://www.heathrow.com',
+    officialMapUrl: 'https://www.heathrow.com/at-the-airport/airport-maps',
     coordinates: { lat: 51.4700, lng: -0.4543 },
     difficultyRating: 4,
     difficultyLabel_it: 'Molto Grande & Dispersivo (Prevedere anticipo)',
@@ -1472,17 +2235,42 @@ export const airportsData: Airport[] = [
     recommendedArrivalHours: { domestic: 2, international: 3.5 },
     navigationAdvice_it: 'Aeroporto vastissimo. Calcolare fino a 20-25 minuti a piedi per raggiungere i gate satellitari del Terminal 5 e Terminal 2.',
     navigationAdvice_en: 'Sprawling mega-hub. Allow up to 20-25 minutes walking to reach satellite gates.',
+    otherCityAirports: [
+      { iata: 'LGW', name_it: 'Londra Gatwick', name_en: 'London Gatwick', distanceInfo: '47 km a sud di Londra' }
+    ],
     securityPolicy: {
       has3DScanners: false,
-      scannersNote_it: 'Reintrodotta temporaneamente la regola dei 100ml dal Dipartimento dei Trasporti britannico.',
-      scannersNote_en: 'UK Department for Transport temporarily reinstated 100ml limit across UK airports.',
+      scannersNote_it: 'Reintrodotta temporaneamente la regola dei 100ml dal Dipartimento dei Trasporti britannico (DfT) durante l\'estensione dei nuovi scanner 3D C3.',
+      scannersNote_en: 'UK Department for Transport temporarily reinstated 100ml limit across UK airports while 3D C3 scanners are being deployed.',
+      terminalRules: [
+        {
+          terminalName: 'Terminal 2 & Terminal 5',
+          has3DScanners: true,
+          liquidsAllowedInBag: false,
+          bottleAllowance_it: 'Max 100ml per flacone (direttiva UK DfT provvisoria). I liquidi possono restare nella valigia sulle linee 3D attive.',
+          bottleAllowance_en: 'Max 100ml per container (temporary UK DfT rule). Liquids may stay inside bags on active 3D lanes.',
+          electronicsInBag: true,
+          notes_it: 'Scanner 3D CTiX installati in progressiva attivazione su varie corsie. Seguire rigorosamente il personale di sicurezza.',
+          notes_en: '3D CTiX scanners progressively operating. Follow ground security agents instructions.'
+        },
+        {
+          terminalName: 'Terminal 3 & Terminal 4',
+          has3DScanners: false,
+          liquidsAllowedInBag: false,
+          bottleAllowance_it: 'Limite tassativo 100ml in busta trasparente 20x20cm da estrarre',
+          bottleAllowance_en: 'Strict 100ml limit in 20x20cm clear bag to be unpacked',
+          electronicsInBag: false,
+          notes_it: 'Linee tradizionali: estrarre computer e sacchetto liquidi.',
+          notes_en: 'Standard screening lines: remove laptops and liquid bag.'
+        }
+      ],
       liquidsAllowance_it: 'I liquidi devono essere in flaconi da massimo 100ml inseriti in un singolo sacchetto trasparente di 20x20 cm.',
       liquidsAllowance_en: 'Liquids max 100ml in one clear resealable bag.',
       liquidsMustBeRemoved: true,
       liquidsUnverified: false,
       electronicsInBag: false,
-      electronicsNote_it: 'Laptop e grandi tablet devono essere estratti e scansionati separatamente.',
-      electronicsNote_en: 'Laptops and large tablets must be taken out.',
+      electronicsNote_it: 'Laptop e grandi tablet devono essere estratti e scansionati separatamente sulle corsie convenzionali.',
+      electronicsNote_en: 'Laptops and large tablets must be taken out on standard lanes.',
       electronicsUnverified: false,
       droneAllowedInCabin: true,
       droneAllowedInHold: false,
@@ -1506,7 +2294,22 @@ export const airportsData: Airport[] = [
       { airlineName: 'British Airways', iataCode: 'BA', terminal: 'Terminal 5', checkInZone: 'Zone A-H' }
     ],
     amenities: [
-      { id: 'lhr-wifi', category: 'wifi', title_it: 'Heathrow Free Wi-Fi', title_en: 'Heathrow Free Wi-Fi', location_it: 'Tutti i terminal', location_en: 'All terminals', details_it: 'Wi-Fi gratuito illimitato.', details_en: 'Free unlimited Wi-Fi.' }
+      { 
+        id: 'lhr-pwr', 
+        category: 'power_charging', 
+        title_it: 'Prese BS1363 UK, prese Schuko e porte USB', 
+        title_en: 'BS1363 UK, Schuko & USB Power Outlets', 
+        terminal: 'Terminal 2, 3, 4, 5', 
+        location_it: 'Tavoli di lavoro dedicati e file di sedute ai Gate T2 e T5', 
+        location_en: 'Dedicated work tables and gate seating at T2 and T5', 
+        availability: 'abundant',
+        scarcityNote_it: 'Disponibilità molto buona: la maggior parte dei banchi e delle sedute al Terminal 2 e al Terminal 5 dispone di prese USB e prese UK.',
+        scarcityNote_en: 'Very good availability: most gate seats and work counters in T2 and T5 feature USB and UK plugs.',
+        details_it: 'Prese integrate per ricarica laptop e smartphone.', 
+        details_en: 'Integrated charging outlets for laptops and phones.' 
+      },
+      { id: 'lhr-wifi', category: 'wifi', title_it: 'Heathrow Free Wi-Fi', title_en: 'Heathrow Free Wi-Fi', location_it: 'Tutti i terminal', location_en: 'All terminals', availability: 'abundant', details_it: 'Wi-Fi gratuito illimitato.', details_en: 'Free unlimited Wi-Fi.' },
+      { id: 'lhr-water', category: 'water_refill', title_it: 'Fontanelle acqua potabile per passeggeri', title_en: 'Free Drinking Water Refill Stations', terminal: 'Tutti i Terminal', location_it: 'Accanto a ciascun blocco di servizi igienici airside', location_en: 'Next to every airside restroom block', availability: 'abundant', details_it: 'Erogatori gratuiti con acqua fresca potabile.', details_en: 'Free chilled water refill stations.' }
     ],
     venues: [
       { id: 'lhr-v1', name: 'Gordon Ramsay Plane Food', category: 'dining', terminal: 'Terminal 5', location: 'Airside 1st floor', hours: '05:30 - 21:30' }
@@ -1515,6 +2318,132 @@ export const airportsData: Airport[] = [
       { id: 'lhr-tr-1', type: 'train', name_it: 'Heathrow Express (per Paddington)', name_en: 'Heathrow Express (to Paddington)', duration: '15 min', frequency: 'Ogni 15 minuti', estimatedCost: '£25.00', pickupLocation_it: 'Heathrow Central e T5', pickupLocation_en: 'Heathrow Central and T5', details_it: 'Il modo più rapido per il centro.', details_en: 'Fastest connection to London.' }
     ],
     lastUpdated: '2026-10-18'
+  },
+
+  // -------------------------------------------------------------------------
+  // LONDRA GATWICK (LGW)
+  // -------------------------------------------------------------------------
+  {
+    id: 'lgw',
+    iata: 'LGW',
+    icao: 'EGKK',
+    name_it: 'Aeroporto di Londra Gatwick',
+    name_en: 'London Gatwick Airport',
+    city_it: 'Londra',
+    city_en: 'London',
+    country_it: 'Regno Unito',
+    country_en: 'United Kingdom',
+    countryCode: 'GB',
+    officialWebsite: 'https://www.gatwickairport.com',
+    officialMapUrl: 'https://www.gatwickairport.com/passenger-guide/flight-information/terminal-maps.html',
+    coordinates: { lat: 51.1537, lng: -0.1821 },
+    difficultyRating: 3,
+    difficultyLabel_it: 'Hub a due Terminal (North & South) con monorotaia rapida',
+    difficultyLabel_en: 'Dual-Terminal Hub (North & South) with rapid shuttle',
+    averageSecurityWaitMin: 12,
+    recommendedArrivalHours: { domestic: 2, international: 3 },
+    navigationAdvice_it: 'I due terminal (North Terminal e South Terminal) sono collegati da una navetta monorotaia gratuita h24 (durata 2 minuti). La stazione ferroviaria con treni diretti per Londra Victoria e London Bridge è situata nel South Terminal.',
+    navigationAdvice_en: 'North Terminal and South Terminal are linked by a free 24/7 automated monorail shuttle (2-min ride). The rail station with express trains to London Victoria and London Bridge is located at South Terminal.',
+    otherCityAirports: [
+      { iata: 'LHR', name_it: 'Londra Heathrow', name_en: 'London Heathrow', distanceInfo: '23 km a ovest di Londra' }
+    ],
+    securityPolicy: {
+      has3DScanners: true,
+      scannersNote_it: 'Gatwick ha completato l\'installazione degli scanner 3D C3. Tuttavia, in ottemperanza alla norma temporanea del Governo UK, vige ancora il limite dei 100ml per contenitore.',
+      scannersNote_en: 'Gatwick completed 3D C3 scanner rollout. However, under temporary UK Government rules, the 100ml container cap remains in place.',
+      terminalRules: [
+        {
+          terminalName: 'North Terminal & South Terminal (Scanner 3D C3)',
+          has3DScanners: true,
+          liquidsAllowedInBag: true,
+          bottleAllowance_it: 'Max 100ml per flacone (direttiva UK). Possono rimanere nella valigia senza estrarli.',
+          bottleAllowance_en: 'Max 100ml per container (UK DfT rule). Can stay inside bag without unpacking.',
+          electronicsInBag: true,
+          notes_it: 'Scanner 3D C3 di nuova generazione: laptop, tablet e sacchetto liquidi restano nella valigia.',
+          notes_en: 'Next-gen 3D C3 scanners: laptops, tablets, and liquids stay inside luggage.'
+        }
+      ],
+      liquidsAllowance_it: 'Tutti i liquidi devono essere contenuti in recipienti di capienza massima 100ml. Grazie agli scanner 3D possono rimanere nel bagaglio a mano senza essere estratti.',
+      liquidsAllowance_en: 'All liquids must be in containers of max 100ml each. Thanks to 3D scanners, they can remain inside carry-on luggage without being taken out.',
+      liquidsMustBeRemoved: false,
+      liquidsUnverified: false,
+      electronicsInBag: true,
+      electronicsNote_it: 'Computer portatili e dispositivi elettronici restano all\'interno del bagaglio a mano.',
+      electronicsNote_en: 'Laptops and electronic devices stay inside your hand luggage during screening.',
+      electronicsUnverified: false,
+      droneAllowedInCabin: true,
+      droneAllowedInHold: false,
+      dronePolicy_it: 'Droni ammessi esclusivamente nel bagaglio a mano con batterie protette. Severamente vietato il volo nei pressi dell\'aeroporto.',
+      dronePolicy_en: 'Drones permitted in cabin luggage only with battery terminals isolated.',
+      droneUnverified: false,
+      maxPowerbankWh: 100,
+      powerbankPolicy_it: 'Powerbank fino a 100Wh consentiti solo in cabina.',
+      powerbankPolicy_en: 'Powerbanks up to 100Wh allowed in cabin only.',
+      powerbankUnverified: false,
+      officialSourceUrl: 'https://www.gatwickairport.com/passenger-guide/security.html',
+      lastVerifiedDate: '2026-10-20'
+    },
+    terminals: [
+      { id: 'lgw-north', name: 'North Terminal', transferInfo_it: 'Dedicato a easyJet, Emirates, Qatar Airways e voli transatlantici.', transferInfo_en: 'Handles easyJet, Emirates, Qatar Airways and transatlantic routes.' },
+      { id: 'lgw-south', name: 'South Terminal', transferInfo_it: 'Dedicato a British Airways, Ryanair, Wizz Air, Vueling e stazione ferroviaria.', transferInfo_en: 'Handles British Airways, Ryanair, Wizz Air, Vueling, and main rail station.' }
+    ],
+    airlines: [
+      { airlineName: 'EasyJet', iataCode: 'U2', terminal: 'North Terminal & South Terminal', checkInZone: 'Zone A-D' },
+      { airlineName: 'British Airways', iataCode: 'BA', terminal: 'South Terminal', checkInZone: 'Zone A-C' },
+      { airlineName: 'Ryanair', iataCode: 'FR', terminal: 'South Terminal', checkInZone: 'Zone K' },
+      { airlineName: 'Wizz Air', iataCode: 'W4', terminal: 'South Terminal', checkInZone: 'Zone H' }
+    ],
+    amenities: [
+      {
+        id: 'lgw-pwr',
+        category: 'power_charging',
+        title_it: 'Postazioni di ricarica con prese UK BS1363 e porte USB',
+        title_en: 'Charging Points with UK BS1363 & USB Ports',
+        terminal: 'North & South Terminal',
+        location_it: 'Tavoli di lavoro dedicati e lounge di entrambi i terminal',
+        location_en: 'Dedicated work desks and lounges across both terminals',
+        availability: 'abundant',
+        scarcityNote_it: 'Disponibilità abbondante: stazioni di ricarica con porte USB ad alta potenza e prese UK distribuite in tutti i moli d\'imbarco.',
+        scarcityNote_en: 'Abundant availability: high-output USB stations and UK plug desks throughout all departure concourses.',
+        details_it: 'Prese universali e porte USB disponibili sui banconi alti da lavoro.',
+        details_en: 'Universal sockets and USB ports available on tall workbenches.'
+      },
+      {
+        id: 'lgw-wifi',
+        category: 'wifi',
+        title_it: 'Gatwick Free Wi-Fi Illimitato',
+        title_en: 'Gatwick Free Unlimited Wi-Fi',
+        terminal: 'Tutti i Terminal',
+        location_it: 'Copertura totale North & South Terminal',
+        location_en: 'Full coverage North & South',
+        availability: 'abundant',
+        details_it: 'Wi-Fi gratuito ad alta velocità con velocità fino a 50Mbps.',
+        details_en: 'High-speed free Wi-Fi up to 50Mbps.'
+      },
+      {
+        id: 'lgw-water',
+        category: 'water_refill',
+        title_it: 'Fontanelle di acqua potabile per borracce',
+        title_en: 'Free Water Refill Stations',
+        terminal: 'North & South Terminal',
+        location_it: 'Vicino a ogni blocco di servizi igienici airside',
+        location_en: 'Next to all airside restroom blocks',
+        availability: 'abundant',
+        scarcityNote_it: 'Distributori d\'acqua potabile gratuiti con erogatore per borracce posizionati vicino ai bagni.',
+        scarcityNote_en: 'Free drinking water dispensers with bottle refiller spouts located by all restrooms.',
+        details_it: 'Erogatori gratuiti con acqua fresca.',
+        details_en: 'Free chilled water dispensers.'
+      }
+    ],
+    venues: [
+      { id: 'lgw-v1', name: 'Wagamama', category: 'dining', terminal: 'North & South', location: 'Partenze dopo controlli', hours: '05:00 - 22:00' },
+      { id: 'lgw-v2', name: 'World Duty Free Gatwick', category: 'duty_free', terminal: 'North & South', location: 'Airside centrale', hours: '04:30 - 22:30' }
+    ],
+    transports: [
+      { id: 'lgw-tr-1', type: 'train', name_it: 'Gatwick Express (Non-stop per London Victoria)', name_en: 'Gatwick Express (Non-stop to London Victoria)', duration: '30 min', frequency: 'Ogni 15 minuti', estimatedCost: '£21.80', pickupLocation_it: 'Stazione ferroviaria Gatwick South Terminal', pickupLocation_en: 'Gatwick South Terminal railway station', details_it: 'Treno espresso no-stop ogni 15 minuti direttamente per London Victoria.', details_en: 'Non-stop express train every 15 minutes straight to London Victoria.' },
+      { id: 'lgw-tr-2', type: 'train', name_it: 'Treni Thameslink / Southern (per London Bridge e St Pancras)', name_en: 'Thameslink / Southern Trains (to London Bridge & St Pancras)', duration: '32-45 min', frequency: 'Ogni 10 minuti', estimatedCost: '£13.50-£18.00', pickupLocation_it: 'Stazione ferroviaria Gatwick South Terminal', pickupLocation_en: 'Gatwick South Terminal railway station', details_it: 'Collegamenti ferroviari frequenti per London Bridge, Blackfriars e St Pancras International.', details_en: 'Frequent direct commuter trains to London Bridge, Blackfriars, and St Pancras International.' }
+    ],
+    lastUpdated: '2026-10-20'
   },
   {
     id: 'jfk',

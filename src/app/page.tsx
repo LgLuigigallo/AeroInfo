@@ -69,7 +69,17 @@ function MainContent() {
 
         {/* Selected Airport Tabbed Details */}
         <section id="airport-details" className="pt-2">
-          <AirportDetail airport={selectedAirport} />
+          <AirportDetail 
+            airport={selectedAirport} 
+            onSelectAirport={(iata) => {
+              const found = airportsData.find(
+                (a) => a.iata.toLowerCase() === iata.toLowerCase()
+              );
+              if (found) {
+                handleSelectAirport(found);
+              }
+            }}
+          />
         </section>
       </main>
 

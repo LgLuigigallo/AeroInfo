@@ -26,6 +26,18 @@ export const translations: Translations = {
   recentSearches: { it: 'Ricerche Recenti', en: 'Recent Searches' },
   clearRecent: { it: 'Cancella', en: 'Clear' },
   noResults: { it: 'Nessun aeroporto trovato per', en: 'No airports found for' },
+  requestAirportTitle: { it: 'Aeroporto non ancora censito', en: 'Airport not yet indexed' },
+  requestAirportDesc: { 
+    it: 'Questo aeroporto non è ancora presente nel nostro database verificato. Puoi richiedere il censimento prioritario: il nostro web scraper analizzerà il sito ufficiale dell\'aeroporto e le regole verranno pubblicate al massimo entro una settimana (o prima con scansione in background).', 
+    en: 'This airport is not yet in our verified database. You can request priority indexing: our web scraper will analyze the official airport website and rules will be published within one week (or sooner via background discovery).' 
+  },
+  requestAirportBtn: { it: 'Richiedi Censimento & Avvia Web Scraping', en: 'Request Indexing & Start Web Scraping' },
+  requestAirportEmailPlaceholder: { it: 'La tua email per notifica (opzionale)', en: 'Your email for publication alert (optional)' },
+  requestAirportSubmitting: { it: 'Invio richiesta e avvio crawler in corso...', en: 'Submitting request and starting crawler...' },
+  requestAirportSuccess: { 
+    it: 'Richiesta presa in carico con successo! Lo scraping è stato accodato e l\'aeroporto verrà inserito entro la sincronizzazione settimanale.', 
+    en: 'Request submitted successfully! Scraping has been queued and the airport will be indexed within the weekly sync.' 
+  },
   
   // Verification Badges & Modal
   verifiedOfficial: { it: 'Fonte Ufficiale Certificata', en: 'Official Certified Source' },
@@ -42,13 +54,54 @@ export const translations: Translations = {
   },
   closeModal: { it: 'Ho capito', en: 'Understood' },
 
+  // Multi-Airport City & Terminal Rules
+  cityMultiAirport: { it: 'Altri aeroporti della stessa città:', en: 'Other airports serving this city:' },
+  terminalRulesTitle: { it: 'Regole Differenziate per Terminal', en: 'Specific Rules by Terminal' },
+  terminalRule3DActive: { it: 'Scanner 3D Attivo', en: '3D Scanner Active' },
+  terminalRuleTraditional: { it: 'Scanner Tradizionale', en: 'Standard Scanner' },
+  liquidsInBagBadge: { it: 'Liquidi e bottiglie nel bagaglio', en: 'Liquids & bottles inside bag' },
+  liquids100mlBadge: { it: 'Limite 100ml in busta 1L', en: '100ml limit in 1L bag' },
+  electronicsInBagBadge: { it: 'Laptop nel bagaglio', en: 'Laptops stay in bag' },
+  electronicsOutBadge: { it: 'Laptop fuori', en: 'Laptops taken out' },
+
+  // Amenities POI & Scarcity
+  amenityAvailability: { it: 'Disponibilità effettiva:', en: 'Actual availability:' },
+  availabilityAbundant: { it: 'Abbondante (su quasi tutte le sedute)', en: 'Abundant (at nearly all seats)' },
+  availabilityModerate: { it: 'Moderata (solo tavoli e colonne dedicate)', en: 'Moderate (dedicated desks/pillars)' },
+  availabilityScarce: { it: 'Limitata / Rara (solo punti specifici segnalati)', en: 'Limited / Scarce (only specific marked spots)' },
+  poiExactLocation: { it: 'Posizione esatta verificata:', en: 'Exact verified location:' },
+  scarcityWarning: { it: 'Attenzione disponibilità:', en: 'Availability notice:' },
+
   // Tabs
   tabSecurity: { it: 'Sicurezza & Bagagli', en: 'Security & Luggage' },
+  tabMap: { it: 'Mappa Terminal & POI', en: 'Terminal Map & POI' },
   tabTerminals: { it: 'Terminal & Compagnie', en: 'Terminals & Airlines' },
   tabDifficulty: { it: 'Difficoltà & Tempi', en: 'Complexity & Wait Times' },
   tabAmenities: { it: 'Prese & Servizi', en: 'Power & Amenities' },
   tabFood: { it: 'Ristorazione & Duty-Free', en: 'Food & Shopping' },
   tabTransport: { it: 'Arrivi & Trasporti', en: 'Arrivals & Transport' },
+
+  // Interactive Terminal Map
+  mapTitle: { it: 'Mappa Interattiva del Terminal & Punti di Interesse', en: 'Interactive Terminal Map & Points of Interest' },
+  mapSubtitle: { it: 'Localizzazione spaziale esatta di prese elettriche, fontanelle d\'acqua, controlli 3D, gate e ristorazione.', en: 'Exact spatial layout of power outlets, drinking water fountains, 3D checkpoints, gates, and dining.' },
+  filterAll: { it: 'Tutti i punti', en: 'All locations' },
+  filterPower: { it: 'Prese & Ricarica', en: 'Power & Charging' },
+  filterWater: { it: 'Fontanelle Acqua', en: 'Drinking Water' },
+  filterSecurity: { it: 'Controlli Sicurezza', en: 'Security Checkpoints' },
+  filterDining: { it: 'Ristoranti & Bar', en: 'Dining & Cafés' },
+  filterShops: { it: 'Duty Free & Negozi', en: 'Duty Free & Shops' },
+  filterGates: { it: 'Gates Imbarco', en: 'Boarding Gates' },
+  filterRelax: { it: 'Aree Relax', en: 'Relax Areas' },
+  selectTerminal: { it: 'Seleziona Terminal:', en: 'Select Terminal:' },
+  openOfficialMap: { it: 'Apri Mappa Ufficiale Aeroporto', en: 'Open Official Airport Map' },
+  mapClickInstruction: { it: 'Clicca su un punto d\'interesse sulla mappa per visualizzare i dettagli completi, disponibilità e note.', en: 'Click any point of interest on the map to inspect full details, availability, and tips.' },
+  selectedPoiTitle: { it: 'Dettaglio Punto Selezionato', en: 'Selected Location Details' },
+  poiListTitle: { it: 'Elenco Punti di Interesse nel Terminal', en: 'Terminal Points of Interest Directory' },
+  zoneCheckinSecurity: { it: 'Area Check-in & Varchi Sicurezza', en: 'Check-in & Security Screening Zone' },
+  zoneAirsideCommercial: { it: 'Piazza Commerciale & Duty-Free', en: 'Central Airside & Duty-Free Plaza' },
+  zoneGates: { it: 'Moli Partenze & Gates', en: 'Departure Piers & Gates' },
+  verifiedOfficialLocation: { it: 'Posizione verificata da fonte ufficiale', en: 'Verified official airport location' },
+  noPoisFoundForFilter: { it: 'Nessun punto presente per la categoria selezionata in questo terminal.', en: 'No points found for the selected category in this terminal.' },
 
   // Security Policy
   securityNotice: { it: 'Regolamento Controlli di Sicurezza', en: 'Security Screening Rules' },

@@ -30,11 +30,25 @@ export interface VerifiedField<T = string> {
   unverifiedNote_en?: string;
 }
 
+export interface TerminalSecurityRule {
+  terminalName: string;
+  has3DScanners: boolean;
+  liquidsAllowedInBag: boolean;
+  bottleAllowance_it: string;
+  bottleAllowance_en: string;
+  electronicsInBag: boolean;
+  notes_it: string;
+  notes_en: string;
+}
+
 export interface SecurityPolicy {
   // Scanner type
   has3DScanners: boolean; // True if EDS-CB C3 scanners installed
   scannersNote_it: string;
   scannersNote_en: string;
+  
+  // Specific per-terminal rules when airport terminals differ
+  terminalRules?: TerminalSecurityRule[];
   
   // Liquids
   liquidsAllowance_it: string;
@@ -98,6 +112,9 @@ export interface AmenityItem {
   location_en: string;
   details_it: string;
   details_en: string;
+  availability?: 'abundant' | 'moderate' | 'scarce'; // Socket or water availability density
+  scarcityNote_it?: string;
+  scarcityNote_en?: string;
   isUnverified?: boolean;
   details_it_unverified?: string;
   details_en_unverified?: string;
@@ -131,6 +148,45 @@ export interface GroundTransportItem {
   details_en_unverified?: string;
 }
 
+export type MapPoiCategory = 
+  | 'power' 
+  | 'water' 
+  | 'security' 
+  | 'gate' 
+  | 'dining' 
+  | 'shop' 
+  | 'restroom' 
+  | 'lounge' 
+  | 'info';
+
+export interface TerminalMapPOI {
+  id: string;
+  category: MapPoiCategory;
+  name_it: string;
+  name_en: string;
+  location_it: string;
+  location_en: string;
+  terminal: string; // e.g. "Terminal 2"
+  zone?: string;     // e.g. "Gate C02-C05"
+  level?: string;    // e.g. "Piano Partenze / Level 2"
+  x: number; // percentage 5-95 on SVG width
+  y: number; // percentage 10-90 on SVG height
+  availability?: 'abundant' | 'moderate' | 'scarce';
+  details_it: string;
+  details_en: string;
+  isVerified?: boolean;
+}
+
+export interface TerminalMapData {
+  terminalId: string;
+  terminalName_it: string;
+  terminalName_en: string;
+  officialInteractiveMapUrl?: string;
+  concourseShape?: 'linear' | 'pier_t' | 'satellite' | 'u_shaped' | 'circular';
+  gates?: Array<{ id: string; label: string; x: number; y: number }>;
+  pois: TerminalMapPOI[];
+}
+
 export interface Airport {
   id: string;
   iata: string;
@@ -159,6 +215,14 @@ export interface Airport {
   navigationAdvice_it: string;
   navigationAdvice_en: string;
   
+  // Alternative/Sibling Airports for the same city (e.g. FCO <-> CIA, MXP <-> LIN <-> BGY, CDG <-> ORY)
+  otherCityAirports?: Array<{
+    iata: string;
+    name_it: string;
+    name_en: string;
+    distanceInfo?: string;
+  }>;
+
   // Sections
   securityPolicy: SecurityPolicy;
   terminals: TerminalDetail[];
@@ -166,6 +230,10 @@ export interface Airport {
   amenities: AmenityItem[];
   venues: VenueItem[];
   transports: GroundTransportItem[];
+  
+  // Interactive Terminal Map
+  officialMapUrl?: string;
+  terminalMaps?: TerminalMapData[];
 
   lastUpdated: string;
 }

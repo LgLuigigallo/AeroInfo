@@ -145,6 +145,19 @@ CREATE TABLE IF NOT EXISTS public.sync_logs (
     executed_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- 9. User Requested Airport Indexing
+CREATE TABLE IF NOT EXISTS public.airport_requests (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    query TEXT NOT NULL,
+    iata_code VARCHAR(10),
+    requester_email TEXT,
+    status VARCHAR(20) DEFAULT 'pending', -- 'pending', 'scraping', 'indexed', 'queued_weekly'
+    scheduled_for TIMESTAMPTZ DEFAULT (NOW() + INTERVAL '7 days'),
+    scraped_data JSONB,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
 -- ==============================================================================
 -- Full-Text Search Indexes for Ultra-Fast Lookups
 -- ==============================================================================
@@ -174,3 +187,8 @@ CREATE POLICY "Public read-only access on airlines" ON public.airlines FOR SELEC
 CREATE POLICY "Public read-only access on amenities" ON public.amenities FOR SELECT USING (true);
 CREATE POLICY "Public read-only access on venues" ON public.venues FOR SELECT USING (true);
 CREATE POLICY "Public read-only access on ground_transports" ON public.ground_transports FOR SELECT USING (true);
+
+ALTER TABLE public.airport_requests ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Public can submit indexing requests" ON public.airport_requests FOR INSERT WITH CHECK (true);
+CREATE POLICY "Public can view indexing requests" ON public.airport_requests FOR SELECT USING (true);
+

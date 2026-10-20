@@ -11,7 +11,8 @@ import {
   ExternalLink,
   ShieldCheck,
   Check,
-  X
+  X,
+  Split
 } from 'lucide-react';
 import { Airport } from '@/types/airport';
 import { useLanguage } from '@/lib/i18n';
@@ -69,6 +70,63 @@ export function SecurityTab({ airport }: SecurityTabProps) {
           </div>
         </div>
       </div>
+
+      {/* Terminal-by-Terminal Breakdown (When different rules apply per terminal) */}
+      {sec.terminalRules && sec.terminalRules.length > 0 && (
+        <div className="space-y-3 p-5 rounded-2xl bg-neutral-50 dark:bg-neutral-850 border border-neutral-200/80 dark:border-neutral-800">
+          <div className="flex items-center gap-2">
+            <Split className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+            <h3 className="text-xs font-bold tracking-wider uppercase text-neutral-700 dark:text-neutral-300">
+              {t('terminalRulesTitle')}
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+            {sec.terminalRules.map((rule, idx) => (
+              <div 
+                key={idx} 
+                className={`p-4 rounded-xl bg-white dark:bg-neutral-900 border transition-all ${
+                  rule.has3DScanners
+                    ? 'border-emerald-200/80 dark:border-emerald-900/60'
+                    : 'border-amber-200/80 dark:border-amber-900/60'
+                }`}
+              >
+                <div className="flex items-center justify-between gap-2 mb-2.5">
+                  <span className="font-bold text-neutral-900 dark:text-white text-xs sm:text-sm">
+                    {rule.terminalName}
+                  </span>
+                  <span className={`px-2 py-0.5 rounded-full text-[11px] font-bold ${
+                    rule.has3DScanners
+                      ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                      : 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'
+                  }`}>
+                    {rule.has3DScanners ? t('terminalRule3DActive') : t('terminalRuleTraditional')}
+                  </span>
+                </div>
+
+                <div className="space-y-1.5 text-xs">
+                  <div className="flex items-start gap-2">
+                    <span className={`w-2 h-2 rounded-full mt-1 shrink-0 ${rule.liquidsAllowedInBag ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                    <span className="font-semibold text-neutral-800 dark:text-neutral-200">
+                      {lang === 'it' ? rule.bottleAllowance_it : rule.bottleAllowance_en}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className={`w-2 h-2 rounded-full shrink-0 ${rule.electronicsInBag ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                    <span className="text-neutral-600 dark:text-neutral-400">
+                      {rule.electronicsInBag ? t('electronicsInBagBadge') : t('electronicsOutBadge')}
+                    </span>
+                  </div>
+                </div>
+
+                <p className="mt-3 pt-2 text-[11px] text-neutral-500 dark:text-neutral-400 border-t border-neutral-100 dark:border-neutral-800 leading-relaxed">
+                  {lang === 'it' ? rule.notes_it : rule.notes_en}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Grid: Liquids & Electronics */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
