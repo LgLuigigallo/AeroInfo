@@ -142,10 +142,102 @@ export const airportsData: Airport[] = [
       }
     ],
     venues: [
-      { id: 'prg-v1', name: 'Pilsner Urquell Original Restaurant', category: 'dining', terminal: 'Terminal 2', location: 'Partenze dopo i controlli', hours: '06:00 - 22:00' },
-      { id: 'prg-v2', name: 'Costa Coffee & Paul Boulangerie', category: 'cafe', terminal: 'Terminal 1 & 2', location: 'Area partenze prima e dopo i controlli', hours: '05:00 - 22:30' },
-      { id: 'prg-v3', name: 'Aelia Duty Free Prague', category: 'duty_free', terminal: 'Terminal 1 & 2', location: 'Airside centrale', hours: '05:30 - 23:00' },
-      { id: 'prg-v4', name: 'Billa Supermarket', category: 'grab_and_go', terminal: 'Tra T1 e T2', location: 'Piano terra prima dei controlli', hours: '06:00 - 21:00' }
+{
+    "id": "prg-v-1",
+    "name": "Pilsner Urquell Original Restaurant",
+    "category": "dining",
+    "terminal": "Terminal 1 & 2",
+    "location": "T1 Transito & T2 Imbarchi Schengen",
+    "hours": "06:00 - 22:00"
+  },
+  {
+    "id": "prg-v-2",
+    "name": "Runway Restaurant (Cucina Ceca & Buffet)",
+    "category": "dining",
+    "terminal": "Terminal 1",
+    "location": "1° Piano area pubblica (ottima vista pista)",
+    "hours": "06:00 - 21:00"
+  },
+  {
+    "id": "prg-v-3",
+    "name": "Marché Mövenpick",
+    "category": "dining",
+    "terminal": "Terminal 1",
+    "location": "Area Imbarchi Non-Schengen",
+    "hours": "06:00 - 22:00"
+  },
+  {
+    "id": "prg-v-4",
+    "name": "Paul French Bakery",
+    "category": "cafe",
+    "terminal": "Terminal 2",
+    "location": "Imbarchi Schengen fronte Gate C",
+    "hours": "05:30 - 22:00"
+  },
+  {
+    "id": "prg-v-5",
+    "name": "Costa Coffee",
+    "category": "cafe",
+    "terminal": "Terminal 1 & 2",
+    "location": "T1 Partenze & T2 Gate D",
+    "hours": "05:00 - 22:30"
+  },
+  {
+    "id": "prg-v-6",
+    "name": "Starbucks Coffee Prague",
+    "category": "cafe",
+    "terminal": "Terminal 1 & 2",
+    "location": "T1 Arrivi & T2 Imbarchi secondo piano",
+    "hours": "06:00 - 22:00"
+  },
+  {
+    "id": "prg-v-7",
+    "name": "Subway",
+    "category": "dining",
+    "terminal": "Terminal 2",
+    "location": "Area Imbarchi Gate C2",
+    "hours": "06:00 - 22:00"
+  },
+  {
+    "id": "prg-v-8",
+    "name": "Aelia Duty Free Prague",
+    "category": "duty_free",
+    "terminal": "Terminal 1 & 2",
+    "location": "Passaggio obbligato dopo controlli sicurezza",
+    "hours": "05:00 - 23:00"
+  },
+  {
+    "id": "prg-v-9",
+    "name": "Manufaktura (Cosmetica Tradizionale Ceca)",
+    "category": "shopping",
+    "terminal": "Terminal 2",
+    "location": "Piazza Commerciale T2",
+    "hours": "06:30 - 21:30"
+  },
+  {
+    "id": "prg-v-10",
+    "name": "Hamleys Toy Store",
+    "category": "shopping",
+    "terminal": "Terminal 2",
+    "location": "Area Imbarchi T2",
+    "hours": "07:00 - 21:00"
+  },
+  {
+    "id": "prg-v-11",
+    "name": "Relay Bookshop & News",
+    "category": "shopping",
+    "terminal": "Terminal 1 & 2",
+    "location": "T1 & T2 molteplici postazioni",
+    "hours": "05:00 - 22:30"
+  },
+  {
+    "id": "prg-v-12",
+    "name": "Lékárna Václava Havla (Farmacia)",
+    "category": "pharmacy",
+    "terminal": "Terminal 2",
+    "location": "Vestibolo T2 Piano Terra",
+    "hours": "06:00 - 21:00"
+  }
     ],
     transports: [
       { id: 'prg-tr-1', type: 'bus', name_it: 'Filobus Elettrico 59 (per Metro A Nádraží Veleslavín)', name_en: 'Trolleybus 59 (to Metro A Nádraží Veleslavín)', duration: '17 min', frequency: 'Ogni 3-6 minuti', estimatedCost: '40 CZK (~€1.60)', pickupLocation_it: 'Pensiline bus fronte Terminal 1 e Terminal 2', pickupLocation_en: 'Bus bays outside Terminal 1 and Terminal 2', details_it: 'Nuovissimo filobus elettrico articolato ad altissima frequenza. A Nádraží Veleslavín si sale sulla metro verde A che porta a Malostranská o Můstek (Piazza San Venceslao) in 10 minuti.', details_en: 'Modern high-capacity articulated electric trolleybus. Connects with Green Metro Line A directly to Old Town.' },
@@ -497,10 +589,1054 @@ export const airportsData: Airport[] = [
       }
     ],
     venues: [
-      { id: 'fco-v1', name: 'Eataly', category: 'dining', terminal: 'Terminal 1', location: 'Piazza del Gusto (dopo controlli)', hours: '06:00 - 22:30' },
-      { id: 'fco-v2', name: 'Ferrari Spazio Bollicine', category: 'dining', terminal: 'Terminal 3', location: 'Area Imbarchi E', hours: '07:00 - 22:00' },
-      { id: 'fco-v3', name: 'Venchi Cioccolato e Gelato', category: 'cafe', terminal: 'Terminal 1 & 3', location: 'Gate A31 ed Area E', hours: '06:00 - 23:00' },
-      { id: 'fco-v4', name: 'Aelia Duty Free', category: 'duty_free', terminal: 'Terminal 1 & 3', location: 'Subito dopo i filtri di sicurezza', hours: '05:30 - 23:00' }
+{
+            "id": "fco-v-1",
+            "name": "12oz",
+            "category": "cafe",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi post-sicurezza",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-2",
+            "name": "180 Grammi",
+            "category": "dining",
+            "terminal": "Terminal 1 & 3",
+            "location": "Terminal 1",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-3",
+            "name": "Accessorize",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-4",
+            "name": "Adidas",
+            "category": "shopping",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi post-sicurezza",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-5",
+            "name": "Aelia Duty Free",
+            "category": "duty_free",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi post-sicurezza",
+            "hours": "05:30 - 23:00"
+      },
+      {
+            "id": "fco-v-6",
+            "name": "Ajisen Ramen",
+            "category": "dining",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi (dopo i controlli)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-7",
+            "name": "Alemagna",
+            "category": "cafe",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-8",
+            "name": "Alice Pizza",
+            "category": "dining",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi (dopo i controlli)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-9",
+            "name": "All'Antico Vinaio",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Gate A21-27",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-10",
+            "name": "Amore",
+            "category": "dining",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-11",
+            "name": "Amorino",
+            "category": "cafe",
+            "terminal": "Terminal 1 & 3",
+            "location": "Terminal 3",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-12",
+            "name": "A|X Armani Exchange",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-13",
+            "name": "Beercode",
+            "category": "shopping",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-14",
+            "name": "Berlucchi",
+            "category": "cafe",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-15",
+            "name": "Best and Fast Change",
+            "category": "shopping",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi (dopo i controlli)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-16",
+            "name": "Bistrot",
+            "category": "cafe",
+            "terminal": "Terminal 1 & 3",
+            "location": "Terminal 3",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-17",
+            "name": "Boggi",
+            "category": "shopping",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi post-sicurezza",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-18",
+            "name": "Bonci",
+            "category": "cafe",
+            "terminal": "Terminal 1 & 3",
+            "location": "Terminal 3",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-19",
+            "name": "Bongustare",
+            "category": "shopping",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi post-sicurezza",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-20",
+            "name": "Borsalino",
+            "category": "shopping",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi post-sicurezza",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-21",
+            "name": "Bottega Veneta",
+            "category": "shopping",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi post-sicurezza",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-22",
+            "name": "Bric's - Tumi",
+            "category": "shopping",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-23",
+            "name": "Brunello Cucinelli",
+            "category": "shopping",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-24",
+            "name": "Bufala di Fattorie Garofalo",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-25",
+            "name": "Bulgari",
+            "category": "shopping",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi post-sicurezza",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-26",
+            "name": "Burberry",
+            "category": "shopping",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-27",
+            "name": "Caffè Kimbo",
+            "category": "cafe",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi post-sicurezza",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-28",
+            "name": "Caffè Napoli",
+            "category": "cafe",
+            "terminal": "Terminal 1 & 3",
+            "location": "Terminal",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-29",
+            "name": "Caffè Vergnano",
+            "category": "cafe",
+            "terminal": "Terminal 3",
+            "location": "Gate E11-24",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-30",
+            "name": "Caffè Vergnano - Women in coffe",
+            "category": "cafe",
+            "terminal": "Terminal 1 & 3",
+            "location": "Terminal 3",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-31",
+            "name": "Caffè Vergnano 1882",
+            "category": "cafe",
+            "terminal": "Terminal 1 & 3",
+            "location": "Terminal 1",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-32",
+            "name": "Caio Antica Pizza Romana",
+            "category": "dining",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi (dopo i controlli)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-33",
+            "name": "Camicissima",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-34",
+            "name": "Card Station",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Gate A31-52",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-35",
+            "name": "Carpisa",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-36",
+            "name": "Cartier",
+            "category": "shopping",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-37",
+            "name": "Chef Market",
+            "category": "cafe",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi (dopo i controlli)",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-38",
+            "name": "Cielo",
+            "category": "dining",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-39",
+            "name": "Cioccolati italiani",
+            "category": "cafe",
+            "terminal": "Terminal 1 & 3",
+            "location": "Terminal 1",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-40",
+            "name": "Città del Sole",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-41",
+            "name": "Coccinelle",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-42",
+            "name": "Costa Caffè",
+            "category": "cafe",
+            "terminal": "Terminal 3",
+            "location": "Gate E31-44",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-43",
+            "name": "Costa Coffee",
+            "category": "cafe",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-44",
+            "name": "Culto Caffè",
+            "category": "cafe",
+            "terminal": "Terminal 1",
+            "location": "Gate A31-52",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-45",
+            "name": "Damiani",
+            "category": "shopping",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-46",
+            "name": "Deli&Cia",
+            "category": "cafe",
+            "terminal": "Terminal 1",
+            "location": "Gate A61-83",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-47",
+            "name": "Diesel",
+            "category": "shopping",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-48",
+            "name": "Dior",
+            "category": "shopping",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-49",
+            "name": "Dolce&Gabbana",
+            "category": "shopping",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi post-sicurezza",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-50",
+            "name": "Doppio Malto",
+            "category": "dining",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-51",
+            "name": "Eataly - La Terrazza",
+            "category": "cafe",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-52",
+            "name": "Eataly Wine Bar",
+            "category": "cafe",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-53",
+            "name": "EXKI",
+            "category": "cafe",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-54",
+            "name": "Fabriano Boutique",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-55",
+            "name": "Farinella",
+            "category": "dining",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi post-sicurezza",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-56",
+            "name": "Farmacia - Farmacie Italiane",
+            "category": "pharmacy",
+            "terminal": "Terminal 1 & 3",
+            "location": "Terminal",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-57",
+            "name": "Feltrinelli",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-58",
+            "name": "Fendi",
+            "category": "shopping",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-59",
+            "name": "Ferragamo",
+            "category": "shopping",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-60",
+            "name": "Ferrari",
+            "category": "shopping",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-61",
+            "name": "Ferrari Spazio Bollicine",
+            "category": "cafe",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi (dopo i controlli)",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-62",
+            "name": "Furla",
+            "category": "shopping",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi post-sicurezza",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-63",
+            "name": "Gallo",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-64",
+            "name": "Genuino",
+            "category": "cafe",
+            "terminal": "Terminal 1 & 3",
+            "location": "Terminal 1",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-65",
+            "name": "Giorgio Armani",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Gate A21-27",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-66",
+            "name": "Global Blue - Tax Free Refunds",
+            "category": "shopping",
+            "terminal": "Terminal 1 & 3",
+            "location": "Terminal • Imbarco",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-67",
+            "name": "Golden Goose",
+            "category": "shopping",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi post-sicurezza",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-68",
+            "name": "Gucci",
+            "category": "shopping",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi post-sicurezza",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-69",
+            "name": "Heinemann",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Gate A21-27",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-70",
+            "name": "Hermes",
+            "category": "shopping",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-71",
+            "name": "Hour Passion",
+            "category": "shopping",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi post-sicurezza",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-72",
+            "name": "Hudson",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-73",
+            "name": "Illy",
+            "category": "cafe",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi post-sicurezza",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-74",
+            "name": "InMotion",
+            "category": "shopping",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi post-sicurezza • T3",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-75",
+            "name": "John Richmond",
+            "category": "shopping",
+            "terminal": "Terminal 3",
+            "location": "Gate E11-24",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-76",
+            "name": "Juicebar",
+            "category": "cafe",
+            "terminal": "Terminal 1 & 3",
+            "location": "Terminal 1",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-77",
+            "name": "Just Design",
+            "category": "shopping",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi post-sicurezza",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-78",
+            "name": "Just Poke",
+            "category": "dining",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi (dopo i controlli)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-79",
+            "name": "KFC",
+            "category": "dining",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-80",
+            "name": "Kikki - Illy",
+            "category": "cafe",
+            "terminal": "Terminal 1 & 3",
+            "location": "Terminal 1",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-81",
+            "name": "La Fucina",
+            "category": "cafe",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-82",
+            "name": "Lavazza",
+            "category": "cafe",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi (dopo i controlli)",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-83",
+            "name": "Lievito",
+            "category": "dining",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-84",
+            "name": "Liu-Jo",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-85",
+            "name": "Louis Vuitton",
+            "category": "shopping",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-86",
+            "name": "Max Mara",
+            "category": "shopping",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-87",
+            "name": "Max Mara Weekend",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Gate A21-27",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-88",
+            "name": "Mc Donald's",
+            "category": "dining",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi (dopo i controlli)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-89",
+            "name": "MC2 Saint Barth",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-90",
+            "name": "Mignon",
+            "category": "cafe",
+            "terminal": "Terminal 1 & 3",
+            "location": "Terminal 3",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-91",
+            "name": "Molo Kidswear",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-92",
+            "name": "Moncler",
+            "category": "shopping",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi post-sicurezza",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-93",
+            "name": "Montblanc",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Gate A21-27",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-94",
+            "name": "Motta",
+            "category": "cafe",
+            "terminal": "Terminal 3",
+            "location": "Gate E31-44",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-95",
+            "name": "My Family",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-96",
+            "name": "Natoo",
+            "category": "cafe",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi (dopo i controlli)",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-97",
+            "name": "Omega",
+            "category": "shopping",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-98",
+            "name": "Ottica Vasari",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-99",
+            "name": "Pandora",
+            "category": "shopping",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi post-sicurezza",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-100",
+            "name": "Panella",
+            "category": "cafe",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi post-sicurezza • A/A21-27",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-101",
+            "name": "Parafarmacia",
+            "category": "pharmacy",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-102",
+            "name": "Parapharmacy2go",
+            "category": "shopping",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi (dopo i controlli)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-103",
+            "name": "Parapharmacy2Go in Aelia Duty Free",
+            "category": "duty_free",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "05:30 - 23:00"
+      },
+      {
+            "id": "fco-v-104",
+            "name": "Passaggio Roma",
+            "category": "cafe",
+            "terminal": "Terminal 3",
+            "location": "Gate E31-44",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-105",
+            "name": "Personal Shopper Desk",
+            "category": "shopping",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-106",
+            "name": "Piadina di Casa Maioli",
+            "category": "dining",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi (dopo i controlli)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-107",
+            "name": "Pick",
+            "category": "cafe",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi (dopo i controlli)",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-108",
+            "name": "Pickup on Return Locker",
+            "category": "shopping",
+            "terminal": "Terminal 1 & 3",
+            "location": "Terminal 1",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-109",
+            "name": "Pinko",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Gate A21-27",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-110",
+            "name": "Piquadro",
+            "category": "shopping",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi post-sicurezza",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-111",
+            "name": "Planet",
+            "category": "shopping",
+            "terminal": "Terminal 1 & 3",
+            "location": "Terminal • Imbarco",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-112",
+            "name": "Pomellato",
+            "category": "shopping",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-113",
+            "name": "Pop up K-Way",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-114",
+            "name": "Prada",
+            "category": "shopping",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-115",
+            "name": "Pret a Manger",
+            "category": "cafe",
+            "terminal": "Terminal 1 & 3",
+            "location": "Terminal 3",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-116",
+            "name": "Punto nel Mondo",
+            "category": "shopping",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi (dopo i controlli)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-117",
+            "name": "Ralph Lauren",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Gate A21-27",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-118",
+            "name": "Relay",
+            "category": "shopping",
+            "terminal": "Terminal 1 & 3",
+            "location": "Area Imbarchi post-sicurezza",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-119",
+            "name": "Rinaldini",
+            "category": "cafe",
+            "terminal": "Terminal 1",
+            "location": "Gate A31-52",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-120",
+            "name": "Rolex",
+            "category": "shopping",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-121",
+            "name": "Rossopomodoro",
+            "category": "dining",
+            "terminal": "Terminal 1 & 3",
+            "location": "Terminal 1",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-122",
+            "name": "Saint Laurent",
+            "category": "shopping",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-123",
+            "name": "Semplicemente Roma",
+            "category": "cafe",
+            "terminal": "Terminal 1 & 3",
+            "location": "Terminal 3",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "fco-v-124",
+            "name": "Sophia Loren",
+            "category": "dining",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-125",
+            "name": "Spizzico",
+            "category": "dining",
+            "terminal": "Terminal 3",
+            "location": "Gate E31-44",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-126",
+            "name": "Suncatcher",
+            "category": "shopping",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-127",
+            "name": "Swarovski in Aelia Duty Free",
+            "category": "duty_free",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "05:30 - 23:00"
+      },
+      {
+            "id": "fco-v-128",
+            "name": "Swatch",
+            "category": "shopping",
+            "terminal": "Terminal 3",
+            "location": "Area Imbarchi E (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-129",
+            "name": "Tax Refund",
+            "category": "shopping",
+            "terminal": "Terminal 1 & 3",
+            "location": "Terminal 3",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-130",
+            "name": "Temakinho",
+            "category": "dining",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi A (Partenze)",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "fco-v-131",
+            "name": "Tentazioni Cafè",
+            "category": "cafe",
+            "terminal": "Terminal 1 & 3",
+            "location": "Terminal 3",
+            "hours": "05:00 - 23:00"
+      }
     ],
     transports: [
       { id: 'fco-tr-1', type: 'train', name_it: 'Leonardo Express (Non-stop per Roma Termini)', name_en: 'Leonardo Express (Non-stop to Rome Termini)', duration: '32 min', frequency: 'Ogni 15 minuti', estimatedCost: '€14.00', pickupLocation_it: 'Stazione ferroviaria interna dell\'aeroporto (fronte T3)', pickupLocation_en: 'Internal airport train station (in front of T3)', details_it: 'Collegamento ferroviario diretto senza fermate fino a Roma Termini.', details_en: 'Direct non-stop train link straight to Rome Termini central station.' },
@@ -622,8 +1758,118 @@ export const airportsData: Airport[] = [
       }
     ],
     venues: [
-      { id: 'cia-v1', name: 'Mokà Caffè & Panini', category: 'cafe', terminal: 'Terminal Unico', location: 'Partenze dopo i controlli', hours: '05:30 - 22:30' },
-      { id: 'cia-v2', name: 'Aelia Duty Free Ciampino', category: 'duty_free', terminal: 'Terminal Unico', location: 'Area imbarchi centrale', hours: '05:30 - 22:00' }
+{
+            "id": "cia-v-1",
+            "name": "Alice Pizza",
+            "category": "dining",
+            "terminal": "Terminal Unico",
+            "location": "Area Imbarchi post-controlli",
+            "hours": "06:00 - 22:00"
+      },
+      {
+            "id": "cia-v-2",
+            "name": "Caio Antica Pizza Romana",
+            "category": "dining",
+            "terminal": "Terminal Unico",
+            "location": "Area Imbarchi Gate 1-5",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "cia-v-3",
+            "name": "Lavazza Caffè",
+            "category": "cafe",
+            "terminal": "Terminal Unico",
+            "location": "Area Partenze centrale",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "cia-v-4",
+            "name": "Mc Donald's",
+            "category": "dining",
+            "terminal": "Terminal Unico",
+            "location": "Area Imbarchi vicino Gate 6",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "cia-v-5",
+            "name": "Panella Bakery & Coffee",
+            "category": "cafe",
+            "terminal": "Terminal Unico",
+            "location": "Partenze post-sicurezza",
+            "hours": "05:30 - 22:30"
+      },
+      {
+            "id": "cia-v-6",
+            "name": "Juicebar",
+            "category": "cafe",
+            "terminal": "Terminal Unico",
+            "location": "Piano Arrivi",
+            "hours": "07:00 - 23:00"
+      },
+      {
+            "id": "cia-v-7",
+            "name": "Just Poke",
+            "category": "dining",
+            "terminal": "Terminal Unico",
+            "location": "Area Imbarchi post-controlli",
+            "hours": "08:00 - 21:30"
+      },
+      {
+            "id": "cia-v-8",
+            "name": "Piadina di Casa Maioli",
+            "category": "dining",
+            "terminal": "Terminal Unico",
+            "location": "Area Imbarchi",
+            "hours": "07:00 - 22:00"
+      },
+      {
+            "id": "cia-v-9",
+            "name": "Aelia Duty Free Ciampino",
+            "category": "duty_free",
+            "terminal": "Terminal Unico",
+            "location": "Area Imbarchi subito dopo i controlli",
+            "hours": "05:30 - 22:30"
+      },
+      {
+            "id": "cia-v-10",
+            "name": "Parapharmacy2go",
+            "category": "pharmacy",
+            "terminal": "Terminal Unico",
+            "location": "Area Imbarchi fronte Gate 3",
+            "hours": "06:00 - 21:00"
+      },
+      {
+            "id": "cia-v-11",
+            "name": "Relay Edicola & Bookshop",
+            "category": "shopping",
+            "terminal": "Terminal Unico",
+            "location": "Area Imbarchi",
+            "hours": "05:30 - 22:30"
+      },
+      {
+            "id": "cia-v-12",
+            "name": "Pick & Sweet",
+            "category": "shopping",
+            "terminal": "Terminal Unico",
+            "location": "Area Imbarchi",
+            "hours": "06:00 - 22:00"
+      },
+      {
+            "id": "cia-v-13",
+            "name": "Best and Fast Change",
+            "category": "shopping",
+            "terminal": "Terminal Unico",
+            "location": "Partenze & Arrivi",
+            "hours": "06:00 - 22:00"
+      },
+      {
+            "id": "cia-v-14",
+            "name": "Punto nel Mondo",
+            "category": "shopping",
+            "terminal": "Terminal Unico",
+            "location": "Piano Arrivi",
+            "hours": "07:00 - 22:30"
+      }
     ],
     transports: [
       { id: 'cia-tr-1', type: 'bus', name_it: 'Bus Atral (per Metro A Anagnina)', name_en: 'Atral Bus (to Metro Line A Anagnina)', duration: '15-20 min', frequency: 'Ogni 20-30 minuti', estimatedCost: '€1.20', pickupLocation_it: 'Pensilina bus fronte uscite arrivi', pickupLocation_en: 'Bus bays outside arrivals hall', details_it: 'Opzione più economica: porta al capolinea Anagnina della Metro A per raggiungere Termini in 25 minuti.', details_en: 'Cheapest transit option: connects to Anagnina Metro A terminal into downtown.' },
@@ -756,7 +2002,166 @@ export const airportsData: Airport[] = [
       }
     ],
     venues: [
-      { id: 'mxp-v1', name: 'Ferrari Spazio Bollicine', category: 'dining', terminal: 'Terminal 1', location: 'Piazza del Lusso', hours: '06:00 - 22:00' }
+{
+            "id": "mxp-v-1",
+            "name": "Ferrari Spazio Bollicine",
+            "category": "dining",
+            "terminal": "Terminal 1",
+            "location": "Piazza del Gusto (Imbarchi A)",
+            "hours": "06:00 - 22:00"
+      },
+      {
+            "id": "mxp-v-2",
+            "name": "Motta Milano 1928",
+            "category": "cafe",
+            "terminal": "Terminal 1",
+            "location": "Area Partenze Check-in & Imbarchi",
+            "hours": "05:00 - 22:30"
+      },
+      {
+            "id": "mxp-v-3",
+            "name": "Rossopomodoro",
+            "category": "dining",
+            "terminal": "Terminal 1",
+            "location": "Piazza del Gusto 1° Piano",
+            "hours": "07:00 - 22:30"
+      },
+      {
+            "id": "mxp-v-4",
+            "name": "Obicà Mozzarella Bar Pizza e Cucina",
+            "category": "dining",
+            "terminal": "Terminal 1",
+            "location": "Imbarchi Imbarco B (Extra-Schengen)",
+            "hours": "06:30 - 22:00"
+      },
+      {
+            "id": "mxp-v-5",
+            "name": "Wagamama Asian Food",
+            "category": "dining",
+            "terminal": "Terminal 1",
+            "location": "Imbarchi B post-controlli",
+            "hours": "08:00 - 22:00"
+      },
+      {
+            "id": "mxp-v-6",
+            "name": "Panino Giusto",
+            "category": "dining",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi Gate A20-A25",
+            "hours": "06:00 - 22:00"
+      },
+      {
+            "id": "mxp-v-7",
+            "name": "Caio Antica Pizza Romana",
+            "category": "dining",
+            "terminal": "Terminal 1",
+            "location": "Imbarchi A",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "mxp-v-8",
+            "name": "McDonald's",
+            "category": "dining",
+            "terminal": "Terminal 1 & 2",
+            "location": "T1 Piano Arrivi & T2 Imbarchi EasyJet",
+            "hours": "06:00 - 23:00"
+      },
+      {
+            "id": "mxp-v-9",
+            "name": "Burger King",
+            "category": "dining",
+            "terminal": "Terminal 1",
+            "location": "Area Partenze secondo piano",
+            "hours": "08:00 - 22:00"
+      },
+      {
+            "id": "mxp-v-10",
+            "name": "Starbucks Coffee",
+            "category": "cafe",
+            "terminal": "Terminal 1",
+            "location": "Piano Arrivi Uscita 4",
+            "hours": "06:30 - 21:30"
+      },
+      {
+            "id": "mxp-v-11",
+            "name": "Illy Caffè",
+            "category": "cafe",
+            "terminal": "Terminal 1",
+            "location": "Imbarchi A e Check-in Area 10",
+            "hours": "05:00 - 22:00"
+      },
+      {
+            "id": "mxp-v-12",
+            "name": "Venchi Cioccolato e Gelato",
+            "category": "cafe",
+            "terminal": "Terminal 1",
+            "location": "Piazza del Gusto e Gate B",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "mxp-v-13",
+            "name": "JuiceBar",
+            "category": "cafe",
+            "terminal": "Terminal 1",
+            "location": "Imbarchi A vicino Gate A14",
+            "hours": "06:00 - 21:00"
+      },
+      {
+            "id": "mxp-v-14",
+            "name": "Dufry Duty Free Malpensa",
+            "category": "duty_free",
+            "terminal": "Terminal 1 & 2",
+            "location": "Subito dopo i controlli di sicurezza",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "mxp-v-15",
+            "name": "Boggi Milano",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Piazza del Lusso",
+            "hours": "06:00 - 21:30"
+      },
+      {
+            "id": "mxp-v-16",
+            "name": "Armani Jeans & Emporio Armani",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Piazza del Lusso Gate A",
+            "hours": "06:00 - 21:30"
+      },
+      {
+            "id": "mxp-v-17",
+            "name": "Victoria's Secret",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Imbarchi A",
+            "hours": "06:30 - 21:30"
+      },
+      {
+            "id": "mxp-v-18",
+            "name": "K-Way",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Imbarchi A",
+            "hours": "06:30 - 21:00"
+      },
+      {
+            "id": "mxp-v-19",
+            "name": "Relay Edicola & Libreria",
+            "category": "shopping",
+            "terminal": "Terminal 1 & 2",
+            "location": "Check-in e Imbarchi (molteplici punti)",
+            "hours": "05:00 - 22:30"
+      },
+      {
+            "id": "mxp-v-20",
+            "name": "Farmacia della Brughiera",
+            "category": "pharmacy",
+            "terminal": "Terminal 1",
+            "location": "Piano Partenze Check-in Area 1",
+            "hours": "06:00 - 21:00"
+      }
     ],
     transports: [
       { id: 'mxp-tr-1', type: 'train', name_it: 'Malpensa Express (per Cadorna / Centrale)', name_en: 'Malpensa Express (to Cadorna / Centrale)', duration: '37-52 min', frequency: 'Ogni 15-30 minuti', estimatedCost: '€13.00', pickupLocation_it: 'Stazione sotterranea T1 e T2', pickupLocation_en: 'Underground railway station T1 and T2', details_it: 'Corse dirette per Milano Cadorna (37 min) e Milano Centrale (52 min).', details_en: 'Direct services to Milan Cadorna (37 min) and Milan Central (52 min).' },
@@ -874,7 +2279,110 @@ export const airportsData: Airport[] = [
       }
     ],
     venues: [
-      { id: 'lin-v1', name: 'Michelangelo Restaurant', category: 'dining', terminal: 'Terminal Principale', location: 'Piano 2F prima dei controlli', hours: '12:00 - 21:30' }
+{
+            "id": "lin-v-1",
+            "name": "Michelangelo Restaurant",
+            "category": "dining",
+            "terminal": "Terminal 1",
+            "location": "Secondo Piano sopra i banchi check-in",
+            "hours": "12:00 - 15:00 e 19:00 - 22:00"
+      },
+      {
+            "id": "lin-v-2",
+            "name": "Panino Giusto",
+            "category": "dining",
+            "terminal": "Terminal 1",
+            "location": "Piazza del Gusto Imbarchi 1° Piano",
+            "hours": "06:00 - 21:30"
+      },
+      {
+            "id": "lin-v-3",
+            "name": "Temakinho Linate",
+            "category": "dining",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi post-sicurezza",
+            "hours": "11:00 - 21:30"
+      },
+      {
+            "id": "lin-v-4",
+            "name": "Caio Antica Pizza Romana",
+            "category": "dining",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi Gate A17",
+            "hours": "06:00 - 22:00"
+      },
+      {
+            "id": "lin-v-5",
+            "name": "Illy Caffè",
+            "category": "cafe",
+            "terminal": "Terminal 1",
+            "location": "Area Partenze Check-in e Imbarchi",
+            "hours": "05:00 - 22:00"
+      },
+      {
+            "id": "lin-v-6",
+            "name": "Motta Caffè Bar",
+            "category": "cafe",
+            "terminal": "Terminal 1",
+            "location": "Piano Terra Arrivi",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "lin-v-7",
+            "name": "Venchi Cioccolato e Gelato",
+            "category": "cafe",
+            "terminal": "Terminal 1",
+            "location": "Imbarchi 1° Piano",
+            "hours": "06:30 - 21:30"
+      },
+      {
+            "id": "lin-v-8",
+            "name": "Caffè Vergnano 1882",
+            "category": "cafe",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi Gate A1-A8",
+            "hours": "05:30 - 21:30"
+      },
+      {
+            "id": "lin-v-9",
+            "name": "Aelia Duty Free Linate",
+            "category": "duty_free",
+            "terminal": "Terminal 1",
+            "location": "Subito dopo i controlli di sicurezza",
+            "hours": "05:30 - 22:30"
+      },
+      {
+            "id": "lin-v-10",
+            "name": "Boggi Milano",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Piazza del Lusso 1° Piano",
+            "hours": "06:00 - 21:30"
+      },
+      {
+            "id": "lin-v-11",
+            "name": "Piquadro",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Area Imbarchi",
+            "hours": "06:30 - 21:00"
+      },
+      {
+            "id": "lin-v-12",
+            "name": "Relay Bookshop",
+            "category": "shopping",
+            "terminal": "Terminal 1",
+            "location": "Imbarchi e Check-in",
+            "hours": "05:30 - 22:00"
+      },
+      {
+            "id": "lin-v-13",
+            "name": "Farmacia di Linate",
+            "category": "pharmacy",
+            "terminal": "Terminal 1",
+            "location": "Piano Partenze fronte banchi 1-10",
+            "hours": "06:00 - 21:00"
+      }
     ],
     transports: [
       { id: 'lin-tr-1', type: 'metro', name_it: 'Metropolitana M4 (Linea Blu per San Babila)', name_en: 'Metro Line M4 (Blue Line to San Babila)', duration: '12 min', frequency: 'Ogni 3-4 minuti', estimatedCost: '€2.20', pickupLocation_it: 'Stazione M4 piano -1 direttamente collegata al terminal', pickupLocation_en: 'Level -1 station connected directly to arrivals', details_it: 'Il collegamento metropolitano più comodo d\'Europa con il pieno centro di Milano.', details_en: 'Direct underground metro straight into central Milan (San Babila).' }
@@ -1008,8 +2516,118 @@ export const airportsData: Airport[] = [
       }
     ],
     venues: [
-      { id: 'bgy-v1', name: 'Vicook Bistrot (Chic Cerea)', category: 'dining', terminal: 'Terminal Unico', location: '1° Piano partenze', hours: '06:00 - 22:00' },
-      { id: 'bgy-v2', name: 'Aelia Duty Free Bergamo', category: 'duty_free', terminal: 'Terminal Unico', location: 'Subito dopo i controlli', hours: '05:00 - 22:30' }
+{
+            "id": "bgy-v-1",
+            "name": "Vicook Bistrot (Fratelli Cerea 3-Stelle)",
+            "category": "dining",
+            "terminal": "Terminal Unico",
+            "location": "Area Imbarchi Gate A1-A6 (1° Piano)",
+            "hours": "06:00 - 22:00"
+      },
+      {
+            "id": "bgy-v-2",
+            "name": "Rossopomodoro",
+            "category": "dining",
+            "terminal": "Terminal Unico",
+            "location": "Area Imbarchi post-sicurezza",
+            "hours": "07:00 - 22:30"
+      },
+      {
+            "id": "bgy-v-3",
+            "name": "Panino Giusto",
+            "category": "dining",
+            "terminal": "Terminal Unico",
+            "location": "Area Imbarchi Gate A",
+            "hours": "06:00 - 22:00"
+      },
+      {
+            "id": "bgy-v-4",
+            "name": "Caio Pizza Romana",
+            "category": "dining",
+            "terminal": "Terminal Unico",
+            "location": "Imbarchi centrale",
+            "hours": "06:00 - 22:30"
+      },
+      {
+            "id": "bgy-v-5",
+            "name": "McDonald's",
+            "category": "dining",
+            "terminal": "Terminal Unico",
+            "location": "Piano Terra Partenze e Imbarchi Gate B",
+            "hours": "05:30 - 23:00"
+      },
+      {
+            "id": "bgy-v-6",
+            "name": "Motta Caffè Bar",
+            "category": "cafe",
+            "terminal": "Terminal Unico",
+            "location": "Piano Arrivi",
+            "hours": "06:00 - 23:00"
+      },
+      {
+            "id": "bgy-v-7",
+            "name": "Espressamente Illy",
+            "category": "cafe",
+            "terminal": "Terminal Unico",
+            "location": "Area Partenze Check-in",
+            "hours": "05:00 - 22:00"
+      },
+      {
+            "id": "bgy-v-8",
+            "name": "Briciole Bar & Bakery",
+            "category": "cafe",
+            "terminal": "Terminal Unico",
+            "location": "Imbarchi Gate B01-B10",
+            "hours": "05:00 - 22:30"
+      },
+      {
+            "id": "bgy-v-9",
+            "name": "JuiceBar",
+            "category": "cafe",
+            "terminal": "Terminal Unico",
+            "location": "Imbarchi fronte Gate A",
+            "hours": "06:00 - 21:30"
+      },
+      {
+            "id": "bgy-v-10",
+            "name": "Dufry Duty Free Bergamo",
+            "category": "duty_free",
+            "terminal": "Terminal Unico",
+            "location": "Subito dopo i filtri di sicurezza",
+            "hours": "05:00 - 23:00"
+      },
+      {
+            "id": "bgy-v-11",
+            "name": "Kiko Milano",
+            "category": "shopping",
+            "terminal": "Terminal Unico",
+            "location": "Galleria Commerciale Imbarchi",
+            "hours": "06:30 - 21:30"
+      },
+      {
+            "id": "bgy-v-12",
+            "name": "Boggi Milano",
+            "category": "shopping",
+            "terminal": "Terminal Unico",
+            "location": "Galleria Commerciale Imbarchi",
+            "hours": "06:30 - 21:30"
+      },
+      {
+            "id": "bgy-v-13",
+            "name": "Relay / Hudson News",
+            "category": "shopping",
+            "terminal": "Terminal Unico",
+            "location": "Area Imbarchi Gate A e B",
+            "hours": "05:00 - 22:30"
+      },
+      {
+            "id": "bgy-v-14",
+            "name": "Farmacia Orio al Serio",
+            "category": "pharmacy",
+            "terminal": "Terminal Unico",
+            "location": "Piano Terra Partenze landside",
+            "hours": "06:00 - 21:00"
+      }
     ],
     transports: [
       { id: 'bgy-tr-1', type: 'bus', name_it: 'Orio Shuttle / Autostradale / Terravision (per Milano Centrale)', name_en: 'Orio Shuttle / Autostradale Coach (to Milan Central)', duration: '50-60 min', frequency: 'Ogni 15-20 minuti', estimatedCost: '€10.00-€12.00', pickupLocation_it: 'Corsie bus 2, 3 e 4 piazzale arrivi', pickupLocation_en: 'Bus bays 2, 3 & 4 outside arrivals', details_it: 'Autobus gran turismo frequenti e diretti per la Stazione di Milano Centrale (fermata piazza Luigi di Savoia).', details_en: 'Frequent direct express motorcoaches straight to Milan Central Station.' },

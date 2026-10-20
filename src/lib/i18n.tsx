@@ -170,6 +170,14 @@ export const translations: Translations = {
   dutyFree: { it: 'Duty-Free', en: 'Duty-Free' },
   shopping: { it: 'Shopping & Moda', en: 'Shopping & Fashion' },
   pharmacy: { it: 'Farmacia & Salute', en: 'Pharmacy & Health' },
+  searchVenuesPlaceholder: { 
+    it: 'Cerca per nome locale, brand o gate (es. Eataly, Venchi, Gucci, Farmacia)...', 
+    en: 'Search by venue name, brand, or gate (e.g. Eataly, Venchi, Gucci, Pharmacy)...' 
+  },
+  noVenuesFound: { 
+    it: 'Nessun locale o negozio trovato per questa ricerca.', 
+    en: 'No venues or shops found matching your search.' 
+  },
 
   // Transport
   transportTitle: { it: 'Come raggiungere la città o l\'aeroporto', en: 'How to reach the city or the airport' },
@@ -186,6 +194,14 @@ export const translations: Translations = {
   footerDisclaimer: {
     it: 'I regolamenti sui liquidi e le disposizioni dei terminali possono variare senza preavviso. Le informazioni con il badge "i" rosso provengono da segnalazioni di viaggiatori non ancora confermate dall\'ente aeroportuale.',
     en: 'Liquids regulations and terminal gates may change without prior notice. Items tagged with the red "i" badge stem from traveler reports not yet confirmed by airport management.'
+  },
+  travelerAdvisoryTitle: {
+    it: 'Nota Informativa per i Viaggiatori',
+    en: 'Traveler Operational Advisory'
+  },
+  travelerAdvisoryNotice: {
+    it: 'Le normative aeroportuali, i varchi di sicurezza e gli orari dei servizi commerciali sono soggetti a continue variazioni operative decise dalle autorità locali e dai gestori degli scali. Nonostante il monitoraggio quotidiano delle fonti ufficiali, alcune informazioni potrebbero subire improvvise modifiche, essere temporaneamente non aggiornate o contenere imprecisioni. Consigliamo di verificare sempre con il personale di terra al banco check-in o ai controlli prima della partenza.',
+    en: 'Airport regulations, security checkpoints, and commercial venue hours are subject to continuous operational changes by local authorities and airport operators. While we monitor official sources daily, some information may experience unexpected updates, temporary delays, or inaccuracies. Always verify critical guidance with airline ground staff or security officers prior to departure.'
   }
 };
 

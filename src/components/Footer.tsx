@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ShieldAlert, RefreshCw, Plane } from 'lucide-react';
+import { ShieldAlert, RefreshCw, Plane, Info } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 
 export function Footer() {
@@ -10,7 +10,7 @@ export function Footer() {
   return (
     <footer className="mt-16 border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 py-10 px-4 sm:px-6 text-zinc-500 dark:text-zinc-400 text-xs transition-colors">
       <div className="max-w-5xl mx-auto space-y-6">
-        {/* Info & Sync Notice */}
+        {/* Info & Sync Notice Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-5 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-zinc-800">
           <div className="flex items-start gap-3">
             <div className="p-1.5 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5">
@@ -41,6 +41,21 @@ export function Footer() {
                 {t('footerDisclaimer')}
               </p>
             </div>
+          </div>
+        </div>
+
+        {/* Elegant Traveler Advisory Card (Friendly, non-alarmist disclaimer) */}
+        <div className="p-4 rounded-xl bg-zinc-50/60 dark:bg-zinc-900/40 border border-zinc-200/80 dark:border-zinc-800/80 flex items-start gap-3">
+          <div className="p-1.5 rounded-md bg-zinc-200/60 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 shrink-0 mt-0.5">
+            <Info className="w-3.5 h-3.5" />
+          </div>
+          <div className="space-y-1">
+            <h6 className="font-bold text-zinc-800 dark:text-zinc-200 text-xs">
+              {t('travelerAdvisoryTitle')}
+            </h6>
+            <p className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed font-sans">
+              {t('travelerAdvisoryNotice')}
+            </p>
           </div>
         </div>
 
