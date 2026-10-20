@@ -18,7 +18,7 @@ export function Footer() {
             </div>
             <div>
               <h5 className="font-semibold text-neutral-900 dark:text-white text-xs mb-1">
-                {lang === 'it' ? 'Sincronizzazione Settimanale Automatica' : 'Weekly Automated Sync'}
+                {lang === 'it' ? 'Sincronizzazione Giornaliera Automatica (24h)' : 'Daily Automated Sync (24h)'}
               </h5>
               <p className="leading-relaxed">
                 {t('weeklyUpdateNotice')}

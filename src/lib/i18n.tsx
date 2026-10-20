@@ -162,8 +162,8 @@ export const translations: Translations = {
 
   // Footer & Disclaimer
   weeklyUpdateNotice: { 
-    it: 'Le informazioni vengono sincronizzate settimanalmente dai siti web ufficiali degli aeroporti.', 
-    en: 'Information is synchronized weekly from official airport websites.' 
+    it: 'Le informazioni vengono sincronizzate automaticamente ogni 24 ore dai siti web ufficiali degli aeroporti.', 
+    en: 'Information is synchronized automatically every 24 hours from official airport websites.' 
   },
   footerDisclaimer: {
     it: 'I regolamenti sui liquidi e le disposizioni dei terminali possono variare senza preavviso. Le informazioni con il badge "i" rosso provengono da segnalazioni di viaggiatori non ancora confermate dall\'ente aeroportuale.',
