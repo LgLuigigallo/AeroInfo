@@ -59,10 +59,10 @@ export function Footer() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-neutral-400 text-[11px] pt-1">
           <div className="flex items-center gap-2.5">
             <a
-              href="mailto:lg.luigigallo@gmail.com"
+              href="mailto:vireontech@gmail.com"
               className="hover:text-neutral-900 dark:hover:text-white transition-colors underline-offset-2 hover:underline"
             >
-              lg.luigigallo@gmail.com
+              vireontech@gmail.com
             </a>
             <span className="text-neutral-300 dark:text-neutral-700">•</span>
             <a
