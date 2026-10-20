@@ -2567,6 +2567,137 @@ export const airportsData: Airport[] = [
       { id: 'hnd-tr-1', type: 'train', name_it: 'Tokyo Monorail', name_en: 'Tokyo Monorail', duration: '13 min', frequency: 'Ogni 4 minuti', estimatedCost: '¥500 (~€3.10)', pickupLocation_it: 'Stazione Monorail interna in ciascun terminal', pickupLocation_en: 'Monorail station inside each terminal', details_it: 'Collega Haneda con Hamamatsucho e la Yamanote Line.', details_en: 'Connects to Hamamatsucho and the Yamanote loop line.' }
     ],
     lastUpdated: '2026-10-18'
+  },
+  // =========================================================================
+  // 🇪🇸 ISOLE CANARIE / SPAGNA - FUERTEVENTURA (FUE)
+  // =========================================================================
+  {
+    id: 'fue',
+    iata: 'FUE',
+    icao: 'GCFV',
+    name_it: 'Aeroporto di Fuerteventura (El Matorral)',
+    name_en: 'Fuerteventura Airport (El Matorral)',
+    city_it: 'Puerto del Rosario, Fuerteventura (Isole Canarie)',
+    city_en: 'Puerto del Rosario, Fuerteventura (Canary Islands)',
+    country_it: 'Spagna',
+    country_en: 'Spain',
+    countryCode: 'ES',
+    officialWebsite: 'https://www.aena.es/es/fuerteventura.html',
+    officialMapUrl: 'https://www.aena.es/es/fuerteventura/servicios-del-aeropuerto/mapas.html',
+    coordinates: { lat: 28.4527, lng: -13.8638 },
+    difficultyRating: 1,
+    difficultyLabel_it: 'Molto Agevole & Veloce (Terminal Unico Compatto)',
+    difficultyLabel_en: 'Very Smooth & Fast (Compact Single Terminal)',
+    averageSecurityWaitMin: 8,
+    recommendedArrivalHours: { domestic: 1.5, international: 2.0 },
+    navigationAdvice_it: 'Aeroporto sviluppato su un unico terminal passeggeri a due piani. Il piano terra (Piano 0) ospita gli arrivi e il ritiro bagagli, mentre il primo piano (Piano 1) ospita l\'area partenze, i banchi check-in e il varco di sicurezza unico che dà accesso ai 24 gate d\'imbarco. L\'orientamento è immediato e le distanze a piedi sono inferiori a 5 minuti.',
+    navigationAdvice_en: 'Single terminal building on two floors. Ground floor (Floor 0) handles arrivals and baggage claim, while Floor 1 handles departures, check-in desks, and single centralized security screening leading to all 24 boarding gates. Navigation is effortless with walking times under 5 minutes.',
+    securityPolicy: {
+      has3DScanners: false,
+      scannersNote_it: 'A Fuerteventura sono operativi varchi radiogeni standard (raggi X convenzionali). È obbligatorio estrarre dal bagaglio a mano i dispositivi elettronici (laptop, tablet) e riporre i liquidi nella bustina trasparente richiudibile.',
+      scannersNote_en: 'Fuerteventura operates conventional X-ray screening checkpoints. Passengers must extract large electronics (laptops, tablets) and place liquids into the clear resealable pouch.',
+      terminalRules: [
+        {
+          terminalName: 'Terminal 1 (Piano 1 Partenze)',
+          has3DScanners: false,
+          liquidsAllowedInBag: false,
+          bottleAllowance_it: 'Contenitori max 100ml in busta trasparente da 1 litro; da estrarre obbligatoriamente dal bagaglio',
+          bottleAllowance_en: 'Max 100ml containers in 1L resealable transparent bag; must be removed from bag',
+          electronicsInBag: false,
+          notes_it: 'I dispositivi elettronici (laptop, tablet) e la bustina dei liquidi devono essere estratti e collocati nelle vaschette separate.',
+          notes_en: 'Electronics (laptops, tablets) and liquids pouch must be removed and placed in separate plastic trays.'
+        }
+      ],
+      liquidsAllowance_it: 'Regola standard 100ml: tutti i liquidi, aerosol e gel devono essere in contenitori di capienza non superiore a 100 ml, inseriti in un\'unica busta trasparente richiudibile di capacità massima 1 litro (20x20 cm), da estrarre e mostrare al controllo.',
+      liquidsAllowance_en: 'Standard 100ml rule: all liquids, aerosols, and gels must be in containers of maximum 100 ml each, enclosed in a single 1-litre transparent resealable bag (20x20 cm), presented outside your carry-on luggage.',
+      liquidsMustBeRemoved: true,
+      liquidsUnverified: false,
+      electronicsInBag: false,
+      electronicsNote_it: 'Computer portatili, tablet, fotocamere e caricabatterie ingombranti vanno estratti dal bagaglio e posizionati nella vaschetta dei raggi X.',
+      electronicsNote_en: 'Laptops, tablets, cameras, and large chargers must be removed from hand luggage and screened in separate trays.',
+      electronicsUnverified: false,
+      droneAllowedInCabin: true,
+      droneAllowedInHold: false,
+      dronePolicy_it: 'Droni ammessi solo in cabina con batterie Lipo rimosse, riposte in sacchetti antincendio e poli isolati. Divieto assoluto di volo nei pressi delle zone costiere aeroportuali e parchi naturali (Dunas de Corralejo).',
+      dronePolicy_en: 'Drones permitted in cabin only with Lipo batteries removed and terminals taped. Strictly prohibited near coastal flight paths and nature reserves (Dunas de Corralejo).',
+      droneUnverified: false,
+      maxPowerbankWh: 100,
+      powerbankPolicy_it: 'Powerbank ammessi esclusivamente nel bagaglio a mano fino a 100Wh (fino a 160Wh con permesso della compagnia). Vietati categoricamente nella stiva.',
+      powerbankPolicy_en: 'Powerbanks strictly permitted in cabin baggage only up to 100Wh (up to 160Wh with airline approval). Forbidden in hold baggage.',
+      powerbankUnverified: false,
+      officialSourceUrl: 'https://www.aena.es/es/pasajeros/equipajes-controles/seguridad.html',
+      lastVerifiedDate: '2026-10-20'
+    },
+    terminals: [
+      {
+        id: 'fue-t1',
+        name: 'Terminal 1 (El Matorral)',
+        transferInfo_it: 'Terminal passeggeri unico. Piano 0 Arrivi, Piano 1 Partenze e Imbarchi (Gate 1-24).',
+        transferInfo_en: 'Single passenger terminal. Floor 0 Arrivals, Floor 1 Departures and Boarding Gates (Gates 1-24).'
+      }
+    ],
+    airlines: [
+      { airlineName: 'Ryanair', iataCode: 'FR', terminal: 'Terminal 1', checkInZone: 'Banchi 1-12' },
+      { airlineName: 'EasyJet', iataCode: 'U2', terminal: 'Terminal 1', checkInZone: 'Banchi 13-20' },
+      { airlineName: 'Binter Canarias', iataCode: 'NT', terminal: 'Terminal 1', checkInZone: 'Banchi Inter-isole 21-26' },
+      { airlineName: 'Vueling / Iberia', iataCode: 'VY/IB', terminal: 'Terminal 1', checkInZone: 'Banchi 27-34' },
+      { airlineName: 'TUI fly / Condor', iataCode: 'X3/DE', terminal: 'Terminal 1', checkInZone: 'Banchi 35-48' },
+      { airlineName: 'Jet2.com', iataCode: 'LS', terminal: 'Terminal 1', checkInZone: 'Banchi 49-60' },
+      { airlineName: 'Neos Air', iataCode: 'NO', terminal: 'Terminal 1', checkInZone: 'Banchi Voli Charter Italia' }
+    ],
+    amenities: [
+      {
+        id: 'fue-pwr-gate',
+        category: 'power_charging',
+        title_it: 'Torrette di ricarica verticali con prese 230V e USB',
+        title_en: 'Vertical Power Totems with 230V AC & USB',
+        terminal: 'Terminal 1',
+        location_it: 'Area imbarchi centrale tra i Gate 8-12 e vicino al Gate 18',
+        location_en: 'Central boarding area between Gates 8-12 and near Gate 18',
+        availability: 'moderate',
+        scarcityNote_it: 'Le normali poltroncine metalliche d\'attesa ai gate NON dispongono di prese elettriche integrate. La ricarica è disponibile solo presso le colonnine verticali dedicate AENA posizionate lungo il corridoio principale.',
+        scarcityNote_en: 'Standard metal waiting chairs at gates lack built-in sockets. Charging is provided only at dedicated vertical AENA charging columns along the central concourse.',
+        details_it: 'Colonnine multi-presa AENA con porte USB e prese Schuko standard europee per la ricarica gratuita di smartphone e portatili.',
+        details_en: 'AENA multi-socket stations featuring USB and standard European Schuko sockets for free device charging.'
+      },
+      {
+        id: 'fue-water',
+        category: 'water_refill',
+        title_it: 'Fontanelle d\'acqua potabile gratuita post-controlli',
+        title_en: 'Free Drinking Water Refill Stations',
+        terminal: 'Terminal 1',
+        location_it: 'Presso i blocchi servizi igienici vicino al Gate 5 e al Gate 17',
+        location_en: 'Near restroom clusters close to Gate 5 and Gate 17',
+        availability: 'abundant',
+        details_it: 'Erogatori di acqua fresca microfiltrata per riempire gratuitamente borracce e bottiglie una volta superati i varchi di sicurezza.',
+        details_en: 'Fresh microfiltered water fountains to refill reusable bottles free of charge after passing security.'
+      },
+      {
+        id: 'fue-wifi',
+        category: 'wifi',
+        title_it: 'Wi-Fi gratuito illimitato "Airport Free Wifi Aena"',
+        title_en: 'Free Unlimited "Airport Free Wifi Aena"',
+        terminal: 'Terminal 1',
+        location_it: 'Copertura ad alta velocità in tutto il terminal',
+        location_en: 'High-speed coverage throughout the terminal',
+        availability: 'abundant',
+        details_it: 'Rete Wi-Fi ufficiale gratuita fornita da AENA, senza limiti di tempo.',
+        details_en: 'Official high-speed wireless network provided by AENA, unlimited browsing.'
+      }
+    ],
+    venues: [
+      { id: 'fue-v1', name: 'Aena Duty Free Fuerteventura', category: 'duty_free', terminal: 'Terminal 1', location: 'Piano 1 Airside subito dopo i controlli', hours: '06:00 - 22:30' },
+      { id: 'fue-v2', name: 'Caffè di Fiore', category: 'cafe', terminal: 'Terminal 1', location: 'Piano 1 Airside vicino al Gate 6', hours: '06:30 - Ultimo volo' },
+      { id: 'fue-v3', name: 'Burger King', category: 'dining', terminal: 'Terminal 1', location: 'Piano 1 Airside centrale', hours: '10:00 - 22:00' },
+      { id: 'fue-v4', name: 'Pans & Company', category: 'grab_and_go', terminal: 'Terminal 1', location: 'Piano 1 Gate 12', hours: '07:00 - 21:30' },
+      { id: 'fue-v5', name: 'Farmacia Aeroporto Fuerteventura', category: 'pharmacy', terminal: 'Terminal 1', location: 'Piano 1 Landside prima dei controlli', hours: '08:00 - 20:00' }
+    ],
+    transports: [
+      { id: 'fue-tr-1', type: 'bus', name_it: 'Tiadhe Autobus Linea 3', name_en: 'Tiadhe Bus Route 3', duration: '15 min', frequency: 'Ogni 30 min', estimatedCost: '€1.45', pickupLocation_it: 'Fermata bus all\'uscita Arrivi (Piano 0)', pickupLocation_en: 'Bus stop outside Arrivals (Floor 0)', details_it: 'Collega l\'aeroporto con Puerto del Rosario e la località turistica di Caleta de Fuste.', details_en: 'Connects airport with Puerto del Rosario and Caleta de Fuste resort.' },
+      { id: 'fue-tr-2', type: 'bus', name_it: 'Tiadhe Autobus Linea 10', name_en: 'Tiadhe Bus Route 10', duration: '75 min', frequency: 'Corse giornaliere regolari', estimatedCost: '€9.70', pickupLocation_it: 'Fermata bus Piano 0', pickupLocation_en: 'Bus stop Floor 0', details_it: 'Linea diretta verso il sud dell\'isola: Costa Calma e Morro Jable.', details_en: 'Direct route to southern island resorts: Costa Calma and Morro Jable.' },
+      { id: 'fue-tr-3', type: 'taxi', name_it: 'Radiotaxi Fuerteventura', name_en: 'Radiotaxi Fuerteventura', duration: '10 min', frequency: 'Disponibile 24/7', estimatedCost: '€15 - €20', pickupLocation_it: 'Corsia taxi all\'uscita Piano 0 Arrivi', pickupLocation_en: 'Taxi rank outside Floor 0 Arrivals', details_it: 'Tariffa a tassametro verso Puerto del Rosario (~€16) o Corralejo al nord (~€45).', details_en: 'Metered fares to Puerto del Rosario (~€16) or Corralejo to the north (~€45).' }
+    ],
+    lastUpdated: '2026-10-20'
   }
 ];
 

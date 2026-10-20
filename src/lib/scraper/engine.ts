@@ -36,6 +36,7 @@ export const OFFICIAL_DOMAIN_WHITELIST: Record<string, string> = {
   // Spain
   MAD: 'https://www.aena.es/es/pasajeros/equipajes-controles/seguridad.html',
   BCN: 'https://www.aena.es/es/pasajeros/equipajes-controles/seguridad.html',
+  FUE: 'https://www.aena.es/es/pasajeros/equipajes-controles/seguridad.html',
 
   // Netherlands
   AMS: 'https://www.schiphol.nl/en/page/security-rules-liquids-in-hand-baggage/',
