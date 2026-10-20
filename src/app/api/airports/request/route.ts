@@ -2,10 +2,18 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 import { AirportScraperEngine, OFFICIAL_DOMAIN_WHITELIST } from '@/lib/scraper/engine';
 
+export const maxDuration = 60;
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { query, email } = body;
+
+    console.info('✈️ [AIRPORT_REQUEST] Received user request:', {
+      query,
+      email,
+      timestamp: new Date().toISOString()
+    });
 
     if (!query || typeof query !== 'string' || query.trim().length === 0) {
       return NextResponse.json(

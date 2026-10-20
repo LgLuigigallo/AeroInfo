@@ -226,12 +226,19 @@ export class AirportScraperEngine {
    */
   public async runWeeklySync(airports: Airport[]): Promise<ScrapingResult[]> {
     const results: ScrapingResult[] = [];
-    for (const airport of airports) {
-      const targetUrl = airport.securityPolicy?.officialSourceUrl || OFFICIAL_DOMAIN_WHITELIST[airport.iata.toUpperCase()];
-      const result = await this.scrapeAirportSecurity(airport.iata, targetUrl);
-      results.push(result);
-      // Politeness pause between requests
-      await new Promise((res) => setTimeout(res, 800));
+    const chunkSize = 5;
+
+    for (let i = 0; i < airports.length; i += chunkSize) {
+      const chunk = airports.slice(i, i + chunkSize);
+      const chunkResults = await Promise.all(
+        chunk.map(async (airport) => {
+          const targetUrl =
+            airport.securityPolicy?.officialSourceUrl ||
+            OFFICIAL_DOMAIN_WHITELIST[airport.iata.toUpperCase()];
+          return this.scrapeAirportSecurity(airport.iata, targetUrl);
+        })
+      );
+      results.push(...chunkResults);
     }
     return results;
   }

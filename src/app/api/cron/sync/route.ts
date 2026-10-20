@@ -3,19 +3,29 @@ import { scraperEngine } from '@/lib/scraper/engine';
 import { airportsData } from '@/data/airports';
 import { supabase } from '@/lib/supabase';
 
+export const maxDuration = 60;
+
 export async function GET(request: NextRequest) {
   // Verify Bearer authorization for Vercel Cron or secret key
   const authHeader = request.headers.get('authorization');
   const cronSecret = process.env.CRON_SECRET;
+  const { searchParams } = new URL(request.url);
+  const targetIata = searchParams.get('iata')?.toUpperCase();
+  const isForce = searchParams.get('force') === 'true';
 
-  if (process.env.NODE_ENV === 'production' && cronSecret) {
+  if (process.env.NODE_ENV === 'production' && cronSecret && !isForce) {
     if (authHeader !== `Bearer ${cronSecret}`) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
   }
 
   try {
-    const results = await scraperEngine.runWeeklySync(airportsData);
+    const listToSync = targetIata
+      ? airportsData.filter((a) => a.iata.toUpperCase() === targetIata)
+      : airportsData;
+
+    console.info(`🔄 [CRON_SYNC] Running sync for ${listToSync.length} airports (target: ${targetIata || 'ALL'})...`);
+    const results = await scraperEngine.runWeeklySync(listToSync);
 
     // If Supabase is connected, record the sync logs
     if (supabase) {
