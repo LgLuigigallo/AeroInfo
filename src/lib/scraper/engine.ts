@@ -11,18 +11,77 @@ export interface ScrapingResult {
   notes?: string;
 }
 
-// Whitelist of strictly official airport domains
+// Whitelist of strictly official airport domains for European Union & Global Hubs
 export const OFFICIAL_DOMAIN_WHITELIST: Record<string, string> = {
+  // Italy
   FCO: 'https://www.adr.it/fiumicino',
   MXP: 'https://www.milanomalpensa-airport.com',
-  LHR: 'https://www.heathrow.com',
-  CDG: 'https://www.parisaeroport.fr',
-  JFK: 'https://www.jfkairport.com',
-  HND: 'https://tokyo-haneda.com',
+  LIN: 'https://www.milanolinate-airport.com',
+  BGY: 'https://www.milanbergamoairport.it',
+  VCE: 'https://www.veneziaairport.it',
+  NAP: 'https://www.aeroportodinapoli.it',
+  BLQ: 'https://www.bologna-airport.it',
+
+  // Germany
+  FRA: 'https://www.frankfurt-airport.com',
+  MUC: 'https://www.munich-airport.com',
+  BER: 'https://ber.berlin-airport.de',
+
+  // France
+  CDG: 'https://www.parisaeroport.fr/roissy-charles-de-gaulle',
+  ORY: 'https://www.parisaeroport.fr/orly',
+  NCE: 'https://www.nice.aeroport.fr',
+
+  // Spain
+  MAD: 'https://www.aena.es/es/adolfo-suarez-madrid-barajas.html',
+  BCN: 'https://www.aena.es/es/josep-tarradellas-barcelona-el-prat.html',
+  PMI: 'https://www.aena.es/es/palma-de-mallorca.html',
+
+  // Netherlands
   AMS: 'https://www.schiphol.nl',
-  DXB: 'https://www.dubaiairports.ae',
-  MAD: 'https://www.aena.es',
-  FRA: 'https://www.frankfurt-airport.com'
+
+  // Ireland
+  DUB: 'https://www.dublinairport.com',
+
+  // Portugal
+  LIS: 'https://www.ana.pt/en/lis/home',
+  OPO: 'https://www.ana.pt/en/opo/home',
+
+  // Belgium
+  BRU: 'https://www.brusselsairport.be',
+  CRL: 'https://www.brussels-charleroi-airport.com',
+
+  // Austria
+  VIE: 'https://www.viennaairport.com',
+
+  // Greece
+  ATH: 'https://www.aia.gr',
+
+  // Denmark
+  CPH: 'https://www.cph.dk',
+
+  // Sweden
+  ARN: 'https://www.swedavia.com/arlanda',
+
+  // Finland
+  HEL: 'https://www.finavia.fi/en/airports/helsinki-airport',
+
+  // Poland
+  WAW: 'https://www.lotnisko-chopina.pl',
+
+  // Czechia
+  PRG: 'https://www.prg.aero',
+
+  // Hungary
+  BUD: 'https://www.bud.hu',
+
+  // Romania
+  OTP: 'https://www.bucharestairports.ro',
+
+  // UK & USA & Japan
+  LHR: 'https://www.heathrow.com',
+  JFK: 'https://www.jfkairport.com',
+  HND: 'https://tokyo-haneda.com'
 };
 
 export class AirportScraperEngine {
@@ -92,14 +151,16 @@ export class AirportScraperEngine {
         pageText.includes('scanner 3d') || 
         pageText.includes('3d scanner') || 
         pageText.includes('scanner tc') ||
-        pageText.includes('smiths detection');
+        pageText.includes('smiths detection') ||
+        pageText.includes('ct scanner');
 
       const liquidsCanStayInBag = 
         has3DScannerMentions && 
         (pageText.includes('liquidi nel bagaglio') || 
          pageText.includes('senza estrarre') || 
          pageText.includes('liquids can stay') ||
-         pageText.includes('no need to remove liquids'));
+         pageText.includes('no need to remove liquids') ||
+         pageText.includes('liquids inside'));
 
       const laptopsCanStayInBag = 
         has3DScannerMentions && 
@@ -144,7 +205,7 @@ export class AirportScraperEngine {
       const result = await this.scrapeAirportSecurity(airport.iata);
       results.push(result);
       // Politeness pause between requests
-      await new Promise((res) => setTimeout(res, 1200));
+      await new Promise((res) => setTimeout(res, 800));
     }
     return results;
   }
