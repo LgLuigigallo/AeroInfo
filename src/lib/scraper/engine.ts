@@ -34,9 +34,9 @@ export const OFFICIAL_DOMAIN_WHITELIST: Record<string, string> = {
   ORY: 'https://www.parisaeroport.fr/passagers/passagers-preparer-vol/bagages-surete',
 
   // Spain
-  MAD: 'https://www.aena.es/es/pasajeros/equipajes-controles/seguridad.html',
-  BCN: 'https://www.aena.es/es/pasajeros/equipajes-controles/seguridad.html',
-  FUE: 'https://www.aena.es/es/pasajeros/equipajes-controles/seguridad.html',
+  MAD: 'https://www.aena.es/es/pasajeros/equipajes-controles/equipaje-mano.html',
+  BCN: 'https://www.aena.es/es/pasajeros/equipajes-controles/equipaje-mano.html',
+  FUE: 'https://www.aena.es/es/pasajeros/equipajes-controles/equipaje-mano.html',
 
   // Netherlands
   AMS: 'https://www.schiphol.nl/en/page/security-rules-liquids-in-hand-baggage/',

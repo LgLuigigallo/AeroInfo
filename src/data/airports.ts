@@ -2625,7 +2625,7 @@ export const airportsData: Airport[] = [
       powerbankPolicy_it: 'Powerbank ammessi esclusivamente nel bagaglio a mano fino a 100Wh (fino a 160Wh con permesso della compagnia). Vietati categoricamente nella stiva.',
       powerbankPolicy_en: 'Powerbanks strictly permitted in cabin baggage only up to 100Wh (up to 160Wh with airline approval). Forbidden in hold baggage.',
       powerbankUnverified: false,
-      officialSourceUrl: 'https://www.aena.es/es/pasajeros/equipajes-controles/seguridad.html',
+      officialSourceUrl: 'https://www.aena.es/es/pasajeros/equipajes-controles/equipaje-mano.html',
       lastVerifiedDate: '2026-10-20'
     },
     terminals: [
