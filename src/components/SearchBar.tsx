@@ -91,7 +91,7 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
     localStorage.removeItem('aeroinfo_recent');
   };
 
-  const topHubs = ['FCO', 'MXP', 'LIN', 'FRA', 'MUC', 'CDG', 'AMS', 'MAD', 'BCN', 'DUB', 'VIE', 'CPH', 'LHR', 'JFK', 'HND'];
+  const topHubs = ['PRG', 'FCO', 'MXP', 'LIN', 'FRA', 'MUC', 'CDG', 'AMS', 'MAD', 'BCN', 'DUB', 'VIE', 'CPH', 'WAW', 'BUD', 'ATH', 'ZRH'];
 
   return (
     <div ref={containerRef} className="relative w-full max-w-3xl mx-auto">
