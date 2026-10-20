@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 import { AirportScraperEngine, OFFICIAL_DOMAIN_WHITELIST } from '@/lib/scraper/engine';
+import { sendRequestConfirmationEmail } from '@/lib/email';
 
 export const maxDuration = 60;
 
@@ -71,7 +72,26 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // 3. Return confirmation response
+    // 3. Dispatch Confirmation Email if user provided an email address
+    let emailStatus: { sent: boolean; provider?: string; error?: string } = { sent: false };
+    if (email && typeof email === 'string' && email.includes('@')) {
+      try {
+        const mailRes = await sendRequestConfirmationEmail({
+          to: email.trim(),
+          airportQuery: cleanedQuery
+        });
+        emailStatus = {
+          sent: mailRes.success,
+          provider: mailRes.provider,
+          error: mailRes.error
+        };
+      } catch (err: any) {
+        console.error('Failed to trigger confirmation email:', err);
+        emailStatus = { sent: false, error: err.message };
+      }
+    }
+
+    // 4. Return confirmation response
     return NextResponse.json({
       success: true,
       message_it: instantScrapeSuccess
@@ -83,7 +103,8 @@ export async function POST(request: NextRequest) {
       requestId: recordId,
       status: instantScrapeSuccess ? 'scraped' : 'queued_weekly',
       scheduledFor: 'Entro 7 giorni (Sincronizzazione Settimanale Automatica)',
-      isInstantScraped: instantScrapeSuccess
+      isInstantScraped: instantScrapeSuccess,
+      emailStatus
     });
   } catch (error: any) {
     console.error('Error handling airport request:', error);
