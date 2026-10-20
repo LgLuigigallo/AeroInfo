@@ -1,13 +1,11 @@
 'use client';
 
 import React from 'react';
-import { Plane, ShieldCheck, Database } from 'lucide-react';
+import { Plane, ShieldCheck } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
-import { isSupabaseConfigured } from '@/lib/supabase';
 
 export function Header() {
   const { lang, setLang, t } = useLanguage();
-  const isDbLive = isSupabaseConfigured();
 
   return (
     <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/80 dark:bg-neutral-950/80 border-b border-neutral-200/80 dark:border-neutral-800/80 transition-colors">
@@ -27,14 +25,8 @@ export function Header() {
           </div>
         </div>
 
-        {/* Right Actions: Official Source Tag, Supabase Status & Language Switcher */}
+        {/* Right Actions: Official Source Tag & Language Switcher */}
         <div className="flex items-center gap-2.5 sm:gap-3">
-          {/* Supabase Status Pill */}
-          <div className="hidden lg:flex items-center gap-1.5 text-[11px] font-medium px-2.5 py-1 rounded-full bg-neutral-100 dark:bg-neutral-900 border border-neutral-200/60 dark:border-neutral-800 text-neutral-600 dark:text-neutral-400">
-            <Database className="w-3 h-3 text-emerald-500" />
-            <span>{isDbLive ? 'Supabase Live' : 'Supabase Ready'}</span>
-          </div>
-
           {/* Official Tag */}
           <div className="hidden sm:flex items-center gap-1.5 text-xs text-neutral-600 dark:text-neutral-400 font-medium px-2.5 py-1 rounded-full bg-neutral-100 dark:bg-neutral-900 border border-neutral-200/60 dark:border-neutral-800">
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />

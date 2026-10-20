@@ -28,15 +28,15 @@ export const translations: Translations = {
   noResults: { it: 'Nessun aeroporto trovato per', en: 'No airports found for' },
   requestAirportTitle: { it: 'Aeroporto non ancora censito', en: 'Airport not yet indexed' },
   requestAirportDesc: { 
-    it: 'Questo aeroporto non è ancora presente nel nostro database verificato. Puoi richiedere il censimento prioritario: il nostro web scraper analizzerà il sito ufficiale dell\'aeroporto e le regole verranno pubblicate al massimo entro una settimana (o prima con scansione in background).', 
-    en: 'This airport is not yet in our verified database. You can request priority indexing: our web scraper will analyze the official airport website and rules will be published within one week (or sooner via background discovery).' 
+    it: 'Questo aeroporto non è ancora presente nel nostro catalogo verificato. Puoi richiederne l\'inserimento prioritario: verificheremo le normative e i servizi sui canali ufficiali dell\'ente aeroportuale e pubblicheremo la scheda completa entro l\'aggiornamento programmato.', 
+    en: 'This airport is not yet in our verified catalog. You can request priority addition: we will verify regulations and amenities through official airport channels and publish the full profile within the scheduled update.' 
   },
-  requestAirportBtn: { it: 'Richiedi Censimento & Avvia Web Scraping', en: 'Request Indexing & Start Web Scraping' },
-  requestAirportEmailPlaceholder: { it: 'La tua email per notifica (opzionale)', en: 'Your email for publication alert (optional)' },
-  requestAirportSubmitting: { it: 'Invio richiesta e avvio crawler in corso...', en: 'Submitting request and starting crawler...' },
+  requestAirportBtn: { it: 'Richiedi Censimento Aeroporto', en: 'Request Airport Addition' },
+  requestAirportEmailPlaceholder: { it: 'La tua email per ricevere la notifica (opzionale)', en: 'Your email for publication alert (optional)' },
+  requestAirportSubmitting: { it: 'Registrazione richiesta e verifica in corso...', en: 'Registering request and verifying...' },
   requestAirportSuccess: { 
-    it: 'Richiesta presa in carico con successo! Lo scraping è stato accodato e l\'aeroporto verrà inserito entro la sincronizzazione settimanale.', 
-    en: 'Request submitted successfully! Scraping has been queued and the airport will be indexed within the weekly sync.' 
+    it: 'Richiesta presa in carico con successo! Le informazioni ufficiali verranno verificate e pubblicate nel catalogo.', 
+    en: 'Request submitted successfully! Official information will be verified and published in the catalog.' 
   },
   
   // Verification Badges & Modal

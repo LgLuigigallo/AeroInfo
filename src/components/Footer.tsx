@@ -51,7 +51,7 @@ export function Footer() {
             <span>AeroInfo • Global Airport Traveler Intelligence</span>
           </div>
           <div>
-            <span>Next.js • Tailwind CSS • Vercel • Supabase</span>
+            <span>{lang === 'it' ? '© 2026 AeroInfo • Tutti i diritti riservati' : '© 2026 AeroInfo • All rights reserved'}</span>
           </div>
         </div>
 

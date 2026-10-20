@@ -95,15 +95,15 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       message_it: instantScrapeSuccess
-        ? 'Scraping ufficiale completato con successo! Le regole sono state verificate e verranno pubblicate all\'aggiornamento settimanale.'
-        : 'Richiesta di censimento registrata con successo! Il nostro crawler analizzerà il sito ufficiale dell\'aeroporto entro l\'aggiornamento settimanale.',
+        ? 'Verifica ufficiale completata con successo! Le informazioni sono state confermate e verranno pubblicate all\'aggiornamento programmato.'
+        : 'Richiesta di censimento registrata con successo! Le informazioni ufficiali verranno verificate e pubblicate entro l\'aggiornamento programmato.',
       message_en: instantScrapeSuccess
-        ? 'Official web scraping completed! Rules verified and will be published at the weekly refresh.'
-        : 'Indexing request submitted successfully! Our crawler will analyze the official airport website within the weekly sync.',
+        ? 'Official verification completed! Regulations verified and will be published at the scheduled refresh.'
+        : 'Airport request submitted successfully! Official information will be verified and published within the scheduled update.',
       requestId: recordId,
-      status: instantScrapeSuccess ? 'scraped' : 'queued_weekly',
-      scheduledFor: 'Entro 7 giorni (Sincronizzazione Settimanale Automatica)',
-      isInstantScraped: instantScrapeSuccess,
+      status: instantScrapeSuccess ? 'verified' : 'queued',
+      scheduledFor: 'Entro 24 ore (Aggiornamento Giornaliero Automatico)',
+      isInstantVerified: instantScrapeSuccess,
       emailStatus
     });
   } catch (error: any) {

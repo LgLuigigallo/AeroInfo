@@ -9,8 +9,8 @@ export interface SendEmailResult {
 }
 
 /**
- * Dispatches an email using either Resend or Nodemailer (SMTP).
- * Gracefully falls back to detailed logging if credentials are not configured yet.
+ * Dispatches an email using Nodemailer (Gmail official SMTP) or Resend.
+ * Uses clean, high-deliverability human formatting to avoid spam filters.
  */
 export async function sendEmail({
   to,
@@ -23,7 +23,6 @@ export async function sendEmail({
   html: string;
   text: string;
 }): Promise<SendEmailResult> {
-  const fromEmail = process.env.EMAIL_FROM || 'AeroInfo <onboarding@resend.dev>';
   const replyTo = process.env.EMAIL_REPLY_TO || 'vireontech@gmail.com';
 
   // 1. Prioritize Nodemailer SMTP (e.g. Gmail official SMTP) for guaranteed inbox delivery
@@ -40,15 +39,14 @@ export async function sendEmail({
       });
 
       const info = await transporter.sendMail({
-        from: process.env.SMTP_FROM || `AeroInfo <${smtpUser}>`,
+        from: `AeroInfo <${smtpUser}>`,
         to,
         replyTo,
         subject,
         text,
         html,
         headers: {
-          'X-Entity-Ref-ID': `aeroinfo-${Date.now()}`,
-          'List-Unsubscribe': `<mailto:${replyTo}?subject=Unsubscribe>`
+          'X-Entity-Ref-ID': `aeroinfo-${Date.now()}`
         }
       });
 
@@ -64,6 +62,7 @@ export async function sendEmail({
   const resendApiKey = process.env.RESEND_API_KEY;
   if (resendApiKey) {
     try {
+      const fromEmail = process.env.EMAIL_FROM || 'AeroInfo <onboarding@resend.dev>';
       const resend = new Resend(resendApiKey);
       const res = await resend.emails.send({
         from: fromEmail,
@@ -71,11 +70,7 @@ export async function sendEmail({
         replyTo,
         subject,
         html,
-        text,
-        headers: {
-          'X-Entity-Ref-ID': `aeroinfo-${Date.now()}`,
-          'List-Unsubscribe': `<mailto:${replyTo}?subject=Unsubscribe>`
-        }
+        text
       });
 
       if (res.error) {
@@ -91,13 +86,24 @@ export async function sendEmail({
     }
   }
 
-  // 3. Fallback when credentials are missing: log to terminal & alert admin
-  console.warn(`⚠️ [EMAIL_DISPATCH_SKIPPED] No email provider configured (missing RESEND_API_KEY or SMTP_USER/PASS). Simulated dispatch to: ${to} | Subject: "${subject}"`);
+  // 3. Fallback when credentials are missing
+  console.warn(`⚠️ [EMAIL_DISPATCH_SKIPPED] No email provider configured. Simulated dispatch to: ${to} | Subject: "${subject}"`);
   return {
     success: false,
     provider: 'none',
-    error: 'Missing email service credentials. Set RESEND_API_KEY or SMTP_USER/SMTP_PASS in environment variables.'
+    error: 'Missing email service credentials.'
   };
+}
+
+/**
+ * Capitalizes string nicely for clean subject lines (avoids spammy ALL-CAPS)
+ */
+function toTitleCase(str: string): string {
+  return str
+    .trim()
+    .split(/\s+/)
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+    .join(' ');
 }
 
 /**
@@ -110,67 +116,44 @@ export async function sendRequestConfirmationEmail({
   to: string;
   airportQuery: string;
 }): Promise<SendEmailResult> {
-  const subject = `✈️ Richiesta di censimento ricevuta: ${airportQuery.toUpperCase()} | AeroInfo`;
-  const text = `Ciao!\n\nAbbiamo ricevuto la tua richiesta di censimento per l'aeroporto "${airportQuery}".\nIl nostro web crawler analizzerà il sito ufficiale dell'aeroporto per verificare le regole su liquidi, controlli 3D, droni e mappa concourse.\n\nRiceverai un'ulteriore email non appena l'aeroporto sarà online ed accessibile su AeroInfo.\n\nA presto,\nIl Team di AeroInfo\nhttps://aero-info.vercel.app`;
+  const cleanName = toTitleCase(airportQuery);
+  const subject = `Conferma richiesta aeroporto ${cleanName} - AeroInfo`;
+  
+  const text = `Ciao,\n\nti confermiamo la ricezione della tua richiesta per l'aeroporto di ${cleanName}.\n\nIl nostro team verificherà le disposizioni ufficiali dell'ente aeroportuale relative a bagaglio a mano, controlli di sicurezza, terminal e servizi per i passeggeri.\n\nTi invieremo un aggiornamento non appena la scheda sarà pubblicata e consultabile online.\n\nA presto,\nTeam AeroInfo\nhttps://aero-info.vercel.app`;
 
   const html = `
     <!DOCTYPE html>
-    <html>
+    <html lang="it">
       <head>
         <meta charset="utf-8">
-        <style>
-          body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f9fafb; margin: 0; padding: 24px; color: #111827; }
-          .container { max-width: 560px; margin: 0 auto; background: #ffffff; border-radius: 16px; border: 1px solid #e5e7eb; overflow: hidden; }
-          .header { background: #0f172a; padding: 32px 24px; text-align: center; color: #ffffff; }
-          .header h1 { margin: 0 0 6px 0; font-size: 20px; font-weight: 700; }
-          .header p { margin: 0; font-size: 13px; color: #94a3b8; }
-          .content { padding: 32px 24px; }
-          .badge { display: inline-block; padding: 6px 14px; background: #eff6ff; color: #1d4ed8; border-radius: 9999px; font-weight: 600; font-size: 13px; margin: 12px 0; border: 1px solid #dbeafe; }
-          .steps { background: #f8fafc; border-radius: 12px; padding: 16px; margin: 20px 0; border: 1px solid #f1f5f9; }
-          .step-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; font-size: 13px; color: #334155; }
-          .step-item:last-child { margin-bottom: 0; }
-          .footer { padding: 20px 24px; background: #f8fafc; border-top: 1px solid #e2e8f0; text-align: center; font-size: 11px; color: #64748b; }
-          .footer a { color: #0284c7; text-decoration: none; }
-        </style>
       </head>
-      <body>
-        <div class="container">
-          <div class="header">
-            <h1>✈️ AeroInfo</h1>
-            <p>Intelligence Ufficiale per Viaggiatori Aeroportuali</p>
-          </div>
-          <div class="content">
-            <h2 style="font-size: 17px; margin-top: 0;">Richiesta presa in carico con successo</h2>
-            <p style="font-size: 14px; line-height: 1.6; color: #4b5563;">
-              Abbiamo registrato la tua richiesta di censimento per l'aeroporto:
-            </p>
-            <div style="text-align: center;">
-              <span class="badge">${airportQuery.toUpperCase()}</span>
-            </div>
-            
-            <div class="steps">
-              <div class="step-item">
-                <span style="font-weight: bold; color: #2563eb;">1.</span>
-                <span><strong>Web Scraping Ufficiale:</strong> I nostri crawler analizzeranno esclusivamente il portale ufficiale dell'autorità aeroportuale.</span>
-              </div>
-              <div class="step-item">
-                <span style="font-weight: bold; color: #2563eb;">2.</span>
-                <span><strong>Verifica Regole:</strong> Rileveremo la presenza di scanner tomografici 3D, deroghe sui liquidi da 100ml, droni, powerbank e stazioni di ricarica.</span>
-              </div>
-              <div class="step-item">
-                <span style="font-weight: bold; color: #2563eb;">3.</span>
-                <span><strong>Pubblicazione & Notifica:</strong> Appena l'aeroporto sarà online nel nostro database, riceverai una seconda email con il link diretto alla scheda completa.</span>
-              </div>
-            </div>
-
-            <p style="font-size: 13px; color: #6b7280; line-height: 1.5;">
-              La sincronizzazione e l'ingestione avvengono automaticamente entro il ciclo settimanale (o non appena lo scraping ufficiale viene validato).
-            </p>
-          </div>
-          <div class="footer">
-            <p style="margin: 0 0 6px 0;">AeroInfo • Global Airport Intelligence</p>
-            <p style="margin: 0;"><a href="https://aero-info.vercel.app">https://aero-info.vercel.app</a></p>
-          </div>
+      <body style="font-family: Arial, Helvetica, sans-serif; background-color: #ffffff; margin: 0; padding: 24px; color: #222222; line-height: 1.6;">
+        <div style="max-width: 560px; margin: 0 auto; padding: 10px;">
+          <h2 style="font-size: 18px; color: #111111; margin-top: 0; margin-bottom: 16px;">
+            Richiesta registrata con successo
+          </h2>
+          <p style="font-size: 14px; margin-bottom: 14px;">Ciao,</p>
+          <p style="font-size: 14px; margin-bottom: 14px;">
+            ti confermiamo la corretta ricezione della tua richiesta per l'aeroporto di <strong>${cleanName}</strong>.
+          </p>
+          <p style="font-size: 14px; margin-bottom: 14px;">
+            Verificheremo le informazioni e le normative ufficiali dell'ente aeroportuale:
+          </p>
+          <ul style="font-size: 14px; padding-left: 20px; margin-bottom: 20px; color: #444444;">
+            <li style="margin-bottom: 6px;">Disposizioni sui liquidi e tipologia di controlli di sicurezza</li>
+            <li style="margin-bottom: 6px;">Suddivisione delle compagnie per terminal</li>
+            <li style="margin-bottom: 6px;">Punti di ricarica per dispositivi e fontanelle per l'acqua</li>
+            <li style="margin-bottom: 6px;">Aree ristoro, negozi e collegamenti con la città</li>
+          </ul>
+          <p style="font-size: 14px; margin-bottom: 24px;">
+            Non appena la scheda sarà disponibile sul portale, ti invieremo un'email di aggiornamento con il link diretto.
+          </p>
+          <hr style="border: none; border-top: 1px solid #eeeeee; margin: 24px 0;" />
+          <p style="font-size: 12px; color: #777777; margin: 0;">
+            A presto,<br>
+            <strong>Team AeroInfo</strong><br>
+            <a href="https://aero-info.vercel.app" style="color: #0066cc; text-decoration: none;">aero-info.vercel.app</a>
+          </p>
         </div>
       </body>
     </html>
@@ -193,45 +176,36 @@ export async function sendAirportPublishedEmail({
   airportIata: string;
   airportUrl: string;
 }): Promise<SendEmailResult> {
-  const subject = `🎉 L'aeroporto ${airportName} (${airportIata}) è ora online su AeroInfo!`;
-  const text = `Ottime notizie!\n\nL'aeroporto da te richiesto "${airportName}" (${airportIata}) è stato censito, verificato dal sito ufficiale e pubblicato nel nostro database.\n\nAccedi subito alla scheda completa e alla mappa concourse:\n${airportUrl}\n\nA presto,\nIl Team di AeroInfo`;
+  const subject = `L'aeroporto ${airportName} (${airportIata}) è ora disponibile su AeroInfo`;
+  
+  const text = `Ciao,\n\nti informiamo che la scheda ufficiale dell'aeroporto ${airportName} (${airportIata}) è ora consultabile online su AeroInfo.\n\nAccedi alla scheda completa:\n${airportUrl}\n\nA presto,\nTeam AeroInfo`;
 
   const html = `
     <!DOCTYPE html>
-    <html>
+    <html lang="it">
       <head>
         <meta charset="utf-8">
-        <style>
-          body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f9fafb; margin: 0; padding: 24px; color: #111827; }
-          .container { max-width: 560px; margin: 0 auto; background: #ffffff; border-radius: 16px; border: 1px solid #e5e7eb; overflow: hidden; }
-          .header { background: #059669; padding: 32px 24px; text-align: center; color: #ffffff; }
-          .header h1 { margin: 0 0 6px 0; font-size: 20px; font-weight: 700; }
-          .content { padding: 32px 24px; text-align: center; }
-          .cta-btn { display: inline-block; padding: 12px 28px; background: #0f172a; color: #ffffff !important; border-radius: 9999px; font-weight: 600; font-size: 14px; text-decoration: none; margin: 24px 0 12px 0; }
-          .footer { padding: 20px 24px; background: #f8fafc; border-top: 1px solid #e2e8f0; text-align: center; font-size: 11px; color: #64748b; }
-        </style>
       </head>
-      <body>
-        <div class="container">
-          <div class="header">
-            <h1>🎉 Nuovo Aeroporto Disponibile!</h1>
-          </div>
-          <div class="content">
-            <h2 style="font-size: 18px; margin-top: 0; color: #111827;">${airportName} (${airportIata})</h2>
-            <p style="font-size: 14px; line-height: 1.6; color: #4b5563;">
-              L'aeroporto che avevi richiesto è stato censito, analizzato dal sito ufficiale ed è ora ufficialmente consultabile su AeroInfo.
-            </p>
-            <p style="font-size: 13px; color: #6b7280;">
-              Troverai le regole sui liquidi, la presenza di scanner 3D, le politiche sui droni, la mappa concourse con le prese di ricarica e i ristoranti.
-            </p>
-            <div>
-              <a href="${airportUrl}" class="cta-btn">Esplora la Scheda Aeroporto &rarr;</a>
-            </div>
-          </div>
-          <div class="footer">
-            <p style="margin: 0 0 6px 0;">AeroInfo • Global Airport Intelligence</p>
-            <p style="margin: 0;"><a href="https://aero-info.vercel.app" style="color: #059669; text-decoration: none;">https://aero-info.vercel.app</a></p>
-          </div>
+      <body style="font-family: Arial, Helvetica, sans-serif; background-color: #ffffff; margin: 0; padding: 24px; color: #222222; line-height: 1.6;">
+        <div style="max-width: 560px; margin: 0 auto; padding: 10px;">
+          <h2 style="font-size: 18px; color: #111111; margin-top: 0; margin-bottom: 16px;">
+            Scheda aeroporto disponibile
+          </h2>
+          <p style="font-size: 14px; margin-bottom: 14px;">Ciao,</p>
+          <p style="font-size: 14px; margin-bottom: 14px;">
+            ti informiamo che la scheda dell'aeroporto <strong>${airportName} (${airportIata})</strong> è ora consultabile su AeroInfo con tutte le disposizioni ufficiali aggiornate.
+          </p>
+          <p style="margin: 24px 0;">
+            <a href="${airportUrl}" style="display: inline-block; padding: 10px 22px; background-color: #111111; color: #ffffff; text-decoration: none; border-radius: 6px; font-size: 14px; font-weight: bold;">
+              Visualizza scheda aeroporto &rarr;
+            </a>
+          </p>
+          <hr style="border: none; border-top: 1px solid #eeeeee; margin: 24px 0;" />
+          <p style="font-size: 12px; color: #777777; margin: 0;">
+            A presto,<br>
+            <strong>Team AeroInfo</strong><br>
+            <a href="https://aero-info.vercel.app" style="color: #0066cc; text-decoration: none;">aero-info.vercel.app</a>
+          </p>
         </div>
       </body>
     </html>
