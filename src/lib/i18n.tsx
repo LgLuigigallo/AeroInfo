@@ -35,8 +35,8 @@ export const translations: Translations = {
   requestAirportEmailPlaceholder: { it: 'La tua email per ricevere la notifica (opzionale)', en: 'Your email for publication alert (optional)' },
   requestAirportSubmitting: { it: 'Registrazione richiesta e verifica in corso...', en: 'Registering request and verifying...' },
   requestAirportSuccess: { 
-    it: 'Richiesta presa in carico con successo! Le informazioni ufficiali verranno verificate e pubblicate nel catalogo.', 
-    en: 'Request submitted successfully! Official information will be verified and published in the catalog.' 
+    it: 'La scheda ufficiale verrà presto elaborata e riceverai news all\'email indicata (controlla anche lo spam).', 
+    en: 'The official dossier will soon be processed and you will receive news at the specified email (check your spam folder too).' 
   },
   
   // Already Requested & Email Subscription
@@ -49,8 +49,8 @@ export const translations: Translations = {
   subscribeAlertBtn: { it: 'Avvisami alla Pubblicazione', en: 'Notify Me When Published' },
   subscribeAlertSubmitting: { it: 'Iscrizione notifica in corso...', en: 'Subscribing to alert...' },
   subscribeAlertSuccess: {
-    it: 'Email registrata! Riceverai una notifica non appena la scheda dell\'aeroporto sarà online.',
-    en: 'Email registered! You will receive an alert as soon as the airport profile is live.'
+    it: 'La scheda ufficiale verrà presto elaborata e riceverai news all\'email indicata (controlla anche lo spam).',
+    en: 'The official dossier will soon be processed and you will receive news at the specified email (check your spam folder too).'
   },
   emailRequiredNotice: {
     it: 'Inserisci un indirizzo email valido per ricevere la notifica.',

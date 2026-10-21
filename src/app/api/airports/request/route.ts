@@ -144,8 +144,12 @@ export async function POST(request: NextRequest) {
         emailStatus = { sent: false, error: err.message };
       }
 
-      const thankYouMsg_it = `Grazie! Abbiamo aggiunto la tua email per l'aeroporto "${existingRequest.query || query.trim()}". Riceverai la notifica non appena la scheda sarà online domani.`;
-      const thankYouMsg_en = `Thank you! Your email has been registered for "${existingRequest.query || query.trim()}". You will be notified once published tomorrow.`;
+      const thankYouMsg_it = email
+        ? 'La scheda ufficiale verrà presto elaborata e riceverai news alla email indicata (controlla anche lo spam).'
+        : `La scheda ufficiale per "${existingRequest.query || query.trim()}" verrà presto elaborata e pubblicata nei prossimi aggiornamenti.`;
+      const thankYouMsg_en = email
+        ? 'The official dossier will soon be processed and you will receive news at the specified email (check your spam folder too).'
+        : `The official dossier for "${existingRequest.query || query.trim()}" will soon be processed and published in upcoming updates.`;
 
       return NextResponse.json({
         success: true,
@@ -210,9 +214,13 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // 5. Build Thank-You response (scheduled for next day)
-    const thankYouLine_it = `Grazie per la tua richiesta! Abbiamo preso in carico la segnalazione per l'aeroporto di "${query.trim()}". La scheda ufficiale verrà elaborata e pubblicata nel ciclo programmato di domani alle ore 03:00.`;
-    const thankYouLine_en = `Thank you for your request! We have queued your submission for "${query.trim()}". The official airport dossier will be processed and published in tomorrow's scheduled 03:00 update.`;
+    // 5. Build Thank-You response without mentioning specific hours
+    const thankYouLine_it = email
+      ? 'La scheda ufficiale verrà presto elaborata e riceverai news alla email indicata (controlla anche lo spam).'
+      : `La scheda ufficiale per "${query.trim()}" verrà presto elaborata e pubblicata nei prossimi aggiornamenti.`;
+    const thankYouLine_en = email
+      ? 'The official dossier will soon be processed and you will receive news at the specified email (check your spam folder too).'
+      : `The official dossier for "${query.trim()}" will soon be processed and published in upcoming updates.`;
 
     return NextResponse.json({
       success: true,
@@ -221,7 +229,7 @@ export async function POST(request: NextRequest) {
       airportIata: candidateIata,
       query: query.trim(),
       status: 'queued',
-      scheduledFor: 'Domani alle ore 03:00',
+      scheduledFor: 'Prossimo aggiornamento programmato',
       thankYouLine_it,
       thankYouLine_en,
       message_it: thankYouLine_it,

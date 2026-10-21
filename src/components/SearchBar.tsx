@@ -311,8 +311,8 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
                         <p className="text-xs text-emerald-800/90 dark:text-emerald-300 leading-relaxed font-normal">
                           {requestFeedbackMsg || (
                             lang === 'it'
-                              ? `Abbiamo aggiunto la tua email per l'aeroporto "${existingRequest?.query || query}". Riceverai una notifica non appena sarà pubblicato.`
-                              : `Your email has been added for "${existingRequest?.query || query}". You will receive a notification once published.`
+                              ? 'La scheda ufficiale verrà presto elaborata e riceverai news alla email indicata (controlla anche lo spam).'
+                              : 'The official dossier will soon be processed and you will receive news at the specified email (check your spam folder too).'
                           )}
                         </p>
                       </div>
@@ -396,8 +396,8 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
                         <p className="text-xs text-emerald-800/90 dark:text-emerald-300 leading-relaxed font-normal">
                           {requestFeedbackMsg || (
                             lang === 'it'
-                              ? `La richiesta per l'aeroporto "${query}" è stata presa in carico con successo. La scheda ufficiale verrà elaborata e pubblicata nel prossimo ciclo di aggiornamento programmato di domani.`
-                              : `Your request for "${query}" has been successfully queued. The official dossier will be processed and published in tomorrow's scheduled update.`
+                              ? 'La scheda ufficiale verrà presto elaborata e riceverai news alla email indicata (controlla anche lo spam).'
+                              : 'The official dossier will soon be processed and you will receive news at the specified email (check your spam folder too).'
                           )}
                         </p>
                       </div>
