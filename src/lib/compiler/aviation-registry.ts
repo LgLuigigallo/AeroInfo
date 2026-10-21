@@ -773,5 +773,418 @@ export const AVIATION_REGISTRY: Record<string, Airport> = {
       }
     ],
     lastUpdated: '2026-10-21'
+  },
+
+  // 🇦🇪 DUBAI (DXB) - Aeroporto Internazionale di Dubai
+  DXB: {
+    id: 'dxb',
+    iata: 'DXB',
+    icao: 'OMDB',
+    name_it: 'Aeroporto Internazionale di Dubai',
+    name_en: 'Dubai International Airport',
+    city_it: 'Dubai',
+    city_en: 'Dubai',
+    country_it: 'Emirati Arabi Uniti',
+    country_en: 'United Arab Emirates',
+    countryCode: 'AE',
+    officialWebsite: 'https://www.dubaiairports.ae',
+    coordinates: { lat: 25.2532, lng: 55.3657 },
+    difficultyRating: 4,
+    difficultyLabel_it: 'Hub globale enorme, trenini interni',
+    difficultyLabel_en: 'Massive global hub, internal trains',
+    averageSecurityWaitMin: 20,
+    recommendedArrivalHours: { domestic: 3, international: 3.5 },
+    navigationAdvice_it: 'Uno degli aeroporti più trafficati al mondo. Il Terminal 3 (hub Emirates) è immenso e si divide nei Concourse A, B e C, collegati da un trenino automatico sotterraneo. Pianificare almeno 20-30 minuti per raggiungere il gate.',
+    navigationAdvice_en: 'One of the world\'s busiest hubs. Terminal 3 (Emirates) comprises Concourses A, B, and C connected by an automated people mover. Allow at least 20-30 minutes to walk to your gate.',
+    securityPolicy: {
+      has3DScanners: true,
+      scannersNote_it: 'Scanner di sicurezza avanzati e Smart Gates per il controllo passaporti biometrico.',
+      scannersNote_en: 'Advanced security scanners and biometric Smart Gates for immigration.',
+      liquidsAllowance_it: 'Massimo 100ml per contenitore in sacchetto trasparente richiudibile da 1 litro',
+      liquidsAllowance_en: 'Max 100ml per container in 1-litre transparent resealable bag',
+      liquidsMustBeRemoved: true,
+      liquidsNote_it: 'Attenzione: medicinali con codeina o sostanze controllate richiedono prescrizione medica preventiva.',
+      liquidsNote_en: 'Note: medications containing codeine or controlled substances require official prior medical approval.',
+      electronicsInBag: true,
+      electronicsNote_it: 'Grazie agli scanner CT avanzati al Terminal 3, i laptop possono spesso rimanere all\'interno della borsa.',
+      electronicsNote_en: 'With advanced CT scanners in Terminal 3, laptops can often remain inside bags.',
+      droneAllowedInCabin: false,
+      droneAllowedInHold: false,
+      dronePolicy_it: 'Droni severamente vietati negli EAU senza previa registrazione ed esplicito permesso GCAA. Non trasportare.',
+      dronePolicy_en: 'Drones strictly prohibited in UAE without prior GCAA registration and permit. Do not carry.',
+      maxPowerbankWh: 100,
+      powerbankPolicy_it: 'Solo nel bagaglio a mano fino a 100Wh (fino a 160Wh con autorizzazione compagnia). Mai in stiva.',
+      powerbankPolicy_en: 'Cabin baggage only up to 100Wh (up to 160Wh with airline approval). Strictly forbidden in checked baggage.',
+      officialSourceUrl: 'https://www.dubaiairports.ae/before-you-fly/security-customs',
+      lastVerifiedDate: '2026-10-21'
+    },
+    terminals: [
+      {
+        id: 't3',
+        name: 'Terminal 3 (Emirates & Flydubai)',
+        transferInfo_it: 'Dedicato a tutti i voli Emirates e parte di Flydubai. Concourse A, B, C collegati con People Mover.',
+        transferInfo_en: 'Dedicated to Emirates and select Flydubai flights. Automated train connects Concourses A, B, and C.'
+      },
+      {
+        id: 't1',
+        name: 'Terminal 1 (Compagnie Internazionali)',
+        transferInfo_it: 'Terminal per tutte le altre compagnie aeree internazionali, collegato al Concourse D.',
+        transferInfo_en: 'Used by all other international carriers, connected to Concourse D via train.'
+      },
+      {
+        id: 't2',
+        name: 'Terminal 2 (Low Cost / Regionali)',
+        transferInfo_it: 'Situato sul lato opposto delle piste, usato per voli charter e parte di Flydubai.',
+        transferInfo_en: 'Located on the opposite side of the runway, serves regional and charter flights.'
+      }
+    ],
+    airlines: [
+      { airlineName: 'Emirates', iataCode: 'EK', terminal: 'Terminal 3', checkInZone: 'Tutti i banchi T3' },
+      { airlineName: 'Flydubai', iataCode: 'FZ', terminal: 'Terminal 2 / 3', checkInZone: 'Vedi biglietto' },
+      { airlineName: 'British Airways', iataCode: 'BA', terminal: 'Terminal 1', checkInZone: 'Concourse D' },
+      { airlineName: 'Lufthansa', iataCode: 'LH', terminal: 'Terminal 1', checkInZone: 'Concourse D' }
+    ],
+    amenities: [
+      {
+        id: 'dxb-power',
+        category: 'power_charging',
+        title_it: 'Aree di ricarica universali e USB',
+        title_en: 'Universal Power & USB Charging Stations',
+        terminal: 'Terminal 1, 2, 3',
+        location_it: 'Presso tutte le porte d\'imbarco e aree d\'attesa',
+        location_en: 'At all boarding gates and seating zones',
+        details_it: 'Prese multipresa compatibili con spine UK (Tipo G), Europee (Tipo C) e porte USB veloci.',
+        details_en: 'Universal outlets compatible with UK (Type G) and EU (Type C) plugs, plus fast USB ports.',
+        availability: 'abundant'
+      },
+      {
+        id: 'dxb-wifi',
+        category: 'wifi',
+        title_it: 'Wi-Fi "DXB Free WiFi"',
+        title_en: 'DXB Free High-Speed WiFi',
+        terminal: 'Tutti i Terminal',
+        location_it: 'Intero scalo aeroportuale',
+        location_en: 'Airport-wide',
+        details_it: 'Connessione Wi-Fi ultra-veloce illimitata con un solo clic.',
+        details_en: 'Unlimited high-speed internet access with a single tap.'
+      },
+      {
+        id: 'dxb-water',
+        category: 'water_refill',
+        title_it: 'Fontanelle acqua fresca potabile',
+        title_en: 'Drinking Water Fountains',
+        terminal: 'Tutti i Terminal',
+        location_it: 'Adiacenti a tutte le aree servizi igienici airside',
+        location_en: 'Next to all airside restroom facilities',
+        details_it: 'Erogatori gratuiti per riempire borracce termiche dopo i controlli.',
+        details_en: 'Free refill stations for water bottles past security.'
+      }
+    ],
+    venues: [
+      {
+        id: 'dxb-v1',
+        name: 'Costa Coffee & Starbucks (H24)',
+        category: 'cafe',
+        terminal: 'Terminal 3 (Concourse A, B, C)',
+        location: 'Airside - Molteplici punti',
+        hours: 'Aperto 24 ore su 24',
+        is24Hours: true,
+        serviceType: 'coffee_snack',
+        highlightNote_it: 'Caffè specialty, bevande fredde e snack aperti giorno e notte.',
+        highlightNote_en: 'Specialty coffee, pastries, and cold beverages open 24/7.'
+      },
+      {
+        id: 'dxb-v2',
+        name: 'The Daily DXB / Food Court H24',
+        category: 'dining',
+        terminal: 'Terminal 3 - Concourse B',
+        location: 'Piano Mezzanino partenze',
+        hours: 'Aperto 24 ore su 24',
+        is24Hours: true,
+        serviceType: 'table_service',
+        highlightNote_it: 'Cucina internazionale, mediorientale, asiatica e fast food operativi h24.',
+        highlightNote_en: 'International, Middle Eastern, and Asian cuisines open 24/7.'
+      }
+    ],
+    transports: [
+      {
+        id: 'dxb-metro',
+        type: 'metro',
+        name_it: 'Metro di Dubai (Linea Rossa)',
+        name_en: 'Dubai Metro (Red Line)',
+        duration: '20-25 min',
+        frequency: 'Ogni 4-7 minuti (dalle 05:00 a mezzanotte / 01:00 nei weekend)',
+        estimatedCost: '5,00 - 7,50 AED (circa 1,30 - 2,00 €)',
+        pickupLocation_it: 'Stazioni Metro dedicate all\'interno del Terminal 1 e Terminal 3',
+        pickupLocation_en: 'Dedicated Metro stations inside Terminal 1 and Terminal 3',
+        details_it: 'Il mezzo più veloce ed economico per raggiungere Downtown Dubai (Burj Khalifa/Dubai Mall), DIFC e Dubai Marina. Necessaria tessera Nol Card acquistabile in stazione.',
+        details_en: 'Fastest direct transit to Downtown Dubai (Burj Khalifa/Dubai Mall) and Dubai Marina. Requires a Nol Card available at stations.'
+      },
+      {
+        id: 'dxb-taxi',
+        type: 'taxi',
+        name_it: 'Dubai Taxi Corporation (DTC) Ufficiale',
+        name_en: 'Official Dubai Airport Taxi (DTC)',
+        duration: '15-20 min',
+        frequency: 'Disponibile h24 all\'uscita di ogni terminal',
+        estimatedCost: '60 - 100 AED (circa 15 - 25 € per Downtown)',
+        pickupLocation_it: 'Corsie taxi ufficiali all\'esterno di T1, T2 e T3',
+        pickupLocation_en: 'Official taxi ranks outside Arrivals at T1, T2, and T3',
+        details_it: 'I taxi dell\'aeroporto applicano una quota di partenza fissa di 25 AED più tassametro. Pagamento con carta di credito contactless accettato su tutti i veicoli.',
+        details_en: 'Airport taxis have a 25 AED flag fall plus meter. Contactless credit cards accepted in all cabs.'
+      }
+    ],
+    lastUpdated: '2026-10-21'
+  },
+
+  // 🇭🇰 HONG KONG (HKG) - Aeroporto Internazionale di Hong Kong (Chek Lap Kok)
+  HKG: {
+    id: 'hkg',
+    iata: 'HKG',
+    icao: 'VHHH',
+    name_it: 'Aeroporto Internazionale di Hong Kong',
+    name_en: 'Hong Kong International Airport',
+    city_it: 'Hong Kong',
+    city_en: 'Hong Kong',
+    country_it: 'Hong Kong (Cina)',
+    country_en: 'Hong Kong (China)',
+    countryCode: 'HK',
+    officialWebsite: 'https://www.hongkongairport.com',
+    coordinates: { lat: 22.308, lng: 113.9185 },
+    difficultyRating: 3,
+    difficultyLabel_it: 'Grande hub all\'avanguardia e scorrevole',
+    difficultyLabel_en: 'State-of-the-art streamlined mega-hub',
+    averageSecurityWaitMin: 12,
+    recommendedArrivalHours: { domestic: 2.5, international: 3 },
+    navigationAdvice_it: 'Hub modernissimo e celebre per la sua efficienza. Dotato del treno interno Automated People Mover (APM) che collega le varie sezioni del Terminal 1. Il treno Airport Express porta direttamente a Central in soli 24 minuti.',
+    navigationAdvice_en: 'Renowned for world-class efficiency. Automated People Mover (APM) connects T1 concourses. Airport Express train reaches Central in 24 minutes.',
+    securityPolicy: {
+      has3DScanners: true,
+      scannersNote_it: 'Nuovi canali smart con tecnologia CT 3D. Computer e liquidi conformi possono rimanere nel bagaglio.',
+      scannersNote_en: 'Smart security channels with 3D CT scanners. Compliant liquids and laptops stay in bags.',
+      liquidsAllowance_it: 'Flaconi max 100ml in busta trasparente da 1 litro',
+      liquidsAllowance_en: 'Max 100ml containers in 1-litre transparent bag',
+      liquidsMustBeRemoved: false,
+      liquidsNote_it: 'Sui nuovi canali con scanner CT non è necessario estrarre i liquidi.',
+      liquidsNote_en: 'On newly upgraded CT lanes, removing liquids is no longer required.',
+      electronicsInBag: true,
+      electronicsNote_it: 'I laptop e tablet possono rimanere all\'interno delle borse.',
+      electronicsNote_en: 'Laptops and tablets remain inside luggage during scan.',
+      droneAllowedInCabin: true,
+      droneAllowedInHold: false,
+      dronePolicy_it: 'Consentito solo in cabina con batterie entro 100Wh.',
+      dronePolicy_en: 'Cabin baggage only with batteries under 100Wh.',
+      maxPowerbankWh: 100,
+      powerbankPolicy_it: 'Severamente vietati nel bagaglio da stiva! Consentiti solo in cabina fino a 100Wh (max 2 pezzi fino a 160Wh).',
+      powerbankPolicy_en: 'Strictly prohibited in checked luggage! Permitted in cabin luggage only up to 100Wh.',
+      officialSourceUrl: 'https://www.hongkongairport.com/en/passenger-guide/airport-security/',
+      lastVerifiedDate: '2026-10-21'
+    },
+    terminals: [
+      {
+        id: 't1',
+        name: 'Terminal 1',
+        transferInfo_it: 'Terminal passeggeri principale con concourse centrale e satellite collegati da treno APM.',
+        transferInfo_en: 'Main passenger terminal with Midfield and North Satellite Concourses connected by APM train.'
+      }
+    ],
+    airlines: [
+      { airlineName: 'Cathay Pacific', iataCode: 'CX', terminal: 'Terminal 1', checkInZone: 'Corsie A-C' },
+      { airlineName: 'Hong Kong Airlines', iataCode: 'HX', terminal: 'Terminal 1', checkInZone: 'Corsia K' },
+      { airlineName: 'Singapore Airlines', iataCode: 'SQ', terminal: 'Terminal 1', checkInZone: 'Corsia F' },
+      { airlineName: 'Emirates', iataCode: 'EK', terminal: 'Terminal 1', checkInZone: 'Corsia J' }
+    ],
+    amenities: [
+      {
+        id: 'hkg-wifi',
+        category: 'wifi',
+        title_it: 'Wi-Fi Gratuito "#HKAirport Free WiFi"',
+        title_en: '#HKAirport Free WiFi',
+        terminal: 'Terminal 1',
+        location_it: 'Tutte le aree dell\'aeroporto',
+        location_en: 'Throughout the airport',
+        details_it: 'Wi-Fi gratuito ad altissima velocità senza limiti.',
+        details_en: 'Free ultra high-speed internet without time limit.'
+      },
+      {
+        id: 'hkg-water',
+        category: 'water_refill',
+        title_it: 'Distributori di acqua potabile calda e fredda',
+        title_en: 'Hot & Cold Drinking Water Dispensers',
+        terminal: 'Terminal 1',
+        location_it: 'Presso ogni gate d\'imbarco',
+        location_en: 'Near every departure gate',
+        details_it: 'Erogatori sia di acqua fresca che calda (per tè o noodles) gratuiti.',
+        details_en: 'Free hot and cold water dispensers throughout departure concourses.'
+      }
+    ],
+    venues: [
+      {
+        id: 'hkg-v1',
+        name: 'Duddell\'s & Tai Cheong Bakery',
+        category: 'dining',
+        terminal: 'Terminal 1',
+        location: 'Food Court Partenze - Livello 7',
+        hours: '06:00 - 23:00',
+        isEarlyMorning: true,
+        serviceType: 'quick_bite',
+        highlightNote_it: 'Famose egg tarts calde di Hong Kong e dim sum cantonesi.',
+        highlightNote_en: 'Famous Hong Kong warm egg tarts and traditional Cantonese dim sum.'
+      }
+    ],
+    transports: [
+      {
+        id: 'hkg-express',
+        type: 'train',
+        name_it: 'Airport Express (MTR)',
+        name_en: 'Airport Express Train (MTR)',
+        duration: '24 min',
+        frequency: 'Ogni 10 minuti',
+        estimatedCost: '115 HKD (circa 13,50 € per Hong Kong Station/Central)',
+        pickupLocation_it: 'Banchina treni direttamente all\'interno della hall Arrivi',
+        pickupLocation_en: 'Train platform located directly inside the Arrivals Hall',
+        details_it: 'Il collegamento ferroviario più rapido e comodo del mondo per raggiungere Kowloon e Central/Isola di Hong Kong. Nessun tornello alla partenza, si paga all\'arrivo con Octopus o carta contactless.',
+        details_en: 'Direct high-speed railway to Kowloon and Hong Kong Station (Central). Tap & go with Octopus or contactless credit cards.'
+      },
+      {
+        id: 'hkg-bus',
+        type: 'bus',
+        name_it: 'Cityflyer Express Bus (Linee A11, A21)',
+        name_en: 'Cityflyer Airport Bus (A11 to Central, A21 to TST)',
+        duration: '45-60 min',
+        frequency: 'Ogni 10-15 minuti',
+        estimatedCost: '35 - 45 HKD (circa 4 - 5 €)',
+        pickupLocation_it: 'Ground Transportation Centre (uscita Arrivi a destra)',
+        pickupLocation_en: 'Ground Transportation Centre outside Arrivals',
+        details_it: 'Autobus panoramici a due piani per raggiungere direttamente gli hotel di Kowloon (A21) e Hong Kong Island (A11).',
+        details_en: 'Scenic double-decker express buses serving Kowloon (A21) and Hong Kong Island (A11).'
+      }
+    ],
+    lastUpdated: '2026-10-21'
   }
+};
+
+/**
+ * Common city name aliases mapped strictly to official 3-letter IATA codes.
+ */
+export const CITY_TO_IATA: Record<string, string> = {
+  // Middle East & Asia
+  DUBAI: 'DXB',
+  'HONG KONG': 'HKG',
+  HONGKONG: 'HKG',
+  SINGAPORE: 'SIN',
+  BANGKOK: 'BKK',
+  DOHA: 'DOH',
+  'ABU DHABI': 'AUH',
+  ABUDHABI: 'AUH',
+  TOKYO: 'HND',
+
+  // Americas
+  'NEW YORK': 'JFK',
+  NEWYORK: 'JFK',
+  MIAMI: 'MIA',
+  CHICAGO: 'ORD',
+  'LOS ANGELES': 'LAX',
+
+  // Italy
+  ROMA: 'FCO',
+  ROME: 'FCO',
+  MILANO: 'MXP',
+  MILAN: 'MXP',
+  NAPOLI: 'NAP',
+  NAPLES: 'NAP',
+  BARI: 'BRI',
+  BOLOGNA: 'BLQ',
+  PISA: 'PSA',
+  FIRENZE: 'FLR',
+  FLORENCE: 'FLR',
+  TORINO: 'TRN',
+  TURIN: 'TRN',
+  PALERMO: 'PMO',
+  CATANIA: 'CTA',
+  CAGLIARI: 'CAG',
+  OLBIA: 'OLB',
+  VERONA: 'VRN',
+  VENEZIA: 'VCE',
+  VENICE: 'VCE',
+  TREVISO: 'TSF',
+  BRINDISI: 'BDS',
+  LAMEZIA: 'SUF',
+  TRIESTE: 'TRS',
+  ALGHERO: 'AHO',
+
+  // Spain & Islands
+  MADRID: 'MAD',
+  BARCELLONA: 'BCN',
+  BARCELONA: 'BCN',
+  IBIZA: 'IBZ',
+  PALMA: 'PMI',
+  MALLORCA: 'PMI',
+  'PALMA DI MAIORCA': 'PMI',
+  TENERIFE: 'TFS',
+  'TENERIFE SUR': 'TFS',
+  'GRAN CANARIA': 'LPA',
+  GRANCANARIA: 'LPA',
+  'LAS PALMAS': 'LPA',
+  LANZAROTE: 'ACE',
+  FUERTEVENTURA: 'FUE',
+  MALAGA: 'AGP',
+  SIVIGLIA: 'SVQ',
+  SEVILLA: 'SVQ',
+  VALENCIA: 'VLC',
+  ALICANTE: 'ALC',
+
+  // Europe Hubs
+  LONDRA: 'LHR',
+  LONDON: 'LHR',
+  PARIGI: 'CDG',
+  PARIS: 'CDG',
+  BERLINO: 'BER',
+  BERLIN: 'BER',
+  MONACO: 'MUC',
+  MUNICH: 'MUC',
+  FRANCOFORTE: 'FRA',
+  FRANKFURT: 'FRA',
+  AMSTERDAM: 'AMS',
+  VIENNA: 'VIE',
+  DUBLINO: 'DUB',
+  DUBLIN: 'DUB',
+  LISBONA: 'LIS',
+  LISBON: 'LIS',
+  PORTO: 'OPO',
+  FARO: 'FAO',
+  BRUXELLES: 'BRU',
+  BRUSSELS: 'BRU',
+  CHARLEROI: 'CRL',
+  PRAGA: 'PRG',
+  PRAGUE: 'PRG',
+  VARSAVIA: 'WAW',
+  WARSAW: 'WAW',
+  CRACOVIA: 'KRK',
+  KRAKOW: 'KRK',
+  BUDAPEST: 'BUD',
+  ZURIGO: 'ZRH',
+  ZURICH: 'ZRH',
+  GINEVRA: 'GVA',
+  GENEVA: 'GVA',
+  COPENAGHEN: 'CPH',
+  COPENHAGEN: 'CPH',
+  STOCCOLMA: 'ARN',
+  STOCKHOLM: 'ARN',
+  HELSINKI: 'HEL',
+  OSLO: 'OSL',
+
+  // Greece & Mediterranean
+  ATENE: 'ATH',
+  ATHENS: 'ATH',
+  CRETA: 'HER',
+  HERAKLION: 'HER',
+  RODI: 'RHO',
+  RHODES: 'RHO',
+  CORFU: 'CFU',
+  CORFÙ: 'CFU',
+  SANTORINI: 'JTR',
+  MYKONOS: 'JMK',
+  ISTANBUL: 'IST',
+  TIRANA: 'TIA'
 };

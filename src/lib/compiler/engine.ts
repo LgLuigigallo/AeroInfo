@@ -1,5 +1,5 @@
 import { Airport } from '@/types/airport';
-import { AVIATION_REGISTRY } from './aviation-registry';
+import { AVIATION_REGISTRY, CITY_TO_IATA } from './aviation-registry';
 import { supabase } from '@/lib/supabase';
 import { seedAllAirportsToSupabase } from '@/lib/supabase-sync';
 import { sendAirportPublishedEmail } from '@/lib/email';
@@ -16,55 +16,81 @@ export interface CompilationReport {
 export class AirportCompilerEngine {
   /**
    * Resolves a search query or IATA candidate into a full Airport object.
+   * Guarantees strict resolution without slicing arbitrary city names.
    */
   public resolveAirport(query: string, candidateIata?: string | null): Airport | null {
     const cleanQuery = query.trim().toUpperCase();
-    const resolvedIata = (candidateIata || cleanQuery).slice(0, 3).toUpperCase();
 
-    // 1. Exact IATA match in static airportsData
-    const exactIataMatch = airportsData.find(
-      (a) => a.iata.toUpperCase() === resolvedIata
-    );
-    if (exactIataMatch) {
-      return exactIataMatch;
+    // 1. Determine target IATA if explicitly provided or mapped via city alias
+    let targetIata: string | null = null;
+
+    if (candidateIata && /^[A-Z]{3}$/.test(candidateIata.toUpperCase())) {
+      targetIata = candidateIata.toUpperCase();
+    } else if (/^[A-Z]{3}$/.test(cleanQuery)) {
+      targetIata = cleanQuery;
+    } else if (CITY_TO_IATA[cleanQuery]) {
+      targetIata = CITY_TO_IATA[cleanQuery];
     }
 
-    // Name match only if query is more descriptive than 3 letters
-    if (cleanQuery.length > 3) {
-      const nameMatch = airportsData.find(
-        (a) =>
-          a.city_it.toUpperCase().includes(cleanQuery) ||
-          a.city_en.toUpperCase().includes(cleanQuery) ||
-          a.name_it.toUpperCase().includes(cleanQuery) ||
-          a.name_en.toUpperCase().includes(cleanQuery)
-      );
-      if (nameMatch) {
-        return nameMatch;
+    // 2. If target IATA was determined, check static airportsData and AVIATION_REGISTRY
+    if (targetIata) {
+      const matchInStatic = airportsData.find((a) => a.iata.toUpperCase() === targetIata);
+      if (matchInStatic) {
+        return matchInStatic;
+      }
+
+      if (AVIATION_REGISTRY[targetIata]) {
+        return AVIATION_REGISTRY[targetIata];
       }
     }
 
-    // 2. Check if in AVIATION_REGISTRY by IATA
-    if (AVIATION_REGISTRY[resolvedIata]) {
-      return AVIATION_REGISTRY[resolvedIata];
+    // 3. Search by exact or partial city/airport name in static airportsData
+    if (cleanQuery.length >= 3) {
+      const matchByName = airportsData.find((a) => {
+        const cityIt = a.city_it.toUpperCase();
+        const cityEn = a.city_en.toUpperCase();
+        const nameIt = a.name_it.toUpperCase();
+        const nameEn = a.name_en.toUpperCase();
+
+        return (
+          cityIt === cleanQuery ||
+          cityEn === cleanQuery ||
+          cityIt.includes(cleanQuery) ||
+          cityEn.includes(cleanQuery) ||
+          nameIt.includes(cleanQuery) ||
+          nameEn.includes(cleanQuery)
+        );
+      });
+
+      if (matchByName) {
+        return matchByName;
+      }
     }
 
-    // Check by city or airport name in registry (only if query is not a 3-letter code or words longer than 3 chars)
-    if (cleanQuery.length > 3) {
+    // 4. Search by city/airport name in AVIATION_REGISTRY
+    if (cleanQuery.length >= 3) {
       for (const [, ap] of Object.entries(AVIATION_REGISTRY)) {
+        const cityIt = ap.city_it.toUpperCase();
+        const cityEn = ap.city_en.toUpperCase();
+        const nameIt = ap.name_it.toUpperCase();
+        const nameEn = ap.name_en.toUpperCase();
+
         if (
-          ap.city_it.toUpperCase().includes(cleanQuery) ||
-          ap.city_en.toUpperCase().includes(cleanQuery) ||
-          ap.name_it.toUpperCase().includes(cleanQuery) ||
-          ap.name_en.toUpperCase().includes(cleanQuery)
+          cityIt === cleanQuery ||
+          cityEn === cleanQuery ||
+          cityIt.includes(cleanQuery) ||
+          cityEn.includes(cleanQuery) ||
+          nameIt.includes(cleanQuery) ||
+          nameEn.includes(cleanQuery)
         ) {
           return ap;
         }
       }
     }
 
-    // 3. Fallback Synthesizer for legitimate 3-letter IATA codes
-    if (/^[A-Z]{3}$/.test(resolvedIata)) {
-      return this.synthesizeGenericAirport(resolvedIata, query);
+    // 5. Fallback Synthesizer ONLY if targetIata is a verified 3-letter IATA code
+    if (targetIata && /^[A-Z]{3}$/.test(targetIata)) {
+      return this.synthesizeGenericAirport(targetIata, query);
     }
 
     return null;

@@ -146,21 +146,11 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
       const data = await res.json();
       if (data.success) {
         setRequestSuccess(true);
-        if (data.message_it) {
-          setRequestFeedbackMsg(lang === 'it' ? data.message_it : data.message_en);
-        }
-        if (data.isInstantlyPublished && onRefreshAirports) {
-          const freshList = await onRefreshAirports();
-          if (Array.isArray(freshList) && data.airportIata) {
-            const newlyCreated = freshList.find(
-              (a: Airport) => a.iata.toUpperCase() === data.airportIata.toUpperCase()
-            );
-            if (newlyCreated) {
-              setTimeout(() => {
-                handleSelect(newlyCreated);
-              }, 1200);
-            }
-          }
+        const thankMsg = lang === 'it'
+          ? (data.thankYouLine_it || data.message_it)
+          : (data.thankYouLine_en || data.message_en);
+        if (thankMsg) {
+          setRequestFeedbackMsg(thankMsg);
         }
       }
     } catch (err) {
@@ -310,9 +300,33 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
                   </div>
 
                   {requestSuccess ? (
-                    <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs font-medium flex items-center justify-center gap-2 max-w-sm mx-auto animate-in fade-in-50">
-                      <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-500" />
-                      <span>{requestFeedbackMsg || t('subscribeAlertSuccess')}</span>
+                    <div className="p-4 sm:p-5 rounded-xl bg-emerald-500/10 dark:bg-emerald-500/15 border border-emerald-500/30 text-emerald-900 dark:text-emerald-200 text-center space-y-2.5 max-w-md mx-auto animate-in fade-in-50 zoom-in-95">
+                      <div className="w-9 h-9 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto text-emerald-600 dark:text-emerald-400">
+                        <CheckCircle2 className="w-5 h-5" />
+                      </div>
+                      <div className="space-y-1">
+                        <h5 className="font-bold text-sm text-emerald-950 dark:text-emerald-100">
+                          {lang === 'it' ? 'Grazie per la tua segnalazione!' : 'Thank you for your request!'}
+                        </h5>
+                        <p className="text-xs text-emerald-800/90 dark:text-emerald-300 leading-relaxed font-normal">
+                          {requestFeedbackMsg || (
+                            lang === 'it'
+                              ? `Abbiamo aggiunto la tua email per l'aeroporto "${existingRequest?.query || query}". Riceverai una notifica non appena sarà pubblicato.`
+                              : `Your email has been added for "${existingRequest?.query || query}". You will receive a notification once published.`
+                          )}
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsOpen(false);
+                          setQuery('');
+                          setRequestSuccess(false);
+                        }}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition-colors shadow-2xs cursor-pointer mt-1"
+                      >
+                        {lang === 'it' ? 'Chiudi' : 'Close'}
+                      </button>
                     </div>
                   ) : (
                     <form onSubmit={handleRequestIndexing} className="space-y-2 max-w-sm mx-auto pt-1">
@@ -371,9 +385,33 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
                   </div>
 
                   {requestSuccess ? (
-                    <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs font-medium flex items-center justify-center gap-2 max-w-sm mx-auto animate-in fade-in-50">
-                      <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-500" />
-                      <span>{requestFeedbackMsg || t('requestAirportSuccess')}</span>
+                    <div className="p-4 sm:p-5 rounded-xl bg-emerald-500/10 dark:bg-emerald-500/15 border border-emerald-500/30 text-emerald-900 dark:text-emerald-200 text-center space-y-2.5 max-w-md mx-auto animate-in fade-in-50 zoom-in-95">
+                      <div className="w-9 h-9 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto text-emerald-600 dark:text-emerald-400">
+                        <CheckCircle2 className="w-5 h-5" />
+                      </div>
+                      <div className="space-y-1">
+                        <h5 className="font-bold text-sm text-emerald-950 dark:text-emerald-100">
+                          {lang === 'it' ? 'Grazie per la tua segnalazione!' : 'Thank you for your request!'}
+                        </h5>
+                        <p className="text-xs text-emerald-800/90 dark:text-emerald-300 leading-relaxed font-normal">
+                          {requestFeedbackMsg || (
+                            lang === 'it'
+                              ? `La richiesta per l'aeroporto "${query}" è stata presa in carico con successo. La scheda ufficiale verrà elaborata e pubblicata nel prossimo ciclo di aggiornamento programmato di domani.`
+                              : `Your request for "${query}" has been successfully queued. The official dossier will be processed and published in tomorrow's scheduled update.`
+                          )}
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsOpen(false);
+                          setQuery('');
+                          setRequestSuccess(false);
+                        }}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition-colors shadow-2xs cursor-pointer mt-1"
+                      >
+                        {lang === 'it' ? 'Chiudi' : 'Close'}
+                      </button>
                     </div>
                   ) : (
                     <form onSubmit={handleRequestIndexing} className="space-y-2 max-w-sm mx-auto pt-1">
