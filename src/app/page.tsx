@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Header } from '@/components/Header';
 import { SearchBar } from '@/components/SearchBar';
 import { AirportDetail } from '@/components/AirportDetail';
@@ -11,10 +11,26 @@ import { Airport } from '@/types/airport';
 
 function MainContent() {
   const { lang, t } = useLanguage();
+  const [airports, setAirports] = useState<Airport[]>(airportsData);
   const defaultAirport = airportsData.find((a) => a.iata.toUpperCase() === 'FCO') || airportsData[0];
   const [selectedAirport, setSelectedAirport] = useState<Airport>(defaultAirport);
 
-  // Read URL query parameter if present on mount (e.g. ?airport=mxp)
+  // Fetch live airports dynamically from Supabase / API
+  const refreshLiveAirports = useCallback(async (): Promise<Airport[]> => {
+    try {
+      const res = await fetch('/api/airports');
+      const data = await res.json();
+      if (data?.airports && Array.isArray(data.airports) && data.airports.length > 0) {
+        setAirports(data.airports);
+        return data.airports;
+      }
+    } catch (err) {
+      console.warn('Failed to refresh live airports:', err);
+    }
+    return airportsData;
+  }, []);
+
+  // Read URL query parameter on mount and sync with live data
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
@@ -28,7 +44,23 @@ function MainContent() {
         }
       }
     }
-  }, []);
+
+    // Load live database catalogue
+    refreshLiveAirports().then((liveList) => {
+      if (typeof window !== 'undefined') {
+        const params = new URLSearchParams(window.location.search);
+        const airportParam = params.get('airport');
+        if (airportParam && liveList) {
+          const found = liveList.find(
+            (a) => a.iata.toLowerCase() === airportParam.toLowerCase() || a.id.toLowerCase() === airportParam.toLowerCase()
+          );
+          if (found) {
+            setSelectedAirport(found);
+          }
+        }
+      }
+    });
+  }, [refreshLiveAirports]);
 
   const handleSelectAirport = (airport: Airport) => {
     setSelectedAirport(airport);
@@ -70,6 +102,8 @@ function MainContent() {
             <SearchBar 
               selectedAirport={selectedAirport} 
               onSelectAirport={handleSelectAirport} 
+              airports={airports}
+              onRefreshAirports={refreshLiveAirports}
             />
           </div>
         </section>
@@ -79,7 +113,7 @@ function MainContent() {
           <AirportDetail 
             airport={selectedAirport} 
             onSelectAirport={(iata) => {
-              const found = airportsData.find(
+              const found = airports.find(
                 (a) => a.iata.toLowerCase() === iata.toLowerCase()
               );
               if (found) {

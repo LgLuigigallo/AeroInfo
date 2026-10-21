@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { scraperEngine } from '@/lib/scraper/engine';
-import { airportsData } from '@/data/airports';
-import { supabase } from '@/lib/supabase';
-import { sendAirportPublishedEmail } from '@/lib/email';
+import { supabase, getLiveAirports } from '@/lib/supabase';
+import { airportCompilerEngine } from '@/lib/compiler/engine';
 
 export const maxDuration = 60;
 
@@ -21,18 +20,24 @@ export async function GET(request: NextRequest) {
   }
 
   try {
+    // 1. Autonomous Compilation: Process all pending user requests into published airports
+    console.info('🚀 [CRON_SYNC] Running autonomous compiler for pending user requests...');
+    const compileReport = await airportCompilerEngine.processPendingRequests();
+    console.info('✅ [CRON_SYNC] Autonomous compiler finished:', compileReport);
+
+    // 2. Fetch full active airport list (from Supabase or local fallback)
+    const activeAirports = await getLiveAirports();
     const listToSync = targetIata
-      ? airportsData.filter((a) => a.iata.toUpperCase() === targetIata)
-      : airportsData;
+      ? activeAirports.filter((a) => a.iata.toUpperCase() === targetIata)
+      : activeAirports.slice(0, 15); // Sync first batch within function timeout limits
 
-    console.info(`🔄 [CRON_SYNC] Running sync for ${listToSync.length} airports (target: ${targetIata || 'ALL'})...`);
-    const results = await scraperEngine.runWeeklySync(listToSync);
+    console.info(`🔄 [CRON_SYNC] Running sync for ${listToSync.length} airports (target: ${targetIata || 'BATCH'})...`);
+    const syncResults = await scraperEngine.runWeeklySync(listToSync);
 
-    // If Supabase is connected, record the sync logs and notify pending requesters
-    let notifiedUsersCount = 0;
+    // 3. Record sync logs in Supabase if configured
     if (supabase) {
       try {
-        for (const res of results) {
+        for (const res of syncResults) {
           await supabase.from('sync_logs').insert({
             airport_iata: res.airportIata,
             official_url: res.sourceUrl,
@@ -41,54 +46,20 @@ export async function GET(request: NextRequest) {
             log_details: res
           });
         }
-
-        // Check for pending airport indexing requests to notify users
-        const { data: pendingRequests } = await supabase
-          .from('airport_requests')
-          .select('*')
-          .in('status', ['pending', 'queued_weekly']);
-
-        if (pendingRequests && pendingRequests.length > 0) {
-          for (const req of pendingRequests) {
-            if (req.requester_email) {
-              const matchedAirport = airportsData.find(
-                (a) =>
-                  (req.iata_code && a.iata.toUpperCase() === req.iata_code.toUpperCase()) ||
-                  a.name_it.toLowerCase().includes(req.query.toLowerCase()) ||
-                  a.city_it.toLowerCase().includes(req.query.toLowerCase())
-              );
-
-              if (matchedAirport) {
-                await sendAirportPublishedEmail({
-                  to: req.requester_email,
-                  airportName: matchedAirport.name_it,
-                  airportIata: matchedAirport.iata,
-                  airportUrl: `https://aero-info.vercel.app/?airport=${matchedAirport.iata.toLowerCase()}`
-                });
-
-                await supabase
-                  .from('airport_requests')
-                  .update({ status: 'notified', updated_at: new Date().toISOString() })
-                  .eq('id', req.id);
-
-                notifiedUsersCount++;
-              }
-            }
-          }
-        }
       } catch (dbErr) {
-        console.warn('Sync logs or notifications note:', dbErr);
+        console.warn('Sync logs note:', dbErr);
       }
     }
 
     return NextResponse.json({
       success: true,
       executionDate: new Date().toISOString(),
-      airportsProcessed: results.length,
-      notifiedUsersCount,
-      results
+      compileReport,
+      airportsProcessed: syncResults.length,
+      syncResults
     });
   } catch (error: any) {
+    console.error('Error in cron sync:', error);
     return NextResponse.json(
       { success: false, error: error.message || 'Internal sync error' },
       { status: 500 }

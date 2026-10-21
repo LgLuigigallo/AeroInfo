@@ -9,16 +9,20 @@ import { airportsData, searchAirports } from '@/data/airports';
 interface SearchBarProps {
   selectedAirport: Airport;
   onSelectAirport: (airport: Airport) => void;
+  airports?: Airport[];
+  onRefreshAirports?: () => Promise<Airport[] | void>;
 }
 
-export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) {
+export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefreshAirports }: SearchBarProps) {
   const { lang, t } = useLanguage();
+  const sourceList = airports && airports.length > 0 ? airports : airportsData;
   const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [results, setResults] = useState<Airport[]>([]);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [isSubmittingRequest, setIsSubmittingRequest] = useState(false);
   const [requestSuccess, setRequestSuccess] = useState(false);
+  const [requestFeedbackMsg, setRequestFeedbackMsg] = useState('');
   const [requestEmail, setRequestEmail] = useState('');
   const [emailValidationError, setEmailValidationError] = useState('');
   const [existingRequest, setExistingRequest] = useState<{
@@ -74,14 +78,27 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
   // Update search results
   useEffect(() => {
     setRequestSuccess(false);
+    setRequestFeedbackMsg('');
     setEmailValidationError('');
     if (query.trim().length > 0) {
-      const filtered = searchAirports(query);
+      const q = query.toLowerCase().trim();
+      const filtered = sourceList.filter((a) => {
+        return (
+          a.iata.toLowerCase().includes(q) ||
+          a.icao.toLowerCase().includes(q) ||
+          a.name_it.toLowerCase().includes(q) ||
+          a.name_en.toLowerCase().includes(q) ||
+          a.city_it.toLowerCase().includes(q) ||
+          a.city_en.toLowerCase().includes(q) ||
+          a.country_it.toLowerCase().includes(q) ||
+          a.country_en.toLowerCase().includes(q)
+        );
+      });
       setResults(filtered);
     } else {
       setResults([]);
     }
-  }, [query]);
+  }, [query, sourceList]);
 
   // Check if uncatalogued airport has already been requested
   useEffect(() => {
@@ -129,6 +146,22 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
       const data = await res.json();
       if (data.success) {
         setRequestSuccess(true);
+        if (data.message_it) {
+          setRequestFeedbackMsg(lang === 'it' ? data.message_it : data.message_en);
+        }
+        if (data.isInstantlyPublished && onRefreshAirports) {
+          const freshList = await onRefreshAirports();
+          if (Array.isArray(freshList) && data.airportIata) {
+            const newlyCreated = freshList.find(
+              (a: Airport) => a.iata.toUpperCase() === data.airportIata.toUpperCase()
+            );
+            if (newlyCreated) {
+              setTimeout(() => {
+                handleSelect(newlyCreated);
+              }, 1200);
+            }
+          }
+        }
       }
     } catch (err) {
       console.error('Request indexing failed:', err);
@@ -279,7 +312,7 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
                   {requestSuccess ? (
                     <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs font-medium flex items-center justify-center gap-2 max-w-sm mx-auto animate-in fade-in-50">
                       <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-500" />
-                      <span>{t('subscribeAlertSuccess')}</span>
+                      <span>{requestFeedbackMsg || t('subscribeAlertSuccess')}</span>
                     </div>
                   ) : (
                     <form onSubmit={handleRequestIndexing} className="space-y-2 max-w-sm mx-auto pt-1">
@@ -340,7 +373,7 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
                   {requestSuccess ? (
                     <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs font-medium flex items-center justify-center gap-2 max-w-sm mx-auto animate-in fade-in-50">
                       <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-500" />
-                      <span>{t('requestAirportSuccess')}</span>
+                      <span>{requestFeedbackMsg || t('requestAirportSuccess')}</span>
                     </div>
                   ) : (
                     <form onSubmit={handleRequestIndexing} className="space-y-2 max-w-sm mx-auto pt-1">
@@ -393,7 +426,7 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
                   </div>
                   <div className="flex flex-wrap gap-1">
                     {recentSearches.map((code) => {
-                      const ap = airportsData.find((a) => a.iata === code);
+                      const ap = sourceList.find((a) => a.iata === code);
                       if (!ap) return null;
                       return (
                         <button
@@ -420,7 +453,7 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
                 </span>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-1">
                   {topHubs.map((code) => {
-                    const ap = airportsData.find((a) => a.iata === code);
+                    const ap = sourceList.find((a) => a.iata === code);
                     if (!ap) return null;
                     return (
                       <button

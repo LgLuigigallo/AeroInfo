@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 import { AirportScraperEngine, OFFICIAL_DOMAIN_WHITELIST } from '@/lib/scraper/engine';
-import { sendRequestConfirmationEmail } from '@/lib/email';
+import { sendRequestConfirmationEmail, sendAirportPublishedEmail } from '@/lib/email';
+import { airportCompilerEngine } from '@/lib/compiler/engine';
 
 export const maxDuration = 60;
 
@@ -148,20 +149,20 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // 3. New request: Check if official domain is known in whitelist for instant pre-check
-    let scrapedPolicy = null;
-    let instantScrapeSuccess = false;
+    // 3. Check if compiler can immediately resolve and publish this airport
+    const resolvedAirport = airportCompilerEngine.resolveAirport(query, candidateIata);
+    let isInstantlyPublished = false;
+    let publishedAirport = null;
 
-    if (candidateIata && OFFICIAL_DOMAIN_WHITELIST[candidateIata]) {
+    if (resolvedAirport) {
       try {
-        const scraper = new AirportScraperEngine();
-        const scrapeRes = await scraper.scrapeAirportSecurity(candidateIata);
-        if (scrapeRes.success) {
-          instantScrapeSuccess = true;
-          scrapedPolicy = scrapeRes;
+        const compileResult = await airportCompilerEngine.compileAndPublishAirport(query, candidateIata);
+        if (compileResult.success && compileResult.airport) {
+          isInstantlyPublished = true;
+          publishedAirport = compileResult.airport;
         }
-      } catch (err) {
-        console.warn(`Instant check attempt failed for ${candidateIata}:`, err);
+      } catch (compileErr) {
+        console.warn('Instant compilation attempt note:', compileErr);
       }
     }
 
@@ -173,10 +174,9 @@ export async function POST(request: NextRequest) {
           .from('airport_requests')
           .insert({
             query: query.trim(),
-            iata_code: candidateIata,
+            iata_code: publishedAirport ? publishedAirport.iata : candidateIata,
             requester_email: email ? email.trim() : null,
-            status: instantScrapeSuccess ? 'verified' : 'queued_weekly',
-            scraped_data: scrapedPolicy || null,
+            status: isInstantlyPublished ? 'published' : 'queued_weekly',
             created_at: new Date().toISOString()
           })
           .select('id')
@@ -193,39 +193,51 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // 5. Dispatch Confirmation Email if user provided an email address
+    // 5. Dispatch Confirmation or Published Email if user provided an email address
     let emailStatus: { sent: boolean; provider?: string; error?: string } = { sent: false };
     if (email && typeof email === 'string' && email.includes('@')) {
       try {
-        const mailRes = await sendRequestConfirmationEmail({
-          to: email.trim(),
-          airportQuery: cleanedQuery
-        });
-        emailStatus = {
-          sent: mailRes.success,
-          provider: mailRes.provider,
-          error: mailRes.error
-        };
+        if (isInstantlyPublished && publishedAirport) {
+          const mailRes = await sendAirportPublishedEmail({
+            to: email.trim(),
+            airportName: publishedAirport.name_it,
+            airportIata: publishedAirport.iata,
+            airportUrl: `https://aero-info.vercel.app/?airport=${publishedAirport.iata.toLowerCase()}`
+          });
+          emailStatus = { sent: mailRes.success, provider: mailRes.provider, error: mailRes.error };
+        } else {
+          const mailRes = await sendRequestConfirmationEmail({
+            to: email.trim(),
+            airportQuery: cleanedQuery
+          });
+          emailStatus = {
+            sent: mailRes.success,
+            provider: mailRes.provider,
+            error: mailRes.error
+          };
+        }
       } catch (err: any) {
         console.error('Failed to trigger confirmation email:', err);
         emailStatus = { sent: false, error: err.message };
       }
     }
 
-    // 6. Return confirmation response
+    // 6. Return response
     return NextResponse.json({
       success: true,
       alreadyRequested: false,
-      message_it: instantScrapeSuccess
-        ? 'Verifica ufficiale completata con successo! Le informazioni sono state confermate e verranno pubblicate all\'aggiornamento programmato.'
-        : 'Richiesta di censimento registrata con successo! Le informazioni ufficiali verranno verificate e pubblicate entro l\'aggiornamento programmato.',
-      message_en: instantScrapeSuccess
-        ? 'Official verification completed! Regulations verified and will be published at the scheduled refresh.'
-        : 'Airport request submitted successfully! Official information will be verified and published within the scheduled update.',
+      isInstantlyPublished,
+      airportIata: publishedAirport?.iata,
+      airportName: publishedAirport?.name_it,
+      message_it: isInstantlyPublished
+        ? `Scheda di ${publishedAirport?.name_it} (${publishedAirport?.iata}) compilata e pubblicata con successo! Ora è disponibile per tutti i viaggiatori.`
+        : 'Richiesta registrata con successo! La scheda ufficiale verrà elaborata e pubblicata durante l\'aggiornamento automatico programmato.',
+      message_en: isInstantlyPublished
+        ? `Dossier for ${publishedAirport?.name_en} (${publishedAirport?.iata}) compiled and published successfully! Now live.`
+        : 'Request submitted successfully! Official dossier will be processed and published in the automated scheduled cycle.',
       requestId: recordId,
-      status: instantScrapeSuccess ? 'verified' : 'queued',
-      scheduledFor: 'Entro 24 ore (Aggiornamento Giornaliero Automatico)',
-      isInstantVerified: instantScrapeSuccess,
+      status: isInstantlyPublished ? 'published' : 'queued_weekly',
+      scheduledFor: isInstantlyPublished ? 'Pubblicato ora' : 'Entro 24 ore (Aggiornamento Notturno Automatico)',
       emailStatus
     });
   } catch (error: any) {
