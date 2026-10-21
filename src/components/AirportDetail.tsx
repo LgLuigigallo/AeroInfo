@@ -22,7 +22,6 @@ import { TerminalMapTab } from './tabs/TerminalMapTab';
 import { TerminalsTab } from './tabs/TerminalsTab';
 import { DifficultyTab } from './tabs/DifficultyTab';
 import { AmenitiesTab } from './tabs/AmenitiesTab';
-import { FoodTab } from './tabs/FoodTab';
 import { TransportTab } from './tabs/TransportTab';
 
 interface AirportDetailProps {
@@ -30,7 +29,7 @@ interface AirportDetailProps {
   onSelectAirport?: (iata: string) => void;
 }
 
-type TabType = 'security' | 'map' | 'terminals' | 'difficulty' | 'amenities' | 'food' | 'transport';
+type TabType = 'security' | 'map' | 'terminals' | 'difficulty' | 'amenities' | 'transport';
 
 export function AirportDetail({ airport, onSelectAirport }: AirportDetailProps) {
   const { lang, t } = useLanguage();
@@ -42,7 +41,6 @@ export function AirportDetail({ airport, onSelectAirport }: AirportDetailProps) 
     { id: 'terminals', label: t('tabTerminals'), icon: <Layers className="w-3.5 h-3.5" /> },
     { id: 'difficulty', label: t('tabDifficulty'), icon: <Gauge className="w-3.5 h-3.5" /> },
     { id: 'amenities', label: t('tabAmenities'), icon: <Zap className="w-3.5 h-3.5" /> },
-    { id: 'food', label: t('tabFood'), icon: <Utensils className="w-3.5 h-3.5" /> },
     { id: 'transport', label: t('tabTransport'), icon: <Train className="w-3.5 h-3.5" /> }
   ];
 
@@ -199,7 +197,6 @@ export function AirportDetail({ airport, onSelectAirport }: AirportDetailProps) 
         {activeTab === 'terminals' && <TerminalsTab airport={airport} />}
         {activeTab === 'difficulty' && <DifficultyTab airport={airport} />}
         {activeTab === 'amenities' && <AmenitiesTab airport={airport} />}
-        {activeTab === 'food' && <FoodTab airport={airport} />}
         {activeTab === 'transport' && <TransportTab airport={airport} />}
       </div>
     </div>

@@ -11,7 +11,8 @@ import { Airport } from '@/types/airport';
 
 function MainContent() {
   const { lang, t } = useLanguage();
-  const [selectedAirport, setSelectedAirport] = useState<Airport>(airportsData[0]);
+  const defaultAirport = airportsData.find((a) => a.iata.toUpperCase() === 'FCO') || airportsData[0];
+  const [selectedAirport, setSelectedAirport] = useState<Airport>(defaultAirport);
 
   // Read URL query parameter if present on mount (e.g. ?airport=mxp)
   useEffect(() => {

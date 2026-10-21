@@ -176,6 +176,7 @@ export interface TerminalMapPOI {
   x: number; // percentage 5-95 on SVG width
   y: number; // percentage 10-90 on SVG height
   availability?: 'abundant' | 'moderate' | 'scarce';
+  count?: number; // for clustered hubs (e.g. 48 restaurants, 71 shops)
   details_it: string;
   details_en: string;
   isVerified?: boolean;

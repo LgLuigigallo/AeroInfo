@@ -92,7 +92,7 @@ export const translations: Translations = {
 
   // Tabs
   tabSecurity: { it: 'Sicurezza & Bagagli', en: 'Security & Luggage' },
-  tabMap: { it: 'Mappa Terminal & POI', en: 'Terminal Map & POI' },
+  tabMap: { it: 'Mappa & Ristorazione', en: 'Map & Dining' },
   tabTerminals: { it: 'Terminal & Compagnie', en: 'Terminals & Airlines' },
   tabDifficulty: { it: 'Difficoltà & Tempi', en: 'Complexity & Wait Times' },
   tabAmenities: { it: 'Prese & Servizi', en: 'Power & Amenities' },
@@ -200,6 +200,43 @@ export const translations: Translations = {
     it: 'Nessun locale o negozio trovato per questa ricerca.', 
     en: 'No venues or shops found matching your search.' 
   },
+  expandAllCategories: { it: 'Espandi tutte le sezioni', en: 'Expand all sections' },
+  collapseAllCategories: { it: 'Comprimi tutte', en: 'Collapse all' },
+  categoryCafeTitle: { it: 'Bar & Caffetterie', en: 'Cafes & Coffee Bars' },
+  categoryCafeDesc: { 
+    it: 'Espresso, cornetti, colazioni e caffetterie H24 o aperte prima delle 05:00', 
+    en: 'Espresso, breakfast, and cafes open 24/7 or before 05:00 AM' 
+  },
+  categoryQuickTitle: { it: 'Al Volo, Pizzerie & Grab-and-Go', en: 'Quick Bites & Grab-and-Go' },
+  categoryQuickDesc: { 
+    it: 'Pizza al taglio, focacce espresse e pasti rapidi da portare al gate in <10 minuti', 
+    en: 'Pizza by the cut, warm focaccia, and quick takeaway ready in <10 minutes' 
+  },
+  categoryDiningTitle: { it: 'Ristoranti con Servizio al Tavolo', en: 'Sit-Down Restaurants' },
+  categoryDiningDesc: { 
+    it: 'Cucina espressa, sale ampie e posti a sedere per scali e attese prolungate', 
+    en: 'Full dining, sit-down tables, and comfortable seating for layovers' 
+  },
+  categoryPharmacyTitle: { it: 'Farmacie & Servizi Sanitari', en: 'Pharmacies & Health Services' },
+  categoryPharmacyDesc: { 
+    it: 'Farmacie aeroportuali e presidi sanitari post-controlli di sicurezza', 
+    en: 'Airport pharmacies, OTC medication, and first aid past security' 
+  },
+  categoryDutyFreeTitle: { it: 'Duty-Free & Negozi di Viaggio', en: 'Duty-Free & Travel Essentials' },
+  categoryDutyFreeDesc: { 
+    it: 'Profumeria, tabacchi, souvenir, cioccolateria e beni esenti da imposte', 
+    en: 'Tax-free perfumes, tobacco, chocolates, and travel essentials' 
+  },
+  categoryBoutiquesTitle: { it: 'Galleria Negozi & Moda', en: 'Fashion & Luxury Boutiques' },
+  categoryBoutiquesDesc: { 
+    it: 'Brand di alta moda, pelletteria e accessori nell\'Area Imbarchi', 
+    en: 'High-fashion, leather goods, and luxury accessories across concourses' 
+  },
+  searchDirectoryPlaceholder: { 
+    it: 'Cerca ristorante, bar, cibo, farmacia o brand (es. Pizza, Eataly, Venchi, Farmacia, Gucci)...', 
+    en: 'Search restaurant, bar, food, pharmacy, or brand (e.g. Pizza, Eataly, Venchi, Pharmacy, Gucci)...' 
+  },
+  viewVenuesBelow: { it: 'Esplora i locali qui sotto ↓', en: 'Explore venues below ↓' },
 
   // Transport
   transportTitle: { it: 'Come raggiungere la città o l\'aeroporto', en: 'How to reach the city or the airport' },
