@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   ShieldCheck, 
   Layers, 
@@ -34,6 +34,29 @@ type TabType = 'security' | 'map' | 'terminals' | 'difficulty' | 'amenities' | '
 export function AirportDetail({ airport, onSelectAirport }: AirportDetailProps) {
   const { lang, t } = useLanguage();
   const [activeTab, setActiveTab] = useState<TabType>('security');
+
+  const tabListRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const checkScroll = () => {
+    if (tabListRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = tabListRef.current;
+      setCanScrollLeft(scrollLeft > 6);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 6);
+    }
+  };
+
+  useEffect(() => {
+    checkScroll();
+    window.addEventListener('resize', checkScroll);
+    return () => window.removeEventListener('resize', checkScroll);
+  }, []);
+
+  const handleTabClick = (tabId: TabType, event: React.MouseEvent<HTMLButtonElement>) => {
+    setActiveTab(tabId);
+    event.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  };
 
   const tabs: { id: TabType; label: string; icon: React.ReactNode }[] = [
     { id: 'security', label: t('tabSecurity'), icon: <ShieldCheck className="w-3.5 h-3.5" /> },
@@ -166,27 +189,50 @@ export function AirportDetail({ airport, onSelectAirport }: AirportDetailProps) 
         )}
       </div>
 
-      {/* Tabs Navigation Bar (Razor-sharp segmented control) */}
-      <div className="sticky top-15 z-30 bg-zinc-50/95 dark:bg-zinc-950/95 backdrop-blur-md py-1.5 -mx-4 px-4 sm:mx-0 sm:px-0">
-        <div className="flex items-center gap-1 overflow-x-auto p-1 rounded-xl bg-zinc-200/60 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 scrollbar-none">
-          {tabs.map((tab) => {
-            const isActive = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold shrink-0 transition-all cursor-pointer ${
-                  isActive
-                    ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-xs border border-zinc-200/50 dark:border-zinc-700/50'
-                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-white/40 dark:hover:bg-zinc-800/40'
-                }`}
-              >
-                {tab.icon}
-                <span>{tab.label}</span>
-              </button>
-            );
-          })}
+      {/* Tabs Navigation Bar (Responsive Horizontal Carousel with High Contrast) */}
+      <div className="sticky top-15 z-30 bg-zinc-50/95 dark:bg-zinc-950/95 backdrop-blur-md py-2 -mx-4 px-4 sm:mx-0 sm:px-0 transition-colors">
+        <div className="relative">
+          {/* Left scroll fade indicator for mobile/tablet */}
+          <div
+            className={`pointer-events-none absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-zinc-50 dark:from-zinc-950 to-transparent z-10 transition-opacity duration-200 ${
+              canScrollLeft ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
+
+          {/* Horizontal Scrollable Tabs Track */}
+          <div
+            ref={tabListRef}
+            onScroll={checkScroll}
+            className="flex items-center gap-2 overflow-x-auto py-1 px-1 scrollbar-none snap-x snap-mandatory scroll-smooth"
+          >
+            {tabs.map((tab) => {
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={(e) => handleTabClick(tab.id, e)}
+                  className={`flex items-center gap-2 px-3.5 py-2.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-xs font-semibold shrink-0 snap-center transition-all cursor-pointer whitespace-nowrap min-h-[40px] sm:min-h-[38px] ${
+                    isActive
+                      ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 shadow-sm border border-zinc-900 dark:border-white font-bold ring-2 ring-zinc-900/10 dark:ring-white/20'
+                      : 'bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white border border-zinc-200 dark:border-zinc-800 shadow-2xs hover:border-zinc-300 dark:hover:border-zinc-700'
+                  }`}
+                >
+                  <span className={`shrink-0 ${isActive ? 'text-white dark:text-zinc-900' : 'text-zinc-500 dark:text-zinc-400'}`}>
+                    {tab.icon}
+                  </span>
+                  <span className="tracking-tight">{tab.label}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Right scroll fade indicator for mobile/tablet */}
+          <div
+            className={`pointer-events-none absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-zinc-50 dark:from-zinc-950 to-transparent z-10 transition-opacity duration-200 ${
+              canScrollRight ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
         </div>
       </div>
 

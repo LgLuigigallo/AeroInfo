@@ -449,32 +449,6 @@ export function SearchBar({ selectedAirport, onSelectAirport }: SearchBarProps) 
           )}
         </div>
       )}
-
-      {/* Flight Departure Strip Hub Chips (below input) */}
-      <div className="flex items-center gap-1.5 overflow-x-auto py-2 scrollbar-none text-xs">
-        <span className="text-zinc-400 font-mono text-[10px] uppercase tracking-wider shrink-0 mr-1 hidden sm:inline">
-          Hub:
-        </span>
-        {topHubs.slice(0, 10).map((code) => {
-          const ap = airportsData.find((a) => a.iata === code);
-          if (!ap) return null;
-          const isSelected = selectedAirport.iata === code;
-          return (
-            <button
-              key={code}
-              type="button"
-              onClick={() => handleSelect(ap)}
-              className={`shrink-0 px-2 py-0.5 rounded text-[11px] font-mono transition-all cursor-pointer ${
-                isSelected
-                  ? 'bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 font-bold shadow-xs'
-                  : 'bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:border-zinc-300 dark:hover:border-zinc-700'
-              }`}
-            >
-              {ap.iata}
-            </button>
-          );
-        })}
-      </div>
     </div>
   );
 }
