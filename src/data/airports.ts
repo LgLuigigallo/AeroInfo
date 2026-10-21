@@ -4736,6 +4736,955 @@ export const airportsData: Airport[] = [
     ],
     lastUpdated: '2026-10-20'
   }
+,
+{
+  "id": "pmo",
+  "iata": "PMO",
+  "icao": "LICJ",
+  "name_it": "Aeroporto di Palermo Falcone e Borsellino",
+  "name_en": "Palermo Falcone Borsellino Airport",
+  "city_it": "Palermo",
+  "city_en": "Palermo",
+  "country_it": "Italia",
+  "country_en": "Italy",
+  "countryCode": "IT",
+  "officialWebsite": "https://www.aeroportodipalermo.it",
+  "officialMapUrl": "https://www.aeroportodipalermo.it",
+  "coordinates": {
+    "lat": 38.1759,
+    "lng": 13.091
+  },
+  "difficultyRating": 2,
+  "difficultyLabel_it": "Moderatamente Agevole",
+  "difficultyLabel_en": "Moderately Easy",
+  "averageSecurityWaitMin": 12,
+  "recommendedArrivalHours": {
+    "domestic": 2,
+    "international": 2.5
+  },
+  "navigationAdvice_it": "Terminal passeggeri recentemente riqualificato con una nuova terrazza lounge panoramica vista mare al terzo piano. I varchi di sicurezza sono posizionati al primo piano.",
+  "navigationAdvice_en": "Passenger terminal recently renovated with a third-floor sea-view panoramic lounge. Security checkpoints are on the 1st floor.",
+  "securityPolicy": {
+    "has3DScanners": false,
+    "scannersNote_it": "Scanner convenzionali a raggi X. È richiesto estrarre liquidi (max 100ml) e computer portatili.",
+    "scannersNote_en": "Standard X-ray scanners. Laptops and 100ml liquids must be removed for screening.",
+    "terminalRules": [
+      {
+        "terminalName": "Terminal Passeggeri",
+        "has3DScanners": false,
+        "notes_it": "Varchi al 1° piano. Regola dei 100ml attiva per tutti i voli.",
+        "notes_en": "1st floor checkpoint. Standard 100ml liquid rule applies."
+      }
+    ],
+    "liquidsAllowance_it": "Massimo 100ml per flacone in busta trasparente da 1 litro. Dolci tipici siciliani ammessi se compatti o acquistati post-sicurezza.",
+    "liquidsAllowance_en": "Max 100ml per container in 1-litre transparent bag. Pastries allowed if solid, or bought past security.",
+    "liquidsMustBeRemoved": true,
+    "liquidsUnverified": false,
+    "electronicsInBag": false,
+    "electronicsNote_it": "Dispositivi elettronici grandi devono essere estratti e riposti nelle vaschette separate.",
+    "electronicsNote_en": "Laptops and tablets must be placed into separate screening trays.",
+    "electronicsUnverified": false,
+    "droneAllowedInCabin": true,
+    "droneAllowedInHold": false,
+    "dronePolicy_it": "Droni ammessi nel bagaglio a mano con batterie protette. Vietato il volo nel raggio di 6 km dallo scalo.",
+    "dronePolicy_en": "Drones permitted in cabin luggage with batteries protected. Strictly prohibited within 6 km of airport.",
+    "droneUnverified": false,
+    "maxPowerbankWh": 100,
+    "powerbankPolicy_it": "Powerbank fino a 100Wh consentiti solo in cabina. Vietati nella stiva.",
+    "powerbankPolicy_en": "Powerbanks up to 100Wh allowed in cabin only. Forbidden in checked baggage.",
+    "powerbankUnverified": false,
+    "officialSourceUrl": "https://www.aeroportodipalermo.it",
+    "lastVerifiedDate": "2026-10-21"
+  },
+  "terminals": [
+    {
+      "id": "pmo-t1",
+      "name": "Terminal Passeggeri",
+      "transferInfo_it": "Unico terminal passeggeri disposto su tre livelli. Stazione FS sotterranea al piano -1.",
+      "transferInfo_en": "Single passenger terminal across three floors with railway station on underground level -1."
+    }
+  ],
+  "airlines": [
+    {
+      "airlineName": "Ryanair",
+      "iataCode": "FR",
+      "terminal": "Terminal Passeggeri",
+      "checkInZone": "Banchi Check-in 1-15"
+    },
+    {
+      "airlineName": "ITA Airways",
+      "iataCode": "AZ",
+      "terminal": "Terminal Passeggeri",
+      "checkInZone": "Banchi Check-in 16-22"
+    },
+    {
+      "airlineName": "EasyJet",
+      "iataCode": "U2",
+      "terminal": "Terminal Passeggeri",
+      "checkInZone": "Banchi Check-in 23-28"
+    },
+    {
+      "airlineName": "Volotea",
+      "iataCode": "V7",
+      "terminal": "Terminal Passeggeri",
+      "checkInZone": "Banchi Check-in 29-34"
+    },
+    {
+      "airlineName": "Wizz Air",
+      "iataCode": "W4",
+      "terminal": "Terminal Passeggeri",
+      "checkInZone": "Banchi Check-in 35-40"
+    }
+  ],
+  "amenities": [
+    {
+      "id": "pmo-pwr",
+      "category": "power_charging",
+      "title_it": "Postazioni di ricarica con prese Schuko e USB",
+      "title_en": "Device Charging Stations with USB & AC",
+      "terminal": "Terminal Passeggeri",
+      "location_it": "Presso i tavoli di lavoro dell'Area Imbarchi (Piano 2 e 3 fronte Gate A3-A6)",
+      "location_en": "High work benches in the departure gate concourse (Level 2 & 3 near Gates A3-A6)",
+      "availability": "moderate",
+      "details_it": "Nuovi banconi da lavoro in legno con prese elettriche 220V e porte USB-A / USB-C per la ricarica rapida.",
+      "details_en": "Work counters equipped with 220V AC and USB fast charging outlets."
+    },
+    {
+      "id": "pmo-water",
+      "category": "water_refill",
+      "title_it": "Fontanelle di acqua potabile gratuita",
+      "title_en": "Free Drinking Water Refill Stations",
+      "terminal": "Terminal Passeggeri",
+      "location_it": "Presso i blocchi bagni vicino al Gate A02 e al Gate B04",
+      "location_en": "Next to restrooms near Gate A02 and Gate B04",
+      "availability": "abundant",
+      "details_it": "Erogatori d'acqua potabile microfiltrata per riempire gratuitamente borracce dopo i varchi di sicurezza.",
+      "details_en": "Water refill fountains for bottles after passing security."
+    },
+    {
+      "id": "pmo-wifi",
+      "category": "wifi",
+      "title_it": "Wi-Fi gratuito \"Palermo Airport Free WiFi\"",
+      "title_en": "Free Wi-Fi \"Palermo Airport Free WiFi\"",
+      "terminal": "Terminal Passeggeri",
+      "location_it": "Copertura in tutto il terminal",
+      "location_en": "Available across all terminal areas",
+      "availability": "abundant",
+      "details_it": "Connessione Wi-Fi gratuita e illimitata.",
+      "details_en": "Unlimited free high-speed wireless connection."
+    }
+  ],
+  "venues": [
+    {
+      "id": "pmo-v-1",
+      "name": "Spinnato Pasticceria & Caffe",
+      "category": "cafe",
+      "terminal": "Terminal Passeggeri",
+      "location": "Piano 2 Area Imbarchi",
+      "hours": "05:00 - 22:30",
+      "isEarlyMorning": true,
+      "serviceType": "coffee_snack",
+      "highlightNote_it": "Iconica pasticceria palermitana con cannoli riempiti al momento, iris e caffe espresso.",
+      "highlightNote_en": "Iconic bakery with cannoli filled fresh on the spot and espresso."
+    },
+    {
+      "id": "pmo-v-2",
+      "name": "Aelia Duty Free Palermo",
+      "category": "duty_free",
+      "terminal": "Terminal Passeggeri",
+      "location": "Piano 2 subito dopo la sicurezza",
+      "hours": "05:30 - 22:30",
+      "isEarlyMorning": true,
+      "serviceType": "duty_free"
+    },
+    {
+      "id": "pmo-v-3",
+      "name": "I Banchi Terrazza Ristorante",
+      "category": "dining",
+      "terminal": "Terminal Passeggeri",
+      "location": "Piano 3 Nuova Area Terrazza",
+      "hours": "11:00 - 22:00",
+      "serviceType": "table_service",
+      "highlightNote_it": "Ristorante con servizio al tavolo e cucina tipica siciliana vista mare.",
+      "highlightNote_en": "Sit-down restaurant with traditional Sicilian cuisine and sea view."
+    },
+    {
+      "id": "pmo-v-4",
+      "name": "Ke Palle Arancine d'Autore",
+      "category": "grab_and_go",
+      "terminal": "Terminal Passeggeri",
+      "location": "Piano 2 Gate A1-A4",
+      "hours": "06:00 - 22:00",
+      "serviceType": "quick_bite",
+      "highlightNote_it": "Arancine espresse calde pronte al volo per il gate.",
+      "highlightNote_en": "Warm gourmet fried arancine ready to grab and take to gate."
+    },
+    {
+      "id": "pmo-v-5",
+      "name": "Farmacia Falcone e Borsellino",
+      "category": "pharmacy",
+      "terminal": "Terminal Passeggeri",
+      "location": "Piano Terra Landside Arrivi",
+      "hours": "07:00 - 21:30",
+      "serviceType": "pharmacy"
+    }
+  ],
+  "transports": [
+    {
+      "id": "pmo-tr-1",
+      "type": "train",
+      "name_it": "Treno Trinacria Express / Genio Express (Trenitalia)",
+      "name_en": "Trinacria Express Train",
+      "duration": "45 - 55 min",
+      "frequency": "Ogni 30 min",
+      "estimatedCost": "€6.50",
+      "pickupLocation_it": "Stazione Ferroviaria sotterranea Punta Raisi (Piano -1)",
+      "pickupLocation_en": "Punta Raisi Underground Railway Station (Level -1)",
+      "details_it": "Collega direttamente l'aeroporto con Palermo Notarbartolo e Palermo Centrale.",
+      "details_en": "Direct rail link to Palermo Notarbartolo and Central Station."
+    },
+    {
+      "id": "pmo-tr-2",
+      "type": "bus",
+      "name_it": "Autobus Prestia e Comande",
+      "name_en": "Prestia e Comande Airport Bus",
+      "duration": "50 min",
+      "frequency": "Ogni 30 min",
+      "estimatedCost": "€6.00",
+      "pickupLocation_it": "Fermata bus all'uscita del Piano Terra Arrivi",
+      "pickupLocation_en": "Bus terminal outside Ground Floor Arrivals",
+      "details_it": "Arriva in centro citta con fermate a Piazza Politeama e Stazione Centrale.",
+      "details_en": "Stops at central Piazza Politeama and Palermo Central Station."
+    },
+    {
+      "id": "pmo-tr-3",
+      "type": "taxi",
+      "name_it": "Taxi Autorizzati Palermo",
+      "name_en": "Authorized Palermo Taxis",
+      "duration": "35 min",
+      "frequency": "Disponibili 24/7",
+      "estimatedCost": "€35 - €45",
+      "pickupLocation_it": "Corsia taxi ufficiale all'uscita Arrivi",
+      "pickupLocation_en": "Official taxi rank outside Arrivals",
+      "details_it": "Tariffa fissa predeterminata per il centro di Palermo e taxi condiviso a €8/persona.",
+      "details_en": "Fixed rate to Palermo city centre or shared taxi at €8/person."
+    }
+  ],
+  "lastUpdated": "2026-10-21"
+},
+{
+  "id": "cta",
+  "iata": "CTA",
+  "icao": "LICC",
+  "name_it": "Aeroporto di Catania-Fontanarossa Vincenzo Bellini",
+  "name_en": "Catania-Fontanarossa Vincenzo Bellini Airport",
+  "city_it": "Catania",
+  "city_en": "Catania",
+  "country_it": "Italia",
+  "country_en": "Italy",
+  "countryCode": "IT",
+  "officialWebsite": "https://www.aeroporto.catania.it",
+  "officialMapUrl": "https://www.aeroporto.catania.it",
+  "coordinates": {
+    "lat": 37.4668,
+    "lng": 15.0664
+  },
+  "difficultyRating": 3,
+  "difficultyLabel_it": "Trafficato nelle Ore di Punta",
+  "difficultyLabel_en": "Busy during Peak Hours",
+  "averageSecurityWaitMin": 18,
+  "recommendedArrivalHours": {
+    "domestic": 2,
+    "international": 2.5
+  },
+  "navigationAdvice_it": "Principale scalo siciliano per volume passeggeri. Il Terminal A gestisce la quasi totalita dei voli, mentre il Terminal C e dedicato a EasyJet.",
+  "navigationAdvice_en": "Main Sicilian airport by passenger volume. Terminal A handles most flights, while Terminal C is dedicated to EasyJet.",
+  "securityPolicy": {
+    "has3DScanners": false,
+    "scannersNote_it": "Scanner convenzionali: estrarre obbligatoriamente liquidi (max 100ml) e portatili.",
+    "scannersNote_en": "Standard X-ray scanners: liquids (max 100ml) and laptops must be placed in trays.",
+    "terminalRules": [
+      {
+        "terminalName": "Terminal A",
+        "has3DScanners": false,
+        "notes_it": "Varchi al 1° piano. Flaconi max 100ml in busta trasparente.",
+        "notes_en": "1st floor screening. Standard 100ml rules."
+      },
+      {
+        "terminalName": "Terminal C",
+        "has3DScanners": false,
+        "notes_it": "Controlli dedicati ai passeggeri EasyJet.",
+        "notes_en": "Dedicated checkpoint for EasyJet passengers."
+      }
+    ],
+    "liquidsAllowance_it": "Regola standard da 100ml per contenitore. Cannoli e dolci siciliani ammessi se solidi o acquistati dopo la sicurezza.",
+    "liquidsAllowance_en": "Standard 100ml liquid rule applies. Pastries allowed if solid, or bought airside.",
+    "liquidsMustBeRemoved": true,
+    "liquidsUnverified": false,
+    "electronicsInBag": false,
+    "electronicsNote_it": "Portatili e tablet devono essere estratti e mostrati separatamente ai controlli.",
+    "electronicsNote_en": "Laptops and tablets must be placed separately in trays.",
+    "electronicsUnverified": false,
+    "droneAllowedInCabin": true,
+    "droneAllowedInHold": false,
+    "dronePolicy_it": "Droni consentiti nel bagaglio a mano con batterie protette. Vietato il volo vicino allo scalo e alle rotte di avvicinamento dell'Etna.",
+    "dronePolicy_en": "Drones permitted in cabin with protected batteries. Forbidden in airport airspace.",
+    "droneUnverified": false,
+    "maxPowerbankWh": 100,
+    "powerbankPolicy_it": "Powerbank max 100Wh consentiti solo in cabina.",
+    "powerbankPolicy_en": "Powerbanks up to 100Wh permitted in cabin only.",
+    "powerbankUnverified": false,
+    "officialSourceUrl": "https://www.aeroporto.catania.it",
+    "lastVerifiedDate": "2026-10-21"
+  },
+  "terminals": [
+    {
+      "id": "cta-ta",
+      "name": "Terminal A",
+      "transferInfo_it": "Terminal principale a 2 livelli per ITA, Ryanair, Wizz Air, Lufthansa.",
+      "transferInfo_en": "Main terminal for ITA, Ryanair, Wizz Air, Lufthansa."
+    },
+    {
+      "id": "cta-tc",
+      "name": "Terminal C",
+      "transferInfo_it": "Terminal dedicato esclusivamente ai voli EasyJet.",
+      "transferInfo_en": "Dedicated terminal exclusively for EasyJet flights."
+    }
+  ],
+  "airlines": [
+    {
+      "airlineName": "Ryanair",
+      "iataCode": "FR",
+      "terminal": "Terminal A",
+      "checkInZone": "Banchi Check-in 1-18"
+    },
+    {
+      "airlineName": "EasyJet",
+      "iataCode": "U2",
+      "terminal": "Terminal C",
+      "checkInZone": "Terminal C dedicato"
+    },
+    {
+      "airlineName": "ITA Airways",
+      "iataCode": "AZ",
+      "terminal": "Terminal A",
+      "checkInZone": "Banchi Check-in 19-25"
+    },
+    {
+      "airlineName": "Wizz Air",
+      "iataCode": "W4",
+      "terminal": "Terminal A",
+      "checkInZone": "Banchi Check-in 26-32"
+    },
+    {
+      "airlineName": "Lufthansa / Swiss",
+      "iataCode": "LH/LX",
+      "terminal": "Terminal A",
+      "checkInZone": "Banchi Check-in 33-38"
+    }
+  ],
+  "amenities": [
+    {
+      "id": "cta-pwr",
+      "category": "power_charging",
+      "title_it": "Prese elettriche e porte USB ai gate d'imbarco",
+      "title_en": "Gate Charging Outlets and USB Ports",
+      "terminal": "Terminal A",
+      "location_it": "Colonne di ricarica vicino ai Gate 5-10",
+      "location_en": "Charging poles near Gates 5-10",
+      "availability": "moderate",
+      "details_it": "Colonnine con prese Schuko e porte USB per la ricarica rapida prima del volo.",
+      "details_en": "Power stations with AC and USB ports."
+    },
+    {
+      "id": "cta-water",
+      "category": "water_refill",
+      "title_it": "Fontanelle di acqua potabile gratuita",
+      "title_en": "Free Drinking Water Refill",
+      "terminal": "Terminal A & C",
+      "location_it": "Presso i blocchi servizi igienici airside",
+      "location_en": "Near airside restrooms",
+      "availability": "abundant",
+      "details_it": "Erogatori verticali gratuiti per riempire borracce.",
+      "details_en": "Free vertical fountains for bottle refill."
+    },
+    {
+      "id": "cta-wifi",
+      "category": "wifi",
+      "title_it": "Wi-Fi gratuito \"Catania Airport Free\"",
+      "title_en": "Free Wi-Fi \"Catania Airport Free\"",
+      "terminal": "Tutti i Terminal",
+      "location_it": "Disponibile in tutti i terminal",
+      "location_en": "Available across all terminals",
+      "availability": "abundant",
+      "details_it": "Rete ad alta velocita gratuita senza registrazione a pagamento.",
+      "details_en": "High-speed wireless connection free of charge."
+    }
+  ],
+  "venues": [
+    {
+      "id": "cta-v-1",
+      "name": "Bacco Pasticceria & Caffe",
+      "category": "cafe",
+      "terminal": "Terminal A",
+      "location": "Piano 1 Partenze",
+      "hours": "05:00 - 22:30",
+      "isEarlyMorning": true,
+      "serviceType": "coffee_snack",
+      "highlightNote_it": "Caffe espresso e granite con brioche, cannoli espressi.",
+      "highlightNote_en": "Espresso coffee, granita with brioche, and freshly filled cannoli."
+    },
+    {
+      "id": "cta-v-2",
+      "name": "Heinemann Duty Free Catania",
+      "category": "duty_free",
+      "terminal": "Terminal A",
+      "location": "Piano 1 dopo la sicurezza",
+      "hours": "05:30 - 22:30",
+      "isEarlyMorning": true,
+      "serviceType": "duty_free"
+    },
+    {
+      "id": "cta-v-3",
+      "name": "Caffe Vergnano 1882",
+      "category": "cafe",
+      "terminal": "Terminal A",
+      "location": "Piano 1 Gate 7",
+      "hours": "05:00 - 23:00",
+      "isEarlyMorning": true,
+      "serviceType": "coffee_snack"
+    },
+    {
+      "id": "cta-v-4",
+      "name": "Rosso Sapore Pizza & Focaccia",
+      "category": "grab_and_go",
+      "terminal": "Terminal A",
+      "location": "Piano 1 Gate 4",
+      "hours": "06:00 - 22:00",
+      "serviceType": "quick_bite",
+      "highlightNote_it": "Pizze e focacce calde espresse da asporto per il gate.",
+      "highlightNote_en": "Warm pizza and focaccia ready for gate takeaway."
+    },
+    {
+      "id": "cta-v-5",
+      "name": "Farmacia Fontanarossa",
+      "category": "pharmacy",
+      "terminal": "Terminal A",
+      "location": "Piano Terra Landside",
+      "hours": "07:30 - 21:00",
+      "serviceType": "pharmacy"
+    }
+  ],
+  "transports": [
+    {
+      "id": "cta-tr-1",
+      "type": "bus",
+      "name_it": "AMTS Alibus Catania",
+      "name_en": "AMTS Alibus Catania",
+      "duration": "20 min",
+      "frequency": "Ogni 25 min",
+      "estimatedCost": "€4.00",
+      "pickupLocation_it": "Fermata bus corsia esterna Piano Terra Arrivi",
+      "pickupLocation_en": "Bus rank outside Ground Floor Arrivals",
+      "details_it": "Collega direttamente l'aeroporto con il centro storico (Piazza Stesicoro, Piazza Duomo) e la Stazione Centrale.",
+      "details_en": "Direct link to city centre and Catania Central Railway Station."
+    },
+    {
+      "id": "cta-tr-2",
+      "type": "train",
+      "name_it": "Treno FS Stazione Catania Aeroporto Fontanarossa",
+      "name_en": "FS Train Catania Airport Station",
+      "duration": "8 min",
+      "frequency": "Ogni 20 - 30 min",
+      "estimatedCost": "€2.20",
+      "pickupLocation_it": "Stazione ferroviaria a 800m collegata con navetta gratuita",
+      "pickupLocation_en": "Train station 800m away via free shuttle",
+      "details_it": "Treni regionali veloci verso Catania Centrale, Messina, Siracusa e Palermo.",
+      "details_en": "Regional trains to Catania Central, Messina, Syracuse and Palermo."
+    },
+    {
+      "id": "cta-tr-3",
+      "type": "taxi",
+      "name_it": "Taxi Autorizzati Catania",
+      "name_en": "Authorized Catania Taxis",
+      "duration": "15 min",
+      "frequency": "Disponibili 24/7",
+      "estimatedCost": "€25 - €30",
+      "pickupLocation_it": "Corsia taxi all'uscita Arrivi",
+      "pickupLocation_en": "Taxi rank outside Arrivals",
+      "details_it": "Tariffa fissa per il centro urbano di Catania.",
+      "details_en": "Fixed standard fare to central Catania."
+    }
+  ],
+  "lastUpdated": "2026-10-21"
+},
+{
+  "id": "lpa",
+  "iata": "LPA",
+  "icao": "GCLP",
+  "name_it": "Aeroporto di Gran Canaria",
+  "name_en": "Gran Canaria Airport",
+  "city_it": "Gran Canaria",
+  "city_en": "Gran Canaria",
+  "country_it": "Spagna",
+  "country_en": "Spain",
+  "countryCode": "ES",
+  "officialWebsite": "https://www.aena.es/es/gran-canaria.html",
+  "officialMapUrl": "https://www.aena.es/es/gran-canaria.html",
+  "coordinates": {
+    "lat": 27.9319,
+    "lng": -15.3866
+  },
+  "difficultyRating": 2,
+  "difficultyLabel_it": "Fluido & Ben Organizzato",
+  "difficultyLabel_en": "Smooth & Well Organized",
+  "averageSecurityWaitMin": 12,
+  "recommendedArrivalHours": {
+    "domestic": 2,
+    "international": 2.5
+  },
+  "navigationAdvice_it": "Aeroporto strutturato in 3 zone d'imbarco (A per Schengen/Spagna, B per Non-Schengen/UK, C per voli interinsulari Canarie). Controlli veloci e ben segnalati.",
+  "navigationAdvice_en": "Terminal split into 3 zones (A for Schengen/Spain, B for Non-Schengen, C for Canary inter-island flights). Efficient security screening.",
+  "securityPolicy": {
+    "has3DScanners": false,
+    "scannersNote_it": "Scanner convenzionali Aena: liquidi max 100ml ed elettronica estratti.",
+    "scannersNote_en": "Standard Aena X-ray: 100ml liquids and laptops must be removed.",
+    "terminalRules": [
+      {
+        "terminalName": "Terminal Passeggeri",
+        "has3DScanners": false,
+        "notes_it": "Varchi al 1° piano. Regola 100ml.",
+        "notes_en": "1st floor security. 100ml rule."
+      }
+    ],
+    "liquidsAllowance_it": "Flaconi max 100ml in busta trasparente da 1 litro.",
+    "liquidsAllowance_en": "Max 100ml per container in 1-litre transparent pouch.",
+    "liquidsMustBeRemoved": true,
+    "liquidsUnverified": false,
+    "electronicsInBag": false,
+    "electronicsNote_it": "Laptop e tablet nelle vaschette separate.",
+    "electronicsNote_en": "Laptops and electronics must be placed in trays.",
+    "electronicsUnverified": false,
+    "droneAllowedInCabin": true,
+    "droneAllowedInHold": false,
+    "dronePolicy_it": "Droni ammessi nel bagaglio a mano con batterie protette.",
+    "dronePolicy_en": "Drones permitted in cabin luggage with batteries protected.",
+    "droneUnverified": false,
+    "maxPowerbankWh": 100,
+    "powerbankPolicy_it": "Max 100Wh consentiti solo in cabina.",
+    "powerbankPolicy_en": "Up to 100Wh allowed in cabin only.",
+    "powerbankUnverified": false,
+    "officialSourceUrl": "https://www.aena.es/es/gran-canaria.html",
+    "lastVerifiedDate": "2026-10-21"
+  },
+  "terminals": [
+    {
+      "id": "lpa-t1",
+      "name": "Terminal Passeggeri",
+      "transferInfo_it": "Zona A (Schengen/Continentale), Zona B (Regno Unito/Internazionale), Zona C (Interinsulari Binter/Canaryfly).",
+      "transferInfo_en": "Zone A (Schengen), Zone B (UK/Intl), Zone C (Inter-island Canary flights)."
+    }
+  ],
+  "airlines": [
+    {
+      "airlineName": "Binter Canarias",
+      "iataCode": "NT",
+      "terminal": "Terminal Passeggeri (Zona C)",
+      "checkInZone": "Banchi dedicati Binter"
+    },
+    {
+      "airlineName": "Ryanair",
+      "iataCode": "FR",
+      "terminal": "Terminal Passeggeri (Zona A/B)",
+      "checkInZone": "Banchi 1-16"
+    },
+    {
+      "airlineName": "Iberia / Vueling",
+      "iataCode": "IB/VY",
+      "terminal": "Terminal Passeggeri (Zona A)",
+      "checkInZone": "Banchi 20-30"
+    },
+    {
+      "airlineName": "TUI Airways / fly",
+      "iataCode": "BY/TB",
+      "terminal": "Terminal Passeggeri (Zona B)",
+      "checkInZone": "Banchi 35-50"
+    },
+    {
+      "airlineName": "EasyJet",
+      "iataCode": "U2",
+      "terminal": "Terminal Passeggeri",
+      "checkInZone": "Banchi 51-60"
+    }
+  ],
+  "amenities": [
+    {
+      "id": "lpa-pwr",
+      "category": "power_charging",
+      "title_it": "Prese Schuko e USB integrate nelle sedute",
+      "title_en": "Integrated Gate Seat Power Sockets",
+      "terminal": "Terminal Passeggeri",
+      "location_it": "Lungo i moli d'imbarco Zona A e B",
+      "location_en": "Concourses Zone A and B",
+      "availability": "abundant",
+      "details_it": "Sedute dotate di prese europee e porte USB.",
+      "details_en": "Gate benches equipped with power outlets."
+    },
+    {
+      "id": "lpa-water",
+      "category": "water_refill",
+      "title_it": "Fontanelle di acqua potabile gratuita Aena",
+      "title_en": "Aena Free Water Refill Fountains",
+      "terminal": "Terminal Passeggeri",
+      "location_it": "Vicino ai bagni in Zona A, B e C",
+      "location_en": "Near restrooms in Zones A, B, C",
+      "availability": "abundant",
+      "details_it": "Erogatori gratuiti per riempire bottiglie e borracce.",
+      "details_en": "Free fountains for bottle refill past security."
+    },
+    {
+      "id": "lpa-wifi",
+      "category": "wifi",
+      "title_it": "Wi-Fi gratuito \"Airport Free Wifi Aena\"",
+      "title_en": "Free Wi-Fi \"Airport Free Wifi Aena\"",
+      "terminal": "Terminal Passeggeri",
+      "location_it": "Copertura in tutto lo scalo",
+      "location_en": "High-speed coverage across terminal",
+      "availability": "abundant",
+      "details_it": "Connessione wireless ufficiale gratuita illimitata.",
+      "details_en": "Unlimited free wireless provided by Aena."
+    }
+  ],
+  "venues": [
+    {
+      "id": "lpa-v-1",
+      "name": "Aena Duty Free Gran Canaria",
+      "category": "duty_free",
+      "terminal": "Terminal Passeggeri",
+      "location": "Piano 1 Airside",
+      "hours": "06:00 - 22:30",
+      "isEarlyMorning": true,
+      "serviceType": "duty_free"
+    },
+    {
+      "id": "lpa-v-2",
+      "name": "Cafe & Tapas",
+      "category": "cafe",
+      "terminal": "Terminal Passeggeri",
+      "location": "Piano 1 Zona A",
+      "hours": "05:30 - 22:00",
+      "isEarlyMorning": true,
+      "serviceType": "coffee_snack",
+      "highlightNote_it": "Caffe, bocadillos con jamon serrano e tapas calde.",
+      "highlightNote_en": "Coffee, Spanish bocadillos, and warm tapas."
+    },
+    {
+      "id": "lpa-v-3",
+      "name": "Burger King",
+      "category": "dining",
+      "terminal": "Terminal Passeggeri",
+      "location": "Piano 1 Food Court",
+      "hours": "10:00 - 22:00",
+      "serviceType": "quick_bite"
+    },
+    {
+      "id": "lpa-v-4",
+      "name": "Starbucks",
+      "category": "cafe",
+      "terminal": "Terminal Passeggeri",
+      "location": "Piano 1 Zona B",
+      "hours": "05:30 - 22:00",
+      "isEarlyMorning": true,
+      "serviceType": "coffee_snack"
+    },
+    {
+      "id": "lpa-v-5",
+      "name": "Farmacia Aeroporto Gran Canaria",
+      "category": "pharmacy",
+      "terminal": "Terminal Passeggeri",
+      "location": "Piano 1 Landside Partenze",
+      "hours": "07:00 - 21:00",
+      "serviceType": "pharmacy"
+    }
+  ],
+  "transports": [
+    {
+      "id": "lpa-tr-1",
+      "type": "bus",
+      "name_it": "Global Autobus Linea 60",
+      "name_en": "Global Bus Line 60",
+      "duration": "25 min",
+      "frequency": "Ogni 30 min",
+      "estimatedCost": "€2.30 - €2.95",
+      "pickupLocation_it": "Fermata bus corsia esterna Arrivi Piano 0",
+      "pickupLocation_en": "Bus terminal outside Floor 0 Arrivals",
+      "details_it": "Linea diretta per Las Palmas de Gran Canaria (Stazione San Telmo e Santa Catalina).",
+      "details_en": "Direct express bus to Las Palmas city centre."
+    },
+    {
+      "id": "lpa-tr-2",
+      "type": "bus",
+      "name_it": "Global Autobus Linea 66 / 90",
+      "name_en": "Global Bus Line 66 / 90",
+      "duration": "35 min",
+      "frequency": "Ogni 30 - 60 min",
+      "estimatedCost": "€3.50 - €4.05",
+      "pickupLocation_it": "Fermata bus Piano 0",
+      "pickupLocation_en": "Bus stop Floor 0",
+      "details_it": "Collega l'aeroporto con le spiagge del sud: Maspalomas, Playa del Ingles e Meloneras.",
+      "details_en": "Connects airport with southern beaches (Maspalomas, Playa del Ingles)."
+    },
+    {
+      "id": "lpa-tr-3",
+      "type": "taxi",
+      "name_it": "Taxi Ufficiali Gran Canaria",
+      "name_en": "Official Gran Canaria Taxis",
+      "duration": "20 min",
+      "frequency": "Disponibili 24/7",
+      "estimatedCost": "€30 - €40",
+      "pickupLocation_it": "Corsia taxi all'uscita Arrivi",
+      "pickupLocation_en": "Taxi rank outside Arrivals",
+      "details_it": "Tariffa a tassametro verso Las Palmas centro (~€30) o Maspalomas (~€40).",
+      "details_en": "Metered fares to Las Palmas (~€30) or Maspalomas (~€40)."
+    }
+  ],
+  "lastUpdated": "2026-10-21"
+},
+{
+  "id": "tfs",
+  "iata": "TFS",
+  "icao": "GCTS",
+  "name_it": "Aeroporto di Tenerife Sud / Sur Reina Sofia",
+  "name_en": "Tenerife South Airport Reina Sofia (Tenerife Sur)",
+  "city_it": "Tenerife (Tenerife Sur)",
+  "city_en": "Tenerife (Tenerife South)",
+  "country_it": "Spagna",
+  "country_en": "Spain",
+  "countryCode": "ES",
+  "officialWebsite": "https://www.aena.es/es/tenerife-sur.html",
+  "officialMapUrl": "https://www.aena.es/es/tenerife-sur.html",
+  "coordinates": {
+    "lat": 28.0445,
+    "lng": -16.5725
+  },
+  "difficultyRating": 3,
+  "difficultyLabel_it": "Affollato nei Giorni Charter",
+  "difficultyLabel_en": "Busy on Charter Days",
+  "averageSecurityWaitMin": 16,
+  "recommendedArrivalHours": {
+    "domestic": 2,
+    "international": 2.5
+  },
+  "navigationAdvice_it": "Principale scalo turistico dell'isola di Tenerife. Molto trafficato nei giorni di martedi e venerdi per i cambi turno dei voli charter europei.",
+  "navigationAdvice_en": "Main tourist gateway to Tenerife. High traffic on Tuesdays and Fridays during charter rotation days.",
+  "securityPolicy": {
+    "has3DScanners": false,
+    "scannersNote_it": "Scanner convenzionali Aena: liquidi max 100ml e portatili da estrarre.",
+    "scannersNote_en": "Standard X-ray scanners: liquids max 100ml and laptops removed.",
+    "terminalRules": [
+      {
+        "terminalName": "Terminal 1",
+        "has3DScanners": false,
+        "notes_it": "Controlli al Piano 1. Regola 100ml.",
+        "notes_en": "Floor 1 security. 100ml rule."
+      }
+    ],
+    "liquidsAllowance_it": "Flaconi max 100ml in sacchetto trasparente richiudibile.",
+    "liquidsAllowance_en": "Max 100ml in transparent 1-litre bag.",
+    "liquidsMustBeRemoved": true,
+    "liquidsUnverified": false,
+    "electronicsInBag": false,
+    "electronicsNote_it": "Laptop e tablet nelle vaschette separate.",
+    "electronicsNote_en": "Laptops and electronics must be screened separately.",
+    "electronicsUnverified": false,
+    "droneAllowedInCabin": true,
+    "droneAllowedInHold": false,
+    "dronePolicy_it": "Droni ammessi nel bagaglio a mano con batterie protette.",
+    "dronePolicy_en": "Drones permitted in cabin luggage with batteries protected.",
+    "droneUnverified": false,
+    "maxPowerbankWh": 100,
+    "powerbankPolicy_it": "Powerbank max 100Wh consentiti solo in cabina.",
+    "powerbankPolicy_en": "Powerbanks up to 100Wh allowed in cabin only.",
+    "powerbankUnverified": false,
+    "officialSourceUrl": "https://www.aena.es/es/tenerife-sur.html",
+    "lastVerifiedDate": "2026-10-21"
+  },
+  "terminals": [
+    {
+      "id": "tfs-t1",
+      "name": "Terminal 1",
+      "transferInfo_it": "Terminal principale strutturato su tre livelli: Piano 0 Arrivi, Piano 1 Partenze e Imbarchi (Gates 1-34), Piano 2 Uffici e Lounge VIP.",
+      "transferInfo_en": "Main terminal across three floors: Floor 0 Arrivals, Floor 1 Departures/Gates 1-34, Floor 2 VIP lounge."
+    }
+  ],
+  "airlines": [
+    {
+      "airlineName": "Ryanair",
+      "iataCode": "FR",
+      "terminal": "Terminal 1",
+      "checkInZone": "Banchi 1-20"
+    },
+    {
+      "airlineName": "EasyJet",
+      "iataCode": "U2",
+      "terminal": "Terminal 1",
+      "checkInZone": "Banchi 21-32"
+    },
+    {
+      "airlineName": "Jet2.com",
+      "iataCode": "LS",
+      "terminal": "Terminal 1",
+      "checkInZone": "Banchi 33-50"
+    },
+    {
+      "airlineName": "TUI Airways",
+      "iataCode": "BY",
+      "terminal": "Terminal 1",
+      "checkInZone": "Banchi 51-65"
+    },
+    {
+      "airlineName": "Iberia / Vueling",
+      "iataCode": "IB/VY",
+      "terminal": "Terminal 1",
+      "checkInZone": "Banchi 66-75"
+    }
+  ],
+  "amenities": [
+    {
+      "id": "tfs-pwr",
+      "category": "power_charging",
+      "title_it": "Prese elettriche e USB nelle aree d'attesa",
+      "title_en": "Waiting Area Power Sockets & USB",
+      "terminal": "Terminal 1",
+      "location_it": "Piano 1 Airside vicino ai Gate 12-24",
+      "location_en": "Floor 1 Airside near Gates 12-24",
+      "availability": "moderate",
+      "details_it": "Postazioni di ricarica rapida e prese Schuko.",
+      "details_en": "Fast charging stations and AC sockets."
+    },
+    {
+      "id": "tfs-water",
+      "category": "water_refill",
+      "title_it": "Fontanelle di acqua potabile gratuita",
+      "title_en": "Free Drinking Water Refill Fountains",
+      "terminal": "Terminal 1",
+      "location_it": "Presso i blocchi bagni airside",
+      "location_en": "Near airside restrooms",
+      "availability": "abundant",
+      "details_it": "Erogatori gratuiti per riempire le borracce dopo la sicurezza.",
+      "details_en": "Free refill fountains after security check."
+    },
+    {
+      "id": "tfs-wifi",
+      "category": "wifi",
+      "title_it": "Wi-Fi gratuito \"Airport Free Wifi Aena\"",
+      "title_en": "Free Wi-Fi \"Airport Free Wifi Aena\"",
+      "terminal": "Terminal 1",
+      "location_it": "Copertura in tutto il terminal",
+      "location_en": "Available across terminal",
+      "availability": "abundant",
+      "details_it": "Wi-Fi gratuito fornito da Aena.",
+      "details_en": "Free wireless connection by Aena."
+    }
+  ],
+  "venues": [
+    {
+      "id": "tfs-v-1",
+      "name": "Canariensis Duty Free Tenerife",
+      "category": "duty_free",
+      "terminal": "Terminal 1",
+      "location": "Piano 1 dopo i controlli",
+      "hours": "06:00 - 22:30",
+      "isEarlyMorning": true,
+      "serviceType": "duty_free"
+    },
+    {
+      "id": "tfs-v-2",
+      "name": "Ritazza Caffe & Bakery",
+      "category": "cafe",
+      "terminal": "Terminal 1",
+      "location": "Piano 1 Gate 14",
+      "hours": "05:00 - 22:00",
+      "isEarlyMorning": true,
+      "serviceType": "coffee_snack",
+      "highlightNote_it": "Colazioni all'alba, cornetti caldi e caffe espresso.",
+      "highlightNote_en": "Dawn breakfasts, warm pastries and espresso."
+    },
+    {
+      "id": "tfs-v-3",
+      "name": "Gambrinus Cerveceria & Tapas",
+      "category": "dining",
+      "terminal": "Terminal 1",
+      "location": "Piano 1 Centrale",
+      "hours": "10:00 - 22:00",
+      "serviceType": "table_service",
+      "highlightNote_it": "Tapas tipiche spagnole, birre e piatti caldi con sedute.",
+      "highlightNote_en": "Traditional tapas, beer and sit-down dining."
+    },
+    {
+      "id": "tfs-v-4",
+      "name": "Upper Crust Sandwiches",
+      "category": "grab_and_go",
+      "terminal": "Terminal 1",
+      "location": "Piano 1 Gate 8",
+      "hours": "06:00 - 22:00",
+      "serviceType": "quick_bite",
+      "highlightNote_it": "Baguette calde e panini espressi da asporto.",
+      "highlightNote_en": "Warm baguettes and quick sandwiches."
+    },
+    {
+      "id": "tfs-v-5",
+      "name": "Farmacia Tenerife Sur",
+      "category": "pharmacy",
+      "terminal": "Terminal 1",
+      "location": "Piano 0 Landside Arrivi",
+      "hours": "07:30 - 21:30",
+      "serviceType": "pharmacy"
+    }
+  ],
+  "transports": [
+    {
+      "id": "tfs-tr-1",
+      "type": "bus",
+      "name_it": "TITSA Autobus Linea 111 / 711",
+      "name_en": "TITSA Bus Line 111 / 711",
+      "duration": "25 min / 55 min",
+      "frequency": "Ogni 30 min",
+      "estimatedCost": "€3.70 - €9.35",
+      "pickupLocation_it": "Fermata bus all'uscita Piano 0 Arrivi",
+      "pickupLocation_en": "Bus rank outside Floor 0 Arrivals",
+      "details_it": "Collega l'aeroporto verso sud con Los Cristianos / Costa Adeje (€3.70) e verso nord con Santa Cruz de Tenerife (€9.35).",
+      "details_en": "Express bus to Los Cristianos/Costa Adeje or Santa Cruz."
+    },
+    {
+      "id": "tfs-tr-2",
+      "type": "bus",
+      "name_it": "TITSA Autobus Linea 40",
+      "name_en": "TITSA Bus Line 40",
+      "duration": "25 min",
+      "frequency": "Ogni 30 min",
+      "estimatedCost": "€3.70",
+      "pickupLocation_it": "Fermata bus Piano 0 Arrivi",
+      "pickupLocation_en": "Bus rank Floor 0 Arrivals",
+      "details_it": "Linea rapida dedicata per i principali resort turistici di Los Cristianos e Las Americas.",
+      "details_en": "Dedicated express route to Los Cristianos and Las Americas resorts."
+    },
+    {
+      "id": "tfs-tr-3",
+      "type": "taxi",
+      "name_it": "Taxi Ufficiali Tenerife Sud",
+      "name_en": "Official Tenerife South Taxis",
+      "duration": "15 min",
+      "frequency": "Disponibili 24/7",
+      "estimatedCost": "€20 - €30",
+      "pickupLocation_it": "Corsia taxi all'uscita Arrivi Piano 0",
+      "pickupLocation_en": "Taxi rank outside Arrivals Floor 0",
+      "details_it": "Tariffa a tassametro verso Los Cristianos (~€20), Playa de las Americas (~€25) o Costa Adeje (~€30).",
+      "details_en": "Metered fares to Los Cristianos (~€20), Las Americas (~€25), Costa Adeje (~€30)."
+    }
+  ],
+  "lastUpdated": "2026-10-21"
+}
 ];
 
 export function getAirportById(id: string): Airport | undefined {

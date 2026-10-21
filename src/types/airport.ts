@@ -33,10 +33,10 @@ export interface VerifiedField<T = string> {
 export interface TerminalSecurityRule {
   terminalName: string;
   has3DScanners: boolean;
-  liquidsAllowedInBag: boolean;
-  bottleAllowance_it: string;
-  bottleAllowance_en: string;
-  electronicsInBag: boolean;
+  liquidsAllowedInBag?: boolean;
+  bottleAllowance_it?: string;
+  bottleAllowance_en?: string;
+  electronicsInBag?: boolean;
   notes_it: string;
   notes_en: string;
 }

@@ -55,16 +55,51 @@ export function AirportDetail({ airport, onSelectAirport }: AirportDetailProps) 
 
   const handleTabClick = (tabId: TabType, event: React.MouseEvent<HTMLButtonElement>) => {
     setActiveTab(tabId);
-    event.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    if (tabListRef.current) {
+      const container = tabListRef.current;
+      const button = event.currentTarget;
+      const targetScroll = button.offsetLeft - container.offsetLeft - 12;
+      container.scrollTo({ left: Math.max(0, targetScroll), behavior: 'smooth' });
+    }
   };
 
-  const tabs: { id: TabType; label: string; icon: React.ReactNode }[] = [
-    { id: 'security', label: t('tabSecurity'), icon: <ShieldCheck className="w-3.5 h-3.5" /> },
-    { id: 'map', label: t('tabMap'), icon: <Compass className="w-3.5 h-3.5" /> },
-    { id: 'terminals', label: t('tabTerminals'), icon: <Layers className="w-3.5 h-3.5" /> },
-    { id: 'difficulty', label: t('tabDifficulty'), icon: <Gauge className="w-3.5 h-3.5" /> },
-    { id: 'amenities', label: t('tabAmenities'), icon: <Zap className="w-3.5 h-3.5" /> },
-    { id: 'transport', label: t('tabTransport'), icon: <Train className="w-3.5 h-3.5" /> }
+  const tabs: { id: TabType; label: string; shortLabel: string; icon: React.ReactNode }[] = [
+    { 
+      id: 'security', 
+      label: t('tabSecurity'), 
+      shortLabel: lang === 'it' ? 'Sicurezza' : 'Security',
+      icon: <ShieldCheck className="w-3.5 h-3.5" /> 
+    },
+    { 
+      id: 'map', 
+      label: t('tabMap'), 
+      shortLabel: lang === 'it' ? 'Mappa & Cibo' : 'Map & Dining',
+      icon: <Compass className="w-3.5 h-3.5" /> 
+    },
+    { 
+      id: 'terminals', 
+      label: t('tabTerminals'), 
+      shortLabel: lang === 'it' ? 'Terminal' : 'Terminals',
+      icon: <Layers className="w-3.5 h-3.5" /> 
+    },
+    { 
+      id: 'difficulty', 
+      label: t('tabDifficulty'), 
+      shortLabel: lang === 'it' ? 'Tempi & Info' : 'Wait Times',
+      icon: <Gauge className="w-3.5 h-3.5" /> 
+    },
+    { 
+      id: 'amenities', 
+      label: t('tabAmenities'), 
+      shortLabel: lang === 'it' ? 'Prese & Servizi' : 'Power & Water',
+      icon: <Zap className="w-3.5 h-3.5" /> 
+    },
+    { 
+      id: 'transport', 
+      label: t('tabTransport'), 
+      shortLabel: lang === 'it' ? 'Trasporti' : 'Transport',
+      icon: <Train className="w-3.5 h-3.5" /> 
+    }
   ];
 
   const has3D = airport.securityPolicy.has3DScanners;
@@ -221,7 +256,8 @@ export function AirportDetail({ airport, onSelectAirport }: AirportDetailProps) 
                   <span className={`shrink-0 ${isActive ? 'text-white dark:text-zinc-900' : 'text-zinc-500 dark:text-zinc-400'}`}>
                     {tab.icon}
                   </span>
-                  <span className="tracking-tight">{tab.label}</span>
+                  <span className="hidden sm:inline tracking-tight">{tab.label}</span>
+                  <span className="sm:hidden tracking-tight font-bold">{tab.shortLabel}</span>
                 </button>
               );
             })}
