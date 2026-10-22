@@ -69,33 +69,21 @@ export function WelcomeView({ airports, onSelectAirport, children }: WelcomeView
             <Sparkles className="w-3 h-3 text-amber-500" />
             {t('quickHubsTitle')}
           </span>
-          {quickHubs.map((hub) => {
-            const rules = hub.securityPolicy.terminalRules;
-            const hasMixed = rules && rules.length > 1 && rules.some(r => r.has3DScanners) && rules.some(r => !r.has3DScanners);
-
-            return (
-              <button
-                key={hub.iata}
-                type="button"
-                onClick={() => onSelectAirport(hub)}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-zinc-200/80 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 transition-all cursor-pointer shadow-2xs group"
-              >
-                <span className="font-mono font-bold text-xs text-zinc-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">
-                  {hub.iata}
-                </span>
-                <span className="text-[11px] text-zinc-500 dark:text-zinc-400">
-                  {lang === 'it' ? hub.city_it : hub.city_en}
-                </span>
-                <span className={`w-1.5 h-1.5 rounded-full ${
-                  hasMixed 
-                    ? 'bg-blue-500' 
-                    : hub.securityPolicy.has3DScanners 
-                      ? 'bg-emerald-500' 
-                      : 'bg-amber-500'
-                }`} />
-              </button>
-            );
-          })}
+          {quickHubs.map((hub) => (
+            <button
+              key={hub.iata}
+              type="button"
+              onClick={() => onSelectAirport(hub)}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-zinc-200/80 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 transition-all cursor-pointer shadow-2xs group"
+            >
+              <span className="font-mono font-bold text-xs text-zinc-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                {hub.iata}
+              </span>
+              <span className="text-[11px] text-zinc-500 dark:text-zinc-400">
+                {lang === 'it' ? hub.city_it : hub.city_en}
+              </span>
+            </button>
+          ))}
         </div>
       </section>
 

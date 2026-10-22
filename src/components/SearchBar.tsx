@@ -25,6 +25,8 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
   const [requestFeedbackMsg, setRequestFeedbackMsg] = useState('');
   const [requestEmail, setRequestEmail] = useState('');
   const [emailValidationError, setEmailValidationError] = useState('');
+  const [isUnsubscribing, setIsUnsubscribing] = useState(false);
+  const [unsubscribeDone, setUnsubscribeDone] = useState(false);
   const [existingRequest, setExistingRequest] = useState<{
     id: string;
     query: string;
@@ -160,6 +162,27 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
       console.error('Request indexing failed:', err);
     } finally {
       setIsSubmittingRequest(false);
+    }
+  };
+
+  const handleQuickUnsubscribe = async () => {
+    if (!requestEmail) return;
+    setIsUnsubscribing(true);
+    try {
+      const res = await fetch('/api/airports/unsubscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: requestEmail.trim() })
+      });
+      const data = await res.json();
+      if (data.success) {
+        setUnsubscribeDone(true);
+        setRequestFeedbackMsg(t('unsubscribeSearchBarSuccess'));
+      }
+    } catch {
+      // ignore
+    } finally {
+      setIsUnsubscribing(false);
     }
   };
 
@@ -334,12 +357,23 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
                           )}
                         </p>
                       </div>
+                      {requestEmail && !unsubscribeDone && (
+                        <button
+                          type="button"
+                          disabled={isUnsubscribing}
+                          onClick={handleQuickUnsubscribe}
+                          className="text-[11px] text-emerald-800 dark:text-emerald-300 hover:underline cursor-pointer block mx-auto disabled:opacity-50"
+                        >
+                          {isUnsubscribing ? t('unsubscribeSubmitting') : t('unsubscribeSearchBarAction')}
+                        </button>
+                      )}
                       <button
                         type="button"
                         onClick={() => {
                           setIsOpen(false);
                           setQuery('');
                           setRequestSuccess(false);
+                          setUnsubscribeDone(false);
                         }}
                         className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition-colors shadow-2xs cursor-pointer mt-1"
                       >
@@ -424,12 +458,23 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
                           )}
                         </p>
                       </div>
+                      {requestEmail && !unsubscribeDone && (
+                        <button
+                          type="button"
+                          disabled={isUnsubscribing}
+                          onClick={handleQuickUnsubscribe}
+                          className="text-[11px] text-emerald-800 dark:text-emerald-300 hover:underline cursor-pointer block mx-auto disabled:opacity-50"
+                        >
+                          {isUnsubscribing ? t('unsubscribeSubmitting') : t('unsubscribeSearchBarAction')}
+                        </button>
+                      )}
                       <button
                         type="button"
                         onClick={() => {
                           setIsOpen(false);
                           setQuery('');
                           setRequestSuccess(false);
+                          setUnsubscribeDone(false);
                         }}
                         className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition-colors shadow-2xs cursor-pointer mt-1"
                       >

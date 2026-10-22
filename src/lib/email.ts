@@ -121,7 +121,9 @@ export async function sendRequestConfirmationEmail({
   const safeHtmlName = escapeHtml(cleanName);
   const subject = `Conferma richiesta aeroporto ${cleanName} - AeroInfo`;
   
-  const text = `Ciao,\n\nti confermiamo la ricezione della tua richiesta per l'aeroporto di ${cleanName}.\n\nIl nostro team verificherà le disposizioni ufficiali dell'ente aeroportuale relative a bagaglio a mano, controlli di sicurezza, terminal e servizi per i passeggeri.\n\nTi invieremo un aggiornamento non appena la scheda sarà pubblicata e consultabile online.\n\nA presto,\nTeam AeroInfo\nhttps://aero-info.vercel.app`;
+  const unsubscribeUrl = `https://aero-info.vercel.app/unsubscribe?email=${encodeURIComponent(to)}`;
+
+  const text = `Ciao,\n\nti confermiamo la ricezione della tua richiesta per l'aeroporto di ${cleanName}.\n\nIl nostro team verificherà le disposizioni ufficiali dell'ente aeroportuale relative a bagaglio a mano, controlli di sicurezza, terminal e servizi per i passeggeri.\n\nTi invieremo un aggiornamento non appena la scheda sarà pubblicata e consultabile online.\n\nNon desideri più ricevere aggiornamenti per questa richiesta? Puoi disiscriverti in qualsiasi momento cliccando qui: ${unsubscribeUrl}\n\nA presto,\nTeam AeroInfo\nhttps://aero-info.vercel.app`;
 
   const html = `
     <!DOCTYPE html>
@@ -151,10 +153,13 @@ export async function sendRequestConfirmationEmail({
             Non appena la scheda sarà disponibile sul portale, ti invieremo un'email di aggiornamento con il link diretto.
           </p>
           <hr style="border: none; border-top: 1px solid #eeeeee; margin: 24px 0;" />
-          <p style="font-size: 12px; color: #777777; margin: 0;">
+          <p style="font-size: 12px; color: #777777; margin: 0 0 12px 0;">
             A presto,<br>
             <strong>Team AeroInfo</strong><br>
             <a href="https://aero-info.vercel.app" style="color: #0066cc; text-decoration: none;">aero-info.vercel.app</a>
+          </p>
+          <p style="font-size: 11px; color: #999999; margin: 16px 0 0 0; line-height: 1.4;">
+            Ricevi questa email perché hai richiesto la scheda di questo aeroporto su AeroInfo. Se non desideri più ricevere notifiche o aggiornamenti, puoi <a href="${unsubscribeUrl}" style="color: #666666; text-decoration: underline;">annullare la tua iscrizione qui</a>.
           </p>
         </div>
       </body>
@@ -183,7 +188,9 @@ export async function sendAirportPublishedEmail({
   const safeUrl = escapeHtml(airportUrl);
   const subject = `L'aeroporto ${airportName} (${airportIata}) è ora disponibile su AeroInfo`;
   
-  const text = `Ciao,\n\nti informiamo che la scheda ufficiale dell'aeroporto ${airportName} (${airportIata}) è ora consultabile online su AeroInfo.\n\nAccedi alla scheda completa:\n${airportUrl}\n\nA presto,\nTeam AeroInfo`;
+  const unsubscribeUrl = `https://aero-info.vercel.app/unsubscribe?email=${encodeURIComponent(to)}`;
+
+  const text = `Ciao,\n\nti informiamo che la scheda ufficiale dell'aeroporto ${airportName} (${airportIata}) è ora consultabile online su AeroInfo.\n\nAccedi alla scheda completa:\n${airportUrl}\n\nSe non desideri più ricevere comunicazioni: ${unsubscribeUrl}\n\nA presto,\nTeam AeroInfo`;
 
   const html = `
     <!DOCTYPE html>
@@ -206,10 +213,13 @@ export async function sendAirportPublishedEmail({
             </a>
           </p>
           <hr style="border: none; border-top: 1px solid #eeeeee; margin: 24px 0;" />
-          <p style="font-size: 12px; color: #777777; margin: 0;">
+          <p style="font-size: 12px; color: #777777; margin: 0 0 12px 0;">
             A presto,<br>
             <strong>Team AeroInfo</strong><br>
             <a href="https://aero-info.vercel.app" style="color: #0066cc; text-decoration: none;">aero-info.vercel.app</a>
+          </p>
+          <p style="font-size: 11px; color: #999999; margin: 16px 0 0 0; line-height: 1.4;">
+            Ricevi questa email perché avevi richiesto aggiornamenti per questo aeroporto su AeroInfo. Se non desideri più ricevere email, puoi <a href="${unsubscribeUrl}" style="color: #666666; text-decoration: underline;">cancellare la tua iscrizione qui</a>.
           </p>
         </div>
       </body>

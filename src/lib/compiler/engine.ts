@@ -109,7 +109,7 @@ export class AirportCompilerEngine {
     return {
       id: iata.toLowerCase(),
       iata: iata.toUpperCase(),
-      icao: `L${iata.toUpperCase()}X`,
+      icao: `L${iata.toUpperCase().slice(0, 3)}`,
       name_it: `Aeroporto Internazionale di ${city} (${iata})`,
       name_en: `${city} International Airport (${iata})`,
       city_it: city,
@@ -234,7 +234,8 @@ export class AirportCompilerEngine {
    */
   public async compileAndPublishAirport(
     query: string,
-    candidateIata?: string | null
+    candidateIata?: string | null,
+    specificRequestIds?: string[]
   ): Promise<{ success: boolean; airport?: Airport; error?: string }> {
     const airport = this.resolveAirport(query, candidateIata);
     if (!airport) {
@@ -252,13 +253,37 @@ export class AirportCompilerEngine {
       try {
         const cleanIata = sanitizePostgrestParam(airport.iata);
         const cleanCity = sanitizePostgrestParam(airport.city_it);
-        const { data: matchingRequests } = await supabase
+        const cleanQuery = sanitizePostgrestParam(query);
+        
+        let matchingRequests: any[] = [];
+
+        // If specific request IDs provided, fetch them directly
+        if (specificRequestIds && specificRequestIds.length > 0) {
+          const { data: idData } = await supabase
+            .from('airport_requests')
+            .select('id, requester_email, query, iata_code')
+            .in('id', specificRequestIds);
+          if (idData) {
+            matchingRequests.push(...idData);
+          }
+        }
+
+        // Also query by IATA or query text for any additional pending subscribers
+        const { data: orData } = await supabase
           .from('airport_requests')
           .select('id, requester_email, query, iata_code')
           .in('status', ['pending', 'queued', 'queued_weekly'])
-          .or(`iata_code.ilike.${cleanIata},query.ilike.%${cleanIata}%,query.ilike.%${cleanCity}%`);
+          .or(`iata_code.ilike.${cleanIata},query.ilike.%${cleanIata}%,query.ilike.%${cleanCity}%,query.ilike.%${cleanQuery}%`);
 
-        if (matchingRequests && matchingRequests.length > 0) {
+        if (orData) {
+          for (const item of orData) {
+            if (!matchingRequests.some((r) => r.id === item.id)) {
+              matchingRequests.push(item);
+            }
+          }
+        }
+
+        if (matchingRequests.length > 0) {
           for (const req of matchingRequests) {
             // Update request status to published
             await supabase
@@ -326,7 +351,9 @@ export class AirportCompilerEngine {
       // Group requests by identified IATA / query key
       const grouped = new Map<string, typeof pendingRequests>();
       for (const req of pendingRequests) {
-        const key = (req.iata_code || req.query).trim().toUpperCase();
+        const cleanQuery = req.query.trim().toUpperCase();
+        const mappedIata = CITY_TO_IATA[cleanQuery] || (req.iata_code ? req.iata_code.trim().toUpperCase() : null);
+        const key = mappedIata || cleanQuery;
         const list = grouped.get(key) || [];
         list.push(req);
         grouped.set(key, list);
@@ -335,7 +362,8 @@ export class AirportCompilerEngine {
       for (const [key, requests] of grouped.entries()) {
         try {
           const sample = requests[0];
-          const result = await this.compileAndPublishAirport(sample.query, sample.iata_code || key);
+          const requestIds = requests.map((r) => r.id);
+          const result = await this.compileAndPublishAirport(sample.query, sample.iata_code || key, requestIds);
 
           if (result.success && result.airport) {
             report.compiledAirportsCount++;

@@ -89,6 +89,14 @@ async function run() {
   assert.strictEqual(isSafeOutboundUrl('https://www.adr.it/fco-norme-di-sicurezza'), true, 'Valid HTTPS public website must be allowed');
   console.log('  ✅ SSRF filter successfully blocks cloud metadata, private IPs, and non-HTTPS targets.');
 
+  // 7. Test Email Unsubscribe & Revocation Sanitization
+  console.log('7. Testing Email Unsubscribe Parameter Security...');
+  assert.strictEqual(isValidEmail('traveler@example.com'), true);
+  assert.strictEqual(isValidEmail(''), false);
+  assert.strictEqual(sanitizePostgrestParam('traveler@example.com'), 'traveler@example.com');
+  assert.strictEqual(sanitizePostgrestParam('admin@domain.com,status.eq.hacked'), 'admin@domain.com status.eq.hacked');
+  console.log('  ✅ Unsubscribe input security and validation passed.');
+
   console.log('\n🎉 ALL SECURITY SUITE TESTS PASSED SUCCESSFULLY!');
 }
 

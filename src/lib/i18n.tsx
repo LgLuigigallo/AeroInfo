@@ -57,6 +57,25 @@ export const translations: Translations = {
     en: 'Please enter a valid email address to receive notification.'
   },
   
+  // Unsubscribe & Notification Preferences
+  unsubscribeTitle: { it: 'Gestione Notifiche ed Email', en: 'Notification & Email Management' },
+  unsubscribeSubtitle: { 
+    it: 'Non desideri più ricevere notifiche di aggiornamento o pubblicazione per gli aeroporti richiesti? Inserisci la tua email per cancellare immediatamente la tua iscrizione.', 
+    en: 'Do not wish to receive airport update or publication alerts anymore? Enter your email to immediately unsubscribe.' 
+  },
+  unsubscribeInputPlaceholder: { it: 'Inserisci il tuo indirizzo email...', en: 'Enter your email address...' },
+  unsubscribeBtn: { it: 'Annulla iscrizione a tutti gli avvisi', en: 'Unsubscribe from all alerts' },
+  unsubscribeSubmitting: { it: 'Cancellazione in corso...', en: 'Unsubscribing...' },
+  unsubscribeSuccessTitle: { it: 'Iscrizione cancellata con successo', en: 'Successfully Unsubscribed' },
+  unsubscribeSuccessDesc: { 
+    it: 'Il tuo indirizzo email è stato rimosso dai nostri archivi di notifica. Non riceverai più alcuna comunicazione o aggiornamento per gli aeroporti richiesti.', 
+    en: 'Your email address has been removed from our notification registry. You will no longer receive any communications or alerts for requested airports.' 
+  },
+  unsubscribeBackHome: { it: 'Torna alla pagina principale', en: 'Back to Home' },
+  unsubscribeSearchBarAction: { it: 'Non vuoi più ricevere questo avviso? Annulla iscrizione', en: 'Do not want to receive this alert? Unsubscribe' },
+  unsubscribeSearchBarSuccess: { it: 'Iscrizione annullata: non riceverai notifiche.', en: 'Unsubscribed: you will not receive alerts.' },
+  footerUnsubscribe: { it: 'Disiscrizione notifiche', en: 'Unsubscribe alerts' },
+  
   // Verification Badges & Modal
   verifiedOfficial: { it: 'Fonte Ufficiale Certificata', en: 'Official Certified Source' },
   verifiedDate: { it: 'Ultima verifica ufficiale', en: 'Last official verification' },

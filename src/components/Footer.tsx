@@ -84,6 +84,13 @@ export function Footer() {
             <span className="text-zinc-500 dark:text-zinc-400">
               {lang === 'it' ? 'Privacy & Cookie Policy' : 'Privacy & Cookie Policy'}
             </span>
+            <span className="text-zinc-300 dark:text-zinc-700">•</span>
+            <Link
+              href="/unsubscribe"
+              className="text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors underline cursor-pointer"
+            >
+              {t('footerUnsubscribe')}
+            </Link>
           </div>
         </div>
 

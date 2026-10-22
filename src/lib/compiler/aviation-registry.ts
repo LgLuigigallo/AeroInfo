@@ -1061,6 +1061,541 @@ export const AVIATION_REGISTRY: Record<string, Airport> = {
       }
     ],
     lastUpdated: '2026-10-21'
+  },
+
+  // 🇩🇪 BERLINO (BER) - Aeroporto di Berlino-Brandeburgo Willy Brandt
+  BER: {
+    id: 'ber',
+    iata: 'BER',
+    icao: 'EDDB',
+    name_it: 'Aeroporto di Berlino-Brandeburgo Willy Brandt',
+    name_en: 'Berlin Brandenburg Airport Willy Brandt',
+    city_it: 'Berlino',
+    city_en: 'Berlin',
+    country_it: 'Germania',
+    country_en: 'Germany',
+    countryCode: 'DE',
+    officialWebsite: 'https://ber.berlin-airport.de',
+    coordinates: { lat: 52.3667, lng: 13.5033 },
+    difficultyRating: 3,
+    difficultyLabel_it: 'Grande hub passeggeri',
+    difficultyLabel_en: 'Major passenger hub',
+    averageSecurityWaitMin: 18,
+    recommendedArrivalHours: { domestic: 2, international: 2.5 },
+    navigationAdvice_it: 'Hub principale articolato sui Terminal 1 e 2. Il T1 ospita il salone check-in centrale su più livelli con collegamenti sotterranei diretti alla stazione ferroviaria.',
+    navigationAdvice_en: 'Main hub spanning Terminal 1 and 2. T1 features a central multi-level departures hall with direct basement access to the train station.',
+    securityPolicy: {
+      has3DScanners: true,
+      scannersNote_it: 'Presenza di moderni scanner computarizzati CT 3D su diverse corsie del Terminal 1. Nei varchi CT i liquidi e i dispositivi elettronici possono rimanere all\'interno del bagaglio a mano.',
+      scannersNote_en: 'Advanced CT 3D computer tomography scanners deployed across multiple lanes in T1. In CT lanes liquids and electronic devices remain inside hand luggage.',
+      liquidsAllowance_it: 'Fino a 2 litri nelle corsie con scanner CT 3D; limite tradizionale 100ml nelle corsie convenzionali',
+      liquidsAllowance_en: 'Up to 2 liters in CT 3D lanes; traditional 100ml limit in standard security lanes',
+      liquidsMustBeRemoved: false,
+      liquidsNote_it: 'Regola differenziata in base alla corsia assegnata: seguire le istruzioni del personale di sicurezza al varco.',
+      liquidsNote_en: 'Lane-dependent rule: follow directions from security agents at your assigned lane.',
+      electronicsInBag: true,
+      electronicsNote_it: 'Nelle corsie CT 3D laptop e tablet restano nella borsa; vanno estratti solo se indirizzati a corsia standard.',
+      electronicsNote_en: 'Laptops and tablets stay inside luggage in CT 3D lanes; only remove if directed to standard lane.',
+      droneAllowedInCabin: true,
+      droneAllowedInHold: false,
+      dronePolicy_it: 'Ammesso in cabina con batterie protette contro i cortocircuiti (max 100Wh).',
+      dronePolicy_en: 'Permitted in cabin luggage only with terminals insulated (max 100Wh).',
+      maxPowerbankWh: 100,
+      powerbankPolicy_it: 'Ammessi solo in cabina fino a 100Wh (max 2 unità a persona). Vietati in stiva.',
+      powerbankPolicy_en: 'Carry-on only up to 100Wh (max 2 per traveler). Strictly prohibited in checked baggage.',
+      terminalRules: [
+        {
+          terminalName: 'Terminal 1',
+          has3DScanners: true,
+          liquidsAllowedInBag: true,
+          electronicsInBag: true,
+          bottleAllowance_it: 'Liquidi consentiti nel bagaglio (varco CT)',
+          bottleAllowance_en: 'Liquids allowed inside luggage (CT lane)',
+          notes_it: 'Corsie con scanner CT 3D attive per la maggioranza dei voli internazionali.',
+          notes_en: 'CT 3D scanner lanes active for most international departures.'
+        },
+        {
+          terminalName: 'Terminal 2',
+          has3DScanners: false,
+          liquidsAllowedInBag: false,
+          electronicsInBag: false,
+          bottleAllowance_it: 'Limite 100ml in sacchetto trasparente',
+          bottleAllowance_en: '100ml limit in transparent bag',
+          notes_it: 'Corsie convenzionali per vettori low-cost: estrarre liquidi ed elettronica.',
+          notes_en: 'Standard lanes for low-cost carriers: remove liquids and electronics.'
+        }
+      ],
+      officialSourceUrl: 'https://ber.berlin-airport.de/en/flying/security-controls.html',
+      lastVerifiedDate: '2026-10-22'
+    },
+    terminals: [
+      {
+        id: 't1',
+        name: 'Terminal 1',
+        transferInfo_it: 'Terminal principale collegato alla stazione ferroviaria sotterranea.',
+        transferInfo_en: 'Main terminal directly connected to the underground train station.'
+      },
+      {
+        id: 't2',
+        name: 'Terminal 2',
+        transferInfo_it: 'Terminal dedicato prevalentemente a compagnie point-to-point (Ryanair, Wizz Air).',
+        transferInfo_en: 'Terminal dedicated mainly to low-cost point-to-point carriers.'
+      }
+    ],
+    airlines: [
+      { airlineName: 'Lufthansa', iataCode: 'LH', terminal: 'Terminal 1' },
+      { airlineName: 'Eurowings', iataCode: 'EW', terminal: 'Terminal 1' },
+      { airlineName: 'EasyJet', iataCode: 'U2', terminal: 'Terminal 1' },
+      { airlineName: 'Ryanair', iataCode: 'FR', terminal: 'Terminal 2' }
+    ],
+    amenities: [
+      {
+        id: 'ber-wifi',
+        category: 'wifi',
+        title_it: 'Wi-Fi gratuito ad alta velocità "_BER Free Wi-Fi"',
+        title_en: 'High-Speed Free Wi-Fi "_BER Free Wi-Fi"',
+        terminal: 'Terminal 1 & 2',
+        location_it: 'Copertura in tutto l\'aeroporto',
+        location_en: 'Airport-wide coverage',
+        details_it: 'Connessione gratuita illimitata e veloce 24/7.',
+        details_en: 'Unlimited high-speed 24/7 internet without time restrictions.'
+      },
+      {
+        id: 'ber-water',
+        category: 'water_refill',
+        title_it: 'Fontanelle acqua potabile gratuita',
+        title_en: 'Free Drinking Water Fountains',
+        terminal: 'Terminal 1 & 2',
+        location_it: 'Area imbarchi vicino ai gruppi di servizi igienici',
+        location_en: 'Airside near main restroom facilities',
+        details_it: 'Erogatori gratuiti per riempire borracce e bottiglie vuote dopo i controlli.',
+        details_en: 'Free refill stations for empty reusable bottles past security.'
+      },
+      {
+        id: 'ber-power',
+        category: 'power_charging',
+        title_it: 'Postazioni di ricarica dispositivi USB e prese 230V',
+        title_en: 'Device Charging Outlets & USB Ports',
+        terminal: 'Terminal 1 & 2',
+        location_it: 'Integrate nei banchi di lavoro e nelle sedute gate',
+        location_en: 'Integrated into gate seating and work benches',
+        details_it: 'Prese universali e porte USB disponibili per passeggeri.',
+        details_en: 'Power sockets and USB charging points available for passengers.'
+      }
+    ],
+    venues: [
+      {
+        id: 'ber-v1',
+        name: 'Curry 36 BER',
+        category: 'grab_and_go',
+        terminal: 'Terminal 1',
+        location: 'Airside - Market Place Gate A',
+        hours: '05:00 - 22:00',
+        isEarlyMorning: true,
+        serviceType: 'quick_bite',
+        highlightNote_it: 'Celebre Currywurst berlinese tradizionale con patatine calde.',
+        highlightNote_en: 'Iconic Berlin traditional currywurst with warm fries.'
+      },
+      {
+        id: 'ber-v2',
+        name: 'Käfer Berlin Restaurant',
+        category: 'dining',
+        terminal: 'Terminal 1',
+        location: 'Piano partenze T1',
+        hours: '06:00 - 21:00',
+        isEarlyMorning: true,
+        serviceType: 'table_service',
+        highlightNote_it: 'Cucina tedesca e internazionale con vista panoramica pista.',
+        highlightNote_en: 'German and international cuisine with airfield view.'
+      }
+    ],
+    transports: [
+      {
+        id: 'ber-train',
+        type: 'train',
+        name_it: 'Treno Veloce Airport Express (FEX)',
+        name_en: 'Airport Express Train (FEX)',
+        duration: '30 min',
+        frequency: 'Ogni 30 minuti',
+        estimatedCost: '4,40 € (tariffa ABC)',
+        pickupLocation_it: 'Stazione sotterranea T1/T2 (binari 1-2)',
+        pickupLocation_en: 'Underground rail station T1/T2 (tracks 1-2)',
+        details_it: 'Collegamento ferroviario veloce non-stop tra l\'aeroporto e Berlino Hauptbahnhof (Stazione Centrale) e Ostkreuz.',
+        details_en: 'Fast express train directly connecting the airport with Berlin Central Station and Ostkreuz.'
+      },
+      {
+        id: 'ber-sbahn',
+        type: 'metro',
+        name_it: 'Linee S-Bahn S9 e S45',
+        name_en: 'S-Bahn Commuter Rail Lines S9 & S45',
+        duration: '45-50 min',
+        frequency: 'Ogni 10-20 minuti',
+        estimatedCost: '4,40 € (tariffa ABC)',
+        pickupLocation_it: 'Stazione sotterranea BER',
+        pickupLocation_en: 'Underground railway station',
+        details_it: 'Collega comodamente tutti i principali quartieri di Berlino (Alexanderplatz, Zoologischer Garten).',
+        details_en: 'Connects directly with major Berlin central hubs including Alexanderplatz.'
+      }
+    ],
+    lastUpdated: '2026-10-22'
+  },
+
+  // 🇬🇷 CRETA / HERAKLION (HER) - Aeroporto di Candia Nikos Kazantzakis
+  HER: {
+    id: 'her',
+    iata: 'HER',
+    icao: 'LGIR',
+    name_it: 'Aeroporto Internazionale di Candia Nikos Kazantzakis',
+    name_en: 'Heraklion International Airport Nikos Kazantzakis',
+    city_it: 'Heraklion (Creta)',
+    city_en: 'Heraklion (Crete)',
+    country_it: 'Grecia',
+    country_en: 'Greece',
+    countryCode: 'GR',
+    officialWebsite: 'https://www.heraklion-airport.info',
+    coordinates: { lat: 35.3397, lng: 25.1803 },
+    difficultyRating: 3,
+    difficultyLabel_it: 'Compatto con forte affollamento estivo',
+    difficultyLabel_en: 'Compact with heavy summer traffic',
+    averageSecurityWaitMin: 22,
+    recommendedArrivalHours: { domestic: 2, international: 2.5 },
+    navigationAdvice_it: 'Terminal unico molto frequentato in alta stagione. Consigliato presentarsi con dovuto anticipo e completare subito i controlli.',
+    navigationAdvice_en: 'Single terminal experiencing heavy traffic in peak season. Arrive well in advance and proceed promptly to security.',
+    securityPolicy: {
+      has3DScanners: false,
+      scannersNote_it: 'Scanner radiogeni convenzionali. È obbligatorio separare liquidi ed elettronica nelle vaschette prima del controllo.',
+      scannersNote_en: 'Standard X-ray scanners. Liquids and electronics must be separated into trays before screening.',
+      liquidsAllowance_it: 'Massimo 100ml per contenitore in sacchetto trasparente richiudibile da 1 litro',
+      liquidsAllowance_en: 'Max 100ml per container in 1-litre clear resealable plastic bag',
+      liquidsMustBeRemoved: true,
+      liquidsNote_it: 'Tutti i liquidi oltre 100ml devono essere stivati.',
+      liquidsNote_en: 'All containers exceeding 100ml must be in checked baggage.',
+      electronicsInBag: false,
+      electronicsNote_it: 'Laptop, fotocamere e tablet vanno estratti e disposti sul nastro.',
+      electronicsNote_en: 'Laptops, cameras, and tablets must be placed in separate trays.',
+      droneAllowedInCabin: true,
+      droneAllowedInHold: false,
+      dronePolicy_it: 'Ammesso in cabina con batterie isolate (max 100Wh).',
+      dronePolicy_en: 'Permitted in cabin baggage only (max 100Wh).',
+      maxPowerbankWh: 100,
+      powerbankPolicy_it: 'Ammessi solo nel bagaglio a mano fino a 100Wh.',
+      powerbankPolicy_en: 'Allowed in carry-on only, up to 100Wh.',
+      officialSourceUrl: 'https://www.ypa.gr',
+      lastVerifiedDate: '2026-10-22'
+    },
+    terminals: [
+      {
+        id: 't1',
+        name: 'Terminal Principale',
+        transferInfo_it: 'Terminal unico per tutti i voli nazionali e charter internazionali.',
+        transferInfo_en: 'Main passenger terminal handling all domestic and charter flights.'
+      }
+    ],
+    airlines: [
+      { airlineName: 'Aegean Airlines', iataCode: 'A3', terminal: 'Terminal Principale' },
+      { airlineName: 'Ryanair', iataCode: 'FR', terminal: 'Terminal Principale' },
+      { airlineName: 'EasyJet', iataCode: 'U2', terminal: 'Terminal Principale' },
+      { airlineName: 'Volotea', iataCode: 'V7', terminal: 'Terminal Principale' }
+    ],
+    amenities: [
+      {
+        id: 'her-wifi',
+        category: 'wifi',
+        title_it: 'Wi-Fi gratuito passeggeri',
+        title_en: 'Free Passenger Wi-Fi',
+        terminal: 'Terminal Principale',
+        location_it: 'In tutte le sale d\'attesa',
+        location_en: 'Terminal-wide waiting lounges',
+        details_it: 'Connessione Wi-Fi gratuita disponibile all\'interno del terminal.',
+        details_en: 'Free internet access provided across terminal areas.'
+      },
+      {
+        id: 'her-water',
+        category: 'water_refill',
+        title_it: 'Punti acqua potabile',
+        title_en: 'Drinking Water Points',
+        terminal: 'Terminal Principale',
+        location_it: 'Area imbarchi vicino ai servizi igienici',
+        location_en: 'Departures area near restrooms',
+        details_it: 'Fontanelle per riempire bottiglie d\'acqua dopo la sicurezza.',
+        details_en: 'Fountains to refill empty bottles past security.'
+      }
+    ],
+    venues: [
+      {
+        id: 'her-v1',
+        name: 'Everest Cafe & Bakery',
+        category: 'cafe',
+        terminal: 'Terminal Principale',
+        location: 'Area Partenze airside',
+        hours: '04:30 - Ultimo volo',
+        isEarlyMorning: true,
+        serviceType: 'coffee_snack',
+        highlightNote_it: 'Caffè greco e freddo espresso, spanakopita e panini caldi.',
+        highlightNote_en: 'Greek freddo espresso, authentic spanakopita and warm pies.'
+      }
+    ],
+    transports: [
+      {
+        id: 'her-bus',
+        type: 'bus',
+        name_it: 'Autobus Urbano KTEL Linea 1',
+        name_en: 'KTEL Local Bus Line 1',
+        duration: '15-20 min',
+        frequency: 'Ogni 10-15 minuti',
+        estimatedCost: '1,50 - 2,00 €',
+        pickupLocation_it: 'Fermata bus piazzale antistante Arrivi',
+        pickupLocation_en: 'Bus stop in front of Arrivals exit',
+        details_it: 'Collega rapidamente l\'aeroporto con il centro di Heraklion e il porto dei traghetti.',
+        details_en: 'Fast and cheap direct connection to central Heraklion and the ferry port.'
+      },
+      {
+        id: 'her-taxi',
+        type: 'taxi',
+        name_it: 'Servizio Taxi Ufficiale Heraklion',
+        name_en: 'Official Airport Taxi Rank',
+        duration: '10-15 min',
+        frequency: 'Disponibile 24/7 all\'uscita',
+        estimatedCost: '15,00 - 20,00 €',
+        pickupLocation_it: 'Corsia taxi fronte terminal Arrivi',
+        pickupLocation_en: 'Taxi rank directly outside Arrivals',
+        details_it: 'Tariffa fissa verso il centro città o tassametro per le località balneari di Creta.',
+        details_en: 'Standard rates for city center and metered service for Crete resorts.'
+      }
+    ],
+    lastUpdated: '2026-10-22'
+  },
+
+  // 🇩🇪 STOCCARDA (STR) - Aeroporto di Stoccarda Manfred Rommel
+  STR: {
+    id: 'str',
+    iata: 'STR',
+    icao: 'EDDS',
+    name_it: 'Aeroporto di Stoccarda Manfred Rommel',
+    name_en: 'Stuttgart Airport Manfred Rommel',
+    city_it: 'Stoccarda',
+    city_en: 'Stuttgart',
+    country_it: 'Germania',
+    country_en: 'Germany',
+    countryCode: 'DE',
+    officialWebsite: 'https://www.stuttgart-airport.com',
+    coordinates: { lat: 48.6899, lng: 9.2219 },
+    difficultyRating: 2,
+    difficultyLabel_it: 'Aeroporto moderno ed efficiente',
+    difficultyLabel_en: 'Modern and efficient airport',
+    averageSecurityWaitMin: 14,
+    recommendedArrivalHours: { domestic: 2, international: 2.5 },
+    navigationAdvice_it: '4 terminal passeggeri interconnessi a piedi sotto lo stesso tetto. La stazione della S-Bahn è situata direttamente al piano interrato del T1.',
+    navigationAdvice_en: '4 interconnected passenger terminals under one roof. S-Bahn station is located directly beneath T1.',
+    securityPolicy: {
+      has3DScanners: false,
+      scannersNote_it: 'Scanner radiogeni standard. Disporre liquidi (max 100ml) e dispositivi elettronici in vaschette separate.',
+      scannersNote_en: 'Standard X-ray security. Place liquids (max 100ml) and electronic devices in separate bins.',
+      liquidsAllowance_it: 'Massimo 100ml per flacone in sacchetto trasparente da 1 litro',
+      liquidsAllowance_en: 'Max 100ml per container in 1-litre transparent bag',
+      liquidsMustBeRemoved: true,
+      liquidsNote_it: 'Tutti i flaconi superiori a 100ml devono essere stivati.',
+      liquidsNote_en: 'Containers over 100ml must be in checked luggage.',
+      electronicsInBag: false,
+      electronicsNote_it: 'Estrarre laptop e tablet per il controllo a raggi X.',
+      electronicsNote_en: 'Remove laptops and tablets for separate X-ray screening.',
+      droneAllowedInCabin: true,
+      droneAllowedInHold: false,
+      dronePolicy_it: 'Ammesso nel bagaglio a mano con batterie protette (max 100Wh).',
+      dronePolicy_en: 'Permitted in cabin luggage only (max 100Wh).',
+      maxPowerbankWh: 100,
+      powerbankPolicy_it: 'Solo in cabina fino a 100Wh (vietato in stiva).',
+      powerbankPolicy_en: 'Carry-on only up to 100Wh (prohibited in hold).',
+      officialSourceUrl: 'https://www.stuttgart-airport.com/security-checks',
+      lastVerifiedDate: '2026-10-22'
+    },
+    terminals: [
+      {
+        id: 't1',
+        name: 'Terminal 1 & 2',
+        transferInfo_it: 'Terminal principale collegato alla ferrovia per voli Star Alliance e network.',
+        transferInfo_en: 'Main terminal connected to railway serving network airlines.'
+      },
+      {
+        id: 't3',
+        name: 'Terminal 3 & 4',
+        transferInfo_it: 'Terminal per partenze europee e voli charter e low-cost.',
+        transferInfo_en: 'Terminal for European departures, charter and low-cost flights.'
+      }
+    ],
+    airlines: [
+      { airlineName: 'Lufthansa', iataCode: 'LH', terminal: 'Terminal 1' },
+      { airlineName: 'Eurowings', iataCode: 'EW', terminal: 'Terminal 1 & 2' },
+      { airlineName: 'Condor', iataCode: 'DE', terminal: 'Terminal 3' }
+    ],
+    amenities: [
+      {
+        id: 'str-wifi',
+        category: 'wifi',
+        title_it: 'Wi-Fi gratuito illimitato',
+        title_en: 'Unlimited Free Wi-Fi',
+        terminal: 'Terminal 1-4',
+        location_it: 'Tutti i terminal',
+        location_en: 'All terminals',
+        details_it: 'Connessione internet gratuita 24h su tutta l\'area.',
+        details_en: 'Free 24/7 high speed internet across all terminals.'
+      },
+      {
+        id: 'str-water',
+        category: 'water_refill',
+        title_it: 'Fontanelle per borracce',
+        title_en: 'Water Bottle Refill Fountains',
+        terminal: 'Terminal 1 & 3',
+        location_it: 'Presso i varchi imbarchi',
+        location_en: 'Near departure gate restrooms',
+        details_it: 'Erogatori gratuiti di acqua potabile dopo la sicurezza.',
+        details_en: 'Free drinking water points past security check.'
+      }
+    ],
+    venues: [
+      {
+        id: 'str-v1',
+        name: 'Bäcker Bachmeier & Brezel Bar',
+        category: 'cafe',
+        terminal: 'Terminal 1',
+        location: 'Airside - Area imbarchi T1',
+        hours: '05:00 - 21:30',
+        isEarlyMorning: true,
+        serviceType: 'coffee_snack',
+        highlightNote_it: 'Pretzel freschi svevi tradizionali, panini e caffè.',
+        highlightNote_en: 'Fresh traditional Swabian pretzels, snacks and coffee.'
+      }
+    ],
+    transports: [
+      {
+        id: 'str-sbahn',
+        type: 'metro',
+        name_it: 'S-Bahn Linee S2 e S3',
+        name_en: 'S-Bahn Commuter Rail S2 & S3',
+        duration: '27 min',
+        frequency: 'Ogni 10-15 minuti',
+        estimatedCost: '4,00 €',
+        pickupLocation_it: 'Stazione sotterranea Terminal 1 (Livello -1)',
+        pickupLocation_en: 'Underground rail station Terminal 1 (Level -1)',
+        details_it: 'Collegamento diretto tra l\'aeroporto e Stoccarda Hauptbahnhof (Stazione Centrale).',
+        details_en: 'Direct rapid rail to Stuttgart Central Station without transfers.'
+      }
+    ],
+    lastUpdated: '2026-10-22'
+  },
+
+  // 🇲🇦 MARRAKECH (RAK) - Aeroporto di Marrakech-Menara
+  RAK: {
+    id: 'rak',
+    iata: 'RAK',
+    icao: 'GMMX',
+    name_it: 'Aeroporto di Marrakech-Menara',
+    name_en: 'Marrakesh Menara Airport',
+    city_it: 'Marrakech',
+    city_en: 'Marrakech',
+    country_it: 'Marocco',
+    country_en: 'Morocco',
+    countryCode: 'MA',
+    officialWebsite: 'https://www.onda.ma',
+    coordinates: { lat: 31.6069, lng: -8.0363 },
+    difficultyRating: 3,
+    difficultyLabel_it: 'Controlli di polizia scrupolosi',
+    difficultyLabel_en: 'Strict police & passport checks',
+    averageSecurityWaitMin: 25,
+    recommendedArrivalHours: { domestic: 2.5, international: 3 },
+    navigationAdvice_it: 'Importante: le autorità marocchine richiedono quasi sempre la carta d\'imbarco cartacea stampata. Presentarsi al banco check-in per il timbro di visto prima dei controlli.',
+    navigationAdvice_en: 'Important: Moroccan authorities almost always require a printed physical boarding pass. Stop at check-in for passport stamp before security.',
+    securityPolicy: {
+      has3DScanners: false,
+      scannersNote_it: 'Scanner radiogeni convenzionali. Estrarre tutti i liquidi ed i dispositivi elettronici per il passaggio ai raggi X.',
+      scannersNote_en: 'Standard X-ray scanners. Remove all liquids and electronics into trays.',
+      liquidsAllowance_it: 'Massimo 100ml per contenitore in sacchetto trasparente da 1 litro',
+      liquidsAllowance_en: 'Max 100ml per container in 1-litre transparent bag',
+      liquidsMustBeRemoved: true,
+      liquidsNote_it: 'Bottiglie e contenitori oltre 100ml devono essere stivati.',
+      liquidsNote_en: 'Liquids over 100ml must be packed in checked luggage.',
+      electronicsInBag: false,
+      electronicsNote_it: 'Estrarre laptop, tablet e fotocamere.',
+      electronicsNote_en: 'Remove laptops, tablets and cameras into trays.',
+      droneAllowedInCabin: false,
+      droneAllowedInHold: false,
+      dronePolicy_it: 'Vietato severamente in Marocco senza previa autorizzazione ministeriale speciale.',
+      dronePolicy_en: 'Strictly prohibited in Morocco without official ministerial clearance.',
+      maxPowerbankWh: 100,
+      powerbankPolicy_it: 'Ammessi solo nel bagaglio a mano fino a 100Wh.',
+      powerbankPolicy_en: 'Permitted in cabin baggage only up to 100Wh.',
+      officialSourceUrl: 'https://www.onda.ma',
+      lastVerifiedDate: '2026-10-22'
+    },
+    terminals: [
+      {
+        id: 't1',
+        name: 'Terminal 1 & 2',
+        transferInfo_it: 'Terminal modernizzati collegati tra loro a piedi per tutti i voli internazionali.',
+        transferInfo_en: 'Modern connected terminals handling all international flights.'
+      }
+    ],
+    airlines: [
+      { airlineName: 'Royal Air Maroc', iataCode: 'AT', terminal: 'Terminal 1' },
+      { airlineName: 'Ryanair', iataCode: 'FR', terminal: 'Terminal 1' },
+      { airlineName: 'EasyJet', iataCode: 'U2', terminal: 'Terminal 1' }
+    ],
+    amenities: [
+      {
+        id: 'rak-wifi',
+        category: 'wifi',
+        title_it: 'Wi-Fi gratuito aeroporto',
+        title_en: 'Free Airport Wi-Fi',
+        terminal: 'Terminal 1 & 2',
+        location_it: 'In tutto il terminal',
+        location_en: 'Throughout the terminal',
+        details_it: 'Connessione Wi-Fi gratuita disponibile con registrazione base.',
+        details_en: 'Free Wi-Fi available throughout departure areas.'
+      }
+    ],
+    venues: [
+      {
+        id: 'rak-v1',
+        name: 'Cafe Menara & Mint Tea Lounge',
+        category: 'cafe',
+        terminal: 'Terminal 1',
+        location: 'Area Partenze post-sicurezza',
+        hours: '05:00 - 23:00',
+        isEarlyMorning: true,
+        serviceType: 'coffee_snack',
+        highlightNote_it: 'Tè alla menta tradizionale marocchino, pasticceria tipica e caffè.',
+        highlightNote_en: 'Traditional Moroccan fresh mint tea, pastries and espresso.'
+      }
+    ],
+    transports: [
+      {
+        id: 'rak-bus',
+        type: 'bus',
+        name_it: 'Autobus Espresso ALSA Linea 19',
+        name_en: 'ALSA Airport Express Bus Line 19',
+        duration: '20-25 min',
+        frequency: 'Ogni 20-30 minuti',
+        estimatedCost: '30 MAD (circa 2,80 € a/r)',
+        pickupLocation_it: 'Uscita pedonale Terminal 1 a sinistra',
+        pickupLocation_en: 'Terminal 1 exit on the left',
+        details_it: 'Collega direttamente l\'aeroporto con Piazza Jemaa el-Fna, Bab Doukkala e la stazione ferroviaria.',
+        details_en: 'Direct express bus to Jemaa el-Fna square and Marrakech Railway Station.'
+      },
+      {
+        id: 'rak-taxi',
+        type: 'taxi',
+        name_it: 'Taxi Ufficiali Marrakech',
+        name_en: 'Official Marrakech Airport Taxis',
+        duration: '15 min',
+        frequency: 'Disponibili 24/7',
+        estimatedCost: '70 - 100 MAD (circa 7 - 10 €)',
+        pickupLocation_it: 'Corsia taxi all\'esterno degli Arrivi',
+        pickupLocation_en: 'Taxi ranks outside Arrivals',
+        details_it: 'Tariffa fissa stabilita dal comune di Marrakech visibile sui cartelli informativi.',
+        details_en: 'Fixed rate to Marrakech medina and Gueliz posted on official signboards.'
+      }
+    ],
+    lastUpdated: '2026-10-22'
   }
 };
 
@@ -1186,5 +1721,18 @@ export const CITY_TO_IATA: Record<string, string> = {
   SANTORINI: 'JTR',
   MYKONOS: 'JMK',
   ISTANBUL: 'IST',
-  TIRANA: 'TIA'
+  TIRANA: 'TIA',
+
+  // Germany additional hubs
+  STOCCARDA: 'STR',
+  STUTTGART: 'STR',
+
+  // North Africa & Morocco
+  MARRACASH: 'RAK',
+  MARRAKECH: 'RAK',
+  DJANET: 'DJG',
+
+  // Regional & General Aviation
+  'ROMA URBE': 'QUR',
+  URBE: 'QUR'
 };
