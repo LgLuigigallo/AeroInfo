@@ -350,6 +350,11 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
                             {emailValidationError}
                           </p>
                         )}
+                        <p className="text-[10px] text-zinc-400 dark:text-zinc-500 text-left pt-1 leading-tight">
+                          {lang === 'it'
+                            ? '🔒 Email usata esclusivamente per notificare la pubblicazione (GDPR • zero spam).'
+                            : '🔒 Email is strictly used for publication alert (GDPR compliant • no spam).'}
+                        </p>
                       </div>
                       <button
                         type="submit"
@@ -425,6 +430,11 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
                         placeholder={t('requestAirportEmailPlaceholder')}
                         className="w-full px-3 py-2 rounded-lg text-xs bg-zinc-50 dark:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 focus:outline-none focus:ring-1 focus:ring-zinc-900 dark:focus:ring-white transition-all font-mono"
                       />
+                      <p className="text-[10px] text-zinc-400 dark:text-zinc-500 text-left pt-0.5 leading-tight">
+                        {lang === 'it'
+                          ? '🔒 Email usata esclusivamente per notificare la pubblicazione (GDPR • zero spam).'
+                          : '🔒 Email is strictly used for publication alert (GDPR compliant • no spam).'}
+                      </p>
                       <button
                         type="submit"
                         disabled={isSubmittingRequest}

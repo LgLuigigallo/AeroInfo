@@ -65,8 +65,12 @@ export function Footer() {
             <Plane className="w-3.5 h-3.5 -rotate-45" />
             <span className="font-mono text-[10px] tracking-wide">AeroInfo • Global Airport Intelligence</span>
           </div>
-          <div className="font-mono text-[10px]">
+          <div className="font-mono text-[10px] flex flex-wrap items-center gap-2">
             <span>{lang === 'it' ? '© 2026 AeroInfo • Tutti i diritti riservati' : '© 2026 AeroInfo • All rights reserved'}</span>
+            <span className="text-zinc-300 dark:text-zinc-700">•</span>
+            <span className="text-zinc-500 dark:text-zinc-400">
+              {lang === 'it' ? 'Privacy: zero tracking • GDPR compliant' : 'Privacy: zero tracking • GDPR compliant'}
+            </span>
           </div>
         </div>
 
