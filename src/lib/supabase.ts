@@ -6,10 +6,11 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
-// Server-side privileged client when service role key is provided; otherwise safe anon client
-const activeKey = (typeof window === 'undefined' && supabaseServiceRoleKey)
-  ? supabaseServiceRoleKey
-  : supabaseAnonKey;
+// Server-side privileged client when service role key or sb_secret_ key is provided;
+// Prevent client browser bundles from ever utilizing a sb_secret_ administrator key
+const activeKey = (typeof window === 'undefined')
+  ? (supabaseServiceRoleKey || supabaseAnonKey)
+  : (supabaseAnonKey.startsWith('sb_secret_') ? '' : supabaseAnonKey);
 
 // Client safe for browser and edge runtime
 export const supabase = (supabaseUrl && activeKey)
