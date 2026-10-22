@@ -7,7 +7,7 @@ import { Airport } from '@/types/airport';
 import { airportsData, searchAirports } from '@/data/airports';
 
 interface SearchBarProps {
-  selectedAirport: Airport;
+  selectedAirport: Airport | null;
   onSelectAirport: (airport: Airport) => void;
   airports?: Airport[];
   onRefreshAirports?: () => Promise<Airport[] | void>;
@@ -237,7 +237,7 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
             <div className="p-1.5 max-h-84 overflow-y-auto">
               {results.length > 0 ? (
                 results.map((airport) => {
-                  const isSelected = selectedAirport.id === airport.id;
+                  const isSelected = selectedAirport?.id === airport.id;
                   return (
                     <button
                       key={airport.id}

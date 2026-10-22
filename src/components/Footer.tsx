@@ -69,8 +69,20 @@ export function Footer() {
           <div className="font-mono text-[10px] flex flex-wrap items-center gap-2">
             <span>{lang === 'it' ? '© 2026 AeroInfo • Tutti i diritti riservati' : '© 2026 AeroInfo • All rights reserved'}</span>
             <span className="text-zinc-300 dark:text-zinc-700">•</span>
+            <button
+              type="button"
+              onClick={() => {
+                if (typeof window !== 'undefined') {
+                  window.dispatchEvent(new CustomEvent('open-cookie-settings'));
+                }
+              }}
+              className="text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors underline cursor-pointer"
+            >
+              {t('cookieSettingsLink')}
+            </button>
+            <span className="text-zinc-300 dark:text-zinc-700">•</span>
             <span className="text-zinc-500 dark:text-zinc-400">
-              {lang === 'it' ? 'Privacy: zero tracking • GDPR compliant' : 'Privacy: zero tracking • GDPR compliant'}
+              {lang === 'it' ? 'Privacy & Cookie Policy' : 'Privacy & Cookie Policy'}
             </span>
           </div>
         </div>

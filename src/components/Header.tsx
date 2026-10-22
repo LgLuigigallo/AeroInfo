@@ -5,20 +5,35 @@ import Link from 'next/link';
 import { Plane, ShieldCheck, MessageSquare } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 
-export function Header() {
+interface HeaderProps {
+  onResetHome?: () => void;
+}
+
+export function Header({ onResetHome }: HeaderProps) {
   const { lang, setLang, t } = useLanguage();
+
+  const handleBrandClick = () => {
+    if (onResetHome) {
+      onResetHome();
+    }
+  };
 
   return (
     <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/90 dark:bg-zinc-950/90 border-b border-zinc-200/80 dark:border-zinc-800/80 transition-colors">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-15 flex items-center justify-between gap-4">
         {/* Brand with Aeronautical Styling */}
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-zinc-900 dark:bg-white flex items-center justify-center text-white dark:text-zinc-900 shadow-xs ring-1 ring-zinc-900/10 dark:ring-white/20">
+        <button
+          type="button"
+          onClick={handleBrandClick}
+          className="flex items-center gap-3 text-left cursor-pointer group"
+          title={lang === 'it' ? 'Torna alla pagina iniziale' : 'Return to home page'}
+        >
+          <div className="w-8 h-8 rounded-lg bg-zinc-900 dark:bg-white flex items-center justify-center text-white dark:text-zinc-900 shadow-xs ring-1 ring-zinc-900/10 dark:ring-white/20 group-hover:scale-105 transition-transform">
             <Plane className="w-4 h-4 -rotate-45" />
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="font-extrabold text-base tracking-tight text-zinc-900 dark:text-white leading-none">
+              <span className="font-extrabold text-base tracking-tight text-zinc-900 dark:text-white leading-none group-hover:underline">
                 Aero<span className="text-zinc-400 dark:text-zinc-500 font-light">Info</span>
               </span>
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" title="System Online" />
@@ -27,7 +42,7 @@ export function Header() {
               Airport Intelligence
             </span>
           </div>
-        </div>
+        </button>
 
         {/* Right Actions: Official Source Tag & Language Switcher */}
         <div className="flex items-center gap-2 sm:gap-3">

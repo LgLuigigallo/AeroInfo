@@ -94,6 +94,36 @@ export const translations: Translations = {
   electronicsInBagBadge: { it: 'Laptop nel bagaglio', en: 'Laptops stay in bag' },
   electronicsOutBadge: { it: 'Laptop fuori', en: 'Laptops taken out' },
 
+  // Welcome View & Home Hubs
+  welcomeTitle: { it: 'Tutto ciò che devi sapere prima di volare.', en: 'Everything you need to know before you fly.' },
+  welcomeSubtitle: { it: 'Scanner 3D, controlli liquidi per terminal, prese per ricarica, fontanelle e collegamenti per i principali aeroporti del mondo.', en: '3D scanners, terminal-by-terminal liquids rules, charging outlets, water refill and transport for major global airports.' },
+  quickHubsTitle: { it: 'Aeroporti principali in evidenza:', en: 'Featured major hubs:' },
+  backToOverview: { it: 'Cerca un altro aeroporto', en: 'Search another airport' },
+  featuredAirportsTitle: { it: 'Aeroporti Verificati in Evidenza', en: 'Featured Verified Airports' },
+  openDossierBtn: { it: 'Apri Dossier Aeroporto →', en: 'Open Airport Dossier →' },
+  dossierTitle: { it: 'Dossier Ufficiale Aeroporto', en: 'Official Airport Dossier' },
+  pillarSecurityTitle: { it: 'Scanner 3D & Regola Liquidi', en: '3D Scanners & Liquids Policy' },
+  pillarSecurityDesc: { it: 'Distinzione rigorosa terminal per terminal tra scanner tomografici (liquidi nel bagaglio) e tradizionali (max 100ml in busta trasparente).', en: 'Strict terminal-by-terminal distinction between 3D tomographic scanners (liquids inside) and traditional lanes (100ml cap).' },
+  pillarMapTitle: { it: 'Mappe Interattive & POI', en: 'Interactive Maps & POIs' },
+  pillarMapDesc: { it: 'Coordinate esatte di prese elettriche per ricarica, fontanelle d\'acqua potabile, gate d\'imbarco e aree ristoro.', en: 'Exact spatial coordinates for power charging sockets, drinking water fountains, gates, and dining.' },
+  pillarTerminalsTitle: { it: 'Terminal & Compagnie', en: 'Terminals & Airlines' },
+  pillarTerminalsDesc: { it: 'Trova a quale terminal è assegnato il tuo volo, i banchi check-in e le modalità di navetta o collegamento tra i terminal.', en: 'Find departure terminals for your airline, check-in desk zones, and inter-terminal transfers.' },
+  pillarTimesTitle: { it: 'Tempi d\'Attesa & Anticipo', en: 'Queue Times & Arrival Advice' },
+  pillarTimesDesc: { it: 'Tempo medio di attesa ai controlli di sicurezza e ore di anticipo consigliate prima della partenza.', en: 'Estimated average security queue times and recommended arrival advance for Schengen and long-haul flights.' },
+
+  // Cookie Consent & Privacy
+  cookieBannerTitle: { it: 'Gestione Cookie & Privacy', en: 'Cookie Management & Privacy' },
+  cookieBannerDesc: { it: 'AeroInfo utilizza cookie tecnici essenziali per il funzionamento del servizio (es. lingua e ricerca) e, previo tuo consenso, cookie analitici anonimi per migliorare le prestazioni. Puoi gestire le tue preferenze in qualsiasi momento.', en: 'AeroInfo uses essential technical cookies for website operation (such as language and search) and, with your consent, anonymous analytics cookies to improve performance. You can manage preferences anytime.' },
+  cookieAcceptAll: { it: 'Accetta tutti', en: 'Accept all' },
+  cookieAcceptEssential: { it: 'Solo necessari', en: 'Essential only' },
+  cookieCustomize: { it: 'Personalizza preferenze', en: 'Customize preferences' },
+  cookieEssentialTitle: { it: 'Cookie Tecnici Essenziali (Obbligatori)', en: 'Essential Technical Cookies (Required)' },
+  cookieEssentialDesc: { it: 'Necessari per la navigazione, la sicurezza della sessione e la memorizzazione della lingua preferita. Non possono essere disattivati.', en: 'Required for navigation, session security, and language preference storage. Cannot be disabled.' },
+  cookieAnalyticsTitle: { it: 'Cookie Analitici Anonimi (Opzionali)', en: 'Anonymous Analytics Cookies (Optional)' },
+  cookieAnalyticsDesc: { it: 'Ci aiutano a capire quali aeroporti vengono consultati maggiormente per ottimizzare le prestazioni, senza tracciare la tua identità personale.', en: 'Help us understand which airports are most consulted to optimize site speed, without tracking personal identity.' },
+  cookieSavePreferences: { it: 'Salva preferenze', en: 'Save preferences' },
+  cookieSettingsLink: { it: 'Gestione Cookie', en: 'Cookie Settings' },
+
   // Amenities POI & Scarcity
   amenityAvailability: { it: 'Disponibilità effettiva:', en: 'Actual availability:' },
   availabilityAbundant: { it: 'Abbondante (su quasi tutte le sedute)', en: 'Abundant (at nearly all seats)' },
