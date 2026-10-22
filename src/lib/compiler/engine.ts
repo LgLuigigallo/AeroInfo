@@ -4,6 +4,7 @@ import { supabase } from '@/lib/supabase';
 import { seedAllAirportsToSupabase } from '@/lib/supabase-sync';
 import { sendAirportPublishedEmail } from '@/lib/email';
 import { airportsData } from '@/data/airports';
+import { sanitizePostgrestParam } from '@/lib/security/sanitize';
 
 export interface CompilationReport {
   totalPendingRequests: number;
@@ -249,11 +250,13 @@ export class AirportCompilerEngine {
 
       // 2. Find and update all matching requests
       try {
+        const cleanIata = sanitizePostgrestParam(airport.iata);
+        const cleanCity = sanitizePostgrestParam(airport.city_it);
         const { data: matchingRequests } = await supabase
           .from('airport_requests')
           .select('id, requester_email, query, iata_code')
           .in('status', ['pending', 'queued', 'queued_weekly'])
-          .or(`iata_code.ilike.${airport.iata},query.ilike.%${airport.iata}%,query.ilike.%${airport.city_it}%`);
+          .or(`iata_code.ilike.${cleanIata},query.ilike.%${cleanIata}%,query.ilike.%${cleanCity}%`);
 
         if (matchingRequests && matchingRequests.length > 0) {
           for (const req of matchingRequests) {

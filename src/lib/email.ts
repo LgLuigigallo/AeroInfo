@@ -1,5 +1,6 @@
 import { Resend } from 'resend';
 import nodemailer from 'nodemailer';
+import { escapeHtml } from '@/lib/security/sanitize';
 
 export interface SendEmailResult {
   success: boolean;
@@ -117,6 +118,7 @@ export async function sendRequestConfirmationEmail({
   airportQuery: string;
 }): Promise<SendEmailResult> {
   const cleanName = toTitleCase(airportQuery);
+  const safeHtmlName = escapeHtml(cleanName);
   const subject = `Conferma richiesta aeroporto ${cleanName} - AeroInfo`;
   
   const text = `Ciao,\n\nti confermiamo la ricezione della tua richiesta per l'aeroporto di ${cleanName}.\n\nIl nostro team verificherà le disposizioni ufficiali dell'ente aeroportuale relative a bagaglio a mano, controlli di sicurezza, terminal e servizi per i passeggeri.\n\nTi invieremo un aggiornamento non appena la scheda sarà pubblicata e consultabile online.\n\nA presto,\nTeam AeroInfo\nhttps://aero-info.vercel.app`;
@@ -134,7 +136,7 @@ export async function sendRequestConfirmationEmail({
           </h2>
           <p style="font-size: 14px; margin-bottom: 14px;">Ciao,</p>
           <p style="font-size: 14px; margin-bottom: 14px;">
-            ti confermiamo la corretta ricezione della tua richiesta per l'aeroporto di <strong>${cleanName}</strong>.
+            ti confermiamo la corretta ricezione della tua richiesta per l'aeroporto di <strong>${safeHtmlName}</strong>.
           </p>
           <p style="font-size: 14px; margin-bottom: 14px;">
             Verificheremo le informazioni e le normative ufficiali dell'ente aeroportuale:
@@ -176,6 +178,9 @@ export async function sendAirportPublishedEmail({
   airportIata: string;
   airportUrl: string;
 }): Promise<SendEmailResult> {
+  const safeName = escapeHtml(airportName);
+  const safeIata = escapeHtml(airportIata);
+  const safeUrl = escapeHtml(airportUrl);
   const subject = `L'aeroporto ${airportName} (${airportIata}) è ora disponibile su AeroInfo`;
   
   const text = `Ciao,\n\nti informiamo che la scheda ufficiale dell'aeroporto ${airportName} (${airportIata}) è ora consultabile online su AeroInfo.\n\nAccedi alla scheda completa:\n${airportUrl}\n\nA presto,\nTeam AeroInfo`;
@@ -193,10 +198,10 @@ export async function sendAirportPublishedEmail({
           </h2>
           <p style="font-size: 14px; margin-bottom: 14px;">Ciao,</p>
           <p style="font-size: 14px; margin-bottom: 14px;">
-            ti informiamo che la scheda dell'aeroporto <strong>${airportName} (${airportIata})</strong> è ora consultabile su AeroInfo con tutte le disposizioni ufficiali aggiornate.
+            ti informiamo che la scheda dell'aeroporto <strong>${safeName} (${safeIata})</strong> è ora consultabile su AeroInfo con tutte le disposizioni ufficiali aggiornate.
           </p>
           <p style="margin: 24px 0;">
-            <a href="${airportUrl}" style="display: inline-block; padding: 10px 22px; background-color: #111111; color: #ffffff; text-decoration: none; border-radius: 6px; font-size: 14px; font-weight: bold;">
+            <a href="${safeUrl}" style="display: inline-block; padding: 10px 22px; background-color: #111111; color: #ffffff; text-decoration: none; border-radius: 6px; font-size: 14px; font-weight: bold;">
               Visualizza scheda aeroporto &rarr;
             </a>
           </p>

@@ -2,16 +2,27 @@ import { createClient } from '@supabase/supabase-js';
 import { Airport } from '@/types/airport';
 import { airportsData } from '@/data/airports';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '';
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+
+// Server-side privileged client when service role key is provided; otherwise safe anon client
+const activeKey = (typeof window === 'undefined' && supabaseServiceRoleKey)
+  ? supabaseServiceRoleKey
+  : supabaseAnonKey;
 
 // Client safe for browser and edge runtime
-export const supabase = (supabaseUrl && supabaseAnonKey)
-  ? createClient(supabaseUrl, supabaseAnonKey)
+export const supabase = (supabaseUrl && activeKey)
+  ? createClient(supabaseUrl, activeKey, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false
+      }
+    })
   : null;
 
 export const isSupabaseConfigured = (): boolean => {
-  return Boolean(supabaseUrl && supabaseAnonKey);
+  return Boolean(supabaseUrl && activeKey);
 };
 
 /**

@@ -190,5 +190,7 @@ CREATE POLICY "Public read-only access on ground_transports" ON public.ground_tr
 
 ALTER TABLE public.airport_requests ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Public can submit indexing requests" ON public.airport_requests FOR INSERT WITH CHECK (true);
-CREATE POLICY "Public can view indexing requests" ON public.airport_requests FOR SELECT USING (true);
+-- In accordance with OWASP and GDPR personal data protection, public SELECT is forbidden on airport_requests.
+-- Only service role has SELECT / ALL permissions on airport_requests.
+CREATE POLICY "Service role full access on airport_requests" ON public.airport_requests FOR ALL TO service_role USING (true) WITH CHECK (true);
 

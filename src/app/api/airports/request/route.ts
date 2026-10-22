@@ -3,6 +3,8 @@ import { supabase } from '@/lib/supabase';
 import { AirportScraperEngine, OFFICIAL_DOMAIN_WHITELIST } from '@/lib/scraper/engine';
 import { sendRequestConfirmationEmail } from '@/lib/email';
 import { CITY_TO_IATA } from '@/lib/compiler/aviation-registry';
+import { getClientIp, checkRateLimit } from '@/lib/security/rate-limit';
+import { sanitizePostgrestParam, isValidEmail } from '@/lib/security/sanitize';
 
 export const maxDuration = 60;
 
@@ -13,15 +15,20 @@ export const maxDuration = 60;
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const query = searchParams.get('query')?.trim();
+    const rawQuery = searchParams.get('query')?.trim();
 
-    if (!query || query.length < 2) {
+    if (!rawQuery || rawQuery.length < 2) {
       return NextResponse.json({ exists: false });
     }
 
-    const cleanUpper = query.trim().toUpperCase();
-    const cleanLower = query.trim().toLowerCase();
-    const isIataCandidate = /^[a-zA-Z]{3}$/.test(cleanLower);
+    const sanitizedQuery = sanitizePostgrestParam(rawQuery);
+    if (sanitizedQuery.length < 2) {
+      return NextResponse.json({ exists: false });
+    }
+
+    const cleanUpper = sanitizedQuery.toUpperCase();
+    const cleanLower = sanitizedQuery.toLowerCase();
+    const isIataCandidate = /^[A-Z]{3}$/.test(cleanUpper);
     const targetIata = isIataCandidate ? cleanUpper : CITY_TO_IATA[cleanUpper] || null;
 
     if (supabase) {
@@ -65,12 +72,33 @@ export async function GET(request: NextRequest) {
  */
 export async function POST(request: NextRequest) {
   try {
+    // 0. Rate limiting by IP (max 5 submissions per 10 minutes)
+    const clientIp = getClientIp(request);
+    const rateCheck = checkRateLimit(clientIp, 5, 600000);
+    if (!rateCheck.allowed) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Rate limit exceeded. Too many airport requests from this network.',
+          message_it: 'Troppe richieste inviate in breve tempo. Per favore riprova tra qualche minuto.',
+          message_en: 'Too many requests sent. Please try again in a few minutes.'
+        },
+        {
+          status: 429,
+          headers: {
+            'Retry-After': String(Math.ceil(rateCheck.resetMs / 1000))
+          }
+        }
+      );
+    }
+
     const body = await request.json();
     const { query, email } = body;
 
     console.info('✈️ [AIRPORT_REQUEST] Handling user request:', {
       query,
       email,
+      clientIp,
       timestamp: new Date().toISOString()
     });
 
@@ -81,13 +109,35 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const cleanedQuery = query.trim().toUpperCase();
+    // Email format validation (RFC 5322 compliance)
+    if (email && (typeof email !== 'string' || !isValidEmail(email))) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Invalid email address format',
+          message_it: 'Inserisci un indirizzo email valido (es. nome@dominio.com).',
+          message_en: 'Please enter a valid email address.'
+        },
+        { status: 400 }
+      );
+    }
+
+    // Sanitization against control characters and PostgREST injection
+    const sanitizedQuery = sanitizePostgrestParam(query);
+    if (sanitizedQuery.length < 2) {
+      return NextResponse.json(
+        { success: false, error: 'Query is too short or contains invalid characters' },
+        { status: 400 }
+      );
+    }
+
+    const cleanedQuery = sanitizedQuery.toUpperCase();
     const isIataCandidate = /^[A-Z]{3}$/.test(cleanedQuery);
     let candidateIata: string | null = isIataCandidate ? cleanedQuery : null;
     if (!candidateIata && CITY_TO_IATA[cleanedQuery]) {
       candidateIata = CITY_TO_IATA[cleanedQuery];
     }
-    const cleanLower = query.trim().toLowerCase();
+    const cleanLower = sanitizedQuery.toLowerCase();
 
     // 1. Check if an existing request is ALREADY pending in Supabase
     let existingRequest = null;
