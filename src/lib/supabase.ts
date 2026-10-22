@@ -57,6 +57,10 @@ export async function getLiveAirports(): Promise<Airport[]> {
         ? row.security_policies[0] 
         : {};
 
+      const staticMatch = airportsData.find(
+        (a) => a.iata.toUpperCase() === row.iata_code?.toUpperCase()
+      );
+
       return {
         id: row.iata_code.toLowerCase(),
         iata: row.iata_code,
@@ -83,33 +87,36 @@ export async function getLiveAirports(): Promise<Airport[]> {
         },
         navigationAdvice_it: row.navigation_advice_it || '',
         navigationAdvice_en: row.navigation_advice_en || '',
+        otherCityAirports: row.other_city_airports || staticMatch?.otherCityAirports,
+        terminalMaps: staticMatch?.terminalMaps,
         securityPolicy: {
           has3DScanners: Boolean(sec.has_3d_scanners),
-          scannersNote_it: sec.scanners_note_it || '',
-          scannersNote_en: sec.scanners_note_en || '',
-          liquidsAllowance_it: sec.liquids_allowance_it || '100ml max',
-          liquidsAllowance_en: sec.liquids_allowance_en || '100ml max',
-          liquidsMustBeRemoved: sec.liquids_must_be_removed ?? true,
+          scannersNote_it: sec.scanners_note_it || staticMatch?.securityPolicy.scannersNote_it || '',
+          scannersNote_en: sec.scanners_note_en || staticMatch?.securityPolicy.scannersNote_en || '',
+          terminalRules: sec.terminal_rules || staticMatch?.securityPolicy.terminalRules,
+          liquidsAllowance_it: sec.liquids_allowance_it || staticMatch?.securityPolicy.liquidsAllowance_it || '100ml max',
+          liquidsAllowance_en: sec.liquids_allowance_en || staticMatch?.securityPolicy.liquidsAllowance_en || '100ml max',
+          liquidsMustBeRemoved: sec.liquids_must_be_removed ?? staticMatch?.securityPolicy.liquidsMustBeRemoved ?? true,
           liquidsUnverified: Boolean(sec.liquids_unverified),
-          liquidsNote_it: sec.liquids_note_it,
-          liquidsNote_en: sec.liquids_note_en,
+          liquidsNote_it: sec.liquids_note_it || staticMatch?.securityPolicy.liquidsNote_it,
+          liquidsNote_en: sec.liquids_note_en || staticMatch?.securityPolicy.liquidsNote_en,
           electronicsInBag: Boolean(sec.electronics_in_bag),
-          electronicsNote_it: sec.electronics_note_it || '',
-          electronicsNote_en: sec.electronics_note_en || '',
+          electronicsNote_it: sec.electronics_note_it || staticMatch?.securityPolicy.electronicsNote_it || '',
+          electronicsNote_en: sec.electronics_note_en || staticMatch?.securityPolicy.electronicsNote_en || '',
           electronicsUnverified: Boolean(sec.electronics_unverified),
-          droneAllowedInCabin: sec.drone_allowed_in_cabin ?? true,
-          droneAllowedInHold: sec.drone_allowed_in_hold ?? false,
-          dronePolicy_it: sec.drone_policy_it || '',
-          dronePolicy_en: sec.drone_policy_en || '',
+          droneAllowedInCabin: sec.drone_allowed_in_cabin ?? staticMatch?.securityPolicy.droneAllowedInCabin ?? true,
+          droneAllowedInHold: sec.drone_allowed_in_hold ?? staticMatch?.securityPolicy.droneAllowedInHold ?? false,
+          dronePolicy_it: sec.drone_policy_it || staticMatch?.securityPolicy.dronePolicy_it || '',
+          dronePolicy_en: sec.drone_policy_en || staticMatch?.securityPolicy.dronePolicy_en || '',
           droneUnverified: Boolean(sec.drone_unverified),
-          droneNote_it: sec.drone_note_it,
-          droneNote_en: sec.drone_note_en,
-          maxPowerbankWh: sec.max_powerbank_wh || 100,
-          powerbankPolicy_it: sec.powerbank_policy_it || '',
-          powerbankPolicy_en: sec.powerbank_policy_en || '',
+          droneNote_it: sec.drone_note_it || staticMatch?.securityPolicy.droneNote_it,
+          droneNote_en: sec.drone_note_en || staticMatch?.securityPolicy.droneNote_en,
+          maxPowerbankWh: sec.max_powerbank_wh || staticMatch?.securityPolicy.maxPowerbankWh || 100,
+          powerbankPolicy_it: sec.powerbank_policy_it || staticMatch?.securityPolicy.powerbankPolicy_it || '',
+          powerbankPolicy_en: sec.powerbank_policy_en || staticMatch?.securityPolicy.powerbankPolicy_en || '',
           powerbankUnverified: Boolean(sec.powerbank_unverified),
-          officialSourceUrl: sec.official_source_url || row.official_website,
-          lastVerifiedDate: sec.last_verified_at ? sec.last_verified_at.split('T')[0] : '2026-10-18'
+          officialSourceUrl: sec.official_source_url || staticMatch?.securityPolicy.officialSourceUrl || row.official_website,
+          lastVerifiedDate: sec.last_verified_at ? sec.last_verified_at.split('T')[0] : (staticMatch?.securityPolicy.lastVerifiedDate || '2026-10-18')
         },
         terminals: (row.terminals || []).map((t: any) => ({
           id: t.id,

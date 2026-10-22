@@ -15,9 +15,24 @@ export async function GET() {
       airportMap.set(a.iata.toUpperCase(), a);
     }
 
-    // Overwrite / append with live database data
+    // Overwrite / append with live database data while preserving rich client fields
     for (const a of liveAirports) {
-      airportMap.set(a.iata.toUpperCase(), a);
+      const existing = airportMap.get(a.iata.toUpperCase());
+      if (existing) {
+        airportMap.set(a.iata.toUpperCase(), {
+          ...existing,
+          ...a,
+          otherCityAirports: a.otherCityAirports || existing.otherCityAirports,
+          terminalMaps: a.terminalMaps || existing.terminalMaps,
+          securityPolicy: {
+            ...existing.securityPolicy,
+            ...a.securityPolicy,
+            terminalRules: a.securityPolicy.terminalRules || existing.securityPolicy.terminalRules
+          }
+        });
+      } else {
+        airportMap.set(a.iata.toUpperCase(), a);
+      }
     }
 
     const mergedList = Array.from(airportMap.values());
@@ -30,7 +45,7 @@ export async function GET() {
       },
       {
         headers: {
-          'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300'
+          'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate'
         }
       }
     );

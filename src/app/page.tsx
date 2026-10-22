@@ -57,6 +57,11 @@ function MainContent() {
           if (found) {
             setSelectedAirport(found);
           }
+        } else if (liveList) {
+          setSelectedAirport((prev) => {
+            const found = liveList.find((a) => a.iata.toUpperCase() === prev.iata.toUpperCase());
+            return found || prev;
+          });
         }
       }
     });
