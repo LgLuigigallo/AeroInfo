@@ -40,7 +40,10 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
     try {
       const stored = localStorage.getItem('aeroinfo_recent');
       if (stored) {
-        setRecentSearches(JSON.parse(stored));
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) {
+          setRecentSearches(parsed.filter((item): item is string => typeof item === 'string').slice(0, 10));
+        }
       }
     } catch {
       // ignore

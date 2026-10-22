@@ -92,12 +92,31 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const body = await request.json();
-    const { query, email } = body;
+    // 1. Content-Length & Payload Size Limit (max 10KB)
+    const contentLength = request.headers.get('content-length');
+    if (contentLength && parseInt(contentLength, 10) > 10240) {
+      return NextResponse.json(
+        { success: false, error: 'Payload too large (max 10KB)' },
+        { status: 413 }
+      );
+    }
+
+    // 2. Safe JSON Parsing
+    let body: any;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json(
+        { success: false, error: 'Malformed or invalid JSON payload' },
+        { status: 400 }
+      );
+    }
+
+    const { query, email } = body || {};
 
     console.info('✈️ [AIRPORT_REQUEST] Handling user request:', {
-      query,
-      email,
+      query: typeof query === 'string' ? query.slice(0, 100) : query,
+      email: typeof email === 'string' ? email.slice(0, 100) : email,
       clientIp,
       timestamp: new Date().toISOString()
     });
@@ -105,6 +124,13 @@ export async function POST(request: NextRequest) {
     if (!query || typeof query !== 'string' || query.trim().length === 0) {
       return NextResponse.json(
         { success: false, error: 'Query parameter is required' },
+        { status: 400 }
+      );
+    }
+
+    if (query.trim().length > 100) {
+      return NextResponse.json(
+        { success: false, error: 'Query parameter is too long (max 100 characters)' },
         { status: 400 }
       );
     }

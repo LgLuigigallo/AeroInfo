@@ -1,5 +1,6 @@
 import * as cheerio from 'cheerio';
 import { Airport, SecurityPolicy, VenueItem, VenueCategory } from '@/types/airport';
+import { isSafeOutboundUrl } from '@/lib/security/ssrf';
 
 export interface ScrapingResult {
   airportIata: string;
@@ -140,6 +141,27 @@ export class AirportScraperEngine {
       };
     }
 
+    // SSRF & Whitelist Protection
+    if (!isSafeOutboundUrl(targetUrl)) {
+      return {
+        airportIata: iata,
+        sourceUrl: targetUrl,
+        success: false,
+        timestamp: new Date().toISOString(),
+        notes: 'Security check: URL rejected by SSRF filter (non-HTTPS or internal/reserved address).'
+      };
+    }
+
+    if (explicitUrl && !this.isOfficialDomain(iata, targetUrl)) {
+      return {
+        airportIata: iata,
+        sourceUrl: targetUrl,
+        success: false,
+        timestamp: new Date().toISOString(),
+        notes: 'Security check: explicit URL does not match official airport domain whitelist.'
+      };
+    }
+
     try {
       const response = await fetch(targetUrl, {
         headers: {
@@ -257,6 +279,10 @@ export class AirportScraperEngine {
     const endpoint = OFFICIAL_VENUES_ENDPOINTS[iata.toUpperCase()];
     if (!endpoint) {
       return { success: false, venues: [], count: 0, error: `No venue endpoint configured for ${iata}` };
+    }
+
+    if (!isSafeOutboundUrl(endpoint.url)) {
+      return { success: false, venues: [], count: 0, error: 'Security check: venue URL rejected by SSRF filter' };
     }
 
     try {
