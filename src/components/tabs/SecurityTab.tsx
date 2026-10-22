@@ -16,6 +16,7 @@ import {
 import { Airport } from '@/types/airport';
 import { useLanguage } from '@/lib/i18n';
 import { UnverifiedBadge } from '@/components/UnverifiedBadge';
+import { cleanOfficialWebsiteUrl } from '@/lib/aviation-authority';
 
 interface SecurityTabProps {
   airport: Airport;
@@ -564,7 +565,7 @@ export function SecurityTab({
         </div>
 
         <a
-          href={sec.officialSourceUrl}
+          href={cleanOfficialWebsiteUrl(sec.officialSourceUrl, airport.iata, airport.countryCode)}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1.5 font-sans font-medium text-zinc-900 dark:text-white hover:underline"

@@ -33,6 +33,7 @@ import {
 import { Airport, TerminalMapPOI, MapPoiCategory, VenueItem } from '@/types/airport';
 import { useLanguage } from '@/lib/i18n';
 import { UnverifiedBadge } from '@/components/UnverifiedBadge';
+import { cleanOfficialWebsiteUrl } from '@/lib/aviation-authority';
 
 interface TerminalMapTabProps {
   airport: Airport;
@@ -451,7 +452,8 @@ export function TerminalMapTab({ airport }: TerminalMapTabProps) {
     }
   };
 
-  const officialMapLink = airport.officialMapUrl || currentTerminalMap?.officialInteractiveMapUrl || airport.officialWebsite;
+  const rawMapLink = airport.officialMapUrl || currentTerminalMap?.officialInteractiveMapUrl || airport.officialWebsite;
+  const officialMapLink = cleanOfficialWebsiteUrl(rawMapLink, airport.iata, airport.countryCode);
 
   const scrollToDirectory = (categoryKey?: string) => {
     if (categoryKey) {

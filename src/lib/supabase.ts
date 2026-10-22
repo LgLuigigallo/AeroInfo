@@ -1,6 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 import { Airport } from '@/types/airport';
 import { airportsData } from '@/data/airports';
+import { AVIATION_REGISTRY } from '@/lib/compiler/aviation-registry';
+import { cleanOfficialWebsiteUrl, isGeneralAviationAirport } from '@/lib/aviation-authority';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '';
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
@@ -57,40 +59,63 @@ export async function getLiveAirports(): Promise<Airport[]> {
         ? row.security_policies[0] 
         : {};
 
+      const upperIata = (row.iata_code || '').toUpperCase();
       const staticMatch = airportsData.find(
-        (a) => a.iata.toUpperCase() === row.iata_code?.toUpperCase()
+        (a) => a.iata.toUpperCase() === upperIata
+      ) || AVIATION_REGISTRY[upperIata];
+
+      const cleanSite = cleanOfficialWebsiteUrl(
+        row.official_website || staticMatch?.officialWebsite,
+        upperIata,
+        row.country_code
+      );
+
+      const isGenAv = Boolean(
+        staticMatch?.isGeneralAviation ||
+        staticMatch?.classification === 'general_aviation' ||
+        isGeneralAviationAirport({
+          iata: upperIata,
+          name_it: row.name_it || staticMatch?.name_it,
+          name_en: row.name_en || staticMatch?.name_en
+        })
       );
 
       return {
         id: row.iata_code.toLowerCase(),
         iata: row.iata_code,
-        icao: row.icao_code || '',
-        name_it: row.name_it,
-        name_en: row.name_en,
+        icao: row.icao_code || staticMatch?.icao || '',
+        name_it: staticMatch?.name_it || row.name_it,
+        name_en: staticMatch?.name_en || row.name_en,
         city_it: row.city_it,
         city_en: row.city_en,
         country_it: row.country_it,
         country_en: row.country_en,
         countryCode: row.country_code,
-        officialWebsite: row.official_website,
+        officialWebsite: cleanSite,
+        classification: staticMatch?.classification || (isGenAv ? 'general_aviation' : 'commercial_scheduled'),
+        isGeneralAviation: isGenAv,
+        classificationLabel_it: staticMatch?.classificationLabel_it || (isGenAv ? 'Aviazione Generale & Voli Privati' : undefined),
+        classificationLabel_en: staticMatch?.classificationLabel_en || (isGenAv ? 'General Aviation & Private Flights' : undefined),
+        classificationNotice_it: staticMatch?.classificationNotice_it,
+        classificationNotice_en: staticMatch?.classificationNotice_en,
         coordinates: {
-          lat: row.latitude || 0,
-          lng: row.longitude || 0
+          lat: row.latitude || staticMatch?.coordinates.lat || 0,
+          lng: row.longitude || staticMatch?.coordinates.lng || 0
         },
-        difficultyRating: row.difficulty_rating || 2,
-        difficultyLabel_it: row.difficulty_label_it || '',
-        difficultyLabel_en: row.difficulty_label_en || '',
-        averageSecurityWaitMin: row.avg_security_wait_min || 15,
+        difficultyRating: staticMatch?.difficultyRating || row.difficulty_rating || 2,
+        difficultyLabel_it: staticMatch?.difficultyLabel_it || row.difficulty_label_it || '',
+        difficultyLabel_en: staticMatch?.difficultyLabel_en || row.difficulty_label_en || '',
+        averageSecurityWaitMin: staticMatch?.averageSecurityWaitMin || row.avg_security_wait_min || 15,
         recommendedArrivalHours: {
-          domestic: row.recommended_arrival_domestic || 2,
-          international: row.recommended_arrival_intl || 3
+          domestic: staticMatch?.recommendedArrivalHours.domestic || row.recommended_arrival_domestic || 2,
+          international: staticMatch?.recommendedArrivalHours.international || row.recommended_arrival_intl || 3
         },
-        navigationAdvice_it: row.navigation_advice_it || '',
-        navigationAdvice_en: row.navigation_advice_en || '',
-        otherCityAirports: row.other_city_airports || staticMatch?.otherCityAirports,
+        navigationAdvice_it: staticMatch?.navigationAdvice_it || row.navigation_advice_it || '',
+        navigationAdvice_en: staticMatch?.navigationAdvice_en || row.navigation_advice_en || '',
+        otherCityAirports: staticMatch?.otherCityAirports || row.other_city_airports,
         terminalMaps: staticMatch?.terminalMaps,
         securityPolicy: {
-          has3DScanners: Boolean(sec.has_3d_scanners),
+          has3DScanners: Boolean(sec.has_3d_scanners ?? staticMatch?.securityPolicy.has3DScanners),
           scannersNote_it: sec.scanners_note_it || staticMatch?.securityPolicy.scannersNote_it || '',
           scannersNote_en: sec.scanners_note_en || staticMatch?.securityPolicy.scannersNote_en || '',
           terminalRules: sec.terminal_rules || staticMatch?.securityPolicy.terminalRules,
@@ -100,7 +125,7 @@ export async function getLiveAirports(): Promise<Airport[]> {
           liquidsUnverified: Boolean(sec.liquids_unverified),
           liquidsNote_it: sec.liquids_note_it || staticMatch?.securityPolicy.liquidsNote_it,
           liquidsNote_en: sec.liquids_note_en || staticMatch?.securityPolicy.liquidsNote_en,
-          electronicsInBag: Boolean(sec.electronics_in_bag),
+          electronicsInBag: Boolean(sec.electronics_in_bag ?? staticMatch?.securityPolicy.electronicsInBag),
           electronicsNote_it: sec.electronics_note_it || staticMatch?.securityPolicy.electronicsNote_it || '',
           electronicsNote_en: sec.electronics_note_en || staticMatch?.securityPolicy.electronicsNote_en || '',
           electronicsUnverified: Boolean(sec.electronics_unverified),
@@ -115,7 +140,11 @@ export async function getLiveAirports(): Promise<Airport[]> {
           powerbankPolicy_it: sec.powerbank_policy_it || staticMatch?.securityPolicy.powerbankPolicy_it || '',
           powerbankPolicy_en: sec.powerbank_policy_en || staticMatch?.securityPolicy.powerbankPolicy_en || '',
           powerbankUnverified: Boolean(sec.powerbank_unverified),
-          officialSourceUrl: sec.official_source_url || staticMatch?.securityPolicy.officialSourceUrl || row.official_website,
+          officialSourceUrl: cleanOfficialWebsiteUrl(
+            sec.official_source_url || staticMatch?.securityPolicy.officialSourceUrl || cleanSite,
+            upperIata,
+            row.country_code
+          ),
           lastVerifiedDate: sec.last_verified_at ? sec.last_verified_at.split('T')[0] : (staticMatch?.securityPolicy.lastVerifiedDate || '2026-10-18')
         },
         terminals: (row.terminals || []).map((t: any) => ({

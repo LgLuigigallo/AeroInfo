@@ -213,6 +213,12 @@ export interface TerminalMapData {
   pois: TerminalMapPOI[];
 }
 
+export type AirportClassification = 
+  | 'commercial_scheduled' 
+  | 'general_aviation' 
+  | 'private_charter' 
+  | 'cargo_logistics';
+
 export interface Airport {
   id: string;
   iata: string;
@@ -225,6 +231,14 @@ export interface Airport {
   country_en: string;
   countryCode: string;
   officialWebsite: string;
+  
+  // Airport Classification & Operation Type
+  classification?: AirportClassification;
+  isGeneralAviation?: boolean;
+  classificationLabel_it?: string;
+  classificationLabel_en?: string;
+  classificationNotice_it?: string;
+  classificationNotice_en?: string;
   coordinates: {
     lat: number;
     lng: number;

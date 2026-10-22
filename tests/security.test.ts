@@ -2,6 +2,7 @@ import assert from 'node:assert';
 import { escapeHtml, sanitizePostgrestParam, isValidEmail } from '../src/lib/security/sanitize';
 import { checkRateLimit } from '../src/lib/security/rate-limit';
 import { isSafeOutboundUrl } from '../src/lib/security/ssrf';
+import { cleanOfficialWebsiteUrl, isGeneralAviationAirport } from '../src/lib/aviation-authority';
 import nextConfig from '../next.config';
 
 async function run() {
@@ -96,6 +97,29 @@ async function run() {
   assert.strictEqual(sanitizePostgrestParam('traveler@example.com'), 'traveler@example.com');
   assert.strictEqual(sanitizePostgrestParam('admin@domain.com,status.eq.hacked'), 'admin@domain.com status.eq.hacked');
   console.log('  ✅ Unsubscribe input security and validation passed.');
+
+  // 8. Test Official Authority URL Resolution & General Aviation Filter
+  console.log('8. Testing Official Authority Resolution & Non-Commercial Tagging...');
+  const qurUrl = cleanOfficialWebsiteUrl('https://www.google.com/search?q=airport+QUR+official+website', 'QUR', 'IT');
+  assert.strictEqual(qurUrl, 'https://www.enac.gov.it', 'Roma Urbe must resolve to official ENAC portal, never google.com');
+
+  const djgUrl = cleanOfficialWebsiteUrl('https://www.google.com/search?q=airport+DJG+official+website', 'DJG', 'DZ');
+  assert.strictEqual(djgUrl, 'https://www.egsa-alger.dz', 'Djanet must resolve to EGSA Alger, never google.com');
+
+  const genericSearchUrl = cleanOfficialWebsiteUrl('https://www.google.com/search?q=airport+ABC', 'ABC', 'IT');
+  assert.strictEqual(genericSearchUrl, 'https://www.enac.gov.it', 'Any Italian airport with google search url must fallback to ENAC');
+
+  assert.strictEqual(
+    isGeneralAviationAirport({ iata: 'QUR', name_it: 'Aeroporto di Roma-Urbe' }),
+    true,
+    'Roma Urbe (QUR) must be recognized as General Aviation'
+  );
+  assert.strictEqual(
+    isGeneralAviationAirport({ iata: 'FCO', name_it: 'Aeroporto di Roma Fiumicino' }),
+    false,
+    'Fiumicino (FCO) must NOT be recognized as General Aviation'
+  );
+  console.log('  ✅ Official authority URL resolution and general aviation classification verified.');
 
   console.log('\n🎉 ALL SECURITY SUITE TESTS PASSED SUCCESSFULLY!');
 }

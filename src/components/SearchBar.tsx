@@ -5,6 +5,7 @@ import { Search, X, MapPin, Clock, ArrowRight, Sparkles, CheckCircle2, Loader2, 
 import { useLanguage } from '@/lib/i18n';
 import { Airport } from '@/types/airport';
 import { airportsData, searchAirports } from '@/data/airports';
+import { isGeneralAviationAirport } from '@/lib/aviation-authority';
 
 interface SearchBarProps {
   selectedAirport: Airport | null;
@@ -290,6 +291,11 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
                       </div>
 
                       <div className="flex items-center gap-2">
+                        {isGeneralAviationAirport(airport) && (
+                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-semibold rounded bg-purple-500/10 text-purple-700 dark:text-purple-300 border border-purple-500/20">
+                            {lang === 'it' ? 'Voli Privati' : 'Private Flights'}
+                          </span>
+                        )}
                         {(() => {
                           const rules = airport.securityPolicy.terminalRules;
                           const hasMixed = rules && rules.length > 1 && rules.some(r => r.has3DScanners) && rules.some(r => !r.has3DScanners);

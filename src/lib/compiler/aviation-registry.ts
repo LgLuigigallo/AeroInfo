@@ -1596,6 +1596,226 @@ export const AVIATION_REGISTRY: Record<string, Airport> = {
       }
     ],
     lastUpdated: '2026-10-22'
+  },
+
+  // 🇮🇹 ROMA URBE (QUR) - Aeroporto di Roma-Urbe (Aviazione Generale & Voli Privati)
+  QUR: {
+    id: 'qur',
+    iata: 'QUR',
+    icao: 'LIRU',
+    name_it: 'Aeroporto di Roma-Urbe',
+    name_en: 'Rome Urbe Airport',
+    city_it: 'Roma',
+    city_en: 'Rome',
+    country_it: 'Italia',
+    country_en: 'Italy',
+    countryCode: 'IT',
+    officialWebsite: 'https://www.enac.gov.it',
+    classification: 'general_aviation',
+    isGeneralAviation: true,
+    classificationLabel_it: 'Aviazione Generale & Voli Privati',
+    classificationLabel_en: 'General Aviation & Private Flights',
+    classificationNotice_it: 'Questo scalo è dedicato esclusivamente ad aviazione generale, voli privati, aerotaxi, elisoccorso e scuola di volo. Non operano voli commerciali di linea passeggeri (per i voli di linea fare riferimento a Roma Fiumicino FCO o Roma Ciampino CIA).',
+    classificationNotice_en: 'This facility is dedicated exclusively to general aviation, private executive flights, aerotaxis, emergency medical services and pilot training. No scheduled commercial airline flights operate from this airport (for commercial flights, refer to Rome Fiumicino FCO or Ciampino CIA).',
+    coordinates: { lat: 41.9519, lng: 12.5028 },
+    difficultyRating: 1,
+    difficultyLabel_it: 'Scalo privato rapido',
+    difficultyLabel_en: 'Fast private facility',
+    averageSecurityWaitMin: 5,
+    recommendedArrivalHours: { domestic: 0.75, international: 1 },
+    navigationAdvice_it: 'Situato in Via Salaria 825. Accesso diretto dedicato per equipaggi, piloti e passeggeri di aerotaxi e voli privati. Presenza della sede dell\'Aero Club di Roma.',
+    navigationAdvice_en: 'Located on Via Salaria 825 in northern Rome. Dedicated private handling facility for executive passengers, aerotaxis, and Aero Club members.',
+    otherCityAirports: [
+      { iata: 'FCO', name_it: 'Roma Fiumicino (Leonardo da Vinci)', name_en: 'Rome Fiumicino', distanceInfo: '32 km - Hub principale voli di linea' },
+      { iata: 'CIA', name_it: 'Roma Ciampino (G.B. Pastine)', name_en: 'Rome Ciampino', distanceInfo: '15 km - Voli low-cost e linea' }
+    ],
+    securityPolicy: {
+      has3DScanners: false,
+      scannersNote_it: 'Controlli di sicurezza dedicati all\'aviazione generale e controlli doganali/passaporti per voli executive.',
+      scannersNote_en: 'Dedicated general aviation screening and private customs/immigration for executive flights.',
+      liquidsAllowance_it: 'Normativa aviazione generale ENAC: controlli personalizzati per voli privati',
+      liquidsAllowance_en: 'ENAC general aviation regulations: personalized executive screening',
+      liquidsMustBeRemoved: true,
+      electronicsInBag: false,
+      electronicsNote_it: 'Dispositivi controllati al varco dedicato partenze private.',
+      electronicsNote_en: 'Inspected at private executive departures checkpoint.',
+      droneAllowedInCabin: true,
+      droneAllowedInHold: false,
+      dronePolicy_it: 'Ammesso a bordo per piloti e passeggeri privati secondo le disposizioni ENAC.',
+      dronePolicy_en: 'Permitted on board under ENAC general aviation rules.',
+      maxPowerbankWh: 100,
+      powerbankPolicy_it: 'Ammessi a bordo in cabina fino a 100Wh.',
+      powerbankPolicy_en: 'Permitted in cabin up to 100Wh.',
+      officialSourceUrl: 'https://www.enac.gov.it',
+      lastVerifiedDate: '2026-10-22'
+    },
+    terminals: [
+      {
+        id: 't-urbe',
+        name: 'Terminal Aviazione Generale & Executive Lounge',
+        transferInfo_it: 'Palazzina passeggeri dedicata ai voli privati, aerotaxi e scuola di volo.',
+        transferInfo_en: 'Executive passenger terminal for private flights, aerotaxis, and flying school.'
+      }
+    ],
+    airlines: [
+      { airlineName: 'Compagnie Aerotaxi & Voli Privati', iataCode: 'PVT', terminal: 'Terminal Aviazione Generale' }
+    ],
+    amenities: [
+      {
+        id: 'qur-wifi',
+        category: 'wifi',
+        title_it: 'Wi-Fi gratuito Club House',
+        title_en: 'Free Wi-Fi Club House',
+        terminal: 'Terminal Aviazione Generale',
+        location_it: 'Club house e lounge passeggeri',
+        location_en: 'Club house and executive lounge',
+        details_it: 'Connessione Wi-Fi per piloti e passeggeri executive.',
+        details_en: 'Wi-Fi connectivity for pilots and private passengers.'
+      }
+    ],
+    venues: [
+      {
+        id: 'qur-v1',
+        name: 'Ristorante & Bar Club House Urbe',
+        category: 'dining',
+        terminal: 'Terminal Aviazione Generale',
+        location: 'Palazzina principale fronte pista',
+        hours: '08:00 - 20:00',
+        isEarlyMorning: false,
+        serviceType: 'table_service',
+        highlightNote_it: 'Caffetteria e ristorante con vista diretta sulla pista di decollo.',
+        highlightNote_en: 'Cafe and restaurant overlooking the private runway.'
+      }
+    ],
+    transports: [
+      {
+        id: 'qur-taxi',
+        type: 'taxi',
+        name_it: 'Servizio Taxi & NCC Roma',
+        name_en: 'Rome Taxi & Private Chauffeur (NCC)',
+        duration: '15-20 min dal centro',
+        frequency: 'Su prenotazione o chiamata taxi',
+        estimatedCost: '15,00 - 25,00 € per il centro città',
+        pickupLocation_it: 'Ingresso Via Salaria 825',
+        pickupLocation_en: 'Main entrance Via Salaria 825',
+        details_it: 'Collegamento rapido con il centro di Roma (Piazza di Spagna, Parioli, Stazione Termini).',
+        details_en: 'Fast connection to central Rome and Termini Station via Via Salaria.'
+      },
+      {
+        id: 'qur-bus',
+        type: 'bus',
+        name_it: 'Autobus Urbano ATAC (Linee 135, 235)',
+        name_en: 'ATAC City Bus (Lines 135, 235)',
+        duration: '25 min',
+        frequency: 'Ogni 15-20 minuti',
+        estimatedCost: '1,50 €',
+        pickupLocation_it: 'Fermata Salaria / Aeroporto dell\'Urbe',
+        pickupLocation_en: 'Bus stop outside Via Salaria main gate',
+        details_it: 'Collega l\'aeroporto con la stazione ferroviaria FL1 Nuovo Salario e Piazza Vescovio.',
+        details_en: 'Connects to FL1 commuter rail station and central Rome public transport.'
+      }
+    ],
+    lastUpdated: '2026-10-22'
+  },
+
+  // 🇩🇿 DJANET (DJG) - Aeroporto di Djanet-Inedbirene
+  DJG: {
+    id: 'djg',
+    iata: 'DJG',
+    icao: 'DAAJ',
+    name_it: 'Aeroporto di Djanet-Inedbirene',
+    name_en: 'Djanet Inedbirene Airport',
+    city_it: 'Djanet',
+    city_en: 'Djanet',
+    country_it: 'Algeria',
+    country_en: 'Algeria',
+    countryCode: 'DZ',
+    officialWebsite: 'https://www.egsa-alger.dz',
+    classification: 'commercial_scheduled',
+    isGeneralAviation: false,
+    coordinates: { lat: 24.2928, lng: 9.4522 },
+    difficultyRating: 2,
+    difficultyLabel_it: 'Scalo desertico compatto',
+    difficultyLabel_en: 'Compact desert regional airport',
+    averageSecurityWaitMin: 15,
+    recommendedArrivalHours: { domestic: 2, international: 2.5 },
+    navigationAdvice_it: 'Scalo principale per l\'accesso al parco nazionale del Tassili n\'Ajjer. Terminal compatto disposto su un unico livello.',
+    navigationAdvice_en: 'Main gateway to the Tassili n\'Ajjer National Park. Compact single-level passenger terminal.',
+    securityPolicy: {
+      has3DScanners: false,
+      scannersNote_it: 'Scanner radiogeni convenzionali. Obbligatorio separare liquidi ed elettronica.',
+      scannersNote_en: 'Standard X-ray security screening. Liquids and electronics must be separated.',
+      liquidsAllowance_it: 'Massimo 100ml per contenitore in sacchetto trasparente da 1 litro',
+      liquidsAllowance_en: 'Max 100ml per container in 1L transparent bag',
+      liquidsMustBeRemoved: true,
+      electronicsInBag: false,
+      electronicsNote_it: 'Laptop e tablet vanno estratti e posti in vaschetta.',
+      electronicsNote_en: 'Laptops and tablets must be placed in separate bins.',
+      droneAllowedInCabin: false,
+      droneAllowedInHold: false,
+      dronePolicy_it: 'Vietato severamente in Algeria senza autorizzazione ministeriale speciale.',
+      dronePolicy_en: 'Strictly prohibited in Algeria without official defense clearance.',
+      maxPowerbankWh: 100,
+      powerbankPolicy_it: 'Ammessi solo nel bagaglio a mano fino a 100Wh.',
+      powerbankPolicy_en: 'Permitted in cabin luggage only, up to 100Wh.',
+      officialSourceUrl: 'https://www.egsa-alger.dz',
+      lastVerifiedDate: '2026-10-22'
+    },
+    terminals: [
+      {
+        id: 't1',
+        name: 'Terminal Passeggeri',
+        transferInfo_it: 'Terminal unico per arrivi e partenze nazionali e charter turistici.',
+        transferInfo_en: 'Single passenger terminal for domestic flights and seasonal charters.'
+      }
+    ],
+    airlines: [
+      { airlineName: 'Air Algérie', iataCode: 'AH', terminal: 'Terminal Passeggeri' },
+      { airlineName: 'Tassili Airlines', iataCode: 'SF', terminal: 'Terminal Passeggeri' }
+    ],
+    amenities: [
+      {
+        id: 'djg-cafe',
+        category: 'wifi',
+        title_it: 'Sala d\'attesa passeggeri',
+        title_en: 'Passenger Waiting Hall',
+        terminal: 'Terminal Passeggeri',
+        location_it: 'Salone partenze',
+        location_en: 'Departures hall',
+        details_it: 'Area d\'attesa climatizzata con servizi igienici.',
+        details_en: 'Air-conditioned waiting area with restrooms.'
+      }
+    ],
+    venues: [
+      {
+        id: 'djg-v1',
+        name: 'Buvette de l\'Aéroport Djanet',
+        category: 'cafe',
+        terminal: 'Terminal Passeggeri',
+        location: 'Area Partenze',
+        hours: 'Durante gli orari dei voli',
+        isEarlyMorning: true,
+        serviceType: 'coffee_snack',
+        highlightNote_it: 'Tè caldo, caffè, bibite fresche e biscotti.',
+        highlightNote_en: 'Tea, coffee, cold refreshments and snacks.'
+      }
+    ],
+    transports: [
+      {
+        id: 'djg-trans',
+        type: 'taxi',
+        name_it: 'Navette 4x4 e Taxi Djanet',
+        name_en: '4x4 Tour Shuttles & Local Taxis',
+        duration: '25-30 min',
+        frequency: 'In coincidenza con i voli di linea',
+        estimatedCost: '1000 - 1500 DZD (circa 7 - 10 €)',
+        pickupLocation_it: 'Piazzale esterno aeroporto',
+        pickupLocation_en: 'Outside terminal exit',
+        details_it: 'I trasferimenti verso gli hotel di Djanet o le guide sahariane sono solitamente organizzati con fuoristrada 4x4.',
+        details_en: 'Transfers to Djanet hotels and desert expeditions typically operate with 4x4 vehicles.'
+      }
+    ],
+    lastUpdated: '2026-10-22'
   }
 };
 

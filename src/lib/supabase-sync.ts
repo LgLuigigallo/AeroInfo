@@ -1,5 +1,6 @@
 import { supabase } from './supabase';
 import { Airport } from '@/types/airport';
+import { cleanOfficialWebsiteUrl } from '@/lib/aviation-authority';
 
 export interface SeedResult {
   success: boolean;
@@ -41,7 +42,7 @@ export async function seedAllAirportsToSupabase(airports: Airport[]): Promise<Se
             country_it: ap.country_it,
             country_en: ap.country_en,
             country_code: ap.countryCode,
-            official_website: ap.officialWebsite,
+            official_website: cleanOfficialWebsiteUrl(ap.officialWebsite, ap.iata, ap.countryCode),
             latitude: ap.coordinates.lat,
             longitude: ap.coordinates.lng,
             difficulty_rating: ap.difficultyRating,
@@ -95,7 +96,7 @@ export async function seedAllAirportsToSupabase(airports: Airport[]): Promise<Se
         powerbank_policy_it: sec.powerbankPolicy_it,
         powerbank_policy_en: sec.powerbankPolicy_en,
         powerbank_unverified: Boolean(sec.powerbankUnverified),
-        official_source_url: sec.officialSourceUrl,
+        official_source_url: cleanOfficialWebsiteUrl(sec.officialSourceUrl, ap.iata, ap.countryCode),
         last_verified_at: new Date().toISOString()
       });
 

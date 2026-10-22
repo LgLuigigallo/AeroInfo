@@ -15,10 +15,13 @@ import {
   Compass,
   AlertTriangle,
   Edit3,
-  Split
+  Split,
+  Plane,
+  Sparkles
 } from 'lucide-react';
 import { Airport, PendingSuggestionNotice } from '@/types/airport';
 import { useLanguage } from '@/lib/i18n';
+import { cleanOfficialWebsiteUrl, isGeneralAviationAirport } from '@/lib/aviation-authority';
 import { SecurityTab } from './tabs/SecurityTab';
 import { TerminalMapTab } from './tabs/TerminalMapTab';
 import { TerminalsTab } from './tabs/TerminalsTab';
@@ -141,6 +144,16 @@ export function AirportDetail({ airport, onSelectAirport }: AirportDetailProps) 
     terminalRules.some((r) => !r.has3DScanners)
   );
 
+  const isGenAv = isGeneralAviationAirport(airport);
+  const cleanWebsiteUrl = cleanOfficialWebsiteUrl(airport.officialWebsite, airport.iata, airport.countryCode);
+  let displayHostname = 'sito ufficiale';
+  try {
+    const parsed = new URL(cleanWebsiteUrl);
+    displayHostname = parsed.hostname.replace(/^www\./, '');
+  } catch {
+    displayHostname = 'sito ufficiale';
+  }
+
   const handleSelectTerminalFromHeader = (idx: number) => {
     setSelectedSecurityTerminalIdx(idx);
     setActiveTab('security');
@@ -160,6 +173,16 @@ export function AirportDetail({ airport, onSelectAirport }: AirportDetailProps) 
               <span className="px-2 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 font-mono text-[11px] font-semibold border border-zinc-200/60 dark:border-zinc-700/60">
                 {airport.icao}
               </span>
+              {isGenAv && (
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-purple-500/10 text-purple-700 dark:text-purple-300 border border-purple-500/25 font-semibold text-xs shadow-2xs">
+                  <Sparkles className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
+                  <span>
+                    {lang === 'it'
+                      ? (airport.classificationLabel_it || 'Aviazione Generale & Voli Privati')
+                      : (airport.classificationLabel_en || 'General Aviation & Private Flights')}
+                  </span>
+                </span>
+              )}
               <span className="flex items-center gap-1 text-xs text-zinc-500 dark:text-zinc-400 font-medium ml-1">
                 <MapPin className="w-3.5 h-3.5 text-zinc-400" />
                 {lang === 'it' ? airport.city_it : airport.city_en}, {lang === 'it' ? airport.country_it : airport.country_en}
@@ -184,13 +207,14 @@ export function AirportDetail({ airport, onSelectAirport }: AirportDetailProps) 
               </button>
 
               <a
-                href={airport.officialWebsite}
+                href={cleanWebsiteUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                title={lang === 'it' ? `Sito ufficiale certificato: ${displayHostname}` : `Certified official website: ${displayHostname}`}
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-50 dark:bg-zinc-800/60 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 transition-colors font-medium text-[11px]"
               >
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
-                <span className="font-mono">{new URL(airport.officialWebsite).hostname.replace('www.', '')}</span>
+                <span className="font-mono">{displayHostname}</span>
                 <ExternalLink className="w-3 h-3 text-zinc-400" />
               </a>
             </div>
@@ -201,6 +225,29 @@ export function AirportDetail({ airport, onSelectAirport }: AirportDetailProps) 
             </div>
           </div>
         </div>
+
+        {/* Dedicated Advisory Banner for General Aviation / Private Flights */}
+        {isGenAv && (
+          <div className="p-4 rounded-2xl bg-purple-500/10 dark:bg-purple-950/30 border border-purple-500/25 text-purple-950 dark:text-purple-200 flex items-start gap-3 text-xs animate-in fade-in">
+            <div className="p-2 rounded-xl bg-purple-500/15 text-purple-600 dark:text-purple-400 shrink-0 mt-0.5">
+              <Plane className="w-4 h-4 -rotate-45" />
+            </div>
+            <div className="space-y-1">
+              <h4 className="font-bold text-xs text-purple-900 dark:text-purple-200 flex items-center gap-2">
+                <span>
+                  {lang === 'it' 
+                    ? 'Scalo per Aviazione Generale, Voli Privati ed Aerotaxi' 
+                    : 'Dedicated General Aviation & Private Executive Facility'}
+                </span>
+              </h4>
+              <p className="text-[11px] text-purple-900/80 dark:text-purple-300/90 leading-relaxed">
+                {lang === 'it'
+                  ? (airport.classificationNotice_it || 'Questo scalo è dedicato all\'aviazione generale, aerotaxi, elisoccorso e scuola di volo. Non sono operativi voli commerciali di linea passeggeri. Per i voli commerciali di linea da Roma fare riferimento agli scali di Fiumicino (FCO) o Ciampino (CIA).')
+                  : (airport.classificationNotice_en || 'This airport is dedicated to general aviation, private executive flights, aerotaxis, emergency medical services, and pilot training. No scheduled commercial airline flights operate from this airport (for commercial flights, please refer to Rome Fiumicino FCO or Rome Ciampino CIA).')}
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* Pending Traveler Suggestion Notice (collapsible info banner) */}
         {pendingNotice && (

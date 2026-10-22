@@ -5,6 +5,7 @@ import { seedAllAirportsToSupabase } from '@/lib/supabase-sync';
 import { sendAirportPublishedEmail } from '@/lib/email';
 import { airportsData } from '@/data/airports';
 import { sanitizePostgrestParam } from '@/lib/security/sanitize';
+import { cleanOfficialWebsiteUrl } from '@/lib/aviation-authority';
 
 export interface CompilationReport {
   totalPendingRequests: number;
@@ -106,6 +107,8 @@ export class AirportCompilerEngine {
       ? formattedCity.charAt(0).toUpperCase() + formattedCity.slice(1).toLowerCase()
       : iata;
 
+    const officialSite = cleanOfficialWebsiteUrl(null, iata, 'EU');
+
     return {
       id: iata.toLowerCase(),
       iata: iata.toUpperCase(),
@@ -117,7 +120,7 @@ export class AirportCompilerEngine {
       country_it: 'Europa / Internazionale',
       country_en: 'Europe / International',
       countryCode: 'EU',
-      officialWebsite: `https://www.google.com/search?q=airport+${iata}+official+website`,
+      officialWebsite: officialSite,
       coordinates: { lat: 45.0, lng: 12.0 },
       difficultyRating: 2,
       difficultyLabel_it: 'Standard passeggeri',
@@ -145,7 +148,7 @@ export class AirportCompilerEngine {
         maxPowerbankWh: 100,
         powerbankPolicy_it: 'Ammessi solo in cabina fino a 100Wh (vietati in stiva).',
         powerbankPolicy_en: 'Allowed only in carry-on up to 100Wh (prohibited in checked luggage).',
-        officialSourceUrl: `https://www.google.com/search?q=airport+${iata}+security+rules`,
+        officialSourceUrl: officialSite,
         lastVerifiedDate: new Date().toISOString().split('T')[0]
       },
       terminals: [
