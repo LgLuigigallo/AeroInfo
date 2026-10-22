@@ -33,28 +33,49 @@ export function TerminalsTab({ airport }: TerminalsTabProps) {
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {airport.terminals.map((term) => (
-            <div
-              key={term.id}
-              className="p-4 sm:p-5 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-2xs space-y-2"
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-md bg-zinc-900 dark:bg-zinc-800 flex items-center justify-center font-mono font-bold text-xs text-white border border-zinc-700">
-                    {term.name.replace(/[^0-9A-Za-z]/g, '').slice(0, 3)}
-                  </div>
-                  <h4 className="font-bold text-zinc-900 dark:text-white text-sm sm:text-base">
-                    {term.name}
-                  </h4>
-                </div>
-                {term.isUnverified && <UnverifiedBadge />}
-              </div>
+          {airport.terminals.map((term) => {
+            const secRule = airport.securityPolicy.terminalRules?.find((r) => 
+              r.terminalName.toLowerCase().includes(term.name.toLowerCase()) ||
+              term.name.toLowerCase().includes(r.terminalName.toLowerCase()) ||
+              r.terminalName.toLowerCase().includes(term.id.toLowerCase())
+            );
 
-              <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed font-normal">
-                {lang === 'it' ? term.transferInfo_it : term.transferInfo_en}
-              </p>
-            </div>
-          ))}
+            return (
+              <div
+                key={term.id}
+                className="p-4 sm:p-5 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-2xs space-y-2.5"
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-md bg-zinc-900 dark:bg-zinc-800 flex items-center justify-center font-mono font-bold text-xs text-white border border-zinc-700">
+                      {term.name.replace(/[^0-9A-Za-z]/g, '').slice(0, 3)}
+                    </div>
+                    <h4 className="font-bold text-zinc-900 dark:text-white text-sm sm:text-base">
+                      {term.name}
+                    </h4>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {secRule && (
+                      <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${
+                        secRule.has3DScanners
+                          ? 'bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 border border-emerald-500/30'
+                          : 'bg-amber-500/15 text-amber-800 dark:text-amber-300 border border-amber-500/30'
+                      }`}>
+                        {secRule.has3DScanners 
+                          ? (lang === 'it' ? 'Scanner 3D' : '3D Scanners') 
+                          : (lang === 'it' ? 'Standard 100ml' : 'Standard 100ml')}
+                      </span>
+                    )}
+                    {term.isUnverified && <UnverifiedBadge />}
+                  </div>
+                </div>
+
+                <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed font-normal">
+                  {lang === 'it' ? term.transferInfo_it : term.transferInfo_en}
+                </p>
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -102,9 +123,27 @@ export function TerminalsTab({ airport }: TerminalsTabProps) {
                         {item.iataCode}
                       </td>
                       <td className="py-2.5 px-4 font-bold text-zinc-900 dark:text-white">
-                        <span className="px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 border border-zinc-200/80 dark:border-zinc-700/80 text-[11px] font-mono">
-                          {item.terminal}
-                        </span>
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span className="px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 border border-zinc-200/80 dark:border-zinc-700/80 text-[11px] font-mono">
+                            {item.terminal}
+                          </span>
+                          {(() => {
+                            const secRule = airport.securityPolicy.terminalRules?.find((r) =>
+                              r.terminalName.toLowerCase().includes(item.terminal.toLowerCase()) ||
+                              item.terminal.toLowerCase().includes(r.terminalName.toLowerCase())
+                            );
+                            if (!secRule) return null;
+                            return (
+                              <span className={`px-1.5 py-0.2 rounded text-[10px] font-mono font-bold ${
+                                secRule.has3DScanners
+                                  ? 'bg-emerald-500/15 text-emerald-800 dark:text-emerald-300'
+                                  : 'bg-amber-500/15 text-amber-800 dark:text-amber-300'
+                              }`}>
+                                {secRule.has3DScanners ? '3D' : '100ml'}
+                              </span>
+                            );
+                          })()}
+                        </div>
                       </td>
                       <td className="py-2.5 px-4 text-xs text-zinc-600 dark:text-zinc-400 font-mono">
                         {item.checkInZone || '—'}

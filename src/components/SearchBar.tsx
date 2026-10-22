@@ -267,16 +267,31 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
                       </div>
 
                       <div className="flex items-center gap-2">
-                        {airport.securityPolicy.has3DScanners ? (
-                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono font-medium rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
-                            <span className="w-1 h-1 rounded-full bg-emerald-500" />
-                            Scanner 3D
-                          </span>
-                        ) : (
-                          <span className="hidden sm:inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono text-zinc-500 dark:text-zinc-400">
-                            100ml Standard
-                          </span>
-                        )}
+                        {(() => {
+                          const rules = airport.securityPolicy.terminalRules;
+                          const hasMixed = rules && rules.length > 1 && rules.some(r => r.has3DScanners) && rules.some(r => !r.has3DScanners);
+                          if (hasMixed) {
+                            return (
+                              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono font-medium rounded bg-blue-500/10 text-blue-700 dark:text-blue-300 border border-blue-500/20">
+                                <span className="w-1 h-1 rounded-full bg-blue-500" />
+                                {lang === 'it' ? '3D / 100ml' : '3D / 100ml'}
+                              </span>
+                            );
+                          }
+                          if (airport.securityPolicy.has3DScanners) {
+                            return (
+                              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono font-medium rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
+                                <span className="w-1 h-1 rounded-full bg-emerald-500" />
+                                Scanner 3D
+                              </span>
+                            );
+                          }
+                          return (
+                            <span className="hidden sm:inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono text-zinc-500 dark:text-zinc-400">
+                              100ml Standard
+                            </span>
+                          );
+                        })()}
                         <ArrowRight className="w-3.5 h-3.5 text-zinc-400" />
                       </div>
                     </button>
@@ -521,9 +536,17 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
                             {lang === 'it' ? ap.city_it : ap.city_en}
                           </span>
                         </div>
-                        {ap.securityPolicy.has3DScanners && (
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" title="Scanner 3D" />
-                        )}
+                        {(() => {
+                          const rules = ap.securityPolicy.terminalRules;
+                          const hasMixed = rules && rules.length > 1 && rules.some(r => r.has3DScanners) && rules.some(r => !r.has3DScanners);
+                          if (hasMixed) {
+                            return <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" title={lang === 'it' ? 'Regole miste per terminal' : 'Mixed terminal rules'} />;
+                          }
+                          if (ap.securityPolicy.has3DScanners) {
+                            return <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" title="Scanner 3D" />;
+                          }
+                          return null;
+                        })()}
                       </button>
                     );
                   })}

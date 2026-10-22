@@ -14,7 +14,8 @@ import {
   Calendar,
   Compass,
   AlertTriangle,
-  Edit3
+  Edit3,
+  Split
 } from 'lucide-react';
 import { Airport, PendingSuggestionNotice } from '@/types/airport';
 import { useLanguage } from '@/lib/i18n';
@@ -39,6 +40,11 @@ export function AirportDetail({ airport, onSelectAirport }: AirportDetailProps) 
   const [activeTab, setActiveTab] = useState<TabType>('security');
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [pendingNotice, setPendingNotice] = useState<PendingSuggestionNotice | null>(null);
+  const [selectedSecurityTerminalIdx, setSelectedSecurityTerminalIdx] = useState<number | null>(null);
+
+  useEffect(() => {
+    setSelectedSecurityTerminalIdx(null);
+  }, [airport.iata]);
 
   const fetchPendingNotice = useCallback(async () => {
     try {
@@ -126,6 +132,19 @@ export function AirportDetail({ airport, onSelectAirport }: AirportDetailProps) 
   ];
 
   const has3D = airport.securityPolicy.has3DScanners;
+  const terminalRules = airport.securityPolicy.terminalRules;
+  const hasMultipleTerminals = Boolean(terminalRules && terminalRules.length > 1);
+  const hasMixedTerminals = Boolean(
+    terminalRules &&
+    terminalRules.length > 1 &&
+    terminalRules.some((r) => r.has3DScanners) &&
+    terminalRules.some((r) => !r.has3DScanners)
+  );
+
+  const handleSelectTerminalFromHeader = (idx: number) => {
+    setSelectedSecurityTerminalIdx(idx);
+    setActiveTab('security');
+  };
 
   return (
     <div className="w-full max-w-5xl mx-auto space-y-5">
@@ -213,48 +232,140 @@ export function AirportDetail({ airport, onSelectAirport }: AirportDetailProps) 
         )}
 
         {/* Primary Scanner Regulation Verdict Card */}
-        <div className={`p-4 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-all ${
-          has3D
-            ? 'bg-emerald-500/5 border-emerald-500/25 dark:bg-emerald-950/20 dark:border-emerald-800/40'
-            : 'bg-amber-500/5 border-amber-500/25 dark:bg-amber-950/20 dark:border-amber-800/40'
-        }`}>
-          <div className="flex items-center gap-3">
-            <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${
-              has3D
-                ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
-                : 'bg-amber-500/10 text-amber-600 dark:text-amber-400'
-            }`}>
-              {has3D ? <ShieldCheck className="w-5 h-5" /> : <AlertTriangle className="w-5 h-5" />}
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-mono font-bold tracking-wider uppercase ${
-                  has3D
-                    ? 'bg-emerald-500/15 text-emerald-800 dark:text-emerald-200'
-                    : 'bg-amber-500/15 text-amber-800 dark:text-amber-200'
-                }`}>
-                  {has3D ? (lang === 'it' ? 'Scanner 3D EDSCB Attivo' : '3D EDSCB Scanners Active') : (lang === 'it' ? 'Regolamento Standard 100ml' : 'Standard 100ml Rule')}
-                </span>
+        {hasMixedTerminals ? (
+          <div className="p-4 sm:p-5 rounded-xl border border-blue-500/30 dark:border-blue-400/30 bg-blue-500/5 dark:bg-blue-950/20 space-y-3.5 transition-all">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-start sm:items-center gap-3">
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
+                  <Split className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="inline-block px-2.5 py-0.5 rounded text-[10px] font-mono font-bold tracking-wider uppercase bg-blue-500/15 text-blue-800 dark:text-blue-200 border border-blue-500/30">
+                      {t('rulesVaryByTerminal')}
+                    </span>
+                    <span className="text-[11px] font-mono text-zinc-500 dark:text-zinc-400">
+                      {t('checkBoardingPassNotice')}
+                    </span>
+                  </div>
+                  <p className="text-xs sm:text-sm font-semibold text-zinc-900 dark:text-white mt-0.5 leading-snug">
+                    {t('rulesVarySubtitle')}
+                  </p>
+                </div>
               </div>
-              <p className="text-xs sm:text-sm font-medium text-zinc-800 dark:text-zinc-200 mt-0.5 leading-snug">
-                {has3D
-                  ? (lang === 'it' ? 'I liquidi e i dispositivi elettronici possono restare all\'interno del bagaglio a mano.' : 'Liquids and laptops can remain inside carry-on luggage.')
-                  : (lang === 'it' ? 'I liquidi devono essere in flaconi da max 100ml in busta trasparente da 1L ed estratti al controllo.' : 'Liquids must be in max 100ml containers in a 1L clear plastic bag and removed.')}
-              </p>
-            </div>
-          </div>
 
-          <div className="shrink-0 flex items-center gap-3 sm:border-l sm:border-zinc-200 sm:dark:border-zinc-800 sm:pl-4 text-xs font-mono">
-            <div>
-              <span className="text-[10px] uppercase text-zinc-400 block">{lang === 'it' ? 'Attesa Controlli' : 'Security Queue'}</span>
-              <span className="font-bold text-zinc-800 dark:text-zinc-200 tabular-nums">~{airport.averageSecurityWaitMin} min</span>
+              <div className="shrink-0 flex items-center gap-3 sm:border-l sm:border-zinc-200 sm:dark:border-zinc-800 sm:pl-4 text-xs font-mono">
+                <div>
+                  <span className="text-[10px] uppercase text-zinc-400 block">{lang === 'it' ? 'Attesa Controlli' : 'Security Queue'}</span>
+                  <span className="font-bold text-zinc-800 dark:text-zinc-200 tabular-nums">~{airport.averageSecurityWaitMin} min</span>
+                </div>
+                <div>
+                  <span className="text-[10px] uppercase text-zinc-400 block">{lang === 'it' ? 'Complessità' : 'Complexity'}</span>
+                  <span className="font-bold text-zinc-800 dark:text-zinc-200 tabular-nums">{airport.difficultyRating}/5</span>
+                </div>
+              </div>
             </div>
-            <div>
-              <span className="text-[10px] uppercase text-zinc-400 block">{lang === 'it' ? 'Complessità' : 'Complexity'}</span>
-              <span className="font-bold text-zinc-800 dark:text-zinc-200 tabular-nums">{airport.difficultyRating}/5</span>
+
+            {/* Clear Side-by-Side Terminal Status Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+              {terminalRules?.map((rule, idx) => (
+                <div
+                  key={idx}
+                  onClick={() => handleSelectTerminalFromHeader(idx)}
+                  className={`p-3 rounded-lg border text-xs flex flex-col justify-between gap-2 transition-all cursor-pointer hover:shadow-xs group ${
+                    rule.has3DScanners
+                      ? 'bg-emerald-500/10 hover:bg-emerald-500/15 border-emerald-500/30 dark:bg-emerald-950/30 dark:hover:bg-emerald-950/40 dark:border-emerald-700/40'
+                      : 'bg-amber-500/10 hover:bg-amber-500/15 border-amber-500/30 dark:bg-amber-950/30 dark:hover:bg-amber-950/40 dark:border-amber-700/40'
+                  }`}
+                  title={lang === 'it' ? 'Clicca per dettagli di questo terminal' : 'Click for this terminal details'}
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="font-bold text-xs text-zinc-900 dark:text-white group-hover:underline">
+                      {rule.terminalName}
+                    </span>
+                    <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold shrink-0 ${
+                      rule.has3DScanners
+                        ? 'bg-emerald-600 text-white dark:bg-emerald-500 dark:text-zinc-950'
+                        : 'bg-amber-600 text-white dark:bg-amber-500 dark:text-zinc-950'
+                    }`}>
+                      {rule.has3DScanners 
+                        ? (lang === 'it' ? 'Scanner 3D C3' : '3D C3 Scanner') 
+                        : (lang === 'it' ? 'Standard 100ml' : 'Standard 100ml')}
+                    </span>
+                  </div>
+
+                  <div className="space-y-1 text-[11px] leading-snug">
+                    <div className="flex items-center gap-1.5 font-medium text-zinc-800 dark:text-zinc-200">
+                      <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${rule.has3DScanners ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                      <span>
+                        {rule.has3DScanners 
+                          ? (lang === 'it' ? 'Liquidi e laptop restano nel bagaglio' : 'Liquids and laptops stay inside bag')
+                          : (lang === 'it' ? 'Liquidi estratti in busta 1L (max 100ml cad.)' : 'Liquids unpacked in 1L bag (max 100ml each)')}
+                      </span>
+                    </div>
+                    {!rule.has3DScanners && (
+                      <div className="flex items-center gap-1.5 text-zinc-600 dark:text-zinc-400 pl-3">
+                        <span>{lang === 'it' ? '• Laptop ed elettronica estratti nelle vaschette' : '• Laptops and tablets removed into trays'}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="pt-1 text-[10px] font-semibold text-zinc-500 dark:text-zinc-400 flex items-center justify-end">
+                    <span>{lang === 'it' ? 'Apri scheda sicurezza →' : 'Open security tab →'}</span>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
+        ) : (
+          <div className={`p-4 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-all ${
+            has3D
+              ? 'bg-emerald-500/5 border-emerald-500/25 dark:bg-emerald-950/20 dark:border-emerald-800/40'
+              : 'bg-amber-500/5 border-amber-500/25 dark:bg-amber-950/20 dark:border-amber-800/40'
+          }`}>
+            <div className="flex items-center gap-3">
+              <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${
+                has3D
+                  ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                  : 'bg-amber-500/10 text-amber-600 dark:text-amber-400'
+              }`}>
+                {has3D ? <ShieldCheck className="w-5 h-5" /> : <AlertTriangle className="w-5 h-5" />}
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-mono font-bold tracking-wider uppercase ${
+                    has3D
+                      ? 'bg-emerald-500/15 text-emerald-800 dark:text-emerald-200'
+                      : 'bg-amber-500/15 text-amber-800 dark:text-amber-200'
+                  }`}>
+                    {has3D ? (lang === 'it' ? 'Scanner 3D EDSCB Attivo' : '3D EDSCB Scanners Active') : (lang === 'it' ? 'Regolamento Standard 100ml' : 'Standard 100ml Rule')}
+                  </span>
+                  {hasMultipleTerminals && (
+                    <span className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400">
+                      ({lang === 'it' ? 'Valido per tutti i terminal' : 'Valid for all terminals'})
+                    </span>
+                  )}
+                </div>
+                <p className="text-xs sm:text-sm font-medium text-zinc-800 dark:text-zinc-200 mt-0.5 leading-snug">
+                  {has3D
+                    ? (lang === 'it' ? 'I liquidi e i dispositivi elettronici possono restare all\'interno del bagaglio a mano.' : 'Liquids and laptops can remain inside carry-on luggage.')
+                    : (lang === 'it' ? 'I liquidi devono essere in flaconi da max 100ml in busta trasparente da 1L ed estratti al controllo.' : 'Liquids must be in max 100ml containers in a 1L clear plastic bag and removed.')}
+                </p>
+              </div>
+            </div>
+
+            <div className="shrink-0 flex items-center gap-3 sm:border-l sm:border-zinc-200 sm:dark:border-zinc-800 sm:pl-4 text-xs font-mono">
+              <div>
+                <span className="text-[10px] uppercase text-zinc-400 block">{lang === 'it' ? 'Attesa Controlli' : 'Security Queue'}</span>
+                <span className="font-bold text-zinc-800 dark:text-zinc-200 tabular-nums">~{airport.averageSecurityWaitMin} min</span>
+              </div>
+              <div>
+                <span className="text-[10px] uppercase text-zinc-400 block">{lang === 'it' ? 'Complessità' : 'Complexity'}</span>
+                <span className="font-bold text-zinc-800 dark:text-zinc-200 tabular-nums">{airport.difficultyRating}/5</span>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Multi-Airport City Switcher Banner */}
         {airport.otherCityAirports && airport.otherCityAirports.length > 0 && (
@@ -337,7 +448,13 @@ export function AirportDetail({ airport, onSelectAirport }: AirportDetailProps) 
 
       {/* Active Tab Content Area */}
       <div className="min-h-[400px] animate-in fade-in-50 duration-150">
-        {activeTab === 'security' && <SecurityTab airport={airport} />}
+        {activeTab === 'security' && (
+          <SecurityTab 
+            airport={airport} 
+            selectedTerminalIdx={selectedSecurityTerminalIdx}
+            onSelectTerminalIdx={setSelectedSecurityTerminalIdx}
+          />
+        )}
         {activeTab === 'map' && <TerminalMapTab airport={airport} />}
         {activeTab === 'terminals' && <TerminalsTab airport={airport} />}
         {activeTab === 'difficulty' && <DifficultyTab airport={airport} />}
