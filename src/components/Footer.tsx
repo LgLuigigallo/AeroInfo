@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { ShieldAlert, RefreshCw, Plane, Info } from 'lucide-react';
+import Link from 'next/link';
+import { ShieldAlert, RefreshCw, Plane, Info, MessageSquare } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 
 export function Footer() {
@@ -74,9 +75,17 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Creator Contacts */}
+        {/* Creator Contacts & Feedback Link */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-zinc-400 text-[11px] pt-1 border-t border-zinc-100 dark:border-zinc-800/80">
           <div className="flex items-center gap-2.5 font-mono text-[10.5px]">
+            <Link
+              href="/feedback"
+              className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 font-semibold hover:underline"
+            >
+              <MessageSquare className="w-3 h-3" />
+              <span>{lang === 'it' ? 'Invia commenti & feedback' : 'Send feedback & comments'}</span>
+            </Link>
+            <span className="text-zinc-300 dark:text-zinc-700">•</span>
             <a
               href="mailto:vireontech@gmail.com"
               className="hover:text-zinc-900 dark:hover:text-white transition-colors underline-offset-2 hover:underline"

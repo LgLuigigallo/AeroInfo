@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { Plane, ShieldCheck } from 'lucide-react';
+import Link from 'next/link';
+import { Plane, ShieldCheck, MessageSquare } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 
 export function Header() {
@@ -35,6 +36,15 @@ export function Header() {
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
             <span className="font-mono text-[11px] tracking-tight">{t('verifiedOfficial')}</span>
           </div>
+
+          {/* Feedback Link */}
+          <Link
+            href="/feedback"
+            className="inline-flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white font-medium px-2.5 py-1 rounded-md bg-zinc-100/80 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800 transition-colors"
+          >
+            <MessageSquare className="w-3.5 h-3.5 text-blue-500" />
+            <span className="font-mono text-[11px] tracking-tight">{lang === 'it' ? 'Feedback' : 'Feedback'}</span>
+          </Link>
 
           {/* Minimalist Segmented Language Switcher */}
           <div className="flex items-center rounded-lg bg-zinc-100 dark:bg-zinc-900 p-0.5 border border-zinc-200 dark:border-zinc-800 text-xs font-mono">

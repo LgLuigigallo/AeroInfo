@@ -23,6 +23,27 @@ export type TransportType =
   | 'taxi' 
   | 'rideshare';
 
+export interface PendingSuggestionNotice {
+  category: string;
+  categoryLabel_it: string;
+  categoryLabel_en: string;
+  count: number;
+  note_it: string;
+  note_en: string;
+  lastReportedAt: string;
+}
+
+export interface AirportSuggestion {
+  id?: string;
+  airportIata: string;
+  category: '3d_scanners' | 'liquids' | 'drones' | 'power_outlets' | 'terminals' | 'dining' | 'other';
+  details: string;
+  sourceUrl?: string;
+  requesterEmail?: string;
+  status: 'pending_verification' | 'verified' | 'unconfirmed';
+  createdAt?: string;
+}
+
 export interface VerifiedField<T = string> {
   value: T;
   isUnverified?: boolean;
@@ -239,6 +260,9 @@ export interface Airport {
   // Interactive Terminal Map
   officialMapUrl?: string;
   terminalMaps?: TerminalMapData[];
+
+  // Pending Passenger Suggestion Notice (collapsible disclaimer)
+  pendingNotice?: PendingSuggestionNotice;
 
   lastUpdated: string;
 }
