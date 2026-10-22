@@ -25,7 +25,7 @@
 
 **AeroInfo** (`aero-info.eu`) è una piattaforma web moderna, ad altissime prestazioni e focalizzata sull'usabilità per i viaggiatori internazionali. Il suo principio cardine è **"2-Click to Info"**: permettere a qualsiasi passeggero di scoprire le normative esatte del proprio volo (scanner 3D, flaconi liquidi, borracce, droni, terminal e prese elettriche) in meno di 2 secondi.
 
-Tutti i dati visualizzati provengono da canali ufficiali certificati o da un motore di compilazione autonomo con verifica delle discrepanze. Se un'informazione proviene da segnalazioni della community in attesa di conferma ufficiale, viene chiaramente evidenziata con badge esplicativi a scomparsa.
+Tutti i dati visualizzati provengono da canali ufficiali verificati o da un motore di compilazione autonomo con verifica delle discrepanze. Se un'informazione proviene da segnalazioni della community in attesa di conferma ufficiale, viene chiaramente evidenziata con badge esplicativi a scomparsa.
 
 ---
 
@@ -149,7 +149,7 @@ AeroInfo/
 │   │   ├── SearchBar.tsx            # Barra di ricerca con autocomplete e scorciatoia '/'
 │   │   ├── SuggestAirportEditModal.tsx # Modale per proporre modifiche alla scheda
 │   │   └── UnverifiedBadge.tsx      # Badge informativo rosso "i" con modale esplicativo
-│   ├── data/                        # Dataset certificato di fallback (50+ aeroporti)
+│   ├── data/                        # Dataset di fallback (50+ aeroporti)
 │   ├── lib/
 │   │   ├── aviation-authority.ts    # Risoluzione autorità ufficiali & filtro link Google
 │   │   ├── compiler/                # Motore di risoluzione e compilazione aeroportuale

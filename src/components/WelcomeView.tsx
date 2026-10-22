@@ -44,7 +44,7 @@ export function WelcomeView({ airports, onSelectAirport, children }: WelcomeView
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-[11px] font-mono text-zinc-600 dark:text-zinc-300 shadow-2xs">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
           <span className="tracking-wide uppercase font-semibold">
-            {lang === 'it' ? 'Database Ufficiale Certificato • Aggiornamento Continuo 24h' : 'Official Certified Database • 24h Continuous Sync'}
+            {lang === 'it' ? 'Dati da Fonti Ufficiali • Aggiornamento Continuo 24h' : 'Official Airport Sources • 24h Continuous Sync'}
           </span>
         </div>
 

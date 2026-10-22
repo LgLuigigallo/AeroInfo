@@ -77,7 +77,7 @@ export const translations: Translations = {
   footerUnsubscribe: { it: 'Disiscrizione notifiche', en: 'Unsubscribe alerts' },
   
   // Verification Badges & Modal
-  verifiedOfficial: { it: 'Fonte Ufficiale Certificata', en: 'Official Certified Source' },
+  verifiedOfficial: { it: 'Fonti Ufficiali Verificate', en: 'Verified Official Sources' },
   verifiedDate: { it: 'Ultima verifica ufficiale', en: 'Last official verification' },
   unverifiedBadgeTitle: { it: 'Dato non verificato sul sito ufficiale', en: 'Data not verified on official site' },
   unverifiedModalHeading: { it: 'Informazione Non Verificata', en: 'Unverified Information' },
