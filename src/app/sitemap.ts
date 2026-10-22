@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 import { airportsData } from '@/data/airports';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://aero-info.vercel.app';
+  const baseUrl = 'https://www.aero-info.eu';
   const lastModified = new Date();
 
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -17,6 +17,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       changeFrequency: 'monthly',
       priority: 0.5,
+    },
+    {
+      url: `${baseUrl}/unsubscribe`,
+      lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.3,
     },
   ];
 

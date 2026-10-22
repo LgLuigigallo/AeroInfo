@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: isProd ? '/' : [],
       disallow: isProd ? ['/api/'] : '/',
     },
-    sitemap: 'https://aero-info.vercel.app/sitemap.xml',
+    sitemap: 'https://www.aero-info.eu/sitemap.xml',
   };
 }

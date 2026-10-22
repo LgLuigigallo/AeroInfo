@@ -6,15 +6,16 @@
 
 *Tutto ciò che devi sapere prima di volare: liquidi 100ml e scanner 3D, regole droni, terminal, prese di ricarica e trasporti — verificati direttamente dalle autorità aeroportuali.*
 
+[![Dominio Ufficiale](https://img.shields.io/badge/Dominio-www.aero--info.eu-0284c7?style=for-the-badge&logo=spaceship)](https://www.aero-info.eu)
 [![Next.js](https://img.shields.io/badge/Next.js-16.4.2-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19.3.0-blue?style=for-the-badge&logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38bdf8?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
 [![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ecf8e?style=for-the-badge&logo=supabase)](https://supabase.com/)
-[![Vercel](https://img.shields.io/badge/Vercel-Deployed-white?style=for-the-badge&logo=vercel)](https://aero-info.vercel.app)
-[![Security Audited](https://img.shields.io/badge/Security-A%2B%20Certified-emerald?style=for-the-badge&logo=securityscorecard)](https://aero-info.vercel.app)
+[![Vercel](https://img.shields.io/badge/Vercel-Production-white?style=for-the-badge&logo=vercel)](https://www.aero-info.eu)
+[![Security Audited](https://img.shields.io/badge/Security-A%2B%20Certified-emerald?style=for-the-badge&logo=securityscorecard)](https://www.aero-info.eu)
 
-[🌐 **Visita l'Applicazione Live**](https://aero-info.vercel.app) • [💬 **Invia Feedback**](https://aero-info.vercel.app/feedback) • [📄 **Report di Sicurezza**](tests/security.test.ts)
+[🌐 **Visita l'Applicazione Live**](https://www.aero-info.eu) • [💬 **Invia Feedback**](https://www.aero-info.eu/feedback) • [🔕 **Gestione Iscrizione**](https://www.aero-info.eu/unsubscribe) • [📄 **Report di Sicurezza**](tests/security.test.ts)
 
 </div>
 
@@ -22,7 +23,7 @@
 
 ## 📖 Panoramica del Progetto
 
-**AeroInfo** è una piattaforma web moderna, ad altissime prestazioni e focalizzata sull'usabilità per i viaggiatori internazionali. Il suo principio cardine è **"2-Click to Info"**: permettere a qualsiasi passeggero di scoprire le normative esatte del proprio volo (scanner 3D, flaconi liquidi, borracce, droni, terminal e prese elettriche) in meno di 2 secondi.
+**AeroInfo** (`aero-info.eu`) è una piattaforma web moderna, ad altissime prestazioni e focalizzata sull'usabilità per i viaggiatori internazionali. Il suo principio cardine è **"2-Click to Info"**: permettere a qualsiasi passeggero di scoprire le normative esatte del proprio volo (scanner 3D, flaconi liquidi, borracce, droni, terminal e prese elettriche) in meno di 2 secondi.
 
 Tutti i dati visualizzati provengono da canali ufficiali certificati o da un motore di compilazione autonomo con verifica delle discrepanze. Se un'informazione proviene da segnalazioni della community in attesa di conferma ufficiale, viene chiaramente evidenziata con badge esplicativi a scomparsa.
 
@@ -30,7 +31,8 @@ Tutti i dati visualizzati provengono da canali ufficiali certificati o da un mot
 
 ## 🌟 Funzionalità Principali
 
-### 🔍 1. Ricerca Istantanea e Universale
+### 🔍 1. Ricerca Istantanea, Universale & Welcome Experience
+- **Welcome Page Pulita:** All'apertura del portale l'utente viene accolto da un'interfaccia elegante e priva di sovrastrutture, con scorciatoie rapide per i principali hub internazionali senza forzare la selezione di scali predefiniti.
 - Ricerca istantanea per **codice IATA** (`FCO`, `MXP`, `CDG`, `DXB`, `BCN`, `JFK`), codice ICAO, nome aeroporto, città o nazione.
 - **Scorciatoia da tastiera globale:** premi `/` o `Cmd+K` da qualsiasi punto della pagina per cercare.
 - Cronologia ricerche recenti salvata localmente in modo sicuro e senza cookie invasivi.
@@ -41,29 +43,48 @@ Tutti i dati visualizzati provengono da canali ufficiali certificati o da un mot
 - Regolamenti specifici per **droni e batterie al litio/powerbank** (trasporto in cabina vs divieto in stiva).
 - Tempi medi di attesa stimati ai controlli e ore di anticipo consigliate (voli nazionali vs intercontinentali).
 
-### 🗺️ 3. Mappe Interattive dei Terminal & Punti di Interesse
-- Schema visivo e navigabile dei terminal con concourse, gate e aree partenze/arrivi.
-- Punti di interesse filtrabili con un click: prese di ricarica 230V e porte USB, fontanelle d'acqua potabile gratuite, ristorazione, bar/caffetterie, duty-free e farmacie.
+### 🛩️ 3. Aviazione Generale & Voli Privati
+- Classificazione e **tag dedicato per scali non commerciali** o dedicati all'aviazione generale e commerciale privata (es. Roma Urbe `QUR`).
+- Avvisi specifici e banner contestuale con raccomandazioni per i passeggeri di linea che cercano per errore tali scali.
 
-### 📝 4. Suggerimento Modifiche Community & Verifica in Background
-- I passeggeri possono segnalare variazioni per qualsiasi aeroporto direttamente dalla scheda ("Suggerisci modifica").
+### 🌐 4. Risoluzione Autorità Ufficiali & Filtro Link Motori di Ricerca
+- Modulo di validazione rigoroso (`aviation-authority.ts`) che **elimina categoricamente link a ricerche Google o Bing**.
+- Risoluzione automatica e fallback sui portali istituzionali dell'aviazione civile ed enti di gestione nazionali (ENAC, AENA, DGAC, ADV, CAA, EGSA, ONDA, ecc.).
+
+### 🖼️ 5. Frame Dossier Unificato
+- Visualizzazione a blocco unico: l'intera scheda informativa dell'aeroporto selezionato (header, statistiche, tab e contatti) è racchiusa in una **cornice visiva coerente**, permettendo all'utente di identificare immediatamente il perimetro del dossier durante lo scorrimento.
+
+### 💡 6. Bolla Floating "Suggerisci Modifica"
+- **Floating Action Button** sempre visibile durante lo scroll della pagina per consentire ai viaggiatori di segnalare variazioni in qualunque momento.
 - **Elaborazione controllata:** le modifiche ricevute **non vengono pubblicate istantaneamente**, ma registrate in background.
 - Se una segnalazione non ha ancora trovato conferma sul portale ufficiale dell'aeroporto, compare un **disclaimer a scomparsa ("i")** che avvisa i passeggeri di possibili modifiche imminenti, consigliando le precauzioni standard.
 - Il motore di sincronizzazione automatica (`/api/cron/sync`) verifica periodicamente le segnalazioni con le fonti ufficiali.
 
-### 💬 5. Portale Feedback & Contatti Utente
-- Pagina dedicata [`/feedback`](https://aero-info.vercel.app/feedback) per inviare commenti, suggerimenti, domande generali o segnalare bug.
+### 🗺️ 7. Mappe Interattive dei Terminal & Punti di Interesse
+- Schema visivo e navigabile dei terminal con concourse, gate e aree partenze/arrivi.
+- Punti di interesse filtrabili con un click: prese di ricarica 230V e porte USB, fontanelle d'acqua potabile gratuite, ristorazione, bar/caffetterie, duty-free e farmacie.
+
+### 🍪 8. Gestione Consenso Cookie & Privacy (GDPR & ePrivacy)
+- Banner e modale di consenso cookie leggero e non invasivo, con salvataggio delle preferenze in `localStorage`.
+- Totale assenza di cookie di tracciamento di terze parti o pixel pubblicitari.
+
+### 🔕 9. Portale Disiscrizione Email Notifiche (`/unsubscribe`)
+- Pagina dedicata conforme al GDPR per consentire la cancellazione immediata da qualsiasi notifica di aggiornamento o scansione aeroportuale richiesta in precedenza.
+- Validazione crittografica e token di disiscrizione sicuro con feedback in tempo reale.
+
+### 💬 10. Portale Feedback & Contatti Utente
+- Pagina dedicata [`/feedback`](https://www.aero-info.eu/feedback) per inviare commenti, suggerimenti, domande generali o segnalare bug.
 - Protezione anti-abuso, rate limiting e notifica istantanea all'amministratore.
 
-### 🌐 6. Bilingue & Accessibile (IT / EN)
-- Supporto completo multilingua (Italiano / Inglese) con memorizzazione delle preferenze.
+### 🌍 11. Bilingue & Accessibile (IT / EN)
+- Supporto completo multilingua (Italiano / Inglese) con memorizzazione istantanea delle preferenze.
 - Contrasti elevati, supporto per Dark/Light mode, etichette ARIA e navigazione completa da tastiera.
 
 ---
 
 ## 🔒 Sicurezza & Certificazione di Produzione
 
-Il progetto è stato sottoposto a una **security review approfondita** e soddisfa tutti i **36 punti della checklist di produzione**:
+Il progetto è stato sottoposto a una **security review approfondita** e soddisfa tutti i requisiti della suite automatizzata di test:
 
 ```
 🔒 AUTOMATED SECURITY TEST SUITE:
@@ -73,6 +94,8 @@ Il progetto è stato sottoposto a una **security review approfondita** e soddisf
   ✅ Sliding-Window Rate Limiter (blocco a 429 oltre 5 richieste / 10 min per IP)
   ✅ HTTP Security Headers (CSP, HSTS 2 anni, X-Frame-Options DENY, nosniff, Referrer, Permissions)
   ✅ Protezione SSRF (blocco tassativo di IP privati, loopback e metadati cloud link-local)
+  ✅ Validazione & Sicurezza Parametri Disiscrizione (/unsubscribe)
+  ✅ Risoluzione Autorità Ufficiali & Classificazione Aviazione Generale
 ```
 
 - **Row Level Security (RLS) su Supabase:** Le email degli utenti registrate nella tabella `airport_requests` sono inaccessibili al pubblico (`SELECT` negato ad `anon`) e consultabili unicamente dal `service_role` server-side.
@@ -92,6 +115,7 @@ Il progetto è stato sottoposto a una **security review approfondita** e soddisf
 | **Scraping & Parsing** | [Cheerio](https://cheerio.js.org/), SSRF outbound validator, Autonomous Compiler Engine |
 | **Email Transazionali** | [Nodemailer](https://nodemailer.com/) (Gmail SMTP) & [Resend](https://resend.com/) con fallback |
 | **Hosting & CI/CD** | [Vercel](https://vercel.com/) (Edge Network, Vercel Cron, Automatic SSL) |
+| **Dominio & DNS** | [Spaceship](https://www.spaceship.com/) + Vercel Anycast DNS (`aero-info.eu`) |
 
 ---
 
@@ -105,18 +129,21 @@ AeroInfo/
 │   │   │   ├── admin/seed/          # Endpoint autenticato di seeding Supabase
 │   │   │   ├── airports/            # API catalogo aeroporti
 │   │   │   │   ├── request/         # Richiesta indicizzazione nuovo aeroporto
-│   │   │   │   └── suggest/         # Suggerimento modifiche community (con verifica)
-│   │   │   ├── cron/sync/           # Cron job settimanale / giornaliero autenticato
+│   │   │   │   ├── suggest/         # Suggerimento modifiche community (con verifica)
+│   │   │   │   └── unsubscribe/     # Endpoint disiscrizione email GDPR
+│   │   │   ├── cron/sync/           # Cron job periodico autenticato
 │   │   │   └── feedback/            # Invio feedback e commenti generici
 │   │   ├── feedback/                # Pagina utente per feedback e messaggi
+│   │   ├── unsubscribe/             # Portale disiscrizione notifiche GDPR
 │   │   ├── not-found.tsx            # Pagina 404 personalizzata a tema aeronautico
 │   │   ├── robots.ts                # Generazione dinamica robots.txt per SEO
 │   │   ├── sitemap.ts               # Mappa del sito dinamica sitemap.xml
 │   │   ├── layout.tsx               # Root layout con metadata OpenGraph e viewport
-│   │   └── page.tsx                 # Dashboard principale AeroInfo
+│   │   └── page.tsx                 # Dashboard principale AeroInfo con Welcome State
 │   ├── components/                  # Componenti React riutilizzabili
 │   │   ├── tabs/                    # Tab specializzate (Sicurezza, Mappa, Terminal, Prese, ecc.)
-│   │   ├── AirportDetail.tsx        # Scheda dossier dettagliata dell'aeroporto
+│   │   ├── AirportDetail.tsx        # Scheda dossier con frame unificato e floating suggest button
+│   │   ├── CookieBanner.tsx         # Banner e modale preferenze cookie GDPR
 │   │   ├── Header.tsx               # Barra di navigazione superiore con lingua e link
 │   │   ├── Footer.tsx               # Footer con legenda, advisory e trasparenza GDPR
 │   │   ├── SearchBar.tsx            # Barra di ricerca con autocomplete e scorciatoia '/'
@@ -124,6 +151,7 @@ AeroInfo/
 │   │   └── UnverifiedBadge.tsx      # Badge informativo rosso "i" con modale esplicativo
 │   ├── data/                        # Dataset certificato di fallback (50+ aeroporti)
 │   ├── lib/
+│   │   ├── aviation-authority.ts    # Risoluzione autorità ufficiali & filtro link Google
 │   │   ├── compiler/                # Motore di risoluzione e compilazione aeroportuale
 │   │   ├── scraper/                 # Motore di web scraping con whitelist ufficiale
 │   │   ├── security/                # Utility: sanificazione, rate limiting, SSRF filter
@@ -135,7 +163,7 @@ AeroInfo/
 │   ├── migrations/                  # Script di migrazione SQL e RLS hardening
 │   └── schema.sql                   # Schema iniziale completo PostgreSQL
 ├── tests/
-│   └── security.test.ts             # Suite automatizzata di test di sicurezza
+│   └── security.test.ts             # Suite automatizzata di test di sicurezza (8 suite)
 └── next.config.ts                   # Configurazione Next.js e HTTP Security Headers
 ```
 
@@ -147,7 +175,7 @@ Sviluppato e curato da **Luigi Gallo**.
 
 - 📧 Email: [vireontech@gmail.com](mailto:vireontech@gmail.com)
 - 💼 LinkedIn: [linkedin.com/in/luigigallo12](https://www.linkedin.com/in/luigigallo12)
-- 🌐 Live App: [aero-info.vercel.app](https://aero-info.vercel.app)
+- 🌐 Live App: [www.aero-info.eu](https://www.aero-info.eu)
 
 ---
 

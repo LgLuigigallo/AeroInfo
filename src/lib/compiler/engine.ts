@@ -304,7 +304,7 @@ export class AirportCompilerEngine {
                 to: req.requester_email,
                 airportName: airport.name_it,
                 airportIata: airport.iata,
-                airportUrl: `https://aero-info.vercel.app/?airport=${airport.iata.toLowerCase()}`
+                airportUrl: `https://www.aero-info.eu/?airport=${airport.iata.toLowerCase()}`
               });
             }
           }
