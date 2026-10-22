@@ -29,6 +29,11 @@ export function CookieConsent() {
       } else {
         const parsed: CookiePreferences = JSON.parse(stored);
         setAnalyticsEnabled(Boolean(parsed.analytics));
+        if (typeof window !== 'undefined' && (window as any).gtag) {
+          (window as any).gtag('consent', 'update', {
+            analytics_storage: parsed.analytics ? 'granted' : 'denied',
+          });
+        }
       }
     } catch {
       setIsOpen(true);
@@ -59,6 +64,13 @@ export function CookieConsent() {
     setAnalyticsEnabled(analytics);
     setIsOpen(false);
     setIsModalOpen(false);
+
+    // Synchronize with Google Consent Mode v2
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('consent', 'update', {
+        analytics_storage: analytics ? 'granted' : 'denied',
+      });
+    }
   };
 
   const handleAcceptAll = () => savePreferences(true);

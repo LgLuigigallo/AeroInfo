@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Plane, ArrowLeft, Send, CheckCircle2, Loader2, MessageSquare, AlertCircle } from 'lucide-react';
 import { LanguageProvider, useLanguage } from '@/lib/i18n';
 import { Footer } from '@/components/Footer';
+import { CookieConsent } from '@/components/CookieConsent';
 
 function FeedbackContent() {
   const { lang } = useLanguage();
@@ -274,6 +275,7 @@ function FeedbackContent() {
       </div>
 
       <Footer />
+      <CookieConsent />
     </div>
   );
 }

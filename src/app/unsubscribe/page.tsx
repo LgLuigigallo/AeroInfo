@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import { Plane, ArrowLeft, CheckCircle2, Loader2, BellOff, AlertCircle } from 'lucide-react';
 import { LanguageProvider, useLanguage } from '@/lib/i18n';
 import { Footer } from '@/components/Footer';
+import { CookieConsent } from '@/components/CookieConsent';
 
 function UnsubscribeContent() {
   const { lang, t } = useLanguage();
@@ -230,6 +231,7 @@ function UnsubscribeContent() {
 
       {/* Footer */}
       <Footer />
+      <CookieConsent />
     </div>
   );
 }
