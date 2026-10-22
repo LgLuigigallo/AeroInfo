@@ -8,11 +8,13 @@
 -- 1. SECURE airport_requests (Protect user emails from public harvesting)
 ALTER TABLE public.airport_requests ENABLE ROW LEVEL SECURITY;
 
--- Drop insecure public select policy
+-- Drop insecure public select policy and old policies
 DROP POLICY IF EXISTS "Public can view indexing requests" ON public.airport_requests;
 DROP POLICY IF EXISTS "Public can submit indexing requests" ON public.airport_requests;
+DROP POLICY IF EXISTS "Allow public insert on airport_requests" ON public.airport_requests;
+DROP POLICY IF EXISTS "Service role full access on airport_requests" ON public.airport_requests;
 
--- Allow anyone to INSERT a request (sanitized via backend API)
+-- Allow public to INSERT new airport requests (handled safely via backend)
 CREATE POLICY "Allow public insert on airport_requests" 
 ON public.airport_requests 
 FOR INSERT 
@@ -20,7 +22,7 @@ TO anon, authenticated
 WITH CHECK (true);
 
 -- Deny public/anon SELECT on airport_requests completely.
--- Only service_role can view or query requests.
+-- Only service_role can view, update or query requests.
 CREATE POLICY "Service role full access on airport_requests"
 ON public.airport_requests
 FOR ALL
@@ -34,6 +36,7 @@ ALTER TABLE public.sync_logs ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Public can view sync logs" ON public.sync_logs;
 DROP POLICY IF EXISTS "Public can insert sync logs" ON public.sync_logs;
+DROP POLICY IF EXISTS "Service role full access on sync_logs" ON public.sync_logs;
 
 -- sync_logs are strictly for internal administrative auditing
 CREATE POLICY "Service role full access on sync_logs"
@@ -46,41 +49,51 @@ WITH CHECK (true);
 
 -- 3. SECURE AIRPORT CATALOG TABLES (Read-only for public, write-only for service_role)
 
--- Helper macro to secure catalog tables
-DO $$
-DECLARE
-    tbl text;
-    tables text[] := ARRAY[
-        'airports',
-        'security_policies',
-        'terminals',
-        'airlines',
-        'amenities',
-        'venues',
-        'ground_transports'
-    ];
-BEGIN
-    FOREACH tbl IN ARRAY tables LOOP
-        -- Enable RLS
-        EXECUTE format('ALTER TABLE public.%I ENABLE ROW LEVEL SECURITY;', tbl);
+-- airports
+ALTER TABLE public.airports ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Public read-only access on airports" ON public.airports;
+DROP POLICY IF EXISTS "Service role full access on airports" ON public.airports;
+CREATE POLICY "Public read-only access on airports" ON public.airports FOR SELECT TO anon, authenticated USING (true);
+CREATE POLICY "Service role full access on airports" ON public.airports FOR ALL TO service_role USING (true) WITH CHECK (true);
 
-        -- Drop any potential permissive write policies
-        EXECUTE format('DROP POLICY IF EXISTS %L ON public.%I;', 'Public full access on ' || tbl, tbl);
-        EXECUTE format('DROP POLICY IF EXISTS %L ON public.%I;', 'Public write access on ' || tbl, tbl);
-        EXECUTE format('DROP POLICY IF EXISTS %L ON public.%I;', 'Public read-only access on ' || tbl, tbl);
+-- security_policies
+ALTER TABLE public.security_policies ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Public read-only access on security_policies" ON public.security_policies;
+DROP POLICY IF EXISTS "Service role full access on security_policies" ON public.security_policies;
+CREATE POLICY "Public read-only access on security_policies" ON public.security_policies FOR SELECT TO anon, authenticated USING (true);
+CREATE POLICY "Service role full access on security_policies" ON public.security_policies FOR ALL TO service_role USING (true) WITH CHECK (true);
 
-        -- Allow Public READ-ONLY
-        EXECUTE format(
-            'CREATE POLICY %L ON public.%I FOR SELECT TO anon, authenticated USING (true);',
-            'Public read-only access on ' || tbl,
-            tbl
-        );
+-- terminals
+ALTER TABLE public.terminals ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Public read-only access on terminals" ON public.terminals;
+DROP POLICY IF EXISTS "Service role full access on terminals" ON public.terminals;
+CREATE POLICY "Public read-only access on terminals" ON public.terminals FOR SELECT TO anon, authenticated USING (true);
+CREATE POLICY "Service role full access on terminals" ON public.terminals FOR ALL TO service_role USING (true) WITH CHECK (true);
 
-        -- Allow Service Role FULL ACCESS (Insert, Update, Delete)
-        EXECUTE format(
-            'CREATE POLICY %L ON public.%I FOR ALL TO service_role USING (true) WITH CHECK (true);',
-            'Service role full access on ' || tbl,
-            tbl
-        );
-    END LOOP;
-END $$;
+-- airlines
+ALTER TABLE public.airlines ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Public read-only access on airlines" ON public.airlines;
+DROP POLICY IF EXISTS "Service role full access on airlines" ON public.airlines;
+CREATE POLICY "Public read-only access on airlines" ON public.airlines FOR SELECT TO anon, authenticated USING (true);
+CREATE POLICY "Service role full access on airlines" ON public.airlines FOR ALL TO service_role USING (true) WITH CHECK (true);
+
+-- amenities
+ALTER TABLE public.amenities ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Public read-only access on amenities" ON public.amenities;
+DROP POLICY IF EXISTS "Service role full access on amenities" ON public.amenities;
+CREATE POLICY "Public read-only access on amenities" ON public.amenities FOR SELECT TO anon, authenticated USING (true);
+CREATE POLICY "Service role full access on amenities" ON public.amenities FOR ALL TO service_role USING (true) WITH CHECK (true);
+
+-- venues
+ALTER TABLE public.venues ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Public read-only access on venues" ON public.venues;
+DROP POLICY IF EXISTS "Service role full access on venues" ON public.venues;
+CREATE POLICY "Public read-only access on venues" ON public.venues FOR SELECT TO anon, authenticated USING (true);
+CREATE POLICY "Service role full access on venues" ON public.venues FOR ALL TO service_role USING (true) WITH CHECK (true);
+
+-- ground_transports
+ALTER TABLE public.ground_transports ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Public read-only access on ground_transports" ON public.ground_transports;
+DROP POLICY IF EXISTS "Service role full access on ground_transports" ON public.ground_transports;
+CREATE POLICY "Public read-only access on ground_transports" ON public.ground_transports FOR SELECT TO anon, authenticated USING (true);
+CREATE POLICY "Service role full access on ground_transports" ON public.ground_transports FOR ALL TO service_role USING (true) WITH CHECK (true);
