@@ -50,12 +50,14 @@ Aggiornare questa sezione al completamento di ogni attività: spuntare la voce, 
 
 **Avanzamento implementazione (2026-10-25):** Preview latest commit `95f1a73e` `READY`. Sitemap dinamica verificata con fixture XZZ senza redeploy e dopo cleanup; staging vuoto. Production `/robots.txt` risponde 200, consente `/`, disabilita `/api/` e indica sitemap; configurazione firewall personalizzata non trovata e anomalie attive assenti al controllo. La sitemap Production risponde 200 ma resta legacy: 36 URL, incluse `/feedback`, `/unsubscribe` e 33 URL `/?airport=...`; non contiene nuove schede localizzate. Modifiche SEO quindi solo Preview. Preview privata aggiunge `X-Robots-Tag: noindex` da Vercel.
 
+**Avanzamento P3 (2026-10-25):** Template scheda verificato; JSON-LD `Organization`, `WebSite` e `BreadcrumbList` verificato su Preview IT/EN del commit `39aed6c5` (`READY`), contenuto nell’HTML e JSON valido.
+
 ### P3 — Contenuti, GEO e misurazione
 
 - [x] **P3.1 Template dossier** — 2026-10-25 Preview/codice. `AirportSeoDossier` rende identità e codici, sicurezza/liquidi e regole terminal, terminal, compagnie, servizi, locali, trasporti, fonti e ultima verifica, breadcrumb e aeroporti correlati; omette sezioni vuote e filtra elementi non verificati.
 - [ ] **P3.2 Intenti e contenuti** — coprire query reali IT/EN su regole liquidi/scanner, terminal, trasporti, batterie e servizi. FAQ/guide solo con contenuto originale, fonti primarie e utilità autonoma.
 - [ ] **P3.3 Fonti e fiducia** — link alla fonte ufficiale vicino alle affermazioni, data verifica, indicatore chiaro per segnalazioni non confermate; distinguere fatti da stime.
-- [ ] **P3.4 Dati strutturati** — `Organization`/`WebSite` per identità e `BreadcrumbList` per percorso se coerenti; JSON-LD deve corrispondere al contenuto visibile. Niente rating o certificazioni inventate.
+- [x] **P3.4 Dati strutturati** — 2026-10-25 Preview. Aggiunti `Organization` e `WebSite` bilingue; `BreadcrumbList` senza doppia voce che puntava alla home. JSON-LD estratto dall’HTML IT/EN e parsato con successo; nomi e URL corrispondono alla pagina. Nessun rating o certificazione.
 - [ ] **P3.5 Misurazione** — baseline e controllo mensile di impressioni/clic/query, pagine indicizzate, traffico verso schede, referral `utm_source=chatgpt.com`, errori canonical/sitemap e Core Web Vitals. Usare GA4 e Vercel Analytics già presenti.
 
 ## Situazione tecnica iniziale
