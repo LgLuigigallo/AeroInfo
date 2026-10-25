@@ -124,11 +124,11 @@ export async function proxy(request: NextRequest) {
   const iata = rawIata.trim().toUpperCase();
   if (!/^[A-Z0-9]{3}$/.test(iata)) return NextResponse.next();
 
-  const slug = await getAirportSlug(iata);
-  if (!slug) return NextResponse.next();
+  const airportSlug = await getAirportSlug(iata);
+  if (!airportSlug) return NextResponse.next();
 
   const destination = request.nextUrl.clone();
-  destination.pathname = `/aeroporti/${slug}`;
+  destination.pathname = `/aeroporti/${airportSlug}`;
   destination.search = '';
   return NextResponse.redirect(destination, 308);
 }
