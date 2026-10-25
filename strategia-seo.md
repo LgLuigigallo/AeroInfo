@@ -38,7 +38,7 @@ Aggiornare questa sezione al completamento di ogni attività: spuntare la voce, 
 - [ ] **P1.4 Compatibilità URL legacy** — `/?airport=IATA` fa redirect permanente alla scheda IT. Ricerca, selettori, email e condivisione usano URL canoniche.
 - [ ] **P1.5 Errori e noindex** — slug sconosciuto restituisce 404; record `pending_quality`/`blocked` restituisce contenuto visitabile ma `noindex`, senza canonical verso altre schede.
 
-**Avanzamento implementazione (2026-10-25):** le route IT/EN server-rendered, i metadati per scheda, il redirect legacy, il dossier e i link alla ricerca sono nel branch. Preview iniziale ha fallito il prerender della home; redirect legacy spostato nel Proxy e lettura link dinamici avvolta in `Suspense`. Restano da verificare via nuova build Preview e URL reali; non sono rilasciati su Production.
+**Avanzamento implementazione (2026-10-25):** le route IT/EN server-rendered, i metadati per scheda, il redirect legacy, il dossier e i link alla ricerca sono nel branch. Prima correzione ha rimosso il blocco `/`; la seconda Preview ha individuato anche `params` e query Supabase delle schede fuori da `Suspense`. Ora entrambe le route IT/EN passano `params` a componenti figli dentro `Suspense`. Serve nuova build Preview e verifica URL reali; non sono rilasciati su Production.
 
 ### P2 — Sitemap, crawler e link interni
 

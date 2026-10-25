@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import { connection } from 'next/server';
 import { notFound } from 'next/navigation';
 import { AirportSeoDossier } from '@/components/AirportSeoDossier';
@@ -35,7 +36,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function EnglishAirportPage({ params }: PageProps) {
+export default function EnglishAirportPage({ params }: PageProps) {
+  return (
+    <Suspense fallback={<p className="mx-auto max-w-5xl px-4 py-12 text-sm text-zinc-600">Loading airport page…</p>}>
+      <EnglishAirportPageContent params={params} />
+    </Suspense>
+  );
+}
+
+async function EnglishAirportPageContent({ params }: PageProps) {
   const { slug } = await params;
   const airport = await loadAirport(slug);
   if (!airport) notFound();
