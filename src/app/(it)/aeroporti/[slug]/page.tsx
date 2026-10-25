@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Suspense } from 'react';
 import { connection } from 'next/server';
 import { notFound } from 'next/navigation';
 import { AirportSeoDossier } from '@/components/AirportSeoDossier';
@@ -7,6 +6,10 @@ import { airportPath } from '@/lib/airport-slug';
 import { getAirportBySlug, getAirportSeoStatus, getSeoAirports, SITE_URL } from '@/lib/seo/airports';
 
 type PageProps = { params: Promise<{ slug: string }> };
+
+// Airport data is loaded per request; resolve it before sending a response so
+// an unknown slug can return a real HTTP 404 rather than a streamed 200.
+export const instant = false;
 
 async function loadAirport(slug: string) {
   await connection();
@@ -36,15 +39,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default function AirportPage({ params }: PageProps) {
-  return (
-    <Suspense fallback={<p className="mx-auto max-w-5xl px-4 py-12 text-sm text-zinc-600">Caricamento scheda aeroporto…</p>}>
-      <AirportPageContent params={params} />
-    </Suspense>
-  );
-}
-
-async function AirportPageContent({ params }: PageProps) {
+export default async function AirportPage({ params }: PageProps) {
   const { slug } = await params;
   const airport = await loadAirport(slug);
   if (!airport) notFound();

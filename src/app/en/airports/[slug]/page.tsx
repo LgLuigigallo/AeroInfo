@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Suspense } from 'react';
 import { connection } from 'next/server';
 import { notFound } from 'next/navigation';
 import { AirportSeoDossier } from '@/components/AirportSeoDossier';
@@ -7,6 +6,9 @@ import { airportPath } from '@/lib/airport-slug';
 import { getAirportBySlug, getAirportSeoStatus, getSeoAirports, SITE_URL } from '@/lib/seo/airports';
 
 type PageProps = { params: Promise<{ slug: string }> };
+
+// Resolve request-time airport data before responding, preserving real 404s.
+export const instant = false;
 
 async function loadAirport(slug: string) {
   await connection();
@@ -36,15 +38,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default function EnglishAirportPage({ params }: PageProps) {
-  return (
-    <Suspense fallback={<p className="mx-auto max-w-5xl px-4 py-12 text-sm text-zinc-600">Loading airport page…</p>}>
-      <EnglishAirportPageContent params={params} />
-    </Suspense>
-  );
-}
-
-async function EnglishAirportPageContent({ params }: PageProps) {
+export default async function EnglishAirportPage({ params }: PageProps) {
   const { slug } = await params;
   const airport = await loadAirport(slug);
   if (!airport) notFound();
