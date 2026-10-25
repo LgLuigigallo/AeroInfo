@@ -49,7 +49,7 @@ export async function GET(request: NextRequest) {
       try {
         for (const res of syncResults) {
           try {
-          if (res.policyVerified && res.extractedPolicy) {
+          if (res.success && res.policyVerified && res.extractedPolicy) {
             const { data: airportRow, error: airportError } = await supabase.from('airports').select('id').eq('iata_code', res.airportIata).maybeSingle();
             if (airportError) throw airportError;
             if (airportRow?.id) {
@@ -106,7 +106,8 @@ export async function GET(request: NextRequest) {
           // airport request's email/publication status.
           const originalAirport = activeAirports.find((airport) => airport.iata.toUpperCase() === res.airportIata.toUpperCase());
           if (originalAirport?.seoStatus) {
-            const refreshedAirport = res.policyVerified && res.extractedPolicy
+            const verifiedThisRun = res.success && res.policyVerified && Boolean(res.extractedPolicy?.lastVerifiedDate);
+            const refreshedAirport = verifiedThisRun && res.extractedPolicy
               ? {
                   ...originalAirport,
                   securityPolicy: {
@@ -118,8 +119,13 @@ export async function GET(request: NextRequest) {
               : originalAirport;
             const reasons = evaluateAirportSeoQuality(refreshedAirport);
             const hasPlaceholder = reasons.some((reason) => reason.includes('segnaposto/generici'));
-            const hasFreshSourceVerification = Boolean(refreshedAirport.securityPolicy.lastVerifiedDate);
-            const status = hasPlaceholder ? 'blocked' : reasons.length === 0 && hasFreshSourceVerification ? 'indexable' : 'pending_quality';
+            const status = hasPlaceholder
+              ? 'blocked'
+              : reasons.length > 0
+                ? 'pending_quality'
+                : verifiedThisRun || originalAirport.seoStatus === 'indexable'
+                  ? 'indexable'
+                  : 'pending_quality';
             await saveAirportSeoEvaluation(refreshedAirport, status, reasons);
           }
 

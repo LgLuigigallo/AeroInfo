@@ -124,9 +124,9 @@ export async function seedAllAirportsToSupabase(airports: Airport[]): Promise<Se
         official_source_url: sec.officialSourceUrl?.startsWith('https://')
           ? sec.officialSourceUrl
           : '',
-        // Preserve an actual cron verification; otherwise use only the date
-        // carried by curated source data.
-        last_verified_at: existingPolicy?.last_verified_at || sec.lastVerifiedDate || null
+        // Catalog seeding does not prove a successful source fetch. Preserve
+        // only a verification timestamp already written by the cron.
+        last_verified_at: existingPolicy?.last_verified_at || null
       };
       const { error: secError } = existingPolicy?.id
         ? await supabase.from('security_policies').update(securityPayload).eq('id', existingPolicy.id)
