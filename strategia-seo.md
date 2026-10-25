@@ -42,21 +42,25 @@ Aggiornare questa sezione al completamento di ogni attività: spuntare la voce, 
 
 ### P2 — Sitemap, crawler e link interni
 
-- [x] **P2.1 Sitemap dinamica** — 2026-10-25 Preview. `/sitemap.xml` restituisce 67 URL (home + 33 record statici approvati in due lingue), alternates `hreflang`, zero URL query. Staging DB vuoto: verificato fallback statico approvato.
+- [x] **P2.1 Sitemap dinamica** — 2026-10-25 Preview. Ora 69 URL (home + 33 record aeroportuali statici in due lingue + guida IT/EN), alternates `hreflang`, zero URL query. Staging DB vuoto: verificato fallback statico approvato.
 - [x] **P2.2 Freschezza sitemap** — 2026-10-25 Preview/staging. Fixture reversibile XZZ `indexable`: sitemap aggiornata alla richiesta successiva senza deploy (67 → 3 URL, include IT/EN); rimossa fixture, sitemap tornata a 67 URL, slug XZZ HTTP 404. DB staging verificato pulito (zero aeroporti, policy e terminal XZZ).
 - [x] **P2.3 Robots e crawler** — 2026-10-25 Production/Preview. `/robots.txt` Production HTTP 200: consente `/`, disabilita `/api/`, include sitemap; stessi agenti verificati in Preview. Vercel non restituisce una configurazione firewall personalizzata e stato anomalie attive è vuoto. Prova riguarda config/HTTP pubblici, non log di fetch per ogni bot.
-- [x] **P2.4 Link crawlable** — 2026-10-25 Preview. Home contiene 33 anchor HTML alle schede; dossier contiene breadcrumb e link ad aeroporti correlati quando definiti nei dati.
+- [x] **P2.4 Link crawlable** — 2026-10-25 Preview. Home contiene 33 anchor HTML alle schede e link HTML alla guida; dossier contiene breadcrumb e link ad aeroporti correlati quando definiti nei dati.
 - [ ] **P2.5 Webmaster tools** — verificare dominio e inviare sitemap a Google Search Console e Bing Webmaster Tools. Valutare IndexNow per aggiornamenti; invio URL non garantisce inclusione nell’indice.
 
 **Avanzamento implementazione (2026-10-25):** Preview latest commit `95f1a73e` `READY`. Sitemap dinamica verificata con fixture XZZ senza redeploy e dopo cleanup; staging vuoto. Production `/robots.txt` risponde 200, consente `/`, disabilita `/api/` e indica sitemap; configurazione firewall personalizzata non trovata e anomalie attive assenti al controllo. La sitemap Production risponde 200 ma resta legacy: 36 URL, incluse `/feedback`, `/unsubscribe` e 33 URL `/?airport=...`; non contiene nuove schede localizzate. Modifiche SEO quindi solo Preview. Preview privata aggiunge `X-Robots-Tag: noindex` da Vercel.
 
 **Avanzamento P3 (2026-10-25):** Template scheda verificato; JSON-LD `Organization`, `WebSite` e `BreadcrumbList` verificato su Preview IT/EN del commit `39aed6c5` (`READY`), contenuto nell’HTML e JSON valido.
 
+**Avanzamento guida editoriale (2026-10-25):** Preview `f22a38d2` `READY`. Guide IT/EN HTTP 200, H1/metadata/canonical/lang verificati; contenuti e fonti nell’HTML SSR. Sitemap 69 URL comprende entrambe le lingue senza query; footer contiene link crawlable alla guida. Header `X-Robots-Tag: noindex` viene aggiunto da Vercel alle Preview protette; non è una verifica dell’indicizzabilità Production.
+
 ### P3 — Contenuti, GEO e misurazione
 
 - [x] **P3.1 Template dossier** — 2026-10-25 Preview/codice. `AirportSeoDossier` rende identità e codici, sicurezza/liquidi e regole terminal, terminal, compagnie, servizi, locali, trasporti, fonti e ultima verifica, breadcrumb e aeroporti correlati; omette sezioni vuote e filtra elementi non verificati.
-- [ ] **P3.2 Intenti e contenuti** — coprire query reali IT/EN su regole liquidi/scanner, terminal, trasporti, batterie e servizi. FAQ/guide solo con contenuto originale, fonti primarie e utilità autonoma.
-- [ ] **P3.3 Fonti e fiducia** — link alla fonte ufficiale vicino alle affermazioni, data verifica, indicatore chiaro per segnalazioni non confermate; distinguere fatti da stime.
+- [ ] **P3.2 Intenti e contenuti** — coprire query reali IT/EN su regole liquidi/scanner, terminal, trasporti, batterie e servizi. FAQ/guide solo con contenuto originale, fonti primarie e utilità autonoma. Query e volumi reali restano da verificare in Search Console/Bing.
+  - [x] **P3.2a Guida liquidi/scanner IT/EN** — 2026-10-25 Preview commit `f22a38d2` (`READY`). Regola generale 100 ml distinta dagli esempi ufficiali di Fiumicino/Heathrow fino a 2 L; transiti e verifica specifica aeroporto spiegati con prudenza. Route IT/EN 200, HTML SSR, title, canonical e `lang` corretti; sitemap e footer aggiornati.
+- [ ] **P3.3 Fonti e fiducia** — estendere a tutte le schede link ufficiali vicino ai fatti, data verifica e distinzione visibile fra verificato/stimato/segnalato.
+  - [x] **P3.3a Guida liquidi: fonti e aggiornamento** — 2026-10-25 Preview. Fonte UE e pagine ufficiali Fiumicino/Heathrow collegate alle affermazioni; data controllo visibile (25 ottobre 2026). Distinti limiti pubblicati da singolo aeroporto dalla regola generale.
 - [x] **P3.4 Dati strutturati** — 2026-10-25 Preview. Aggiunti `Organization` e `WebSite` bilingue; `BreadcrumbList` senza doppia voce che puntava alla home. JSON-LD estratto dall’HTML IT/EN e parsato con successo; nomi e URL corrispondono alla pagina. Nessun rating o certificazione.
 - [ ] **P3.5 Misurazione** — baseline e controllo mensile di impressioni/clic/query, pagine indicizzate, traffico verso schede, referral `utm_source=chatgpt.com`, errori canonical/sitemap e Core Web Vitals. Usare GA4 e Vercel Analytics già presenti.
 
