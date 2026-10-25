@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/react';
 import { GoogleAnalytics } from '@/components/GoogleAnalytics';
+import { SiteStructuredData } from '@/components/SiteStructuredData';
 import '../globals.css';
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] });
@@ -35,6 +36,7 @@ export default function ItalianRootLayout({ children }: Readonly<{ children: Rea
   return (
     <html lang="it" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col font-sans">
+        <SiteStructuredData />
         {children}
         <Analytics />
         <GoogleAnalytics />

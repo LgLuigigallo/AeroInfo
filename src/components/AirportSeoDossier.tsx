@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { airportPath } from '@/lib/airport-slug';
 import { getAirportSeoStatus } from '@/lib/seo/airports';
+import { getAirportBreadcrumbStructuredData } from '@/lib/seo/structured-data';
 import type { Airport, Language } from '@/types/airport';
 
 type Props = { airport: Airport; airports: Airport[]; lang: Language };
@@ -30,15 +31,7 @@ export function AirportSeoDossier({ airport, airports, lang }: Props) {
   const updated = policy.lastVerifiedDate
     ? new Intl.DateTimeFormat(isItalian ? 'it-IT' : 'en-GB', { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(`${policy.lastVerifiedDate}T00:00:00Z`))
     : null;
-  const breadcrumbs = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'AeroInfo', item: 'https://www.aero-info.eu/' },
-      { '@type': 'ListItem', position: 2, name: homeLabel, item: 'https://www.aero-info.eu/' },
-      { '@type': 'ListItem', position: 3, name: displayName },
-    ],
-  };
+  const breadcrumbs = getAirportBreadcrumbStructuredData(displayName, lang);
 
   return (
     <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100">
