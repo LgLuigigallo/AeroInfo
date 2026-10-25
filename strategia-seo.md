@@ -1,6 +1,6 @@
 # Strategia SEO e GEO AeroInfo
 
-**Stato:** implementazione sul branch isolato `codex/seo-geo-foundation`; Preview Vercel in verifica, nessuna modifica a Production
+**Stato:** Preview `READY` sul branch isolato `codex/seo-geo-foundation`; nessuna modifica a Production
 **Ultimo aggiornamento:** 2026-10-25  
 **Mercati:** italiano prioritario; inglese internazionale  
 **Scopo:** acquisire traffico organico qualificato e rendere le informazioni aeroportuali comprensibili e citabili da motori di ricerca e motori di risposta AI. Nessuna attività garantisce posizionamenti o indicizzazione.
@@ -19,7 +19,7 @@ Aggiornare questa sezione al completamento di ogni attività: spuntare la voce, 
 - [ ] **P0.6 Scrittura delle verifiche** — cron mirato ai nuovi record; persistire solo estrazioni supportate da fonte e aggiornare date di verifica solo dopo fetch/estrazione riusciti. Non confondere richiesta `published` con approvazione SEO.
 - [ ] **P0.7 Audit 47 record** — applicare gli stessi criteri ai dati esistenti; le schede incomplete restano fruibili nell’app, ma fuori sitemap e con `noindex`.
 
-**Avanzamento implementazione locale (2026-10-25):**
+**Avanzamento implementazione (2026-10-25):**
 
 - [x] **P0.4a Migrazione reversibile preparata** — campi SEO, slug univoci, `source_verified_at`; rimozione dei default che inventavano date sulle nuove righe. Rollback in `supabase/rollback/20261025000000_airport_seo_quality.sql`. Applicata al solo progetto `aero-info-staging` il 2026-10-25; produzione invariata.
 - [x] **P0.4b Ambiente Supabase staging** — creato `aero-info-staging` (`rkigkmmtlqwmbwtyijpp`, EU West); schema e 3 migrazioni applicati. Query di verifica: 11 tabelle pubbliche, 29 colonne aeroporti, RLS attiva; zero policy SELECT anon/authenticated su `airport_suggestions`; Security Advisor senza rilievi.
@@ -28,27 +28,27 @@ Aggiornare questa sezione al completamento di ogni attività: spuntare la voce, 
 - [x] **P0.6a Flusso codice** — cron FIFO sui pending, whitelist estesa ai 47 codici attuali, persistenza solo di regole esplicite; seed conserva stato e slug; compilazione fallita non pubblica la richiesta; venue aggiunte/aggiornate senza cancellare le altre.
 - [x] **P0.7a Audit meccanico** — 33 statici: 33 superano il gate automatico dopo normalizzazione del prefisso `www` per fonti regolatorie come TSA. Database: 47/47 superano controlli automatici di identità bilingue, URL HTTPS, campi core bilingui, due dettagli bilingui e coordinate; questo non prova che i fatti siano corretti o che le fonti siano state raggiunte.
 
-**Blocco P0 residuo:** Production AeroInfo resta invariata: mancano campi SEO e `source_verified_at`; le 47 date legacy non provano un fetch riuscito. Staging è inizializzato ma vuoto. Vercel Preview ha URL, chiave pubblica e `SUPABASE_SERVICE_ROLE_KEY` di staging, limitati al branch `codex/seo-geo-foundation`. Le variabili da sole non avviano un nuovo deploy. Branch pubblicato su GitHub; Preview ha compilato codice e TypeScript ma fallito durante il prerender di `/`. Correzione in corso: redirect legacy anticipato in `src/proxy.ts`; lettura Supabase dei link pagina avvolta in `Suspense`. Build locale non completabile nell’ambiente corrente: `next/font` non raggiunge Google Fonts; `tsc` locale non disponibile (`node_modules/.bin/tsc` punta a un file mancante). Serve nuova build Preview per verificare la correzione. Nessuna modifica Production.
+**Blocco P0 residuo:** Production AeroInfo resta invariata: mancano campi SEO e `source_verified_at`; le 47 date legacy non provano un fetch riuscito. Staging è inizializzato ma vuoto. Vercel Preview ha URL, chiave pubblica e `SUPABASE_SERVICE_ROLE_KEY` di staging, tutti limitati a `codex/seo-geo-foundation`. Cron Preview non testato: endpoint risponde 401 perché manca `CRON_SECRET` branch-scoped. Preview è `READY` sul commit `d212bb71`; pagine, sitemap, robots, redirect e vero 404 verificati. Build locale non eseguibile in questo ambiente: `next/font` non raggiunge Google Fonts; `tsc` locale mancante. Serve verificare cron con secret Preview e rivedere deploy/staging prima di valutare qualunque rilascio. Nessuna modifica Production.
 
 ### P1 — URL e pagine aeroporto
 
-- [ ] **P1.1 Route IT/EN server-rendered** — mantenere home IT su `/`; creare `/aeroporti/[slug]` e `/en/airports/[slug]`; HTML iniziale include contenuto e metadati della scheda.
+- [x] **P1.1 Route IT/EN server-rendered** — 2026-10-25 Preview. `/aeroporti/aeroporto-di-praga-vaclav-havel-prg` e `/en/airports/vaclav-havel-airport-prague-prg` rispondono 200 con H1 e contenuto nell’HTML iniziale; `html lang` corretto.
 - [ ] **P1.2 Slug persistenti** — generare slug localizzati con codice IATA, salvati in Supabase e immutabili dopo pubblicazione. Nome aggiornato non cambia URL.
-- [ ] **P1.3 Metadati e lingue** — titolo, description, Open Graph, canonical autoreferenziale, `hreflang` reciproco e `html lang` corretto per route.
-- [ ] **P1.4 Compatibilità URL legacy** — `/?airport=IATA` fa redirect permanente alla scheda IT. Ricerca, selettori, email e condivisione usano URL canoniche.
-- [ ] **P1.5 Errori e noindex** — slug sconosciuto restituisce 404; record `pending_quality`/`blocked` restituisce contenuto visitabile ma `noindex`, senza canonical verso altre schede.
+- [x] **P1.3 Metadati e lingue** — 2026-10-25 Preview. Titoli e `lang` localizzati, canonical autoreferenziale, tre alternates `hreflang` reciproci; dati verificati nel sorgente HTML IT/EN.
+- [x] **P1.4 Compatibilità URL legacy** — 2026-10-25 Preview. Proxy risponde con redirect permanente 308; test `/?airport=PRG` seguito fino al dossier canonical PRG. Link dalla ricerca usano route canoniche.
+- [ ] **P1.5 Errori e noindex** — slug inesistente restituisce HTTP 404 `noindex` verificato in entrambe le lingue. Da verificare: record reale `pending_quality`/`blocked` visitabile ma `noindex`, senza canonical verso altre schede.
 
-**Avanzamento implementazione (2026-10-25):** le route IT/EN server-rendered, i metadati per scheda, il redirect legacy, il dossier e i link alla ricerca sono nel branch. Preview ha superato il build dopo redirect Proxy, boundary `Suspense` per i link dinamici e configurazione `instant = false` sulle schede. Verificati home e dossier IT/EN 200, canonical autoreferenziali, metadati `index, follow`, sitemap 67 URL senza query e robots crawler. Il controllo HTTP ha confermato che lo slug aeroporto inesistente restava 200 anche con `notFound()`; aggiunta validazione Proxy pre-render con risposta 404 vera, controllo DB per schede non statiche e 503 `noindex` se Supabase non è raggiungibile. Nuova build Preview e retest necessari; nulla rilasciato su Production.
+**Avanzamento implementazione (2026-10-25):** Preview `READY` sul branch isolato. Verificati: home IT 200 e 33 link HTML; dossier PRG IT/EN 200 nell’HTML, titolo, canonical, alternates, `lang`; legacy `?airport=PRG` risolto dal redirect Proxy; slug inesistente IT/EN HTTP 404; sitemap con 67 URL, alternates e nessuna query; robots con regole per Googlebot, Bingbot e OAI-SearchBot. Il Proxy controlla slug DB non statici e restituisce 503 `noindex` se Supabase non è raggiungibile. Cron risponde 401 perché `CRON_SECRET` non è configurato su Preview. Il dominio Production è accessibile: `https://www.aero-info.eu/` risponde 200; il controllo iniziale fallì sul redirect apex→www/tool di fetch, non per indisponibilità del sito. Preview protetta aggiunge header `X-Robots-Tag: noindex`, atteso per deploy privati. Nulla rilasciato su Production.
 
 ### P2 — Sitemap, crawler e link interni
 
-- [ ] **P2.1 Sitemap dinamica** — includere home e sole schede `indexable`, entrambe le lingue e alternates; usare date di verifica effettive. Escludere query, feedback e unsubscribe. Se DB indisponibile, includere solo fallback statici approvati.
+- [x] **P2.1 Sitemap dinamica** — 2026-10-25 Preview. `/sitemap.xml` restituisce 67 URL (home + 33 record statici approvati in due lingue), alternates `hreflang`, zero URL query. Staging DB vuoto: verificato fallback statico approvato.
 - [ ] **P2.2 Freschezza sitemap** — nuova scheda idonea compare alla richiesta successiva senza redeploy; testare caching Next/Vercel e invalidazione necessaria.
 - [ ] **P2.3 Robots e crawler** — permettere pagine pubbliche a Googlebot, Bingbot e `OAI-SearchBot`; bloccare `/api/`; verificare firewall/CDN e status HTTP effettivo.
-- [ ] **P2.4 Link crawlable** — aggiungere anchor HTML dalla home agli aeroporti principali e collegamenti tra aeroporti della stessa città, breadcrumb e percorsi per paese quando utili.
+- [x] **P2.4 Link crawlable** — 2026-10-25 Preview. Home contiene 33 anchor HTML alle schede; dossier contiene breadcrumb e link ad aeroporti correlati quando definiti nei dati.
 - [ ] **P2.5 Webmaster tools** — verificare dominio e inviare sitemap a Google Search Console e Bing Webmaster Tools. Valutare IndexNow per aggiornamenti; invio URL non garantisce inclusione nell’indice.
 
-**Avanzamento implementazione locale (2026-10-25):** sitemap runtime e robots sono implementati localmente. La verifica della sitemap aggiornata senza redeploy, degli status HTTP e delle regole crawler su Vercel resta da fare dopo il rilascio.
+**Avanzamento implementazione (2026-10-25):** Preview verifica sitemap 67 URL, alternates e nessuna query; `robots.txt` permette Googlebot, Bingbot e `OAI-SearchBot` e disabilita `/api/`. Restano da verificare freschezza dopo inserimento DB e firewall/CDN sul dominio Production. Preview privata aggiunge `X-Robots-Tag: noindex` da Vercel.
 
 ### P3 — Contenuti, GEO e misurazione
 
