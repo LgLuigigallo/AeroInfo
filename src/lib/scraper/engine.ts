@@ -6,6 +6,7 @@ export interface ScrapingResult {
   airportIata: string;
   sourceUrl: string;
   success: boolean;
+  policyVerified?: boolean;
   timestamp: string;
   extractedPolicy?: Partial<SecurityPolicy>;
   extractedVenues?: VenueItem[];
@@ -79,7 +80,26 @@ export const OFFICIAL_DOMAIN_WHITELIST: Record<string, string> = {
   // UK & USA & Japan
   LHR: 'https://www.heathrow.com/at-the-airport/airport-security',
   JFK: 'https://www.tsa.gov/travel/security-screening',
-  HND: 'https://tokyo-haneda.com/en/passenger_guide/security/index.html'
+  HND: 'https://tokyo-haneda.com/en/passenger_guide/security/index.html',
+
+  // Additional airports already present in the live catalogue
+  BLQ: 'https://www.bologna-airport.it/guida-al-viaggio/sicurezza-e-controlli/',
+  BRI: 'https://www.aeroportidipuglia.it/norme-di-sicurezza',
+  CTA: 'https://www.aeroporto.catania.it',
+  DJG: 'https://www.egsa-alger.dz',
+  DXB: 'https://www.dubaiairports.ae/before-you-fly/security-customs',
+  HER: 'https://www.ypa.gr',
+  HKG: 'https://www.hongkongairport.com/en/passenger-guide/airport-security/',
+  IBZ: 'https://www.aena.es/es/ibiza/equipajes-controles.html',
+  LGW: 'https://www.gatwickairport.com/passenger-guide/security.html',
+  LPA: 'https://www.aena.es/es/gran-canaria.html',
+  PMI: 'https://www.aena.es/es/pasajeros/equipajes-controles/equipaje-mano.html',
+  PMO: 'https://www.aeroportodipalermo.it',
+  PSA: 'https://www.pisa-airport.com/it/passeggeri/in-aeroporto/sicurezza.html',
+  QUR: 'https://www.enac.gov.it',
+  RAK: 'https://www.onda.ma',
+  STR: 'https://www.stuttgart-airport.com/security-checks',
+  TFS: 'https://www.aena.es/es/tenerife-sur.html'
 };
 
 // Official venue directory endpoints (Shops, Restaurants, Duty Free, Cafes)
@@ -120,7 +140,9 @@ export class AirportScraperEngine {
     try {
       const parsedOfficial = new URL(officialBase);
       const parsedUrl = new URL(url);
-      return parsedUrl.hostname.endsWith(parsedOfficial.hostname.replace('www.', ''));
+      const officialHost = parsedOfficial.hostname.replace(/^www\./, '');
+      const requestedHost = parsedUrl.hostname.replace(/^www\./, '');
+      return requestedHost === officialHost || requestedHost.endsWith(`.${officialHost}`);
     } catch {
       return false;
     }
@@ -202,8 +224,7 @@ export class AirportScraperEngine {
         pageText.includes('hi-scan 6040');
 
       // 2. Precise Detection: Do liquids stay in bag?
-      const liquidsCanStayInBag = 
-        has3DScannerMentions && 
+      const liquidsCanStayInBag =
         (
           pageText.includes('liquidi nel bagaglio') || 
           pageText.includes('senza estrarre') || 
@@ -216,6 +237,15 @@ export class AirportScraperEngine {
           pageText.includes('liquids inside hand baggage') ||
           pageText.includes('liquids inside your bag')
         );
+
+      const liquidsMustBeRemoved =
+        pageText.includes('remove liquids from your bag') ||
+        pageText.includes('remove all liquids') ||
+        pageText.includes('take liquids out of your bag') ||
+        pageText.includes('estrarre i liquidi') ||
+        pageText.includes('rimuovere i liquidi dal bagaglio') ||
+        pageText.includes('liquidi devono essere estratti');
+      const explicitLiquidsRule = liquidsCanStayInBag || liquidsMustBeRemoved;
 
       // 3. Precise Detection: Do laptops & electronics stay in bag?
       const laptopsCanStayInBag = 
@@ -243,23 +273,36 @@ export class AirportScraperEngine {
           pageText.includes('fino a 2 litri')
         );
 
+      const policyVerified = explicitLiquidsRule;
       const extractedPolicy: Partial<SecurityPolicy> = {
-        has3DScanners: has3DScannerMentions,
-        liquidsMustBeRemoved: !liquidsCanStayInBag,
-        electronicsInBag: laptopsCanStayInBag,
-        lastVerifiedDate: new Date().toISOString().split('T')[0],
-        officialSourceUrl: targetUrl
+        ...(has3DScannerMentions ? { has3DScanners: true } : {}),
+        ...(explicitLiquidsRule ? {
+          liquidsMustBeRemoved: liquidsMustBeRemoved,
+          liquidsAllowance_it: liquidsCanStayInBag
+            ? 'La fonte ufficiale indica che i liquidi possono restare nel bagaglio a mano.'
+            : 'La fonte ufficiale indica che i liquidi devono essere estratti dal bagaglio a mano.',
+          liquidsAllowance_en: liquidsCanStayInBag
+            ? 'The official source says liquids may remain inside cabin baggage.'
+            : 'The official source says liquids must be removed from cabin baggage.',
+          liquidsUnverified: false,
+        } : {}),
+        ...(laptopsCanStayInBag ? { electronicsInBag: true, electronicsUnverified: false } : {}),
+        ...(policyVerified ? { lastVerifiedDate: new Date().toISOString().split('T')[0] } : {}),
+        officialSourceUrl: targetUrl,
       };
 
       return {
         airportIata: iata,
         sourceUrl: targetUrl,
         success: true,
+        policyVerified,
         timestamp: new Date().toISOString(),
-        extractedPolicy,
+        extractedPolicy: Object.keys(extractedPolicy).length > 1 ? extractedPolicy : undefined,
         notes: allowsLargerBottles 
           ? 'Verified: 3D CT lanes allow bottles and liquids inside bag.' 
-          : 'Successfully verified against official security page.'
+          : policyVerified
+            ? 'Official page contained an explicit liquids rule; only supported fields were extracted.'
+            : 'Official page loaded, but no explicit security rule could be confirmed.'
       };
     } catch (err: any) {
       return {
@@ -313,8 +356,8 @@ export class AirportScraperEngine {
               const name = (item.shopNameLabel || '').trim();
               if (!name) continue;
 
-              const terminal = item.terminalOrBoardingAreaLabel ? `Terminal ${item.terminalOrBoardingAreaLabel}` : 'Terminal 1';
-              const location = item.areaLabel ? `${item.areaLabel} (post-controlli)` : 'Area Imbarchi';
+              const terminal = item.terminalOrBoardingAreaLabel ? `Terminal ${item.terminalOrBoardingAreaLabel}` : '';
+              const location = item.areaLabel ? `${item.areaLabel} (post-controlli)` : '';
               const key = `${name.toLowerCase()}-${terminal.toLowerCase()}`;
               if (seen.has(key)) continue;
               seen.add(key);
@@ -337,7 +380,8 @@ export class AirportScraperEngine {
                 category,
                 terminal,
                 location,
-                hours: '06:00 - 22:30'
+                hours: typeof item.openingHours === 'string' ? item.openingHours : '',
+                isUnverified: !terminal || !location,
               });
             }
 
@@ -359,8 +403,8 @@ export class AirportScraperEngine {
             const name = nameMatch[1].trim();
             const rawCat = descMatch ? descMatch[1].trim() : '';
 
-            let terminal = 'Terminal 1 & 3';
-            let rawLoc = 'Area Imbarchi';
+            let terminal = '';
+            let rawLoc = '';
             if (termMatches.length > 0) {
               const terms = termMatches.map(m => m[1].trim());
               terminal = terms.join(', ');
@@ -385,7 +429,7 @@ export class AirportScraperEngine {
               category = 'shopping';
             }
 
-            let termLabel = 'Terminal 1 & 3';
+            let termLabel = terminal;
             if (terminal.includes('T1') && !terminal.includes('T3')) {
               termLabel = 'Terminal 1';
             } else if (terminal.includes('T3') && !terminal.includes('T1')) {
@@ -396,23 +440,21 @@ export class AirportScraperEngine {
               termLabel = 'Terminal 3';
             }
 
-            let cleanLoc = rawLoc.replace(/^A\/Area comune A/i, 'Area Imbarchi A (Partenze)')
+            const cleanLoc = rawLoc.replace(/^A\/Area comune A/i, 'Area Imbarchi A (Partenze)')
                                  .replace(/^E\/Area comune E/i, 'Area Imbarchi E (Partenze)')
                                  .replace(/^A\/A([0-9\-]+)/i, 'Gate A$1')
                                  .replace(/^E\/E([0-9\-]+)/i, 'Gate E$1');
 
-            let hours = '06:00 - 22:30';
-            if (category === 'cafe') hours = '05:00 - 23:00';
-            if (category === 'duty_free') hours = '05:30 - 23:00';
-            if (name.toLowerCase().includes('24h') || name.toLowerCase().includes('h24')) hours = '24 Ore';
+            const hours = '';
 
             venues.push({
               id: `${iata.toLowerCase()}-v-${venues.length + 1}`,
               name,
               category,
               terminal: termLabel,
-              location: cleanLoc || 'Area Imbarchi post-sicurezza',
-              hours
+              location: cleanLoc,
+              hours,
+              isUnverified: !terminal || !cleanLoc,
             });
           }
         }

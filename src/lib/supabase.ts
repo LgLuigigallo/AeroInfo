@@ -28,6 +28,10 @@ export const isSupabaseConfigured = (): boolean => {
   return Boolean(supabaseUrl && activeKey);
 };
 
+export const isSupabaseAdminConfigured = (): boolean => {
+  return Boolean(supabaseUrl && supabaseServiceRoleKey);
+};
+
 /**
  * Retrieves all airports from Supabase if configured, otherwise falls back to local certified dataset.
  */
@@ -82,6 +86,12 @@ export async function getLiveAirports(): Promise<Airport[]> {
 
       return {
         id: row.iata_code.toLowerCase(),
+        seoStatus: row.seo_status || 'pending_quality',
+        seoSlugIt: row.seo_slug_it || undefined,
+        seoSlugEn: row.seo_slug_en || undefined,
+        seoLastEvaluatedAt: row.seo_last_evaluated_at || undefined,
+        seoBlockReasons: Array.isArray(row.seo_block_reasons) ? row.seo_block_reasons : [],
+        createdAt: row.created_at || undefined,
         iata: row.iata_code,
         icao: row.icao_code || staticMatch?.icao || '',
         name_it: staticMatch?.name_it || row.name_it,
@@ -140,12 +150,15 @@ export async function getLiveAirports(): Promise<Airport[]> {
           powerbankPolicy_it: sec.powerbank_policy_it || staticMatch?.securityPolicy.powerbankPolicy_it || '',
           powerbankPolicy_en: sec.powerbank_policy_en || staticMatch?.securityPolicy.powerbankPolicy_en || '',
           powerbankUnverified: Boolean(sec.powerbank_unverified),
-          officialSourceUrl: cleanOfficialWebsiteUrl(
-            sec.official_source_url || staticMatch?.securityPolicy.officialSourceUrl || cleanSite,
-            upperIata,
-            row.country_code
-          ),
-          lastVerifiedDate: sec.last_verified_at ? sec.last_verified_at.split('T')[0] : (staticMatch?.securityPolicy.lastVerifiedDate || '2026-10-18')
+          officialSourceUrl:
+            typeof sec.official_source_url === 'string' && sec.official_source_url.startsWith('https://')
+              ? sec.official_source_url
+              : (staticMatch?.securityPolicy.officialSourceUrl || ''),
+          // Legacy last_verified_at and curated fallbacks are not proof that
+          // this database record passed a successful source fetch.
+          lastVerifiedDate: sec.source_verified_at
+            ? sec.source_verified_at.split('T')[0]
+            : ''
         },
         terminals: (row.terminals || []).map((t: any) => ({
           id: t.id,
@@ -197,7 +210,9 @@ export async function getLiveAirports(): Promise<Airport[]> {
           details_en: tr.details_en || '',
           isUnverified: Boolean(tr.is_unverified)
         })),
-        lastUpdated: row.last_verified_at ? row.last_verified_at.split('T')[0] : '2026-10-18'
+        lastUpdated: sec.source_verified_at
+          ? sec.source_verified_at.split('T')[0]
+          : (staticMatch?.lastUpdated || '')
       };
     });
   } catch (err) {

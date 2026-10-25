@@ -1,6 +1,7 @@
 import { supabase } from './supabase';
 import { Airport } from '@/types/airport';
 import { cleanOfficialWebsiteUrl } from '@/lib/aviation-authority';
+import { makeAirportSlug } from '@/lib/airport-slug';
 
 export interface SeedResult {
   success: boolean;
@@ -28,6 +29,24 @@ export async function seedAllAirportsToSupabase(airports: Airport[]): Promise<Se
 
   for (const ap of airports) {
     try {
+      // Read existing SEO fields before upsert. Preserve published URLs and
+      // indexability on reseed; fill slugs once for new or legacy rows.
+      const { data: existingSeo, error: seoReadError } = await supabase
+        .from('airports')
+        .select('seo_status, seo_slug_it, seo_slug_en')
+        .eq('iata_code', ap.iata)
+        .maybeSingle();
+      const schemaMissingSeo = Boolean(seoReadError && /seo_(status|slug_it|slug_en)|schema cache|column .* does not exist/i.test(seoReadError.message));
+      if (seoReadError && !schemaMissingSeo) {
+        errors.push(`Failed to read SEO fields for ${ap.iata}: ${seoReadError.message}`);
+        continue;
+      }
+      const seoPayload = schemaMissingSeo ? {} : {
+        seo_status: existingSeo?.seo_status || 'pending_quality',
+        seo_slug_it: existingSeo?.seo_slug_it || makeAirportSlug(ap, 'it'),
+        seo_slug_en: existingSeo?.seo_slug_en || makeAirportSlug(ap, 'en'),
+      };
+
       // 1. Upsert Airport
       const { data: airportRow, error: airportError } = await supabase
         .from('airports')
@@ -53,7 +72,9 @@ export async function seedAllAirportsToSupabase(airports: Airport[]): Promise<Se
             recommended_arrival_intl: Math.round(ap.recommendedArrivalHours.international),
             navigation_advice_it: ap.navigationAdvice_it,
             navigation_advice_en: ap.navigationAdvice_en,
-            last_verified_at: new Date().toISOString()
+            ...seoPayload,
+            // A catalog seed is not a verification event.
+            last_verified_at: ap.securityPolicy.lastVerifiedDate || null
           },
           { onConflict: 'iata_code' }
         )
@@ -69,8 +90,12 @@ export async function seedAllAirportsToSupabase(airports: Airport[]): Promise<Se
 
       // 2. Upsert Security Policy
       const sec = ap.securityPolicy;
-      await supabase.from('security_policies').delete().eq('airport_id', airportId);
-      const { error: secError } = await supabase.from('security_policies').insert({
+      const { data: existingPolicy } = await supabase
+        .from('security_policies')
+        .select('id, last_verified_at')
+        .eq('airport_id', airportId)
+        .maybeSingle();
+      const securityPayload = {
         airport_id: airportId,
         has_3d_scanners: sec.has3DScanners,
         scanners_note_it: sec.scannersNote_it,
@@ -96,9 +121,16 @@ export async function seedAllAirportsToSupabase(airports: Airport[]): Promise<Se
         powerbank_policy_it: sec.powerbankPolicy_it,
         powerbank_policy_en: sec.powerbankPolicy_en,
         powerbank_unverified: Boolean(sec.powerbankUnverified),
-        official_source_url: cleanOfficialWebsiteUrl(sec.officialSourceUrl, ap.iata, ap.countryCode),
-        last_verified_at: new Date().toISOString()
-      });
+        official_source_url: sec.officialSourceUrl?.startsWith('https://')
+          ? sec.officialSourceUrl
+          : '',
+        // Preserve an actual cron verification; otherwise use only the date
+        // carried by curated source data.
+        last_verified_at: existingPolicy?.last_verified_at || sec.lastVerifiedDate || null
+      };
+      const { error: secError } = existingPolicy?.id
+        ? await supabase.from('security_policies').update(securityPayload).eq('id', existingPolicy.id)
+        : await supabase.from('security_policies').insert(securityPayload);
 
       if (secError) {
         errors.push(`Failed to insert security policy for ${ap.iata}: ${secError.message}`);

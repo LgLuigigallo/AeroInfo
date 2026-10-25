@@ -19,6 +19,11 @@ CREATE TABLE IF NOT EXISTS public.airports (
     country_en TEXT NOT NULL,
     country_code VARCHAR(2) NOT NULL,
     official_website TEXT NOT NULL,
+    seo_status TEXT NOT NULL DEFAULT 'pending_quality' CHECK (seo_status IN ('pending_quality', 'indexable', 'blocked')),
+    seo_slug_it TEXT NOT NULL UNIQUE,
+    seo_slug_en TEXT NOT NULL UNIQUE,
+    seo_last_evaluated_at TIMESTAMPTZ,
+    seo_block_reasons TEXT[] NOT NULL DEFAULT '{}',
     latitude DOUBLE PRECISION,
     longitude DOUBLE PRECISION,
     difficulty_rating INT CHECK (difficulty_rating BETWEEN 1 AND 5) DEFAULT 2,
@@ -29,7 +34,7 @@ CREATE TABLE IF NOT EXISTS public.airports (
     recommended_arrival_intl NUMERIC(3,1) DEFAULT 3.0,
     navigation_advice_it TEXT,
     navigation_advice_en TEXT,
-    last_verified_at TIMESTAMPTZ DEFAULT NOW(),
+    last_verified_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -63,7 +68,8 @@ CREATE TABLE IF NOT EXISTS public.security_policies (
     powerbank_policy_en TEXT,
     powerbank_unverified BOOLEAN DEFAULT FALSE,
     official_source_url TEXT NOT NULL,
-    last_verified_at TIMESTAMPTZ DEFAULT NOW()
+    last_verified_at TIMESTAMPTZ,
+    source_verified_at TIMESTAMPTZ
 );
 
 -- 3. Terminals Table

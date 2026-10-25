@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { scraperEngine } from '@/lib/scraper/engine';
-import { supabase, getLiveAirports } from '@/lib/supabase';
+import { supabase, getLiveAirports, isSupabaseAdminConfigured } from '@/lib/supabase';
 import { airportCompilerEngine } from '@/lib/compiler/engine';
+import { evaluateAirportSeoQuality, saveAirportSeoEvaluation } from '@/lib/seo/airports';
 
 export const maxDuration = 60;
 
@@ -18,6 +19,10 @@ export async function GET(request: NextRequest) {
     }
   }
 
+  if (!supabase || !isSupabaseAdminConfigured()) {
+    return NextResponse.json({ error: 'Cron persistence requires Supabase configuration and SUPABASE_SERVICE_ROLE_KEY.' }, { status: 503 });
+  }
+
   try {
     // 1. Autonomous Compilation: Process all pending user requests into published airports
     console.info('🚀 [CRON_SYNC] Running autonomous compiler for pending user requests...');
@@ -26,24 +31,111 @@ export async function GET(request: NextRequest) {
 
     // 2. Fetch full active airport list (from Supabase or local fallback)
     const activeAirports = await getLiveAirports();
+    const pendingAirports = activeAirports
+      .filter((airport) => airport.seoStatus === 'pending_quality')
+      // FIFO avoids starvation when new requests keep arriving.
+      .sort((a, b) => (Date.parse(a.createdAt || '') || 0) - (Date.parse(b.createdAt || '') || 0));
+    const alreadyEvaluated = activeAirports.filter((airport) => airport.seoStatus !== 'pending_quality');
     const listToSync = targetIata
       ? activeAirports.filter((a) => a.iata.toUpperCase() === targetIata)
-      : activeAirports.slice(0, 15); // Sync first batch within function timeout limits
+      : [...pendingAirports, ...alreadyEvaluated].slice(0, 15); // New records are reviewed first.
 
     console.info(`🔄 [CRON_SYNC] Running sync for ${listToSync.length} airports (target: ${targetIata || 'BATCH'})...`);
     const syncResults = await scraperEngine.runWeeklySync(listToSync);
 
-    // 3. Record sync logs in Supabase if configured
+    // 3. Persist only facts extracted from an explicit official security rule.
+    const persistenceErrors: string[] = [];
     if (supabase) {
       try {
         for (const res of syncResults) {
-          await supabase.from('sync_logs').insert({
+          try {
+          if (res.policyVerified && res.extractedPolicy) {
+            const { data: airportRow, error: airportError } = await supabase.from('airports').select('id').eq('iata_code', res.airportIata).maybeSingle();
+            if (airportError) throw airportError;
+            if (airportRow?.id) {
+              const { data: policyRow, error: policyReadError } = await supabase.from('security_policies').select('id').eq('airport_id', airportRow.id).maybeSingle();
+              if (policyReadError) throw policyReadError;
+              const policy = res.extractedPolicy;
+              const payload = {
+                ...(typeof policy.has3DScanners === 'boolean' ? { has_3d_scanners: policy.has3DScanners } : {}),
+                ...(typeof policy.liquidsMustBeRemoved === 'boolean' ? { liquids_must_be_removed: policy.liquidsMustBeRemoved } : {}),
+                ...(policy.liquidsAllowance_it ? { liquids_allowance_it: policy.liquidsAllowance_it } : {}),
+                ...(policy.liquidsAllowance_en ? { liquids_allowance_en: policy.liquidsAllowance_en } : {}),
+                ...(typeof policy.liquidsUnverified === 'boolean' ? { liquids_unverified: policy.liquidsUnverified } : {}),
+                ...(typeof policy.electronicsInBag === 'boolean' ? { electronics_in_bag: policy.electronicsInBag } : {}),
+                ...(typeof policy.electronicsUnverified === 'boolean' ? { electronics_unverified: policy.electronicsUnverified } : {}),
+                official_source_url: res.sourceUrl,
+                source_verified_at: policy.lastVerifiedDate ? `${policy.lastVerifiedDate}T00:00:00.000Z` : res.timestamp,
+              };
+              const policyWrite = policyRow?.id
+                ? await supabase.from('security_policies').update(payload).eq('id', policyRow.id)
+                : await supabase.from('security_policies').insert({ ...payload, airport_id: airportRow.id });
+              if (policyWrite.error) throw policyWrite.error;
+            }
+          }
+
+          if (res.extractedVenues?.length) {
+            const { data: airportRow, error: airportError } = await supabase.from('airports').select('id').eq('iata_code', res.airportIata).maybeSingle();
+            if (airportError) throw airportError;
+            const verifiedVenues = res.extractedVenues.filter((venue) => !venue.isUnverified && venue.terminal && venue.location);
+            if (airportRow?.id && verifiedVenues.length) {
+              const { data: existingVenues, error: venuesError } = await supabase
+                .from('venues').select('id, name').eq('airport_id', airportRow.id);
+              if (venuesError) throw venuesError;
+              for (const venue of verifiedVenues) {
+                const existing = existingVenues?.find((item) => item.name.trim().toLocaleLowerCase() === venue.name.trim().toLocaleLowerCase());
+                const payload = {
+                  airport_id: airportRow.id,
+                  name: venue.name,
+                  category: venue.category,
+                  terminal: venue.terminal,
+                  location: venue.location,
+                  hours: venue.hours || null,
+                  is_24_hours: Boolean(venue.is24Hours),
+                  is_unverified: false,
+                };
+                const write = existing
+                  ? await supabase.from('venues').update(payload).eq('id', existing.id)
+                  : await supabase.from('venues').insert(payload);
+                if (write.error) throw write.error;
+              }
+            }
+          }
+
+          // 4. Audit the resulting record. The SEO state is independent of the
+          // airport request's email/publication status.
+          const originalAirport = activeAirports.find((airport) => airport.iata.toUpperCase() === res.airportIata.toUpperCase());
+          if (originalAirport?.seoStatus) {
+            const refreshedAirport = res.policyVerified && res.extractedPolicy
+              ? {
+                  ...originalAirport,
+                  securityPolicy: {
+                    ...originalAirport.securityPolicy,
+                    ...res.extractedPolicy,
+                    lastVerifiedDate: res.extractedPolicy.lastVerifiedDate || originalAirport.securityPolicy.lastVerifiedDate,
+                  },
+                }
+              : originalAirport;
+            const reasons = evaluateAirportSeoQuality(refreshedAirport);
+            const hasPlaceholder = reasons.some((reason) => reason.includes('segnaposto/generici'));
+            const hasFreshSourceVerification = Boolean(refreshedAirport.securityPolicy.lastVerifiedDate);
+            const status = hasPlaceholder ? 'blocked' : reasons.length === 0 && hasFreshSourceVerification ? 'indexable' : 'pending_quality';
+            await saveAirportSeoEvaluation(refreshedAirport, status, reasons);
+          }
+
+          // 5. Keep the operational crawl record for diagnostics.
+          const { error: logError } = await supabase.from('sync_logs').insert({
             airport_iata: res.airportIata,
             official_url: res.sourceUrl,
             status: res.success ? 'SUCCESS' : 'FAILED',
             changes_detected: Boolean(res.discrepanciesFound?.length),
             log_details: res
           });
+          if (logError) console.warn(`Could not save sync log for ${res.airportIata}:`, logError.message);
+          } catch (airportError) {
+            console.warn(`Could not persist sync results for ${res.airportIata}:`, airportError);
+            persistenceErrors.push(`${res.airportIata}: ${airportError instanceof Error ? airportError.message : 'database write failed'}`);
+          }
         }
       } catch (dbErr) {
         console.warn('Sync logs note:', dbErr);
@@ -51,16 +143,17 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json({
-      success: true,
+      success: persistenceErrors.length === 0,
       executionDate: new Date().toISOString(),
       compileReport,
       airportsProcessed: syncResults.length,
-      syncResults
-    });
-  } catch (error: any) {
+      syncResults,
+      persistenceErrors,
+    }, { status: persistenceErrors.length ? 500 : 200 });
+  } catch (error: unknown) {
     console.error('Error in cron sync:', error);
     return NextResponse.json(
-      { success: false, error: error.message || 'Internal sync error' },
+      { success: false, error: error instanceof Error ? error.message : 'Internal sync error' },
       { status: 500 }
     );
   }

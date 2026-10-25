@@ -54,20 +54,12 @@ ALTER TABLE public.airport_suggestions ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Allow public insert on airport_suggestions" ON public.airport_suggestions;
 DROP POLICY IF EXISTS "Service role full access on airport_suggestions" ON public.airport_suggestions;
-DROP POLICY IF EXISTS "Allow public read on airport_suggestions" ON public.airport_suggestions;
 
 CREATE POLICY "Allow public insert on airport_suggestions" 
 ON public.airport_suggestions 
 FOR INSERT 
 TO anon, authenticated 
 WITH CHECK (true);
-
--- Public can read non-sensitive summary rows
-CREATE POLICY "Allow public read on airport_suggestions" 
-ON public.airport_suggestions 
-FOR SELECT 
-TO anon, authenticated 
-USING (true);
 
 CREATE POLICY "Service role full access on airport_suggestions" 
 ON public.airport_suggestions 

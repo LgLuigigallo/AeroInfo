@@ -560,7 +560,7 @@ export function SecurityTab({
         <div className="flex items-center gap-2">
           <span>{t('verifiedDate')}:</span>
           <span className="font-semibold text-zinc-700 dark:text-zinc-300">
-            {sec.lastVerifiedDate}
+            {sec.lastVerifiedDate || (lang === 'it' ? 'non verificato' : 'not verified')}
           </span>
         </div>
 

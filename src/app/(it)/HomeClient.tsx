@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { SearchBar } from '@/components/SearchBar';
@@ -11,9 +12,11 @@ import { Footer } from '@/components/Footer';
 import { LanguageProvider, useLanguage } from '@/lib/i18n';
 import { airportsData } from '@/data/airports';
 import { Airport } from '@/types/airport';
+import { airportPath } from '@/lib/airport-slug';
 
 function MainContent() {
-  const { lang, t } = useLanguage();
+  const router = useRouter();
+  const { t } = useLanguage();
   const [airports, setAirports] = useState<Airport[]>(airportsData);
   // Default is null so a clean, beautiful Welcome Page is shown on initial visit
   const [selectedAirport, setSelectedAirport] = useState<Airport | null>(null);
@@ -33,64 +36,26 @@ function MainContent() {
     return airportsData;
   }, []);
 
-  // Read URL query parameter on mount and sync with live data
+  // Hydrate the search catalog after the static first render.
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      const airportParam = params.get('airport');
-      if (airportParam) {
-        const found = airportsData.find(
-          (a) => a.iata.toLowerCase() === airportParam.toLowerCase() || a.id.toLowerCase() === airportParam.toLowerCase()
-        );
-        if (found) {
-          setSelectedAirport(found);
-        }
-      }
-    }
-
-    // Load live database catalogue and update selected airport if active
-    refreshLiveAirports().then((liveList) => {
-      if (typeof window !== 'undefined') {
-        const params = new URLSearchParams(window.location.search);
-        const airportParam = params.get('airport');
-        if (airportParam && liveList) {
-          const found = liveList.find(
-            (a) => a.iata.toLowerCase() === airportParam.toLowerCase() || a.id.toLowerCase() === airportParam.toLowerCase()
-          );
-          if (found) {
-            setSelectedAirport(found);
-          }
-        } else if (liveList) {
-          setSelectedAirport((prev) => {
-            if (!prev) return null;
-            const found = liveList.find((a) => a.iata.toUpperCase() === prev.iata.toUpperCase());
-            return found || prev;
-          });
-        }
-      }
-    });
-  }, [refreshLiveAirports]);
+    let isMounted = true;
+    fetch('/api/airports')
+      .then((response) => response.json())
+      .then((data) => {
+        if (isMounted && Array.isArray(data?.airports) && data.airports.length > 0) setAirports(data.airports);
+      })
+      .catch((err) => console.warn('Failed to load airport catalog:', err));
+    return () => { isMounted = false; };
+  }, []);
 
   const handleSelectAirport = (airport: Airport) => {
     setSelectedAirport(airport);
-    // Update URL without page reload
-    if (typeof window !== 'undefined') {
-      const url = new URL(window.location.href);
-      url.searchParams.set('airport', airport.iata.toLowerCase());
-      window.history.pushState({}, '', url.toString());
-      // Smooth scroll to top of details
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    router.push(airportPath(airport, 'it'));
   };
 
   const handleResetHome = () => {
     setSelectedAirport(null);
-    if (typeof window !== 'undefined') {
-      const url = new URL(window.location.href);
-      url.searchParams.delete('airport');
-      window.history.pushState({}, '', url.pathname);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    router.push('/');
   };
 
   return (
@@ -130,9 +95,7 @@ function MainContent() {
                   const found = airports.find(
                     (a) => a.iata.toLowerCase() === iata.toLowerCase()
                   );
-                  if (found) {
-                    handleSelectAirport(found);
-                  }
+                  if (found) handleSelectAirport(found);
                 }}
               />
             </section>

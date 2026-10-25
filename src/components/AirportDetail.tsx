@@ -221,7 +221,7 @@ export function AirportDetail({ airport, onSelectAirport }: AirportDetailProps) 
 
             <div className="flex items-center gap-1 text-zinc-400 dark:text-zinc-500 text-[11px] font-mono">
               <Calendar className="w-3 h-3" />
-              <span>{t('verifiedDate')}: {airport.lastUpdated}</span>
+              <span>{t('verifiedDate')}: {airport.lastUpdated || (lang === 'it' ? 'non verificato' : 'not verified')}</span>
             </div>
           </div>
         </div>

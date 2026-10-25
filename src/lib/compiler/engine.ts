@@ -3,6 +3,7 @@ import { AVIATION_REGISTRY, CITY_TO_IATA } from './aviation-registry';
 import { supabase } from '@/lib/supabase';
 import { seedAllAirportsToSupabase } from '@/lib/supabase-sync';
 import { sendAirportPublishedEmail } from '@/lib/email';
+import { airportPath } from '@/lib/airport-slug';
 import { airportsData } from '@/data/airports';
 import { sanitizePostgrestParam } from '@/lib/security/sanitize';
 import { cleanOfficialWebsiteUrl } from '@/lib/aviation-authority';
@@ -148,19 +149,24 @@ export class AirportCompilerEngine {
         maxPowerbankWh: 100,
         powerbankPolicy_it: 'Ammessi solo in cabina fino a 100Wh (vietati in stiva).',
         powerbankPolicy_en: 'Allowed only in carry-on up to 100Wh (prohibited in checked luggage).',
-        officialSourceUrl: officialSite,
-        lastVerifiedDate: new Date().toISOString().split('T')[0]
+        officialSourceUrl: '',
+        liquidsUnverified: true,
+        electronicsUnverified: true,
+        droneUnverified: true,
+        powerbankUnverified: true,
+        lastVerifiedDate: ''
       },
       terminals: [
         {
           id: 't-main',
           name: 'Terminal 1',
           transferInfo_it: 'Terminal principale per partenze e arrivi passeggeri.',
-          transferInfo_en: 'Main passenger terminal for departures and arrivals.'
+          transferInfo_en: 'Main passenger terminal for departures and arrivals.',
+          isUnverified: true
         }
       ],
       airlines: [
-        { airlineName: 'Voli di Linea & Low Cost', iataCode: 'ALL', terminal: 'Terminal 1' }
+        { airlineName: 'Voli di Linea & Low Cost', iataCode: 'ALL', terminal: 'Terminal 1', isUnverified: true }
       ],
       amenities: [
         {
@@ -172,7 +178,8 @@ export class AirportCompilerEngine {
           location_it: 'In tutto il terminal',
           location_en: 'Terminal-wide',
           details_it: 'Rete Wi-Fi aperta disponibile in tutte le aree passeggeri.',
-          details_en: 'Open Wi-Fi network available throughout the terminal.'
+          details_en: 'Open Wi-Fi network available throughout the terminal.',
+          isUnverified: true
         },
         {
           id: `${iata.toLowerCase()}-power`,
@@ -183,7 +190,8 @@ export class AirportCompilerEngine {
           location_it: 'Presso le sedute delle sale d\'attesa',
           location_en: 'Near boarding gate waiting areas',
           details_it: 'Prese per la ricarica di smartphone e computer portatili.',
-          details_en: 'Outlets for charging smartphones and mobile devices.'
+          details_en: 'Outlets for charging smartphones and mobile devices.',
+          isUnverified: true
         }
       ],
       venues: [
@@ -197,7 +205,8 @@ export class AirportCompilerEngine {
           isEarlyMorning: true,
           serviceType: 'coffee_snack',
           highlightNote_it: 'Caffetteria, cornetti caldi, bibite e snack veloci.',
-          highlightNote_en: 'Coffee, pastries, cold beverages and quick snacks.'
+          highlightNote_en: 'Coffee, pastries, cold beverages and quick snacks.',
+          isUnverified: true
         }
       ],
       transports: [
@@ -212,7 +221,8 @@ export class AirportCompilerEngine {
           pickupLocation_it: 'Fronte uscita Arrivi',
           pickupLocation_en: 'Outside Arrivals hall',
           details_it: 'Collegamento diretto tra l\'aeroporto e la stazione centrale della città.',
-          details_en: 'Direct bus connection between airport and central train station.'
+          details_en: 'Direct bus connection between airport and central train station.',
+          isUnverified: true
         },
         {
           id: `${iata.toLowerCase()}-taxi`,
@@ -225,10 +235,11 @@ export class AirportCompilerEngine {
           pickupLocation_it: 'Corsia taxi all\'uscita Arrivi',
           pickupLocation_en: 'Taxi rank at Arrivals exit',
           details_it: 'Tariffa a tassametro per il centro città.',
-          details_en: 'Metered fares to city center.'
+          details_en: 'Metered fares to city center.',
+          isUnverified: true
         }
       ],
-      lastUpdated: new Date().toISOString().split('T')[0]
+      lastUpdated: ''
     };
   }
 
@@ -246,10 +257,24 @@ export class AirportCompilerEngine {
     }
 
     // 1. Seed to Supabase
+    let publishedAirport = airport;
     if (supabase) {
       const seedResult = await seedAllAirportsToSupabase([airport]);
       if (!seedResult.success && seedResult.errors.length > 0) {
         console.warn(`Supabase seed warning for ${airport.iata}:`, seedResult.errors);
+        return { success: false, error: `Airport ${airport.iata} was not fully saved; request remains pending.` };
+      }
+      const { data: persistedSlugs } = await supabase
+        .from('airports')
+        .select('seo_slug_it, seo_slug_en')
+        .eq('iata_code', airport.iata)
+        .maybeSingle();
+      if (persistedSlugs?.seo_slug_it || persistedSlugs?.seo_slug_en) {
+        publishedAirport = {
+          ...airport,
+          seoSlugIt: persistedSlugs.seo_slug_it || undefined,
+          seoSlugEn: persistedSlugs.seo_slug_en || undefined,
+        };
       }
 
       // 2. Find and update all matching requests
@@ -304,7 +329,7 @@ export class AirportCompilerEngine {
                 to: req.requester_email,
                 airportName: airport.name_it,
                 airportIata: airport.iata,
-                airportUrl: `https://www.aero-info.eu/?airport=${airport.iata.toLowerCase()}`
+                airportUrl: `https://www.aero-info.eu${airportPath(publishedAirport, 'it')}`
               });
             }
           }
