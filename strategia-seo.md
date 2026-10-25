@@ -43,12 +43,12 @@ Aggiornare questa sezione al completamento di ogni attività: spuntare la voce, 
 ### P2 — Sitemap, crawler e link interni
 
 - [x] **P2.1 Sitemap dinamica** — 2026-10-25 Preview. `/sitemap.xml` restituisce 67 URL (home + 33 record statici approvati in due lingue), alternates `hreflang`, zero URL query. Staging DB vuoto: verificato fallback statico approvato.
-- [ ] **P2.2 Freschezza sitemap** — nuova scheda idonea compare alla richiesta successiva senza redeploy; testare caching Next/Vercel e invalidazione necessaria.
-- [ ] **P2.3 Robots e crawler** — permettere pagine pubbliche a Googlebot, Bingbot e `OAI-SearchBot`; bloccare `/api/`; verificare firewall/CDN e status HTTP effettivo.
+- [ ] **P2.2 Freschezza sitemap** — il codice legge Supabase a ogni richiesta (`connection()` in `src/app/sitemap.ts`), ma manca una scheda `indexable` nello staging per verificare in runtime comparsa senza redeploy e cache Vercel.
+- [ ] **P2.3 Robots e crawler** — regole del file verificate su Preview; completare verifica Production del firewall/CDN e della raggiungibilità effettiva dei crawler.
 - [x] **P2.4 Link crawlable** — 2026-10-25 Preview. Home contiene 33 anchor HTML alle schede; dossier contiene breadcrumb e link ad aeroporti correlati quando definiti nei dati.
 - [ ] **P2.5 Webmaster tools** — verificare dominio e inviare sitemap a Google Search Console e Bing Webmaster Tools. Valutare IndexNow per aggiornamenti; invio URL non garantisce inclusione nell’indice.
 
-**Avanzamento implementazione (2026-10-25):** Preview verifica sitemap 67 URL, alternates e nessuna query; `robots.txt` permette Googlebot, Bingbot e `OAI-SearchBot` e disabilita `/api/`. Restano da verificare freschezza dopo inserimento DB e firewall/CDN sul dominio Production. Preview privata aggiunge `X-Robots-Tag: noindex` da Vercel.
+**Avanzamento implementazione (2026-10-25):** Preview verifica sitemap 67 URL, alternates e nessuna query; la funzione Next forza esecuzione a richiesta e legge il DB, con fallback statico approvato. Il test senza redeploy resta aperto finché staging è vuoto. Production `https://www.aero-info.eu/robots.txt` risponde 200: consente `/`, disabilita `/api/` e dichiara la sitemap. Header Vercel mostra cache HIT (età 178849 s) su robots; il testo corrisponde al file ma non è prova dei passaggi del WAF per ciascun crawler. La sitemap Production risponde 200, ma è quella legacy: 36 URL, incluse `/feedback`, `/unsubscribe` e 33 URL `/?airport=...`; non contiene le nuove schede localizzate. Questo conferma che le modifiche SEO sono ancora solo nella Preview. Preview privata aggiunge `X-Robots-Tag: noindex` da Vercel.
 
 ### P3 — Contenuti, GEO e misurazione
 
