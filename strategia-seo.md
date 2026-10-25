@@ -1,6 +1,6 @@
 # Strategia SEO e GEO AeroInfo
 
-**Stato:** implementazione locale in corso sul branch `codex/seo-geo-foundation`; nessun deploy o push  
+**Stato:** implementazione sul branch isolato `codex/seo-geo-foundation`; Preview Vercel in verifica, nessuna modifica a Production
 **Ultimo aggiornamento:** 2026-10-25  
 **Mercati:** italiano prioritario; inglese internazionale  
 **Scopo:** acquisire traffico organico qualificato e rendere le informazioni aeroportuali comprensibili e citabili da motori di ricerca e motori di risposta AI. Nessuna attività garantisce posizionamenti o indicizzazione.
@@ -28,7 +28,7 @@ Aggiornare questa sezione al completamento di ogni attività: spuntare la voce, 
 - [x] **P0.6a Flusso codice** — cron FIFO sui pending, whitelist estesa ai 47 codici attuali, persistenza solo di regole esplicite; seed conserva stato e slug; compilazione fallita non pubblica la richiesta; venue aggiunte/aggiornate senza cancellare le altre.
 - [x] **P0.7a Audit meccanico** — 33 statici: 33 superano il gate automatico dopo normalizzazione del prefisso `www` per fonti regolatorie come TSA. Database: 47/47 superano controlli automatici di identità bilingue, URL HTTPS, campi core bilingui, due dettagli bilingui e coordinate; questo non prova che i fatti siano corretti o che le fonti siano state raggiunte.
 
-**Blocco P0 residuo:** Production AeroInfo resta invariata: mancano campi SEO e `source_verified_at`; le 47 date legacy non provano un fetch riuscito. Staging è inizializzato ma vuoto. Vercel Preview ora punta a staging con URL e chiave pubblica; manca `SUPABASE_SERVICE_ROLE_KEY` di staging, quindi il cron resta non operativo finché la chiave server non viene aggiunta. Il branch esiste solo localmente e va pubblicato su GitHub per attivare la Preview. Nessun commit, push o deploy eseguito.
+**Blocco P0 residuo:** Production AeroInfo resta invariata: mancano campi SEO e `source_verified_at`; le 47 date legacy non provano un fetch riuscito. Staging è inizializzato ma vuoto. Vercel Preview ha URL, chiave pubblica e `SUPABASE_SERVICE_ROLE_KEY` di staging, limitati al branch `codex/seo-geo-foundation`. Le variabili da sole non avviano un nuovo deploy. Branch pubblicato su GitHub; Preview ha compilato codice e TypeScript ma fallito durante il prerender di `/`. Correzione in corso: redirect legacy anticipato in `src/proxy.ts`; lettura Supabase dei link pagina avvolta in `Suspense`. Build locale non completabile nell’ambiente corrente: `next/font` non raggiunge Google Fonts; `tsc` locale non disponibile (`node_modules/.bin/tsc` punta a un file mancante). Serve nuova build Preview per verificare la correzione. Nessuna modifica Production.
 
 ### P1 — URL e pagine aeroporto
 
@@ -38,7 +38,7 @@ Aggiornare questa sezione al completamento di ogni attività: spuntare la voce, 
 - [ ] **P1.4 Compatibilità URL legacy** — `/?airport=IATA` fa redirect permanente alla scheda IT. Ricerca, selettori, email e condivisione usano URL canoniche.
 - [ ] **P1.5 Errori e noindex** — slug sconosciuto restituisce 404; record `pending_quality`/`blocked` restituisce contenuto visitabile ma `noindex`, senza canonical verso altre schede.
 
-**Avanzamento implementazione locale (2026-10-25):** le route IT/EN server-rendered, i metadati per scheda, il redirect legacy, il dossier e i link alla ricerca sono nel branch. Restano da verificare via build/deploy e URL reali; non sono ancora rilasciati.
+**Avanzamento implementazione (2026-10-25):** le route IT/EN server-rendered, i metadati per scheda, il redirect legacy, il dossier e i link alla ricerca sono nel branch. Preview iniziale ha fallito il prerender della home; redirect legacy spostato nel Proxy e lettura link dinamici avvolta in `Suspense`. Restano da verificare via nuova build Preview e URL reali; non sono rilasciati su Production.
 
 ### P2 — Sitemap, crawler e link interni
 
@@ -111,6 +111,5 @@ Titoli, H1 e descrizioni devono essere specifici per aeroporto e lingua; testo n
 ## Registro decisioni e limiti
 
 - **Indicizzazione automatica dopo verifica qualità:** richiesto dall’utente il 2026-10-25. Fallback generici non entrano nell’indice.
-- **Nessun deploy/commit/push automatico:** le modifiche restano nel workspace finché non si decide integrazione e rilascio.
-- **Reversibilità e isolamento:** codice in `codex/seo-geo-foundation`; Production Supabase e Vercel Production non modificati. Schema applicato solo al progetto staging nuovo e vuoto; env vars modificate solo nel target Vercel Preview. Migrazione additiva con rollback in `supabase/rollback/20261025000000_airport_seo_quality.sql`. Nessun commit, push o deploy.
+- **Reversibilità e isolamento:** codice e commit solo in `codex/seo-geo-foundation`; branch remoto attiva solo Preview. Production Supabase e Vercel Production non modificati. Schema applicato solo al progetto staging nuovo e vuoto; env vars modificate solo nel target Vercel Preview e branch-scoped. Migrazione additiva con rollback in `supabase/rollback/20261025000000_airport_seo_quality.sql`. Merge o deploy Production richiede decisione separata.
 - **Verifiche webmaster:** configurazione Search Console/Bing dipende dall’accesso agli account; finché non verificata, resta attività aperta.
