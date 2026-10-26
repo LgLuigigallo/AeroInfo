@@ -1,0 +1,55 @@
+{
+  "environment": "staging",
+  "projectRef": "rkigkmmtlqwmbwtyijpp",
+  "generatedAt": "2026-10-26T09:53:55Z",
+  "status": "partial",
+  "results": [
+    {
+      "id": "migration-admin-console",
+      "status": "passed",
+      "detail": "Admin console migration applied successfully to staging."
+    },
+    {
+      "id": "rls-anon-private-tables",
+      "status": "passed",
+      "detail": "Role anon returned zero rows for all five synthetic fixtures."
+    },
+    {
+      "id": "rls-authenticated-private-tables",
+      "status": "passed",
+      "detail": "Role authenticated returned zero rows for all five synthetic fixtures."
+    },
+    {
+      "id": "rls-service-role-private-tables",
+      "status": "passed",
+      "detail": "Role service_role read exactly one fixture from each private table."
+    },
+    {
+      "id": "local-security-suite",
+      "status": "passed",
+      "detail": "npm test, TypeScript check, and git diff whitespace check passed."
+    },
+    {
+      "id": "staging-application-route-smoke",
+      "status": "blocked",
+      "detail": "The available SEO branch preview returned 404 for /api/admin/session, so it does not contain the admin console."
+    },
+    {
+      "id": "admin-api-and-session-integration",
+      "status": "blocked",
+      "detail": "The current admin-console previews are not verified as connected to staging; the staging service-role key and authenticated admin/non-admin test sessions are not available to the test runner."
+    }
+  ],
+  "fixtures": {
+    "airport_requests": "00000000-0000-4000-8000-000000000101",
+    "airport_suggestions": "00000000-0000-4000-8000-000000000102",
+    "site_feedback": "00000000-0000-4000-8000-000000000103",
+    "sync_logs": "00000000-0000-4000-8000-000000000104",
+    "admin_audit_log": "00000000-0000-4000-8000-000000000105"
+  },
+  "notes": [
+    "All fixture content is synthetic and uses example.invalid addresses.",
+    "The admin_audit_log fixture is retained because the audit table is append-only.",
+    "No production application session or production API was accessed."
+  ]
+}

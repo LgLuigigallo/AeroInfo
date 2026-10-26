@@ -60,8 +60,8 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json({ exists: false });
-  } catch (err: any) {
-    console.error('Error in GET /api/airports/request:', err);
+  } catch {
+    console.error('Airport request lookup failed.');
     return NextResponse.json({ exists: false });
   }
 }
@@ -115,9 +115,8 @@ export async function POST(request: NextRequest) {
     const { query, email } = body || {};
 
     console.info('✈️ [AIRPORT_REQUEST] Handling user request:', {
-      query: typeof query === 'string' ? query.slice(0, 100) : query,
-      email: typeof email === 'string' ? email.slice(0, 100) : email,
-      clientIp,
+      queryLength: typeof query === 'string' ? query.length : null,
+      hasContact: typeof email === 'string' && email.length > 0,
       timestamp: new Date().toISOString()
     });
 
@@ -216,7 +215,7 @@ export async function POST(request: NextRequest) {
         });
         emailStatus = { sent: mailRes.success, provider: mailRes.provider, error: mailRes.error };
       } catch (err: any) {
-        console.error('Failed to dispatch subscriber confirmation email:', err);
+        console.error('Subscriber confirmation email failed.');
         emailStatus = { sent: false, error: err.message };
       }
 
@@ -264,10 +263,10 @@ export async function POST(request: NextRequest) {
           recordId = data.id;
         }
         if (error) {
-          console.warn('Supabase airport_requests insert note:', error.message);
+          console.warn('Supabase airport_requests insert note.');
         }
-      } catch (dbErr) {
-        console.warn('Database error when saving request:', dbErr);
+      } catch {
+        console.warn('Database error when saving request.');
       }
     }
 
@@ -285,7 +284,7 @@ export async function POST(request: NextRequest) {
           error: mailRes.error
         };
       } catch (err: any) {
-        console.error('Failed to trigger confirmation email:', err);
+        console.error('Confirmation email failed.');
         emailStatus = { sent: false, error: err.message };
       }
     }
@@ -314,7 +313,7 @@ export async function POST(request: NextRequest) {
       emailStatus
     });
   } catch (error: any) {
-    console.error('Error handling airport request:', error);
+    console.error('Airport request handling failed.');
     return NextResponse.json(
       { success: false, error: error.message || 'Internal server error' },
       { status: 500 }
