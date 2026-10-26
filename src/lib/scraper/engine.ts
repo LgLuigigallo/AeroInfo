@@ -44,13 +44,13 @@ export const OFFICIAL_DOMAIN_WHITELIST: Record<string, string> = {
   FUE: 'https://www.aena.es/es/pasajeros/equipajes-controles/equipaje-mano.html',
 
   // Netherlands
-  AMS: 'https://www.schiphol.nl/en/page/security-rules-liquids-in-hand-baggage/',
+  AMS: 'https://www.schiphol.nl/en/prepare-for-your-flight-at-schiphol/prepare-for-security/',
 
   // Ireland
   DUB: 'https://www.dublinairport.com/at-the-airport/security',
 
   // Portugal
-  LIS: 'https://www.ana.pt/en/passenger-guide/what-can-i-carry',
+  LIS: 'https://www.ana.pt/en/content-topic/plan-your-trip',
 
   // Austria
   VIE: 'https://www.viennaairport.com/passagiere/flughafen/sicherheitskontrolle',
@@ -65,7 +65,7 @@ export const OFFICIAL_DOMAIN_WHITELIST: Record<string, string> = {
   HEL: 'https://www.finavia.fi/en/airports/helsinki-airport/before-flight/security-control',
 
   // Poland
-  WAW: 'https://www.lotnisko-chopina.pl/en/security-control.html',
+  WAW: 'https://airportchopin.com/en/info/security',
   KRK: 'https://krakowairport.pl/en/passenger/security-control',
 
   // Hungary
@@ -75,7 +75,7 @@ export const OFFICIAL_DOMAIN_WHITELIST: Record<string, string> = {
   ATH: 'https://www.aia.gr/traveler/security-information',
 
   // Switzerland
-  ZRH: 'https://www.flughafen-zuerich.ch/en/passengers/fly/security-and-customs',
+  ZRH: 'https://www.flughafen-zuerich.ch/en/passengers/fly/all-about-the-flight/what-is-allowed-in-your-baggage',
 
   // UK & USA & Japan
   LHR: 'https://www.heathrow.com/at-the-airport/airport-security',
@@ -131,6 +131,29 @@ export const OFFICIAL_VENUES_ENDPOINTS: Record<string, { type: 'adr_portlet' | '
 export class AirportScraperEngine {
   private userAgent = 'AeroInfo-Intelligence-Bot/1.0 (+https://aeroinfo.vercel.app)';
   private readonly maxRedirects = 5;
+  private readonly maxHtmlBytes = 2_000_000;
+
+  private async readHtml(response: Response): Promise<string> {
+    const declaredLength = Number(response.headers.get('content-length') || 0);
+    if (declaredLength > this.maxHtmlBytes) throw new Error('Official page exceeded the 2 MB response limit.');
+    if (!response.body) return '';
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let bytes = 0;
+    let html = '';
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      bytes += value.byteLength;
+      if (bytes > this.maxHtmlBytes) {
+        await reader.cancel();
+        throw new Error('Official page exceeded the 2 MB response limit.');
+      }
+      html += decoder.decode(value, { stream: true });
+    }
+    return html + decoder.decode();
+  }
 
   private async fetchOfficialPage(iata: string, startUrl: string): Promise<{ response?: Response; finalUrl: string; error?: string }> {
     let currentUrl = startUrl;
@@ -178,7 +201,7 @@ export class AirportScraperEngine {
     if (contentType && !/(text\/html|application\/xhtml\+xml)/i.test(contentType)) return [];
 
     try {
-      const html = await response.text();
+      const html = await this.readHtml(response);
       const $ = cheerio.load(html);
       const matches = new Map<string, number>();
       const relevant = /security|screening|checkpoint|baggage|luggage|liquid|prohibited|bagagli|sicurezza|controlli|sicherheitskontrolle|sicherheit|seguridade|seguridad|sûreté/i;
@@ -246,27 +269,6 @@ export class AirportScraperEngine {
       };
     }
 
-    // SSRF & Whitelist Protection
-    if (!isSafeOutboundUrl(targetUrl)) {
-      return {
-        airportIata: iata,
-        sourceUrl: targetUrl,
-        success: false,
-        timestamp: new Date().toISOString(),
-        notes: 'Security check: URL rejected by SSRF filter (non-HTTPS or internal/reserved address).'
-      };
-    }
-
-    if (explicitUrl && !this.isOfficialDomain(iata, targetUrl)) {
-      return {
-        airportIata: iata,
-        sourceUrl: targetUrl,
-        success: false,
-        timestamp: new Date().toISOString(),
-        notes: 'Security check: explicit URL does not match official airport domain whitelist.'
-      };
-    }
-
     try {
       const discoveredUrls = await this.discoverOfficialSecurityUrls(iata, officialWebsite);
       const candidateUrls = [...new Set([targetUrl, canonicalUrl, ...discoveredUrls].filter((url): url is string => Boolean(url)))];
@@ -282,7 +284,13 @@ export class AirportScraperEngine {
         if (fetched.response?.ok) {
           const contentType = fetched.response.headers.get('content-type') || '';
           if (!contentType || /(text\/html|application\/xhtml\+xml)/i.test(contentType)) {
-            const html = await fetched.response.clone().text();
+            let html: string;
+            try {
+              html = await this.readHtml(fetched.response.clone());
+            } catch {
+              failures.push(`${new URL(candidateUrl).pathname}: response exceeded the safe HTML limit`);
+              continue;
+            }
             if (this.hasExplicitLiquidsRule(html)) {
               response = fetched.response;
               resolvedUrl = fetched.finalUrl;
@@ -305,16 +313,19 @@ export class AirportScraperEngine {
       }
 
       if (!response) {
+        const accessDenied = failures.some((failure) => /HTTP (401|403)\b/.test(failure));
         return {
           airportIata: iata,
           sourceUrl: targetUrl,
           success: false,
           timestamp: new Date().toISOString(),
-          notes: `Official source unavailable after safe fallback checks (${failures.slice(0, 3).join('; ') || 'no eligible source'}).`,
+          notes: accessDenied
+            ? `The official website denied automated access; source availability could not be confirmed (${failures.slice(0, 3).join('; ')}).`
+            : `Official source unavailable after safe fallback checks (${failures.slice(0, 3).join('; ') || 'no eligible source'}).`,
         };
       }
 
-      const html = await response.text();
+      const html = await this.readHtml(response);
       const $ = cheerio.load(html);
 
       $('script, style, noscript, svg, nav, footer').remove();
@@ -417,7 +428,7 @@ export class AirportScraperEngine {
           ? 'Verified: 3D CT lanes allow bottles and liquids inside bag.' 
           : policyVerified
             ? 'Official page contained an explicit liquids rule; only supported fields were extracted.'
-            : 'Official page loaded, but no explicit security rule could be confirmed.'}`
+            : 'Official page loaded, but no explicit security rule was exposed to the scraper; no policy fields or verification date were updated.'}`
       };
     } catch (err: any) {
       return {
