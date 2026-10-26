@@ -62,67 +62,6 @@ body {
   border-color: inherit;
 }
 
-/* Airplane stylized flight animation (contained in full-width horizon stage) */
-@keyframes flightTrajectory {
-  0% {
-    transform: translate(-100px, 105px) rotate(0deg) scale(0.65);
-    opacity: 0;
-  }
-  5% {
-    transform: translate(20px, 105px) rotate(0deg) scale(0.7);
-    opacity: 0.95;
-  }
-  14% {
-    /* Taxi and takeoff roll */
-    transform: translate(160px, 105px) rotate(-4deg) scale(0.75);
-    opacity: 1;
-  }
-  28% {
-    /* Climb */
-    transform: translate(420px, 62px) rotate(-16deg) scale(0.85);
-    opacity: 1;
-  }
-  44% {
-    /* High Cruising entry */
-    transform: translate(720px, 28px) rotate(-2deg) scale(0.9);
-    opacity: 0.95;
-  }
-  58% {
-    /* Cruising high across sky */
-    transform: translate(960px, 28px) rotate(1deg) scale(0.9);
-    opacity: 0.95;
-  }
-  72% {
-    /* Glide descent */
-    transform: translate(1220px, 58px) rotate(12deg) scale(0.85);
-    opacity: 0.95;
-  }
-  86% {
-    /* Approach */
-    transform: translate(1420px, 88px) rotate(10deg) scale(0.8);
-    opacity: 0.95;
-  }
-  92% {
-    /* Touchdown */
-    transform: translate(1520px, 105px) rotate(1deg) scale(0.75);
-    opacity: 0.9;
-  }
-  97% {
-    /* Rollout deceleration */
-    transform: translate(1620px, 105px) rotate(0deg) scale(0.7);
-    opacity: 0.5;
-  }
-  100% {
-    transform: translate(1700px, 105px) rotate(0deg) scale(0.65);
-    opacity: 0;
-  }
-}
-
-.animate-flight-loop {
-  animation: flightTrajectory 14s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  will-change: transform, opacity;
-}
-
 @keyframes cloudDriftSlow {
   0% {
     transform: translateX(-10%);
