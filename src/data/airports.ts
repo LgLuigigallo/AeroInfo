@@ -3229,7 +3229,7 @@ export const airportsData: Airport[] = [
       powerbankPolicy_it: 'Max 100Wh consentiti solo nel bagaglio a mano.',
       powerbankPolicy_en: 'Max 100Wh allowed in cabin bag only.',
       powerbankUnverified: false,
-      officialSourceUrl: 'https://www.bud.hu/en/passengers/flight_and_travel_info/security_screening',
+      officialSourceUrl: 'https://www.bud.hu/en/flight-and-travel-information/travel/security-screening',
       lastVerifiedDate: '2026-10-18'
     },
     terminals: [
