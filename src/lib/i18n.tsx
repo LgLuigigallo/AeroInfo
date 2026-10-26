@@ -82,8 +82,12 @@ export const translations: Translations = {
     en: 'Official Source'
   },
   viewOfficialRegulations: {
-    it: 'Consulta regolamento ufficiale',
-    en: 'View official regulation'
+    it: 'Consulta il sito ufficiale',
+    en: 'Visit official website'
+  },
+  bubbleClose: {
+    it: 'Chiudi',
+    en: 'Close'
   },
   searchPlaceholder: { 
     it: 'Cerca aeroporto (es. FCO, Malpensa, JFK, Londra, Roma)...', 

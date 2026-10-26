@@ -144,6 +144,17 @@ export function AirportBubblesView({
                 {isItalian ? 'Aggiornato al' : 'Verified on'} {verifiedDateFormatted}
               </span>
             )}
+            {officialUrl && (
+              <a
+                href={officialUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#05668D] dark:text-[#5EAAA8] hover:underline pt-0.5"
+              >
+                <span>{isItalian ? 'Consulta il sito ufficiale' : 'Visit official website'}</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+            )}
           </div>
         </div>
       </section>
@@ -154,9 +165,6 @@ export function AirportBubblesView({
           <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
             {isItalian ? 'Scegli la categoria di tuo interesse' : 'Choose what you need to check'}
           </h2>
-          <span className="text-xs text-[#5EAAA8] font-medium hidden sm:inline">
-            {isItalian ? '4 bolle informative rapide' : '4 instant intelligence cards'}
-          </span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
@@ -497,7 +505,7 @@ export function AirportBubblesView({
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] hover:underline font-semibold"
                       >
-                        <span>{t('viewOfficialRegulations')}</span>
+                        <span>{isItalian ? 'Consulta il sito ufficiale' : 'Visit official website'}</span>
                         <ExternalLink className="w-3.5 h-3.5" />
                       </a>
                     </div>
@@ -661,16 +669,25 @@ export function AirportBubblesView({
             </div>
 
             {/* Modal Bottom Close Bar */}
-            <div className="p-3 sm:p-4 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80 flex items-center justify-between text-xs">
-              <span className="text-zinc-400 font-mono hidden sm:inline">
-                AeroInfo • Minimalist Traveler View
-              </span>
+            <div className="p-3 sm:p-4 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80 flex items-center justify-between text-xs gap-3">
+              {officialUrl ? (
+                <a
+                  href={officialUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] hover:underline font-semibold truncate"
+                >
+                  <span>{isItalian ? 'Consulta il sito ufficiale' : 'Visit official website'}</span>
+                  <ExternalLink className="w-3.5 h-3.5 shrink-0" />
+                </a>
+              ) : <div />}
+
               <button
                 type="button"
                 onClick={() => setActiveModal(null)}
-                className="w-full sm:w-auto px-5 py-2 rounded-xl bg-[#05668D] hover:bg-[#5EAAA8] text-white font-bold transition-colors cursor-pointer text-center ml-auto"
+                className="w-full sm:w-auto px-6 py-2 rounded-xl bg-[#05668D] hover:bg-[#5EAAA8] text-white font-bold transition-colors cursor-pointer text-center text-xs ml-auto shadow-xs shrink-0"
               >
-                {t('bubbleClose')}
+                {isItalian ? 'Chiudi' : 'Close'}
               </button>
             </div>
 
