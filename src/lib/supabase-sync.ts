@@ -18,7 +18,7 @@ export async function seedAllAirportsToSupabase(airports: Airport[], options: { 
   if (!supabase) {
     return {
       success: false,
-      message: 'Supabase is not configured. Provide NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in .env.local',
+      message: 'Supabase is not configured. Provide NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY in .env.local',
       count: 0,
       errors: ['Client is null']
     };

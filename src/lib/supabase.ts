@@ -7,7 +7,7 @@ import { AVIATION_REGISTRY } from '@/lib/compiler/aviation-registry';
 import { cleanOfficialWebsiteUrl, isGeneralAviationAirport } from '@/lib/aviation-authority';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
 // Server-side privileged client when service role key or sb_secret_ key is provided;

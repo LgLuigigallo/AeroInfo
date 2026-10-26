@@ -5,11 +5,26 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 
 let browserClient: SupabaseClient | null = null;
 
+function isSafeBrowserKey(key: string): boolean {
+  if (key.startsWith('sb_publishable_')) return true;
+  if (key.startsWith('sb_secret_')) return false;
+
+  const payload = key.split('.')[1];
+  if (!payload) return false;
+  try {
+    const encoded = payload.replace(/-/g, '+').replace(/_/g, '/');
+    const claims = JSON.parse(atob(encoded.padEnd(Math.ceil(encoded.length / 4) * 4, '=')));
+    return claims.role === 'anon';
+  } catch {
+    return false;
+  }
+}
+
 export function getAdminAuthClient(): SupabaseClient | null {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!url || !anonKey) return null;
-  browserClient ??= createBrowserClient(url, anonKey, {
+  const publicKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !publicKey || !isSafeBrowserKey(publicKey)) return null;
+  browserClient ??= createBrowserClient(url, publicKey, {
     auth: {
       flowType: 'pkce',
       persistSession: true,
