@@ -92,6 +92,10 @@ export function evaluateAirportSeoQuality(airport: Airport, now = new Date()): s
 }
 
 export function getAirportSeoStatus(airport: Airport): AirportSeoStatus {
+  // Roma Urbe serves general aviation rather than scheduled airline traffic.
+  // Its current record contains passenger-security claims without an official
+  // source, so never expose it as an indexable SEO dossier.
+  if (airport.iata.trim().toUpperCase() === 'QUR') return 'blocked';
   const reasons = evaluateAirportSeoQuality(airport);
   if (airport.seoStatus === 'blocked') return 'blocked';
   if (airport.seoStatus === 'indexable') return reasons.length === 0 ? 'indexable' : 'blocked';
