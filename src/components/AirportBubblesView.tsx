@@ -80,7 +80,7 @@ export function AirportBubblesView({
     <div className="w-full space-y-6 animate-in fade-in duration-200">
       
       {/* Top Header & Search Bar Navigation */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-zinc-200/80 dark:border-zinc-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3">
         <button
           type="button"
           onClick={onBack}
@@ -100,8 +100,8 @@ export function AirportBubblesView({
         </div>
       </div>
 
-      {/* Airport Identification Card (Clean & Minimal) */}
-      <section className="rounded-3xl bg-white dark:bg-zinc-900 border border-[#B3E5E0]/60 dark:border-zinc-800 p-5 sm:p-7 shadow-xs">
+      {/* Airport Identification Card (Clean & Minimal - No Heavy Borders) */}
+      <section className="rounded-3xl bg-white dark:bg-zinc-900 p-5 sm:p-7 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div className="space-y-1.5">
             <div className="flex flex-wrap items-center gap-2">
@@ -114,7 +114,7 @@ export function AirportBubblesView({
                 </span>
               )}
               {policy.has3DScanners ? (
-                <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
+                <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
                   <CheckCircle2 className="w-3 h-3" />
                   {isItalian ? 'Scanner 3D EDS-CB C3' : '3D EDS-CB C3 Scanners'}
                 </span>
@@ -135,7 +135,7 @@ export function AirportBubblesView({
 
           {/* Verification Badge & Source */}
           <div className="flex flex-col items-start sm:items-end gap-1 text-xs">
-            <div className="inline-flex items-center gap-1.5 text-zinc-600 dark:text-zinc-300 font-medium bg-[#E8F1F2]/60 dark:bg-zinc-800/80 px-2.5 py-1 rounded-full border border-[#B3E5E0]/50">
+            <div className="inline-flex items-center gap-1.5 text-zinc-600 dark:text-zinc-300 font-medium bg-[#E8F1F2]/60 dark:bg-zinc-800/80 px-2.5 py-1 rounded-full shadow-2xs">
               <ShieldCheck className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
               <span>{t('verifiedOfficial')}</span>
             </div>
@@ -159,7 +159,7 @@ export function AirportBubblesView({
         </div>
       </section>
 
-      {/* 4 Main Interactive Bubbles Grid */}
+      {/* 4 Main Interactive Bubbles Grid - Borderless Design */}
       <section aria-label="Informazioni essenziali aeroporto" className="space-y-3">
         <div className="flex items-center justify-between">
           <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
@@ -173,7 +173,7 @@ export function AirportBubblesView({
           <button
             type="button"
             onClick={() => setActiveModal('liquids')}
-            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 border-2 border-zinc-200/90 dark:border-zinc-800 hover:border-[#5EAAA8] dark:hover:border-[#5EAAA8] transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer flex flex-col justify-between space-y-4"
+            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer flex flex-col justify-between space-y-4"
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between">
@@ -198,7 +198,7 @@ export function AirportBubblesView({
               </div>
             </div>
 
-            <div className="pt-2 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center gap-2 text-xs font-medium text-[#05668D] dark:text-[#5EAAA8]">
+            <div className="pt-2 flex items-center gap-2 text-xs font-medium text-[#05668D] dark:text-[#5EAAA8]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#5EAAA8]" />
               <span>{isItalian ? 'Flaconi, sacchetto trasparente, deroghe' : 'Bottles, clear bag, exemptions'}</span>
             </div>
@@ -208,7 +208,7 @@ export function AirportBubblesView({
           <button
             type="button"
             onClick={() => setActiveModal('baggage')}
-            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 border-2 border-zinc-200/90 dark:border-zinc-800 hover:border-[#05668D] dark:hover:border-[#5EAAA8] transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer flex flex-col justify-between space-y-4"
+            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer flex flex-col justify-between space-y-4"
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between">
@@ -233,7 +233,7 @@ export function AirportBubblesView({
               </div>
             </div>
 
-            <div className="pt-2 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center gap-2 text-xs font-medium text-[#05668D] dark:text-[#5EAAA8]">
+            <div className="pt-2 flex items-center gap-2 text-xs font-medium text-[#05668D] dark:text-[#5EAAA8]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#05668D]" />
               <span>{isItalian ? 'Elettronica, misure cabina, stiva e compagnie' : 'Electronics, cabin limits, hold & airlines'}</span>
             </div>
@@ -243,7 +243,7 @@ export function AirportBubblesView({
           <button
             type="button"
             onClick={() => setActiveModal('general')}
-            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 border-2 border-zinc-200/90 dark:border-zinc-800 hover:border-[#F4D35E] dark:hover:border-[#F4D35E] transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer flex flex-col justify-between space-y-4"
+            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer flex flex-col justify-between space-y-4"
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between">
@@ -268,7 +268,7 @@ export function AirportBubblesView({
               </div>
             </div>
 
-            <div className="pt-2 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center gap-2 text-xs font-medium text-amber-700 dark:text-[#F4D35E]">
+            <div className="pt-2 flex items-center gap-2 text-xs font-medium text-amber-700 dark:text-[#F4D35E]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#F4D35E]" />
               <span>{isItalian ? 'Droni, batterie max 100Wh, farmaci essenziali' : 'Drones, 100Wh batteries, critical meds'}</span>
             </div>
@@ -278,7 +278,7 @@ export function AirportBubblesView({
           <button
             type="button"
             onClick={() => setActiveModal('map')}
-            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 border-2 border-zinc-200/90 dark:border-zinc-800 hover:border-[#5EAAA8] dark:hover:border-[#5EAAA8] transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer flex flex-col justify-between space-y-4"
+            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer flex flex-col justify-between space-y-4"
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between">
@@ -303,7 +303,7 @@ export function AirportBubblesView({
               </div>
             </div>
 
-            <div className="pt-2 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center gap-2 text-xs font-medium text-[#05668D] dark:text-[#5EAAA8]">
+            <div className="pt-2 flex items-center gap-2 text-xs font-medium text-[#05668D] dark:text-[#5EAAA8]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#5EAAA8]" />
               <span>{isItalian ? 'Terminal, varchi, prese, acqua e gate' : 'Terminals, checkpoints, power, water'}</span>
             </div>

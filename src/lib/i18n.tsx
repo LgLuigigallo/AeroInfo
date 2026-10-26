@@ -22,20 +22,32 @@ export const translations: Translations = {
     en: 'Everything you need to know before flying.'
   },
   minimalHeroSubtitle: {
-    it: 'il sito per avere a portata di click tutte le informazioni essenziali di un aeroporto',
-    en: 'the site to get all essential airport information with a single click'
+    it: 'Il sito per avere a portata di click tutte le informazioni essenziali di un aeroporto',
+    en: 'The site to get all essential airport information with a single click'
   },
   step1: {
-    it: '1. cerca l\'aeroporto',
-    en: '1. search the airport'
+    it: "Cerca l'aeroporto",
+    en: 'Search airport'
+  },
+  step1Desc: {
+    it: 'Inserisci il nome, la città o il codice IATA.',
+    en: 'Enter airport name, city or 3-letter IATA code.'
   },
   step2: {
-    it: '2. leggi le info che ti servono',
-    en: '2. read what you need'
+    it: 'Leggi le info che ti servono',
+    en: 'Read what you need'
+  },
+  step2Desc: {
+    it: 'Apri subito le 4 bolle rapide senza muri di testo.',
+    en: 'Instantly view the 4 quick bubbles without text walls.'
   },
   step3: {
-    it: '3. parti senza problemi',
-    en: '3. travel hassle-free'
+    it: 'Parti senza problemi',
+    en: 'Travel hassle-free'
+  },
+  step3Desc: {
+    it: 'Supera i controlli di sicurezza in totale serenità.',
+    en: 'Clear security checkpoints with complete peace of mind.'
   },
   bubbleLiquids: {
     it: 'Regole dei liquidi',

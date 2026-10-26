@@ -228,7 +228,7 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
           }}
           onFocus={() => setIsOpen(true)}
           placeholder={t('searchPlaceholder')}
-          className="w-full pl-12 pr-24 py-4 rounded-2xl bg-white dark:bg-zinc-900 border-2 border-zinc-200/90 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 text-sm sm:text-base tracking-tight focus:outline-none focus:border-[#5EAAA8] focus:ring-4 focus:ring-[#B3E5E0]/30 shadow-sm hover:shadow-md focus:shadow-lg transition-all"
+          className="w-full pl-12 pr-24 py-4 rounded-2xl bg-white dark:bg-zinc-900 border-2 border-[#B3E5E0] hover:border-[#5EAAA8] text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 text-sm sm:text-base tracking-tight focus:outline-none focus:border-[#05668D] focus:ring-4 focus:ring-[#B3E5E0]/30 shadow-sm hover:shadow-md focus:shadow-lg transition-all"
         />
 
         {/* Clear or Keyboard Hint */}
@@ -245,7 +245,7 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
               <X className="w-4 h-4" />
             </button>
           ) : (
-            <div className="hidden sm:flex items-center gap-1 text-[11px] font-mono font-medium text-zinc-400 dark:text-zinc-500 bg-[#E8F1F2]/80 dark:bg-zinc-800/80 px-2 py-0.5 rounded-lg border border-[#B3E5E0]/60 dark:border-zinc-700/80">
+            <div className="hidden sm:flex items-center gap-1 text-[11px] font-mono font-medium text-[#05668D] dark:text-[#5EAAA8] bg-[#E8F1F2] dark:bg-zinc-800/80 px-2 py-0.5 rounded-lg">
               <Command className="w-3 h-3" />
               <span>K</span>
             </div>
@@ -255,7 +255,7 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
 
       {/* Autocomplete Dropdown */}
       {isOpen && (
-        <div className="absolute left-0 right-0 mt-2 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-xl z-50 overflow-hidden divide-y divide-zinc-100 dark:divide-zinc-800/80 animate-in fade-in-50 duration-150">
+        <div className="absolute left-0 right-0 mt-2 bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl z-50 overflow-hidden divide-y divide-[#E8F1F2] dark:divide-zinc-800/80 animate-in fade-in-50 duration-150">
           {/* Query Results */}
           {query.trim().length > 0 ? (
             <div className="p-1.5 max-h-84 overflow-y-auto">
