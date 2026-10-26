@@ -99,8 +99,18 @@ Il progetto è stato sottoposto a una **security review approfondita** e soddisf
 ```
 
 - **Row Level Security (RLS) su Supabase:** Le email degli utenti registrate nella tabella `airport_requests` sono inaccessibili al pubblico (`SELECT` negato ad `anon`) e consultabili unicamente dal `service_role` server-side.
-- **Fail-Closed Authorization:** Gli endpoint operativi `/api/cron/sync` e `/api/admin/seed` richiedono un Bearer token segreto a 256-bit (`CRON_SECRET` / `ADMIN_SECRET_KEY`).
+- **Fail-Closed Authorization:** `/api/cron/sync` usa `CRON_SECRET`; la console `/admin` e il seeding manuale usano sessioni Google Supabase Auth verificate contro `ADMIN_EMAILS` e una chiave `service_role` confinata al server.
 - **Zero Tracking Cookies:** Nessun cookie di profilazione o tracciamento invasivo di terze parti (piena conformità GDPR ed ePrivacy).
+
+---
+
+## Console amministrativa
+
+La console privata è disponibile su `/admin`. Il login usa Google tramite Supabase Auth; il server autorizza solo gli indirizzi elencati in `ADMIN_EMAILS` e usa `SUPABASE_SERVICE_ROLE_KEY` solo lato server.
+
+La console gestisce richieste, segnalazioni, feedback, catalogo aeroporti, qualità SEO, sincronizzazioni singole e registro append-only. Le richieste restano nel flusso automatico; “Avvia ora” elabora soltanto la selezionata. Le modifiche al catalogo sono protette dal seeding statico successivo. I dati di contatto sono visibili solo nei dettagli protetti.
+
+Prima di abilitare la console, configura Google OAuth in Supabase e aggiungi `https://www.aero-info.eu/admin/callback` agli URL di reindirizzamento consentiti. Le migrazioni richieste sono `20261026064848_admin_console.sql`, `20261026080708_admin_seo_fields.sql` e `20261026081500_admin_source_verification.sql`.
 
 ---
 

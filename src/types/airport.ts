@@ -1,4 +1,5 @@
 export type Language = 'it' | 'en';
+export type AirportSeoStatus = 'pending_quality' | 'indexable' | 'blocked';
 
 export type AmenityCategory = 
   | 'power_charging' 
@@ -221,6 +222,12 @@ export type AirportClassification =
 
 export interface Airport {
   id: string;
+  seoStatus?: AirportSeoStatus;
+  seoSlugIt?: string;
+  seoSlugEn?: string;
+  seoLastEvaluatedAt?: string;
+  seoBlockReasons?: string[];
+  createdAt?: string;
   iata: string;
   icao: string;
   name_it: string;

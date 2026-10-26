@@ -1,3 +1,5 @@
+import 'server-only';
+
 import { createClient } from '@supabase/supabase-js';
 import { Airport } from '@/types/airport';
 import { airportsData } from '@/data/airports';
@@ -26,6 +28,10 @@ export const supabase = (supabaseUrl && activeKey)
 
 export const isSupabaseConfigured = (): boolean => {
   return Boolean(supabaseUrl && activeKey);
+};
+
+export const isSupabaseAdminConfigured = (): boolean => {
+  return Boolean(supabaseUrl && supabaseServiceRoleKey);
 };
 
 /**
@@ -82,10 +88,16 @@ export async function getLiveAirports(): Promise<Airport[]> {
 
       return {
         id: row.iata_code.toLowerCase(),
+        seoStatus: row.seo_status || 'pending_quality',
+        seoSlugIt: row.seo_slug_it || undefined,
+        seoSlugEn: row.seo_slug_en || undefined,
+        seoLastEvaluatedAt: row.seo_last_evaluated_at || undefined,
+        seoBlockReasons: Array.isArray(row.seo_block_reasons) ? row.seo_block_reasons : [],
+        createdAt: row.created_at || undefined,
         iata: row.iata_code,
         icao: row.icao_code || staticMatch?.icao || '',
-        name_it: staticMatch?.name_it || row.name_it,
-        name_en: staticMatch?.name_en || row.name_en,
+        name_it: row.name_it || staticMatch?.name_it || '',
+        name_en: row.name_en || staticMatch?.name_en || '',
         city_it: row.city_it,
         city_en: row.city_en,
         country_it: row.country_it,
@@ -99,19 +111,19 @@ export async function getLiveAirports(): Promise<Airport[]> {
         classificationNotice_it: staticMatch?.classificationNotice_it,
         classificationNotice_en: staticMatch?.classificationNotice_en,
         coordinates: {
-          lat: row.latitude || staticMatch?.coordinates.lat || 0,
-          lng: row.longitude || staticMatch?.coordinates.lng || 0
+          lat: row.latitude ?? staticMatch?.coordinates.lat ?? 0,
+          lng: row.longitude ?? staticMatch?.coordinates.lng ?? 0
         },
-        difficultyRating: staticMatch?.difficultyRating || row.difficulty_rating || 2,
-        difficultyLabel_it: staticMatch?.difficultyLabel_it || row.difficulty_label_it || '',
-        difficultyLabel_en: staticMatch?.difficultyLabel_en || row.difficulty_label_en || '',
-        averageSecurityWaitMin: staticMatch?.averageSecurityWaitMin || row.avg_security_wait_min || 15,
+        difficultyRating: row.difficulty_rating ?? staticMatch?.difficultyRating ?? 2,
+        difficultyLabel_it: row.difficulty_label_it || staticMatch?.difficultyLabel_it || '',
+        difficultyLabel_en: row.difficulty_label_en || staticMatch?.difficultyLabel_en || '',
+        averageSecurityWaitMin: row.avg_security_wait_min ?? staticMatch?.averageSecurityWaitMin ?? 15,
         recommendedArrivalHours: {
-          domestic: staticMatch?.recommendedArrivalHours.domestic || row.recommended_arrival_domestic || 2,
-          international: staticMatch?.recommendedArrivalHours.international || row.recommended_arrival_intl || 3
+          domestic: row.recommended_arrival_domestic ?? staticMatch?.recommendedArrivalHours.domestic ?? 2,
+          international: row.recommended_arrival_intl ?? staticMatch?.recommendedArrivalHours.international ?? 3
         },
-        navigationAdvice_it: staticMatch?.navigationAdvice_it || row.navigation_advice_it || '',
-        navigationAdvice_en: staticMatch?.navigationAdvice_en || row.navigation_advice_en || '',
+        navigationAdvice_it: row.navigation_advice_it || staticMatch?.navigationAdvice_it || '',
+        navigationAdvice_en: row.navigation_advice_en || staticMatch?.navigationAdvice_en || '',
         otherCityAirports: staticMatch?.otherCityAirports || row.other_city_airports,
         terminalMaps: staticMatch?.terminalMaps,
         securityPolicy: {
@@ -140,12 +152,15 @@ export async function getLiveAirports(): Promise<Airport[]> {
           powerbankPolicy_it: sec.powerbank_policy_it || staticMatch?.securityPolicy.powerbankPolicy_it || '',
           powerbankPolicy_en: sec.powerbank_policy_en || staticMatch?.securityPolicy.powerbankPolicy_en || '',
           powerbankUnverified: Boolean(sec.powerbank_unverified),
-          officialSourceUrl: cleanOfficialWebsiteUrl(
-            sec.official_source_url || staticMatch?.securityPolicy.officialSourceUrl || cleanSite,
-            upperIata,
-            row.country_code
-          ),
-          lastVerifiedDate: sec.last_verified_at ? sec.last_verified_at.split('T')[0] : (staticMatch?.securityPolicy.lastVerifiedDate || '2026-10-18')
+          officialSourceUrl:
+            typeof sec.official_source_url === 'string' && sec.official_source_url.startsWith('https://')
+              ? sec.official_source_url
+              : (staticMatch?.securityPolicy.officialSourceUrl || ''),
+          // Legacy last_verified_at and curated fallbacks are not proof that
+          // this database record passed a successful source fetch.
+          lastVerifiedDate: sec.source_verified_at
+            ? sec.source_verified_at.split('T')[0]
+            : ''
         },
         terminals: (row.terminals || []).map((t: any) => ({
           id: t.id,
@@ -171,6 +186,8 @@ export async function getLiveAirports(): Promise<Airport[]> {
           location_en: am.location_en || '',
           details_it: am.details_it || '',
           details_en: am.details_en || '',
+          details_it_unverified: am.unverified_note_it || undefined,
+          details_en_unverified: am.unverified_note_en || undefined,
           isUnverified: Boolean(am.is_unverified)
         })),
         venues: (row.venues || []).map((v: any) => ({
@@ -197,7 +214,9 @@ export async function getLiveAirports(): Promise<Airport[]> {
           details_en: tr.details_en || '',
           isUnverified: Boolean(tr.is_unverified)
         })),
-        lastUpdated: row.last_verified_at ? row.last_verified_at.split('T')[0] : '2026-10-18'
+        lastUpdated: sec.source_verified_at
+          ? sec.source_verified_at.split('T')[0]
+          : (staticMatch?.lastUpdated || '')
       };
     });
   } catch (err) {
