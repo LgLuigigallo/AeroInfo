@@ -109,7 +109,7 @@ export function AirportSeoDossier({ airport, airports, lang }: Props) {
         <section className="space-y-3 border-t border-zinc-200 pt-6 dark:border-zinc-800">
           <h2 className="text-2xl font-semibold">{isItalian ? 'Fonti e aggiornamento' : 'Sources and updates'}</h2>
           {sourceUrl ? <p className="text-sm">{isItalian ? 'Fonte ufficiale per la sicurezza:' : 'Official security source:'} <a className="underline underline-offset-4" href={sourceUrl} target="_blank" rel="noreferrer">{isItalian ? 'consulta il sito ufficiale' : 'view the official source'}</a>.</p> : <p className="text-sm">{isItalian ? 'La fonte ufficiale per le regole di sicurezza non è ancora stata verificata.' : 'The official security source has not yet been verified.'}</p>}
-          {airport.officialWebsite.startsWith('https://') && <p className="text-sm">{isItalian ? 'Sito ufficiale dell’aeroporto:' : 'Official airport website:'} <a className="underline underline-offset-4" href={airport.officialWebsite} target="_blank" rel="noreferrer">{airport.officialWebsite}</a></p>}
+          {airport.iata.toUpperCase() !== 'QUR' && airport.officialWebsite.startsWith('https://') && <p className="text-sm">{isItalian ? 'Sito ufficiale dell’aeroporto:' : 'Official airport website:'} <a className="underline underline-offset-4" href={airport.officialWebsite} target="_blank" rel="noreferrer">{airport.officialWebsite}</a></p>}
           {updated && <p className="text-sm text-zinc-500">{isItalian ? 'Ultima verifica registrata:' : 'Last recorded verification:'} {updated}.</p>}
         </section>
 

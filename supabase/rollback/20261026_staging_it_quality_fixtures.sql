@@ -1,5 +1,5 @@
 -- Run only against the separate Supabase staging project rkigkmmtlqwmbwtyijpp.
--- Removes the 11 Italian SEO-audit fixtures inserted on 2026-10-26.
+-- Removes the 12 Italian SEO-audit fixtures inserted on 2026-10-26.
 -- Leaves the pre-existing airport request untouched.
 begin;
 
@@ -15,7 +15,8 @@ where id in (
   'a4a842ab-8dfe-4ed4-bc85-dc4c235c6306', -- MXP
   'a5f89ef0-5be8-4101-8ed8-1ade561bdfc9', -- NAP
   '7a8b57b4-15ec-481e-9381-714dc5e499d8', -- PMO
-  'e260fe75-7065-4d38-b7e4-e324e509f5bc'  -- PSA
+  'e260fe75-7065-4d38-b7e4-e324e509f5bc', -- PSA
+  'f43b4c1e-5179-44bf-a6d4-ff9ddf22117a'  -- QUR
 );
 
 delete from public.airports
@@ -30,7 +31,8 @@ where id in (
   'c5beac6a-38b4-4960-b3e0-52dfb3033315', -- MXP
   '89dd03e3-7904-40bf-9620-19d128660174', -- NAP
   'fe6ada1c-b818-44c0-97b1-543a15886d39', -- PMO
-  '737ed6c8-42d7-4da8-94a3-fb76d6724317'  -- PSA
+  '737ed6c8-42d7-4da8-94a3-fb76d6724317', -- PSA
+  'd8c7057d-7a8f-4e6c-88cf-5ba9c92194f1'  -- QUR
 );
 
 commit;
