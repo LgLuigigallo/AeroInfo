@@ -5,13 +5,13 @@ import React from 'react';
 export function AirplaneSkyAnimation() {
   return (
     <div 
-      className="w-full h-full relative overflow-hidden pointer-events-none select-none"
+      className="w-full h-full relative overflow-hidden pointer-events-none select-none bg-transparent"
       aria-hidden="true"
     >
-      {/* SVG Canvas for Flight Path & Animated Airplane */}
+      {/* SVG Canvas for Full-Width Flight Horizon & Aircraft */}
       <svg
-        className="w-full h-full min-w-[640px] max-w-4xl mx-auto"
-        viewBox="0 0 1000 150"
+        className="w-full h-full"
+        viewBox="0 0 1600 130"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         preserveAspectRatio="xMidYMid meet"
@@ -19,11 +19,11 @@ export function AirplaneSkyAnimation() {
         <defs>
           {/* Linear gradient for stylized flight arc */}
           <linearGradient id="flightPathGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#5EAAA8" stopOpacity="0.1" />
-            <stop offset="25%" stopColor="#5EAAA8" stopOpacity="0.45" />
-            <stop offset="55%" stopColor="#05668D" stopOpacity="0.4" />
-            <stop offset="85%" stopColor="#5EAAA8" stopOpacity="0.45" />
-            <stop offset="100%" stopColor="#5EAAA8" stopOpacity="0.1" />
+            <stop offset="0%" stopColor="#5EAAA8" stopOpacity="0.05" />
+            <stop offset="20%" stopColor="#5EAAA8" stopOpacity="0.4" />
+            <stop offset="50%" stopColor="#05668D" stopOpacity="0.5" />
+            <stop offset="80%" stopColor="#5EAAA8" stopOpacity="0.4" />
+            <stop offset="100%" stopColor="#5EAAA8" stopOpacity="0.05" />
           </linearGradient>
 
           {/* Beacon Glow */}
@@ -33,9 +33,9 @@ export function AirplaneSkyAnimation() {
           </radialGradient>
         </defs>
 
-        {/* Ambient Flight Glide Trajectory (Dashed Guide Arc) */}
+        {/* Ambient Flight Glide Trajectory (Dashed Guide Arc spanning full screen) */}
         <path
-          d="M 50 110 Q 180 110 260 70 T 480 25 T 720 25 Q 830 55 940 110"
+          d="M 60 105 Q 260 105 400 65 T 800 30 T 1200 30 Q 1380 65 1540 105"
           stroke="url(#flightPathGrad)"
           strokeWidth="1.5"
           strokeDasharray="4 6"
@@ -43,48 +43,53 @@ export function AirplaneSkyAnimation() {
           className="opacity-60 dark:opacity-40"
         />
 
-        {/* Runway Baseline */}
+        {/* Continuous Runway Baseline spanning full width and beyond */}
         <line
-          x1="30"
-          y1="110"
-          x2="970"
-          y2="110"
+          x1="-200"
+          y1="105"
+          x2="1800"
+          y2="105"
           stroke="#05668D"
           strokeOpacity="0.15"
           strokeWidth="1.5"
         />
+
         {/* Runway Markings Left */}
         <line
-          x1="40"
-          y1="110"
-          x2="200"
-          y2="110"
+          x1="60"
+          y1="105"
+          x2="300"
+          y2="105"
           stroke="#5EAAA8"
           strokeOpacity="0.4"
           strokeWidth="2"
-          strokeDasharray="14 10"
+          strokeDasharray="16 12"
         />
         {/* Runway Markings Right */}
         <line
-          x1="800"
-          y1="110"
-          x2="960"
-          y2="110"
+          x1="1300"
+          y1="105"
+          x2="1540"
+          y2="105"
           stroke="#5EAAA8"
           strokeOpacity="0.4"
           strokeWidth="2"
-          strokeDasharray="14 10"
+          strokeDasharray="16 12"
         />
 
-        {/* Subtle stylized cloud in background */}
+        {/* Subtle stylized clouds in background */}
         <g className="animate-cloud-drift opacity-30 dark:opacity-20">
           <path
-            d="M 320 50 Q 335 35 360 40 Q 380 30 400 45 Q 415 45 425 55 Q 430 65 415 70 L 330 70 Q 315 65 320 50 Z"
+            d="M 360 48 Q 375 33 400 38 Q 420 28 440 43 Q 455 43 465 53 Q 470 63 455 68 L 370 68 Q 355 63 360 48 Z"
             fill="#B3E5E0"
           />
           <path
-            d="M 640 40 Q 655 25 680 30 Q 700 20 720 35 Q 735 35 745 45 Q 750 55 735 60 L 650 60 Q 635 55 640 40 Z"
+            d="M 760 38 Q 775 23 800 28 Q 820 18 840 33 Q 855 33 865 43 Q 870 53 855 58 L 770 58 Q 755 53 760 38 Z"
             fill="#E8F1F2"
+          />
+          <path
+            d="M 1160 44 Q 1175 29 1200 34 Q 1220 24 1240 39 Q 1255 39 1265 49 Q 1270 59 1255 64 L 1170 64 Q 1155 59 1160 44 Z"
+            fill="#B3E5E0"
           />
         </g>
 

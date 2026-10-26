@@ -83,16 +83,18 @@ function MainContent() {
     <div className="min-h-screen bg-[#FBFBFB] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 flex flex-col font-sans selection:bg-[#05668D] selection:text-white">
       <Header onResetHome={handleResetHome} />
 
-      <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-16">
+      <main className="flex-1 w-full flex flex-col items-center">
         {selectedAirport ? (
           /* Airport 4-Bubble Interactive View */
-          <AirportBubblesView 
-            airport={selectedAirport}
-            airports={airports}
-            onBack={handleResetHome}
-            onSelectAirport={handleSelectAirport}
-            onRefreshAirports={refreshLiveAirports}
-          />
+          <div className="max-w-5xl w-full mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-16">
+            <AirportBubblesView 
+              airport={selectedAirport}
+              airports={airports}
+              onBack={handleResetHome}
+              onSelectAirport={handleSelectAirport}
+              onRefreshAirports={refreshLiveAirports}
+            />
+          </div>
         ) : (
           /* Clean Minimalist Welcome Page */
           <WelcomeView airports={airports} onSelectAirport={handleSelectAirport}>
