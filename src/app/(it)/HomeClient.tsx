@@ -85,8 +85,8 @@ function MainContent() {
 
       <main className="flex-1 w-full flex flex-col items-center">
         {selectedAirport ? (
-          /* Airport 4-Bubble Interactive View */
-          <div className="max-w-5xl w-full mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-16">
+          /* Airport 4-Bubble Interactive View - Spanning Full Width */
+          <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 pt-4 sm:pt-6 pb-16">
             <AirportBubblesView 
               airport={selectedAirport}
               airports={airports}

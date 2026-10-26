@@ -159,21 +159,21 @@ export function AirportBubblesView({
         </div>
       </section>
 
-      {/* 4 Main Interactive Bubbles Grid - Borderless Design */}
-      <section aria-label="Informazioni essenziali aeroporto" className="space-y-3">
+      {/* 4 Main Interactive Bubbles Grid - 4 In una fila a tutto schermo */}
+      <section aria-label="Informazioni essenziali aeroporto" className="space-y-3 w-full">
         <div className="flex items-center justify-between">
           <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
-            {isItalian ? 'Scegli la categoria di tuo interesse' : 'Choose what you need to check'}
+            {isItalian ? 'Scegli cosa vuoi sapere' : 'Choose what you want to know'}
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 w-full">
           
           {/* Bolla 1: Regole dei Liquidi */}
           <button
             type="button"
             onClick={() => setActiveModal('liquids')}
-            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer flex flex-col justify-between space-y-4"
+            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer flex flex-col justify-between space-y-4 h-full"
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between">
@@ -190,7 +190,7 @@ export function AirportBubblesView({
                 <h3 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-white group-hover:text-[#05668D] dark:group-hover:text-[#5EAAA8] transition-colors">
                   {t('bubbleLiquids')}
                 </h3>
-                <p className="mt-1 text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 line-clamp-2 leading-relaxed">
+                <p className="mt-1 text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 line-clamp-3 leading-relaxed">
                   {policy.has3DScanners 
                     ? (isItalian ? 'Scanner 3D presenti: puoi portare liquidi oltre 100ml e lasciarli nel bagaglio a mano.' : '3D scanners installed: you can bring liquids over 100ml and leave them inside your bag.')
                     : (isItalian ? 'Norma standard: max 100ml a flacone in busta trasparente da 1 litro.' : 'Standard rule: max 100ml per container in a 1-liter clear plastic bag.')}
@@ -199,8 +199,8 @@ export function AirportBubblesView({
             </div>
 
             <div className="pt-2 flex items-center gap-2 text-xs font-medium text-[#05668D] dark:text-[#5EAAA8]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#5EAAA8]" />
-              <span>{isItalian ? 'Flaconi, sacchetto trasparente, deroghe' : 'Bottles, clear bag, exemptions'}</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#5EAAA8] shrink-0" />
+              <span className="truncate">{isItalian ? 'Flaconi, sacchetto trasparente, deroghe' : 'Bottles, clear bag, exemptions'}</span>
             </div>
           </button>
 
@@ -208,7 +208,7 @@ export function AirportBubblesView({
           <button
             type="button"
             onClick={() => setActiveModal('baggage')}
-            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer flex flex-col justify-between space-y-4"
+            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer flex flex-col justify-between space-y-4 h-full"
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between">
@@ -225,7 +225,7 @@ export function AirportBubblesView({
                 <h3 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-white group-hover:text-[#05668D] dark:group-hover:text-[#5EAAA8] transition-colors">
                   {t('bubbleBaggage')}
                 </h3>
-                <p className="mt-1 text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 line-clamp-2 leading-relaxed">
+                <p className="mt-1 text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 line-clamp-3 leading-relaxed">
                   {policy.electronicsInBag
                     ? (isItalian ? 'Dispositivi elettronici: non serve estrarre laptop e tablet dal bagaglio.' : 'Electronic devices: no need to remove laptops and tablets from cabin bag.')
                     : (isItalian ? 'Dispositivi elettronici: estrarre laptop e tablet nei vassoi ai controlli.' : 'Electronic devices: take laptops and tablets out into security trays.')}
@@ -234,8 +234,8 @@ export function AirportBubblesView({
             </div>
 
             <div className="pt-2 flex items-center gap-2 text-xs font-medium text-[#05668D] dark:text-[#5EAAA8]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#05668D]" />
-              <span>{isItalian ? 'Elettronica, misure cabina, stiva e compagnie' : 'Electronics, cabin limits, hold & airlines'}</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#05668D] shrink-0" />
+              <span className="truncate">{isItalian ? 'Elettronica, misure cabina, stiva e compagnie' : 'Electronics, cabin limits, hold & airlines'}</span>
             </div>
           </button>
 
@@ -243,7 +243,7 @@ export function AirportBubblesView({
           <button
             type="button"
             onClick={() => setActiveModal('general')}
-            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer flex flex-col justify-between space-y-4"
+            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer flex flex-col justify-between space-y-4 h-full"
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between">
@@ -260,7 +260,7 @@ export function AirportBubblesView({
                 <h3 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-[#F4D35E] transition-colors">
                   {t('bubbleGeneral')}
                 </h3>
-                <p className="mt-1 text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 line-clamp-2 leading-relaxed">
+                <p className="mt-1 text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 line-clamp-3 leading-relaxed">
                   {isItalian
                     ? 'Regolamentazione droni, powerbank al litio, medicinali, cibo per neonati e duty free.'
                     : 'Regulations for drones, lithium powerbanks, medicines, baby food and duty free.'}
@@ -269,8 +269,8 @@ export function AirportBubblesView({
             </div>
 
             <div className="pt-2 flex items-center gap-2 text-xs font-medium text-amber-700 dark:text-[#F4D35E]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#F4D35E]" />
-              <span>{isItalian ? 'Droni, batterie max 100Wh, farmaci essenziali' : 'Drones, 100Wh batteries, critical meds'}</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F4D35E] shrink-0" />
+              <span className="truncate">{isItalian ? 'Droni, batterie max 100Wh, farmaci essenziali' : 'Drones, 100Wh batteries, critical meds'}</span>
             </div>
           </button>
 
@@ -278,7 +278,7 @@ export function AirportBubblesView({
           <button
             type="button"
             onClick={() => setActiveModal('map')}
-            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer flex flex-col justify-between space-y-4"
+            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer flex flex-col justify-between space-y-4 h-full"
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between">
@@ -295,7 +295,7 @@ export function AirportBubblesView({
                 <h3 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-white group-hover:text-[#5EAAA8] transition-colors">
                   {t('bubbleMap')}
                 </h3>
-                <p className="mt-1 text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 line-clamp-2 leading-relaxed">
+                <p className="mt-1 text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 line-clamp-3 leading-relaxed">
                   {isItalian
                     ? 'Mappa interattiva dei terminal, varchi sicurezza, prese di ricarica, acqua potabile e gate.'
                     : 'Interactive terminal map with security lanes, power sockets, drinking water and gates.'}
@@ -304,8 +304,8 @@ export function AirportBubblesView({
             </div>
 
             <div className="pt-2 flex items-center gap-2 text-xs font-medium text-[#05668D] dark:text-[#5EAAA8]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#5EAAA8]" />
-              <span>{isItalian ? 'Terminal, varchi, prese, acqua e gate' : 'Terminals, checkpoints, power, water'}</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#5EAAA8] shrink-0" />
+              <span className="truncate">{isItalian ? 'Terminal, varchi, prese, acqua e gate' : 'Terminals, checkpoints, power, water'}</span>
             </div>
           </button>
 

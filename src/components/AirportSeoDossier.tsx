@@ -43,7 +43,7 @@ export function AirportSeoDossier({ airport, airports, lang }: Props) {
       <div className="min-h-screen bg-[#FBFBFB] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 flex flex-col font-sans">
         <Header />
 
-        <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 pt-6 sm:pt-8 pb-16 space-y-8">
+        <main className="flex-1 w-full px-4 sm:px-6 md:px-8 lg:px-12 pt-4 sm:pt-6 pb-16 space-y-8">
           {/* Breadcrumb Navigation */}
           <nav aria-label={isItalian ? 'Percorso di navigazione' : 'Breadcrumb'} className="text-xs text-zinc-500">
             <ol className="flex flex-wrap items-center gap-1.5">
@@ -55,13 +55,13 @@ export function AirportSeoDossier({ airport, airports, lang }: Props) {
             </ol>
           </nav>
 
-          {/* PRIMARY INTERACTIVE EXPERIENCE: 4 Bolle Principali */}
-          <section aria-label="Interfaccia rapida a bolle">
+          {/* PRIMARY INTERACTIVE EXPERIENCE: 4 Bolle Principali (Full-Width) */}
+          <section aria-label="Interfaccia rapida a bolle" className="w-full">
             <AirportDossierInteractiveWrapper airport={airport} airports={airports} lang={lang} />
           </section>
 
           {/* COMPREHENSIVE DOSSIER & SEARCH ENGINE SECTION */}
-          <article className="pt-8 border-t border-zinc-200 dark:border-zinc-800 space-y-6">
+          <article className="max-w-6xl mx-auto pt-8 border-t border-zinc-200 dark:border-zinc-800 space-y-6">
             <header className="space-y-2">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <p className="text-xs font-semibold uppercase tracking-widest text-[#05668D] dark:text-[#5EAAA8]">
