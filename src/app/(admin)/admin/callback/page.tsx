@@ -27,9 +27,16 @@ export default function AdminCallbackPage() {
         const { error } = await client.auth.exchangeCodeForSession(code);
         if (error) {
           const errorCode = (error.code || error.name || 'unknown').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 48);
+          const errorStatus = typeof error.status === 'number' ? `, HTTP ${error.status}` : '';
+          const errorDetail = error.message
+            .replace(/[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}/g, '[email omessa]')
+            .replace(/https?:\/\/\S+/g, '[indirizzo omesso]')
+            .replace(/[A-Fa-f0-9_-]{28,}/g, '[identificativo omesso]')
+            .replace(/[\r\n]+/g, ' ')
+            .slice(0, 100);
           setMessage(error.name === 'AuthPKCECodeVerifierMissingError'
             ? 'La sessione temporanea di accesso non è stata conservata. Torna alla console e riprova.'
-            : `Non è stato possibile completare l’accesso (${errorCode}). Torna alla console e riprova.`);
+            : `Non è stato possibile completare l’accesso (${errorCode}${errorStatus}: ${errorDetail}). Torna alla console e riprova.`);
           return;
         }
       }
