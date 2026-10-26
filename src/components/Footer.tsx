@@ -67,6 +67,13 @@ export function Footer() {
             <span className="font-mono text-[10px] tracking-wide">AeroInfo • Global Airport Intelligence</span>
           </div>
           <div className="font-mono text-[10px] flex flex-wrap items-center gap-2">
+            <Link
+              href={lang === 'it' ? '/guide/liquidi-bagaglio-a-mano' : '/en/guides/liquids-in-carry-on-baggage'}
+              className="text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors underline cursor-pointer"
+            >
+              {lang === 'it' ? 'Liquidi nel bagaglio a mano' : 'Carry-on liquids guide'}
+            </Link>
+            <span className="text-zinc-300 dark:text-zinc-700">•</span>
             <span>{lang === 'it' ? '© 2026 AeroInfo • Tutti i diritti riservati' : '© 2026 AeroInfo • All rights reserved'}</span>
             <span className="text-zinc-300 dark:text-zinc-700">•</span>
             <button
@@ -119,7 +126,7 @@ export function Footer() {
               href="https://www.linkedin.com/in/luigigallo12"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="LinkedIn Luigi Gallo"
+              aria-label="LinkedIn AeroInfo"
               className="text-zinc-400 hover:text-[#0A66C2] dark:hover:text-[#0A66C2] transition-colors p-0.5"
             >
               <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
