@@ -214,8 +214,8 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
     <div ref={containerRef} className="relative w-full max-w-2xl mx-auto">
       {/* Search Console Input */}
       <div className="relative group">
-        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 group-focus-within:text-zinc-900 dark:group-focus-within:text-white transition-colors">
-          <Search className="w-4 h-4" />
+        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-zinc-400 group-focus-within:text-[#05668D] dark:group-focus-within:text-[#5EAAA8] transition-colors">
+          <Search className="w-5 h-5" />
         </div>
 
         <input
@@ -228,11 +228,11 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
           }}
           onFocus={() => setIsOpen(true)}
           placeholder={t('searchPlaceholder')}
-          className="w-full pl-11 pr-24 py-3.5 sm:py-4 rounded-2xl bg-white dark:bg-zinc-900 border-2 border-zinc-200/90 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 text-sm tracking-tight focus:outline-none focus:border-[#5EAAA8] focus:ring-4 focus:ring-[#B3E5E0]/30 shadow-xs transition-all"
+          className="w-full pl-12 pr-24 py-4 rounded-2xl bg-white dark:bg-zinc-900 border-2 border-zinc-200/90 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 text-sm sm:text-base tracking-tight focus:outline-none focus:border-[#5EAAA8] focus:ring-4 focus:ring-[#B3E5E0]/30 shadow-sm hover:shadow-md focus:shadow-lg transition-all"
         />
 
         {/* Clear or Keyboard Hint */}
-        <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center gap-1.5">
+        <div className="absolute inset-y-0 right-0 pr-4 flex items-center gap-1.5">
           {query ? (
             <button
               type="button"
@@ -242,7 +242,7 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
               }}
               className="p-1 rounded-md text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
             >
-              <X className="w-3.5 h-3.5" />
+              <X className="w-4 h-4" />
             </button>
           ) : (
             <div className="hidden sm:flex items-center gap-1 text-[11px] font-mono font-medium text-zinc-400 dark:text-zinc-500 bg-[#E8F1F2]/80 dark:bg-zinc-800/80 px-2 py-0.5 rounded-lg border border-[#B3E5E0]/60 dark:border-zinc-700/80">
