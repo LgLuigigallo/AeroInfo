@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getAdminAuthClient } from '@/lib/admin/browser';
+import '../admin.css';
 
 export default function AdminCallbackPage() {
   const router = useRouter();
@@ -16,11 +17,18 @@ export default function AdminCallbackPage() {
         setMessage('Accesso non configurato. Contatta chi gestisce il sito.');
         return;
       }
-      const code = new URLSearchParams(window.location.search).get('code');
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get('code');
+      if (params.has('error')) {
+        setMessage('Google non ha completato l’accesso. Riprova.');
+        return;
+      }
       if (code) {
         const { error } = await client.auth.exchangeCodeForSession(code);
         if (error) {
-          setMessage('Non è stato possibile completare l’accesso. Riprova.');
+          setMessage(error.name === 'AuthPKCECodeVerifierMissingError'
+            ? 'La sessione temporanea di accesso non è stata conservata. Torna alla console e riprova.'
+            : 'Non è stato possibile completare l’accesso. Torna alla console e riprova.');
           return;
         }
       }
@@ -44,5 +52,5 @@ export default function AdminCallbackPage() {
     return () => { active = false; };
   }, [router]);
 
-  return <main className="admin-auth-screen"><div className="admin-auth-card"><span className="admin-mark">A</span><h1>Console AeroInfo</h1><p>{message}</p></div></main>;
+  return <main className="admin-auth-screen"><div className="admin-auth-card"><span className="admin-mark">A</span><h1>Console AeroInfo</h1><p aria-live="polite">{message}</p>{message !== 'Verifica dell’accesso in corso…' && <a className="admin-back" href="/admin">Torna alla console</a>}</div></main>;
 }
