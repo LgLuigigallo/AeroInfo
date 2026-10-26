@@ -17,6 +17,74 @@ export const translations: Translations = {
     it: 'L\'aggregatore essenziale per chi viaggia nei principali aeroporti del mondo.', 
     en: 'The essential intelligence aggregator for travelers in global airports.' 
   },
+  minimalHeroTitle: {
+    it: 'Tutto ciò che devi sapere prima di volare.',
+    en: 'Everything you need to know before flying.'
+  },
+  minimalHeroSubtitle: {
+    it: 'il sito per avere a portata di click tutte le informazioni essenziali di un aeroporto',
+    en: 'the site to get all essential airport information with a single click'
+  },
+  step1: {
+    it: '1. cerca l\'aeroporto',
+    en: '1. search the airport'
+  },
+  step2: {
+    it: '2. leggi le info che ti servono',
+    en: '2. read what you need'
+  },
+  step3: {
+    it: '3. parti senza problemi',
+    en: '3. travel hassle-free'
+  },
+  bubbleLiquids: {
+    it: 'Regole dei liquidi',
+    en: 'Liquids rules'
+  },
+  bubbleLiquidsDesc: {
+    it: 'Scanner 3D, flaconi 100ml, busta trasparente e deroghe',
+    en: '3D scanners, 100ml bottles, clear bags and exceptions'
+  },
+  bubbleBaggage: {
+    it: 'Regole dei bagagli',
+    en: 'Baggage rules'
+  },
+  bubbleBaggageDesc: {
+    it: 'Dispositivi elettronici, misure cabina e stiva',
+    en: 'Electronic devices, cabin and hold limits'
+  },
+  bubbleGeneral: {
+    it: 'Altre regole generali',
+    en: 'Other general rules'
+  },
+  bubbleGeneralDesc: {
+    it: 'Droni, powerbank al litio, medicinali e duty free',
+    en: 'Drones, lithium powerbanks, meds and duty free'
+  },
+  bubbleMap: {
+    it: 'Mappa',
+    en: 'Map'
+  },
+  bubbleMapDesc: {
+    it: 'Varchi sicurezza, terminal, prese, acqua e gate',
+    en: 'Security lanes, terminals, sockets, water and gates'
+  },
+  bubbleTapToExplore: {
+    it: 'Tocca per aprire',
+    en: 'Tap to open'
+  },
+  changeAirport: {
+    it: 'Cambia aeroporto',
+    en: 'Change airport'
+  },
+  officialSource: {
+    it: 'Fonte Ufficiale',
+    en: 'Official Source'
+  },
+  viewOfficialRegulations: {
+    it: 'Consulta regolamento ufficiale',
+    en: 'View official regulation'
+  },
   searchPlaceholder: { 
     it: 'Cerca aeroporto (es. FCO, Malpensa, JFK, Londra, Roma)...', 
     en: 'Search airport (e.g. FCO, Malpensa, JFK, London, Rome)...' 
@@ -333,20 +401,43 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Language>('it');
+export function LanguageProvider({ 
+  children,
+  initialLang = 'it'
+}: { 
+  children: ReactNode;
+  initialLang?: Language;
+}) {
+  const [lang, setLangState] = useState<Language>(initialLang);
 
   useEffect(() => {
+    // 1. Explicit path route check (e.g. /en or /en/...)
+    if (typeof window !== 'undefined' && window.location.pathname.startsWith('/en')) {
+      setLangState('en');
+      return;
+    }
+
+    // 2. Check if user already manually selected and saved a language preference
     const saved = localStorage.getItem('aeroinfo_lang') as Language;
     if (saved === 'it' || saved === 'en') {
       setLangState(saved);
-    } else {
-      const browserLang = navigator.language.slice(0, 2);
-      if (browserLang === 'it') {
+      return;
+    }
+
+    // 3. Automatically detect device/browser language
+    try {
+      const languages = (typeof navigator !== 'undefined' && navigator.languages && navigator.languages.length > 0)
+        ? navigator.languages
+        : [navigator.language || 'it'];
+
+      const hasItalian = languages.some((l) => l && l.toLowerCase().startsWith('it'));
+      if (hasItalian) {
         setLangState('it');
       } else {
         setLangState('en');
       }
+    } catch {
+      setLangState('it');
     }
   }, []);
 

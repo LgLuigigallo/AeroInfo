@@ -228,11 +228,11 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
           }}
           onFocus={() => setIsOpen(true)}
           placeholder={t('searchPlaceholder')}
-          className="w-full pl-10 pr-22 py-3 rounded-xl bg-white dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 text-sm tracking-tight focus:outline-none focus:ring-2 focus:ring-zinc-900/10 dark:focus:ring-white/10 focus:border-zinc-400 dark:focus:border-zinc-600 shadow-xs transition-all"
+          className="w-full pl-11 pr-24 py-3.5 sm:py-4 rounded-2xl bg-white dark:bg-zinc-900 border-2 border-zinc-200/90 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 text-sm tracking-tight focus:outline-none focus:border-[#5EAAA8] focus:ring-4 focus:ring-[#B3E5E0]/30 shadow-xs transition-all"
         />
 
         {/* Clear or Keyboard Hint */}
-        <div className="absolute inset-y-0 right-0 pr-3 flex items-center gap-1.5">
+        <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center gap-1.5">
           {query ? (
             <button
               type="button"
@@ -245,8 +245,8 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
               <X className="w-3.5 h-3.5" />
             </button>
           ) : (
-            <div className="hidden sm:flex items-center gap-1 text-[10px] font-mono font-medium text-zinc-400 dark:text-zinc-500 bg-zinc-100 dark:bg-zinc-800/80 px-2 py-0.5 rounded border border-zinc-200/80 dark:border-zinc-700/80">
-              <Command className="w-2.5 h-2.5" />
+            <div className="hidden sm:flex items-center gap-1 text-[11px] font-mono font-medium text-zinc-400 dark:text-zinc-500 bg-[#E8F1F2]/80 dark:bg-zinc-800/80 px-2 py-0.5 rounded-lg border border-[#B3E5E0]/60 dark:border-zinc-700/80">
+              <Command className="w-3 h-3" />
               <span>K</span>
             </div>
           )}
@@ -274,7 +274,7 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
                       }`}
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-8 rounded bg-zinc-900 dark:bg-zinc-800 flex items-center justify-center font-mono font-bold text-xs tracking-wider text-white border border-zinc-900 dark:border-zinc-700 shrink-0">
+                        <div className="w-10 h-8 rounded-lg bg-[#05668D] dark:bg-zinc-800 flex items-center justify-center font-mono font-bold text-xs tracking-wider text-white border border-[#05668D] dark:border-zinc-700 shrink-0">
                           {airport.iata}
                         </div>
                         <div>

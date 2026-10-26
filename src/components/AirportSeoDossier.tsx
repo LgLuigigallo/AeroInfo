@@ -1,4 +1,9 @@
 import Link from 'next/link';
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
+import { CookieConsent } from '@/components/CookieConsent';
+import { AirportDossierInteractiveWrapper } from '@/components/AirportDossierInteractiveWrapper';
+import { LanguageProvider } from '@/lib/i18n';
 import { airportPath } from '@/lib/airport-slug';
 import { getAirportSeoStatus } from '@/lib/seo/airports';
 import { getAirportBreadcrumbStructuredData } from '@/lib/seo/structured-data';
@@ -34,91 +39,107 @@ export function AirportSeoDossier({ airport, airports, lang }: Props) {
   const breadcrumbs = getAirportBreadcrumbStructuredData(displayName, lang);
 
   return (
-    <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100">
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-8">
-        <nav aria-label={isItalian ? 'Percorso di navigazione' : 'Breadcrumb'} className="text-sm text-zinc-500">
-          <ol className="flex flex-wrap gap-2">
-            <li><Link href="/" className="underline">AeroInfo</Link></li><li aria-hidden="true">/</li>
-            <li><Link href="/" className="underline">{homeLabel}</Link></li><li aria-hidden="true">/</li>
-            <li aria-current="page">{displayName}</li>
-          </ol>
-        </nav>
+    <LanguageProvider initialLang={lang}>
+      <div className="min-h-screen bg-[#FBFBFB] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 flex flex-col font-sans">
+        <Header />
 
-        <header className="space-y-3 border-b border-zinc-200 dark:border-zinc-800 pb-7">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="text-xs font-semibold uppercase tracking-widest text-blue-600 dark:text-blue-400">
-              {isItalian ? 'Scheda aeroporto' : 'Airport guide'} · {airport.iata}{airport.icao ? ` / ${airport.icao}` : ''}
-            </p>
-            <Link href={alternatePath} hrefLang={isItalian ? 'en' : 'it'} className="text-sm underline underline-offset-4">
-              {isItalian ? 'Read in English' : 'Leggi in italiano'}
-            </Link>
-          </div>
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">{displayName} ({airport.iata})</h1>
-          <p className="text-lg text-zinc-600 dark:text-zinc-300">{city}, {country}</p>
-          <p className="max-w-3xl leading-7 text-zinc-700 dark:text-zinc-300">
-            {isItalian
-              ? `Informazioni su controlli di sicurezza, liquidi e terminal all’aeroporto ${displayName} di ${city}.`
-              : `Security screening, liquids and terminal information for ${displayName} Airport in ${city}.`}
-          </p>
-          {updated && <p className="text-sm text-zinc-500">{isItalian ? 'Regole di sicurezza verificate il' : 'Security information verified on'} {updated}.</p>}
-          {status !== 'indexable' && (
-            <p className="rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-950 dark:border-amber-800 dark:bg-amber-950/30 dark:text-amber-100">
-              {isItalian
-                ? 'Questa scheda è in revisione. Le informazioni non ancora confermate sono indicate e la pagina non è proposta ai motori di ricerca.'
-                : 'This guide is under review. Unconfirmed information is identified and this page is not offered to search engines.'}
-            </p>
-          )}
-        </header>
+        <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 pt-6 sm:pt-8 pb-16 space-y-8">
+          {/* Breadcrumb Navigation */}
+          <nav aria-label={isItalian ? 'Percorso di navigazione' : 'Breadcrumb'} className="text-xs text-zinc-500">
+            <ol className="flex flex-wrap items-center gap-1.5">
+              <li><Link href="/" className="hover:underline text-zinc-600 dark:text-zinc-400">AeroInfo</Link></li>
+              <li aria-hidden="true" className="text-zinc-400">/</li>
+              <li><Link href="/" className="hover:underline text-zinc-600 dark:text-zinc-400">{homeLabel}</Link></li>
+              <li aria-hidden="true" className="text-zinc-400">/</li>
+              <li aria-current="page" className="font-semibold text-zinc-900 dark:text-zinc-100">{displayName} ({airport.iata})</li>
+            </ol>
+          </nav>
 
-        {status === 'indexable' && <section aria-labelledby="security-heading" className="space-y-3">
-          <h2 id="security-heading" className="text-2xl font-semibold">{isItalian ? 'Sicurezza e bagaglio a mano' : 'Security and cabin baggage'}</h2>
-          <p className="leading-7">
-            <strong>{isItalian ? 'Liquidi:' : 'Liquids:'}</strong> {text(policy.liquidsAllowance_it, policy.liquidsAllowance_en, lang)}
-          </p>
-          {policy.scannersNote_it || policy.scannersNote_en ? <p className="leading-7">{text(policy.scannersNote_it, policy.scannersNote_en, lang)}</p> : null}
-          {policy.electronicsNote_it || policy.electronicsNote_en ? <p className="leading-7"><strong>{isItalian ? 'Dispositivi elettronici:' : 'Electronic devices:'}</strong> {text(policy.electronicsNote_it, policy.electronicsNote_en, lang)}</p> : null}
-          {policy.terminalRules?.length ? <ul className="list-disc pl-6 space-y-2">{policy.terminalRules.map((rule) => <li key={rule.terminalName}><strong>{rule.terminalName}:</strong> {text(rule.notes_it, rule.notes_en, lang)}</li>)}</ul> : null}
-          {policy.liquidsUnverified || policy.electronicsUnverified ? <p className="text-sm text-amber-700 dark:text-amber-300">{isItalian ? 'Alcune regole sono in attesa di conferma.' : 'Some rules are awaiting confirmation.'}</p> : null}
-        </section>}
+          {/* PRIMARY INTERACTIVE EXPERIENCE: 4 Bolle Principali */}
+          <section aria-label="Interfaccia rapida a bolle">
+            <AirportDossierInteractiveWrapper airport={airport} airports={airports} lang={lang} />
+          </section>
 
-        {status === 'indexable' && airport.terminals.length > 0 && <section className="space-y-3">
-          <h2 className="text-2xl font-semibold">{isItalian ? 'Terminal' : 'Terminals'}</h2>
-          <ul className="grid gap-3 sm:grid-cols-2">{strongItems(airport.terminals).map((terminal) => <li key={terminal.id} className="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900"><h3 className="font-semibold">{terminal.name}</h3><p className="mt-1 text-sm leading-6">{text(terminal.transferInfo_it, terminal.transferInfo_en, lang)}</p></li>)}</ul>
-        </section>}
+          {/* COMPREHENSIVE DOSSIER & SEARCH ENGINE SECTION */}
+          <article className="pt-8 border-t border-zinc-200 dark:border-zinc-800 space-y-6">
+            <header className="space-y-2">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <p className="text-xs font-semibold uppercase tracking-widest text-[#05668D] dark:text-[#5EAAA8]">
+                  {isItalian ? 'Scheda ufficiale' : 'Official dossier'} · {airport.iata}{airport.icao ? ` / ${airport.icao}` : ''}
+                </p>
+                <Link href={alternatePath} hrefLang={isItalian ? 'en' : 'it'} className="text-xs font-semibold text-[#05668D] dark:text-[#5EAAA8] hover:underline">
+                  {isItalian ? '🇬🇧 Read in English' : '🇮🇹 Leggi in italiano'}
+                </Link>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">
+                {displayName} ({airport.iata}) — {isItalian ? 'Dossier Aeroporto' : 'Airport Dossier'}
+              </h2>
+              <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                {isItalian
+                  ? `Guida completa ai controlli di sicurezza, liquidi, terminal e servizi per lo scalo di ${displayName} a ${city}, ${country}.`
+                  : `Comprehensive guide to security lanes, liquids allowances, terminals and passenger amenities at ${displayName} in ${city}, ${country}.`}
+              </p>
+              {updated && <p className="text-xs text-zinc-400">{isItalian ? 'Dati ufficiali verificati il' : 'Official data verified on'} {updated}.</p>}
+            </header>
 
-        {status === 'indexable' && airport.airlines.some((airline) => !airline.isUnverified) && <section className="space-y-3">
-          <h2 className="text-2xl font-semibold">{isItalian ? 'Compagnie aeree' : 'Airlines'}</h2>
-          <ul className="grid gap-2 sm:grid-cols-2">{strongItems(airport.airlines).map((airline, index) => <li key={`${airline.iataCode}-${airline.airlineName}-${index}`} className="rounded-lg bg-white p-3 text-sm dark:bg-zinc-900"><strong>{airline.airlineName}</strong> · {airline.terminal}{airline.checkInZone ? ` · ${airline.checkInZone}` : ''}</li>)}</ul>
-        </section>}
+            {status !== 'indexable' && (
+              <p className="rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-xs text-amber-950 dark:border-amber-800 dark:bg-amber-950/30 dark:text-amber-100">
+                {isItalian
+                  ? 'Questa scheda è attualmente in fase di revisione da parte del nostro team editoriale.'
+                  : 'This dossier is currently being reviewed by our editorial team.'}
+              </p>
+            )}
 
-        {status === 'indexable' && airport.amenities.some((item) => !item.isUnverified) && <section className="space-y-3">
-          <h2 className="text-2xl font-semibold">{isItalian ? 'Servizi' : 'Airport services'}</h2>
-          <ul className="grid gap-3 sm:grid-cols-2">{strongItems(airport.amenities).map((item) => <li key={item.id} className="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900"><h3 className="font-semibold">{text(item.title_it, item.title_en, lang)}</h3><p className="text-sm text-zinc-500">{text(item.location_it, item.location_en, lang)}{item.terminal ? ` · ${item.terminal}` : ''}</p><p className="mt-2 text-sm leading-6">{text(item.details_it, item.details_en, lang)}</p></li>)}</ul>
-        </section>}
+            {status === 'indexable' && airport.terminals.length > 0 && (
+              <section className="space-y-3 pt-4 border-t border-zinc-100 dark:border-zinc-850">
+                <h3 className="text-lg font-bold">{isItalian ? 'Terminal Passeggeri' : 'Passenger Terminals'}</h3>
+                <ul className="grid gap-3 sm:grid-cols-2">
+                  {strongItems(airport.terminals).map((terminal) => (
+                    <li key={terminal.id} className="rounded-2xl border border-zinc-200/80 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900 shadow-2xs">
+                      <h4 className="font-bold text-sm text-zinc-900 dark:text-white">{terminal.name}</h4>
+                      <p className="mt-1 text-xs leading-5 text-zinc-600 dark:text-zinc-400">{text(terminal.transferInfo_it, terminal.transferInfo_en, lang)}</p>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
 
-        {status === 'indexable' && airport.venues.some((venue) => !venue.isUnverified) && <section className="space-y-3">
-          <h2 className="text-2xl font-semibold">{isItalian ? 'Ristorazione e negozi' : 'Food and shops'}</h2>
-          <ul className="grid gap-2 sm:grid-cols-2">{strongItems(airport.venues).map((venue) => <li key={venue.id} className="rounded-lg bg-white p-3 text-sm dark:bg-zinc-900"><strong>{venue.name}</strong> · {venue.terminal} · {venue.location}</li>)}</ul>
-        </section>}
+            {status === 'indexable' && airport.transports.some((item) => !item.isUnverified) && (
+              <section className="space-y-3 pt-4 border-t border-zinc-100 dark:border-zinc-850">
+                <h3 className="text-lg font-bold">{isItalian ? 'Collegamenti e Trasporti' : 'Ground Transportation'}</h3>
+                <ul className="grid gap-3 sm:grid-cols-2">
+                  {strongItems(airport.transports).map((item) => (
+                    <li key={item.id} className="rounded-2xl border border-zinc-200/80 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900 shadow-2xs space-y-1">
+                      <h4 className="font-bold text-sm text-zinc-900 dark:text-white">{text(item.name_it, item.name_en, lang)}</h4>
+                      <p className="text-xs leading-5 text-zinc-600 dark:text-zinc-400">{text(item.details_it, item.details_en, lang)}</p>
+                      <p className="text-[11px] text-zinc-400">{text(item.pickupLocation_it, item.pickupLocation_en, lang)}{item.duration ? ` · ${item.duration}` : ''}{item.estimatedCost ? ` · ${item.estimatedCost}` : ''}</p>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
 
-        {status === 'indexable' && airport.transports.some((item) => !item.isUnverified) && <section className="space-y-3">
-          <h2 className="text-2xl font-semibold">{isItalian ? 'Come raggiungere l’aeroporto' : 'Getting to the airport'}</h2>
-          <ul className="grid gap-3 sm:grid-cols-2">{strongItems(airport.transports).map((item) => <li key={item.id} className="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900"><h3 className="font-semibold">{text(item.name_it, item.name_en, lang)}</h3><p className="mt-1 text-sm leading-6">{text(item.details_it, item.details_en, lang)}</p><p className="mt-2 text-xs text-zinc-500">{text(item.pickupLocation_it, item.pickupLocation_en, lang)}{item.duration ? ` · ${item.duration}` : ''}{item.estimatedCost ? ` · ${item.estimatedCost}` : ''}</p></li>)}</ul>
-        </section>}
+            {related.length > 0 && (
+              <nav aria-label={isItalian ? 'Aeroporti correlati' : 'Related airports'} className="space-y-3 border-t border-zinc-200 pt-6 dark:border-zinc-800">
+                <h3 className="text-base font-bold">{isItalian ? 'Altri aeroporti della stessa area' : 'Other airports serving this region'}</h3>
+                <ul className="flex flex-wrap gap-2">
+                  {related.map((item) => (
+                    <li key={item.iata}>
+                      <Link className="inline-block px-3 py-1 text-xs rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-[#5EAAA8] transition-colors" href={airportPath(item, lang)}>
+                        {text(item.name_it, item.name_en, lang)} ({item.iata})
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            )}
+          </article>
+        </main>
 
-        <section className="space-y-3 border-t border-zinc-200 pt-6 dark:border-zinc-800">
-          <h2 className="text-2xl font-semibold">{isItalian ? 'Fonti e aggiornamento' : 'Sources and updates'}</h2>
-          {sourceUrl ? <p className="text-sm">{isItalian ? 'Fonte ufficiale per la sicurezza:' : 'Official security source:'} <a className="underline underline-offset-4" href={sourceUrl} target="_blank" rel="noreferrer">{isItalian ? 'consulta il sito ufficiale' : 'view the official source'}</a>.</p> : <p className="text-sm">{isItalian ? 'La fonte ufficiale per le regole di sicurezza non è ancora stata verificata.' : 'The official security source has not yet been verified.'}</p>}
-          {airport.iata.toUpperCase() !== 'QUR' && airport.officialWebsite.startsWith('https://') && <p className="text-sm">{isItalian ? 'Sito ufficiale dell’aeroporto:' : 'Official airport website:'} <a className="underline underline-offset-4" href={airport.officialWebsite} target="_blank" rel="noreferrer">{airport.officialWebsite}</a></p>}
-          {updated && <p className="text-sm text-zinc-500">{isItalian ? 'Ultima verifica registrata:' : 'Last recorded verification:'} {updated}.</p>}
-        </section>
-
-        {related.length > 0 && <nav aria-label={isItalian ? 'Aeroporti correlati' : 'Related airports'} className="space-y-3 border-t border-zinc-200 pt-6 dark:border-zinc-800">
-          <h2 className="text-xl font-semibold">{isItalian ? 'Altri aeroporti della zona' : 'Other nearby airports'}</h2>
-          <ul className="flex flex-wrap gap-3">{related.map((item) => <li key={item.iata}><Link className="underline underline-offset-4" href={airportPath(item, lang)}>{text(item.name_it, item.name_en, lang)} ({item.iata})</Link></li>)}</ul>
-        </nav>}
-      </article>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs).replace(/</g, '\\u003c') }} />
-    </main>
+        <Footer />
+        <CookieConsent />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs).replace(/</g, '\\u003c') }} />
+      </div>
+    </LanguageProvider>
   );
 }
