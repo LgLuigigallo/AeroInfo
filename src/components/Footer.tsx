@@ -88,9 +88,12 @@ export function Footer() {
               {t('cookieSettingsLink')}
             </button>
             <span className="text-zinc-300 dark:text-zinc-700">•</span>
-            <span className="text-zinc-500 dark:text-zinc-400">
+            <Link
+              href="/privacy"
+              className="text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors underline cursor-pointer"
+            >
               {lang === 'it' ? 'Privacy & Cookie Policy' : 'Privacy & Cookie Policy'}
-            </span>
+            </Link>
             <span className="text-zinc-300 dark:text-zinc-700">•</span>
             <Link
               href="/unsubscribe"
