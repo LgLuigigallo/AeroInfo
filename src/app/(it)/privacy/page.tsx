@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft, Plane } from 'lucide-react';
 import { PrivacyFooter } from '@/components/PrivacyFooter';
-import { CookieConsent } from '@/components/CookieConsent';
 
 export const metadata: Metadata = {
   title: 'Privacy e cookie policy | AeroInfo',
@@ -97,7 +96,6 @@ export default function PrivacyPage() {
         </div>
       </main>
       <PrivacyFooter />
-      <CookieConsent />
       <style>{`.privacy-copy a { color: #2563eb; text-decoration: underline; text-underline-offset: 2px; } .privacy-copy ul { list-style: disc; padding-left: 1.25rem; } .privacy-copy li + li { margin-top: .5rem; } .privacy-copy code { border-radius: .375rem; background: rgb(244 244 245); padding: .125rem .375rem; font-size: .8em; } .dark .privacy-copy code { background: rgb(39 39 42); }`}</style>
     </div>
   );
