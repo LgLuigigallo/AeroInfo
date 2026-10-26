@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { ArrowLeft, Plane } from 'lucide-react';
 import { Footer } from '@/components/Footer';
 import { CookieConsent } from '@/components/CookieConsent';
+import { LanguageProvider } from '@/lib/i18n';
 
 export const metadata: Metadata = {
   title: 'Privacy e cookie policy | AeroInfo',
@@ -65,6 +66,7 @@ const sections = [
 
 export default function PrivacyPage() {
   return (
+    <LanguageProvider>
     <div className="min-h-screen bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
       <main className="mx-auto w-full max-w-4xl px-4 py-8 sm:px-6 sm:py-14">
         <header className="mb-10 space-y-8">
@@ -100,5 +102,6 @@ export default function PrivacyPage() {
       <CookieConsent />
       <style>{`.privacy-copy a { color: #2563eb; text-decoration: underline; text-underline-offset: 2px; } .privacy-copy ul { list-style: disc; padding-left: 1.25rem; } .privacy-copy li + li { margin-top: .5rem; } .privacy-copy code { border-radius: .375rem; background: rgb(244 244 245); padding: .125rem .375rem; font-size: .8em; } .dark .privacy-copy code { background: rgb(39 39 42); }`}</style>
     </div>
+    </LanguageProvider>
   );
 }
