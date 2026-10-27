@@ -131,6 +131,29 @@ export function AirportBubblesView({
             <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
               {city}, {country}
             </p>
+
+            {airport.otherCityAirports && airport.otherCityAirports.length > 0 && (
+              <div className="flex flex-wrap items-center gap-1.5 pt-1 text-xs">
+                <span className="text-zinc-400 font-medium">{isItalian ? 'Stessa area:' : 'Same area:'}</span>
+                {airport.otherCityAirports.map((other) => (
+                  <button
+                    key={other.iata}
+                    type="button"
+                    onClick={() => {
+                      const match = airports.find((a) => a.iata.toUpperCase() === other.iata.toUpperCase());
+                      if (match) onSelectAirport(match);
+                    }}
+                    className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#E8F1F2]/70 hover:bg-[#5EAAA8]/20 dark:bg-zinc-800 text-[#05668D] dark:text-[#5EAAA8] font-semibold transition-colors cursor-pointer text-xs"
+                    title={isItalian ? other.name_it : other.name_en}
+                  >
+                    <span>{other.iata}</span>
+                    <span className="text-[11px] font-normal text-zinc-500 dark:text-zinc-400">
+                      ({isItalian ? other.name_it : other.name_en})
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Verification Badge & Source */}
