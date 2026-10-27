@@ -4,12 +4,11 @@ import { getAirportSeoStatus, getIndexableAirports, SITE_URL } from '@/lib/seo/a
 import { liquidsGuide } from '@/lib/seo/content-guides';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  'use cache';
   const airports = await getIndexableAirports();
   const entries: MetadataRoute.Sitemap = [
     {
       url: `${SITE_URL}/`,
-      changeFrequency: 'daily',
-      priority: 1,
       alternates: {
         languages: {
           it: `${SITE_URL}/`,
@@ -20,8 +19,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${SITE_URL}/en`,
-      changeFrequency: 'daily',
-      priority: 0.9,
       alternates: {
         languages: {
           it: `${SITE_URL}/`,
@@ -33,16 +30,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: new URL(liquidsGuide.it.path, SITE_URL).toString(),
       lastModified: new Date(`${liquidsGuide.it.reviewedAt}T00:00:00Z`),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-      alternates: { languages: { it: new URL(liquidsGuide.it.path, SITE_URL).toString(), en: new URL(liquidsGuide.en.path, SITE_URL).toString(), 'x-default': new URL(liquidsGuide.it.path, SITE_URL).toString() } },
+      alternates: {
+        languages: {
+          it: new URL(liquidsGuide.it.path, SITE_URL).toString(),
+          en: new URL(liquidsGuide.en.path, SITE_URL).toString(),
+          'x-default': new URL(liquidsGuide.it.path, SITE_URL).toString(),
+        },
+      },
     },
     {
       url: new URL(liquidsGuide.en.path, SITE_URL).toString(),
       lastModified: new Date(`${liquidsGuide.en.reviewedAt}T00:00:00Z`),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-      alternates: { languages: { it: new URL(liquidsGuide.it.path, SITE_URL).toString(), en: new URL(liquidsGuide.en.path, SITE_URL).toString(), 'x-default': new URL(liquidsGuide.it.path, SITE_URL).toString() } },
+      alternates: {
+        languages: {
+          it: new URL(liquidsGuide.it.path, SITE_URL).toString(),
+          en: new URL(liquidsGuide.en.path, SITE_URL).toString(),
+          'x-default': new URL(liquidsGuide.it.path, SITE_URL).toString(),
+        },
+      },
     },
   ];
 
@@ -56,15 +61,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       {
         url: it,
         ...(lastModified && !Number.isNaN(lastModified.getTime()) ? { lastModified } : {}),
-        changeFrequency: 'weekly',
-        priority: 0.8,
         alternates: { languages: { it, en, 'x-default': it } },
       },
       {
         url: en,
         ...(lastModified && !Number.isNaN(lastModified.getTime()) ? { lastModified } : {}),
-        changeFrequency: 'weekly',
-        priority: 0.7,
         alternates: { languages: { it, en, 'x-default': it } },
       },
     );
