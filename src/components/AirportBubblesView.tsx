@@ -23,7 +23,7 @@ import {
   Search,
   Edit3
 } from 'lucide-react';
-import { Airport, Language } from '@/types/airport';
+import { Airport, Language, SuggestCategory } from '@/types/airport';
 import { useLanguage } from '@/lib/i18n';
 import { cleanOfficialWebsiteUrl } from '@/lib/aviation-authority';
 import { airportPath } from '@/lib/airport-slug';
@@ -52,19 +52,21 @@ export function AirportBubblesView({
   const [activeModal, setActiveModal] = useState<BubbleId | null>(null);
   const [airlineSearch, setAirlineSearch] = useState('');
   const [isSuggestModalOpen, setIsSuggestModalOpen] = useState(false);
-  const [suggestCategory, setSuggestCategory] = useState<'3d_scanners' | 'liquids' | 'drones' | 'power_outlets' | 'terminals' | 'dining' | 'other'>('3d_scanners');
+  const [suggestCategory, setSuggestCategory] = useState<SuggestCategory>('liquids');
 
-  const handleOpenSuggest = (cat?: '3d_scanners' | 'liquids' | 'drones' | 'power_outlets' | 'terminals' | 'dining' | 'other') => {
+  const handleOpenSuggest = (cat?: SuggestCategory) => {
     if (cat) {
       setSuggestCategory(cat);
     } else if (activeModal === 'liquids') {
       setSuggestCategory('liquids');
     } else if (activeModal === 'baggage') {
-      setSuggestCategory('terminals');
+      setSuggestCategory('baggage');
     } else if (activeModal === 'general') {
-      setSuggestCategory('drones');
+      setSuggestCategory('general');
+    } else if (activeModal === 'map') {
+      setSuggestCategory('map');
     } else {
-      setSuggestCategory('3d_scanners');
+      setSuggestCategory('liquids');
     }
     setIsSuggestModalOpen(true);
   };
@@ -646,7 +648,7 @@ export function AirportBubblesView({
                   <div className="pt-2 flex justify-end">
                     <button
                       type="button"
-                      onClick={() => handleOpenSuggest('terminals')}
+                      onClick={() => handleOpenSuggest('baggage')}
                       className="inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] hover:text-[#5EAAA8] dark:hover:text-[#B3E5E0] font-semibold transition-colors cursor-pointer"
                     >
                       <Edit3 className="w-3.5 h-3.5" />
@@ -718,7 +720,7 @@ export function AirportBubblesView({
                   <div className="pt-2 flex justify-end">
                     <button
                       type="button"
-                      onClick={() => handleOpenSuggest('drones')}
+                      onClick={() => handleOpenSuggest('general')}
                       className="inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] hover:text-[#5EAAA8] dark:hover:text-[#B3E5E0] font-semibold transition-colors cursor-pointer"
                     >
                       <Edit3 className="w-3.5 h-3.5" />
@@ -745,7 +747,7 @@ export function AirportBubblesView({
                   <div className="pt-2 flex justify-end">
                     <button
                       type="button"
-                      onClick={() => handleOpenSuggest('other')}
+                      onClick={() => handleOpenSuggest('map')}
                       className="inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] hover:text-[#5EAAA8] dark:hover:text-[#B3E5E0] font-semibold transition-colors cursor-pointer"
                     >
                       <Edit3 className="w-3.5 h-3.5" />

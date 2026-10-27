@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { X, Edit3, Send, CheckCircle2, Loader2, Sparkles, AlertCircle } from 'lucide-react';
-import { Airport } from '@/types/airport';
+import { Airport, SuggestCategory } from '@/types/airport';
 import { useLanguage } from '@/lib/i18n';
 
 interface SuggestAirportEditModalProps {
@@ -10,7 +10,7 @@ interface SuggestAirportEditModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSuggestionSubmitted?: () => void;
-  initialCategory?: '3d_scanners' | 'liquids' | 'drones' | 'power_outlets' | 'terminals' | 'dining' | 'other';
+  initialCategory?: SuggestCategory;
 }
 
 export function SuggestAirportEditModal({
@@ -22,7 +22,7 @@ export function SuggestAirportEditModal({
 }: SuggestAirportEditModalProps) {
   const { lang } = useLanguage();
 
-  const [category, setCategory] = useState<'3d_scanners' | 'liquids' | 'drones' | 'power_outlets' | 'terminals' | 'dining' | 'other'>(initialCategory || '3d_scanners');
+  const [category, setCategory] = useState<SuggestCategory>(initialCategory || 'liquids');
   const [details, setDetails] = useState('');
   const [sourceUrl, setSourceUrl] = useState('');
   const [email, setEmail] = useState('');
@@ -48,15 +48,18 @@ export function SuggestAirportEditModal({
 
   if (!isOpen) return null;
 
-  const categories = [
-    { id: '3d_scanners', label_it: 'Scanner 3D (liquidi in borsa)', label_en: '3D Scanners (liquids in bag)' },
-    { id: 'liquids', label_it: 'Regolamento Liquidi (100ml / bottiglie)', label_en: 'Liquids Allowance' },
-    { id: 'drones', label_it: 'Regole Droni (cabina / stiva)', label_en: 'Drone Rules' },
+  const categories: { id: SuggestCategory; label_it: string; label_en: string }[] = [
+    { id: 'liquids', label_it: 'Regole Liquidi & Scanner 3D', label_en: 'Liquids & 3D Scanners' },
+    { id: 'baggage', label_it: 'Regole Bagagli (a mano, stiva, dimensioni, elettronica)', label_en: 'Baggage Rules (cabin & hold luggage, sizes, devices)' },
+    { id: 'general', label_it: 'Altre Regole (droni, powerbank, farmaci, duty free)', label_en: 'General Rules (drones, powerbanks, medicines, duty free)' },
+    { id: 'map', label_it: 'Mappa Terminal & Servizi (prese, fontanelle, relax)', label_en: 'Terminal Map & Amenities (sockets, fountains, lounges)' },
+    { id: 'terminals', label_it: 'Terminal & Compagnie Aeree', label_en: 'Terminals & Airlines' },
+    { id: '3d_scanners', label_it: 'Presenza / Modello Scanner 3D', label_en: '3D Scanner Availability & Model' },
+    { id: 'drones', label_it: 'Regolamento Droni', label_en: 'Drone Rules' },
     { id: 'power_outlets', label_it: 'Prese di ricarica & USB', label_en: 'Power Outlets & USB' },
-    { id: 'terminals', label_it: 'Terminal & Porte di imbarco', label_en: 'Terminals & Gates' },
     { id: 'dining', label_it: 'Ristoranti / Negozi / Prezzi', label_en: 'Dining & Shops' },
     { id: 'other', label_it: 'Altro / Suggerimento generico', label_en: 'Other / General Note' },
-  ] as const;
+  ];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -107,6 +110,7 @@ export function SuggestAirportEditModal({
     setSourceUrl('');
     setEmail('');
     setErrorMsg('');
+    if (initialCategory) setCategory(initialCategory);
     onClose();
   };
 
