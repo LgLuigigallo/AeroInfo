@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import '../globals.css';
+import './admin/admin.css';
 
 export const metadata: Metadata = {
   title: 'Console admin | AeroInfo',
