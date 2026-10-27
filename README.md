@@ -128,6 +128,16 @@ Le email dei richiedenti non vengono incluse negli elenchi; sono accessibili sol
 
 ---
 
+## Console amministrativa
+
+La console privata è disponibile su `/admin`. Il login usa Google tramite Supabase Auth; il server autorizza solo gli indirizzi elencati in `ADMIN_EMAILS` e usa `SUPABASE_SERVICE_ROLE_KEY` solo lato server.
+
+La console gestisce richieste, segnalazioni, feedback, catalogo aeroporti, qualità SEO, sincronizzazioni singole e registro append-only. Le richieste restano nel flusso automatico; “Avvia ora” elabora soltanto la selezionata. Le modifiche al catalogo sono protette dal seeding statico successivo. I dati di contatto sono visibili solo nei dettagli protetti.
+
+Prima di abilitare la console, configura Google OAuth in Supabase e aggiungi `https://www.aero-info.eu/admin/callback` agli URL di reindirizzamento consentiti. Le migrazioni richieste sono `20261026064848_admin_console.sql`, `20261026080708_admin_seo_fields.sql` e `20261026081500_admin_source_verification.sql`.
+
+---
+
 ## 🛠️ Stack Tecnologico
 
 | Layer | Tecnologie Utilizzate |

@@ -3069,7 +3069,7 @@ export const airportsData: Airport[] = [
     country_it: 'Polonia',
     country_en: 'Poland',
     countryCode: 'PL',
-    officialWebsite: 'https://www.lotnisko-chopina.pl',
+    officialWebsite: 'https://airportchopin.com',
     coordinates: { lat: 52.1672, lng: 20.9679 },
     difficultyRating: 2,
     difficultyLabel_it: 'Moderno Hub LOT Polish Airlines (Treno 20 min)',
@@ -3099,7 +3099,7 @@ export const airportsData: Airport[] = [
       powerbankPolicy_it: 'Max 100Wh consentiti solo a bordo.',
       powerbankPolicy_en: 'Max 100Wh allowed on board.',
       powerbankUnverified: false,
-      officialSourceUrl: 'https://www.lotnisko-chopina.pl/en/security-control.html',
+      officialSourceUrl: 'https://airportchopin.com/en/info/security',
       lastVerifiedDate: '2026-10-18'
     },
     terminals: [
@@ -3229,7 +3229,7 @@ export const airportsData: Airport[] = [
       powerbankPolicy_it: 'Max 100Wh consentiti solo nel bagaglio a mano.',
       powerbankPolicy_en: 'Max 100Wh allowed in cabin bag only.',
       powerbankUnverified: false,
-      officialSourceUrl: 'https://www.bud.hu/en/passengers/flight_and_travel_info/security_screening',
+      officialSourceUrl: 'https://www.bud.hu/en/flight-and-travel-information/travel/security-screening',
       lastVerifiedDate: '2026-10-18'
     },
     terminals: [
@@ -3365,7 +3365,7 @@ export const airportsData: Airport[] = [
       powerbankPolicy_it: 'Max 100Wh nel bagaglio a mano.',
       powerbankPolicy_en: 'Max 100Wh in cabin luggage.',
       powerbankUnverified: false,
-      officialSourceUrl: 'https://www.flughafen-zuerich.ch/en/passengers/fly/security-and-customs',
+      officialSourceUrl: 'https://www.flughafen-zuerich.ch/en/passengers/fly/all-about-the-flight/what-is-allowed-in-your-baggage',
       lastVerifiedDate: '2026-10-18'
     },
     terminals: [
@@ -3691,7 +3691,7 @@ export const airportsData: Airport[] = [
       powerbankPolicy_it: 'Massimo 100Wh consentiti nel bagaglio a mano.',
       powerbankPolicy_en: 'Maximum 100Wh permitted in cabin bag.',
       powerbankUnverified: false,
-      officialSourceUrl: 'https://www.schiphol.nl/en/page/security-rules-liquids-in-hand-baggage/',
+      officialSourceUrl: 'https://www.schiphol.nl/en/prepare-for-your-flight-at-schiphol/prepare-for-security/',
       lastVerifiedDate: '2026-10-18'
     },
     terminals: [
@@ -3982,7 +3982,7 @@ export const airportsData: Airport[] = [
       powerbankPolicy_it: 'Max 100Wh nel bagaglio a mano.',
       powerbankPolicy_en: 'Max 100Wh in cabin luggage.',
       powerbankUnverified: false,
-      officialSourceUrl: 'https://www.ana.pt/en/passenger-guide/what-can-i-carry',
+      officialSourceUrl: 'https://www.ana.pt/en/content-topic/plan-your-trip',
       lastVerifiedDate: '2026-10-18'
     },
     terminals: [

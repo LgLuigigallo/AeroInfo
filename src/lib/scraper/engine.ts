@@ -44,13 +44,13 @@ export const OFFICIAL_DOMAIN_WHITELIST: Record<string, string> = {
   FUE: 'https://www.aena.es/es/pasajeros/equipajes-controles/equipaje-mano.html',
 
   // Netherlands
-  AMS: 'https://www.schiphol.nl/en/page/security-rules-liquids-in-hand-baggage/',
+  AMS: 'https://www.schiphol.nl/en/prepare-for-your-flight-at-schiphol/prepare-for-security/',
 
   // Ireland
   DUB: 'https://www.dublinairport.com/at-the-airport/security',
 
   // Portugal
-  LIS: 'https://www.ana.pt/en/passenger-guide/what-can-i-carry',
+  LIS: 'https://www.ana.pt/en/content-topic/plan-your-trip',
 
   // Austria
   VIE: 'https://www.viennaairport.com/passagiere/flughafen/sicherheitskontrolle',
@@ -65,17 +65,17 @@ export const OFFICIAL_DOMAIN_WHITELIST: Record<string, string> = {
   HEL: 'https://www.finavia.fi/en/airports/helsinki-airport/before-flight/security-control',
 
   // Poland
-  WAW: 'https://www.lotnisko-chopina.pl/en/security-control.html',
+  WAW: 'https://airportchopin.com/en/info/security',
   KRK: 'https://krakowairport.pl/en/passenger/security-control',
 
   // Hungary
-  BUD: 'https://www.bud.hu/en/passengers/flight_and_travel_info/security_screening',
+  BUD: 'https://www.bud.hu/en/flight-and-travel-information/travel/security-screening',
 
   // Greece
   ATH: 'https://www.aia.gr/traveler/security-information',
 
   // Switzerland
-  ZRH: 'https://www.flughafen-zuerich.ch/en/passengers/fly/security-and-customs',
+  ZRH: 'https://www.flughafen-zuerich.ch/en/passengers/fly/all-about-the-flight/what-is-allowed-in-your-baggage',
 
   // UK & USA & Japan
   LHR: 'https://www.heathrow.com/at-the-airport/airport-security',
@@ -130,6 +130,111 @@ export const OFFICIAL_VENUES_ENDPOINTS: Record<string, { type: 'adr_portlet' | '
 
 export class AirportScraperEngine {
   private userAgent = 'AeroInfo-Intelligence-Bot/1.0 (+https://aeroinfo.vercel.app)';
+  private readonly maxRedirects = 5;
+  private readonly maxHtmlBytes = 2_000_000;
+
+  private async readHtml(response: Response): Promise<string> {
+    const declaredLength = Number(response.headers.get('content-length') || 0);
+    if (declaredLength > this.maxHtmlBytes) throw new Error('Official page exceeded the 2 MB response limit.');
+    if (!response.body) return '';
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let bytes = 0;
+    let html = '';
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      bytes += value.byteLength;
+      if (bytes > this.maxHtmlBytes) {
+        await reader.cancel();
+        throw new Error('Official page exceeded the 2 MB response limit.');
+      }
+      html += decoder.decode(value, { stream: true });
+    }
+    return html + decoder.decode();
+  }
+
+  private async fetchOfficialPage(iata: string, startUrl: string): Promise<{ response?: Response; finalUrl: string; error?: string }> {
+    let currentUrl = startUrl;
+    for (let redirectCount = 0; redirectCount <= this.maxRedirects; redirectCount += 1) {
+      if (!isSafeOutboundUrl(currentUrl) || !this.isOfficialDomain(iata, currentUrl)) {
+        return { finalUrl: currentUrl, error: 'Security check: destination is outside the verified official domain.' };
+      }
+
+      try {
+        const response = await fetch(currentUrl, {
+          redirect: 'manual',
+          headers: {
+            'User-Agent': this.userAgent,
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Language': 'it,en;q=0.9,cs;q=0.8,de;q=0.8,fr;q=0.8,es;q=0.8',
+          },
+          signal: AbortSignal.timeout(10000),
+        });
+
+        if (![301, 302, 303, 307, 308].includes(response.status)) {
+          return { response, finalUrl: currentUrl };
+        }
+
+        const location = response.headers.get('location');
+        if (!location || redirectCount === this.maxRedirects) {
+          return { finalUrl: currentUrl, error: 'Official page returned an invalid or excessive redirect chain.' };
+        }
+        currentUrl = new URL(location, currentUrl).toString();
+      } catch (error) {
+        return { finalUrl: currentUrl, error: error instanceof Error ? error.message : 'Official page request failed.' };
+      }
+    }
+
+    return { finalUrl: currentUrl, error: 'Official page returned an excessive redirect chain.' };
+  }
+
+  private async discoverOfficialSecurityUrls(iata: string, officialWebsite?: string): Promise<string[]> {
+    const canonical = OFFICIAL_DOMAIN_WHITELIST[iata.toUpperCase()];
+    const siteUrl = [officialWebsite, canonical].find((candidate) => Boolean(candidate && this.isOfficialDomain(iata, candidate)));
+    if (!siteUrl) return [];
+
+    const { response } = await this.fetchOfficialPage(iata, siteUrl);
+    if (!response?.ok) return [];
+    const contentType = response.headers.get('content-type') || '';
+    if (contentType && !/(text\/html|application\/xhtml\+xml)/i.test(contentType)) return [];
+
+    try {
+      const html = await this.readHtml(response);
+      const $ = cheerio.load(html);
+      const matches = new Map<string, number>();
+      const relevant = /security|screening|checkpoint|baggage|luggage|liquid|prohibited|bagagli|sicurezza|controlli|sicherheitskontrolle|sicherheit|seguridade|seguridad|sûreté/i;
+      $('a[href]').each((_, element) => {
+        const anchor = $(element);
+        const label = `${anchor.text()} ${anchor.attr('title') || ''}`.trim();
+        if (!relevant.test(`${label} ${anchor.attr('href') || ''}`)) return;
+        try {
+          const url = new URL(anchor.attr('href') || '', siteUrl).toString();
+          if (this.isOfficialDomain(iata, url) && isSafeOutboundUrl(url)) {
+            const score = (/security|sicurezza|sicherheit|seguridad|sûreté/i.test(label) ? 2 : 0)
+              + (/security|screening|sicurezza|sicherheit|seguridad|sûreté/i.test(url) ? 3 : 0)
+              + (/screen|liquid|baggage|bagagli|luggage/i.test(url) ? 1 : 0);
+            matches.set(url, Math.max(matches.get(url) || 0, score));
+          }
+        } catch {
+          // Ignore malformed and non-HTTP links.
+        }
+      });
+      return [...matches.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5).map(([url]) => url);
+    } catch {
+      return [];
+    }
+  }
+
+  private hasExplicitLiquidsRule(html: string): boolean {
+    const $ = cheerio.load(html);
+    $('script, style, noscript, svg, nav, footer').remove();
+    const text = $('body').text().toLowerCase().replace(/\s+/g, ' ');
+    const mentionsLiquids = /liquids?|liquidi|líquidos|flüssigkeiten|liquides/.test(text);
+    const statesHandling = /(?:must|have to|need to|required to|permitted to|allowed to|can|may|should).{0,100}(?:remove|take out|extract|remain|stay|keep|carry)|(?:remove|take out|extract|remain|stay|keep|carry).{0,100}(?:liquids?|liquidi|líquidos|flüssigkeiten|liquides)/.test(text);
+    return mentionsLiquids && statesHandling;
+  }
 
   /**
    * Validates if a URL belongs to the official verified domain
@@ -151,8 +256,9 @@ export class AirportScraperEngine {
   /**
    * Scrapes official airport web pages and extracts precise security regulations
    */
-  public async scrapeAirportSecurity(iata: string, explicitUrl?: string): Promise<ScrapingResult> {
-    const targetUrl = explicitUrl || OFFICIAL_DOMAIN_WHITELIST[iata.toUpperCase()];
+  public async scrapeAirportSecurity(iata: string, explicitUrl?: string, officialWebsite?: string): Promise<ScrapingResult> {
+    const canonicalUrl = OFFICIAL_DOMAIN_WHITELIST[iata.toUpperCase()];
+    const targetUrl = explicitUrl || canonicalUrl;
     if (!targetUrl) {
       return {
         airportIata: iata,
@@ -163,48 +269,63 @@ export class AirportScraperEngine {
       };
     }
 
-    // SSRF & Whitelist Protection
-    if (!isSafeOutboundUrl(targetUrl)) {
-      return {
-        airportIata: iata,
-        sourceUrl: targetUrl,
-        success: false,
-        timestamp: new Date().toISOString(),
-        notes: 'Security check: URL rejected by SSRF filter (non-HTTPS or internal/reserved address).'
-      };
-    }
-
-    if (explicitUrl && !this.isOfficialDomain(iata, targetUrl)) {
-      return {
-        airportIata: iata,
-        sourceUrl: targetUrl,
-        success: false,
-        timestamp: new Date().toISOString(),
-        notes: 'Security check: explicit URL does not match official airport domain whitelist.'
-      };
-    }
-
     try {
-      const response = await fetch(targetUrl, {
-        headers: {
-          'User-Agent': this.userAgent,
-          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-          'Accept-Language': 'it,en;q=0.9,cs;q=0.8,de;q=0.8,fr;q=0.8,es;q=0.8'
-        },
-        signal: AbortSignal.timeout(10000)
-      });
+      const discoveredUrls = await this.discoverOfficialSecurityUrls(iata, officialWebsite);
+      const candidateUrls = [...new Set([targetUrl, canonicalUrl, ...discoveredUrls].filter((url): url is string => Boolean(url)))];
+      const failures: string[] = [];
+      let response: Response | undefined;
+      let fallbackResponse: Response | undefined;
+      let fallbackUrl = targetUrl;
+      let resolvedUrl = targetUrl;
 
-      if (!response.ok) {
+      for (const candidateUrl of candidateUrls) {
+        if (!this.isOfficialDomain(iata, candidateUrl) || !isSafeOutboundUrl(candidateUrl)) continue;
+        const fetched = await this.fetchOfficialPage(iata, candidateUrl);
+        if (fetched.response?.ok) {
+          const contentType = fetched.response.headers.get('content-type') || '';
+          if (!contentType || /(text\/html|application\/xhtml\+xml)/i.test(contentType)) {
+            let html: string;
+            try {
+              html = await this.readHtml(fetched.response.clone());
+            } catch {
+              failures.push(`${new URL(candidateUrl).pathname}: response exceeded the safe HTML limit`);
+              continue;
+            }
+            if (this.hasExplicitLiquidsRule(html)) {
+              response = fetched.response;
+              resolvedUrl = fetched.finalUrl;
+              break;
+            }
+            fallbackResponse ??= fetched.response;
+            fallbackUrl = fetched.finalUrl;
+            failures.push(`${new URL(candidateUrl).pathname}: page loaded without an explicit liquids rule`);
+            continue;
+          }
+          failures.push(`${new URL(candidateUrl).pathname}: non-HTML response`);
+        } else {
+          failures.push(`${new URL(candidateUrl).pathname}: ${fetched.response ? `HTTP ${fetched.response.status}` : fetched.error || 'request failed'}`);
+        }
+      }
+
+      if (!response && fallbackResponse) {
+        response = fallbackResponse;
+        resolvedUrl = fallbackUrl;
+      }
+
+      if (!response) {
+        const accessDenied = failures.some((failure) => /HTTP (401|403)\b/.test(failure));
         return {
           airportIata: iata,
           sourceUrl: targetUrl,
           success: false,
           timestamp: new Date().toISOString(),
-          notes: `HTTP error ${response.status} from official server`
+          notes: accessDenied
+            ? `The official website denied automated access; source availability could not be confirmed (${failures.slice(0, 3).join('; ')}).`
+            : `Official source unavailable after safe fallback checks (${failures.slice(0, 3).join('; ') || 'no eligible source'}).`,
         };
       }
 
-      const html = await response.text();
+      const html = await this.readHtml(response);
       const $ = cheerio.load(html);
 
       $('script, style, noscript, svg, nav, footer').remove();
@@ -293,7 +414,7 @@ export class AirportScraperEngine {
 
       return {
         airportIata: iata,
-        sourceUrl: targetUrl,
+        sourceUrl: resolvedUrl,
         success: true,
         policyVerified,
         timestamp: new Date().toISOString(),
@@ -480,11 +601,8 @@ export class AirportScraperEngine {
       const chunk = airports.slice(i, i + chunkSize);
       const chunkResults = await Promise.all(
         chunk.map(async (airport) => {
-          const targetUrl =
-            airport.securityPolicy?.officialSourceUrl ||
-            OFFICIAL_DOMAIN_WHITELIST[airport.iata.toUpperCase()];
-          
-          const secResult = await this.scrapeAirportSecurity(airport.iata, targetUrl);
+          const targetUrl = airport.securityPolicy?.officialSourceUrl || OFFICIAL_DOMAIN_WHITELIST[airport.iata.toUpperCase()];
+          const secResult = await this.scrapeAirportSecurity(airport.iata, targetUrl, airport.officialWebsite);
 
           // If airport has official venue endpoint configured, sync venues as well
           if (OFFICIAL_VENUES_ENDPOINTS[airport.iata.toUpperCase()]) {

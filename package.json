@@ -12,6 +12,7 @@
     "test:admin:staging": "node tests/admin-security-live.mjs"
   },
   "dependencies": {
+    "@supabase/ssr": "0.12.7",
     "@supabase/supabase-js": "^2.118.0",
     "@vercel/analytics": "^2.0.1",
     "cheerio": "^1.2.0",
