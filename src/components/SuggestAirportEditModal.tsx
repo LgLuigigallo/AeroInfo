@@ -10,23 +10,31 @@ interface SuggestAirportEditModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSuggestionSubmitted?: () => void;
+  initialCategory?: '3d_scanners' | 'liquids' | 'drones' | 'power_outlets' | 'terminals' | 'dining' | 'other';
 }
 
 export function SuggestAirportEditModal({
   airport,
   isOpen,
   onClose,
-  onSuggestionSubmitted
+  onSuggestionSubmitted,
+  initialCategory
 }: SuggestAirportEditModalProps) {
   const { lang } = useLanguage();
 
-  const [category, setCategory] = useState<'3d_scanners' | 'liquids' | 'drones' | 'power_outlets' | 'terminals' | 'dining' | 'other'>('3d_scanners');
+  const [category, setCategory] = useState<'3d_scanners' | 'liquids' | 'drones' | 'power_outlets' | 'terminals' | 'dining' | 'other'>(initialCategory || '3d_scanners');
   const [details, setDetails] = useState('');
   const [sourceUrl, setSourceUrl] = useState('');
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
+
+  useEffect(() => {
+    if (isOpen && initialCategory) {
+      setCategory(initialCategory);
+    }
+  }, [isOpen, initialCategory]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -106,7 +114,7 @@ export function SuggestAirportEditModal({
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-150"
+      className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-150"
       onClick={onClose}
     >
       <div

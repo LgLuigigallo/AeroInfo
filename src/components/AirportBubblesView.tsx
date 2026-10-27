@@ -20,7 +20,8 @@ import {
   Pill, 
   ShoppingBag, 
   Sparkles,
-  Search
+  Search,
+  Edit3
 } from 'lucide-react';
 import { Airport, Language } from '@/types/airport';
 import { useLanguage } from '@/lib/i18n';
@@ -28,6 +29,7 @@ import { cleanOfficialWebsiteUrl } from '@/lib/aviation-authority';
 import { airportPath } from '@/lib/airport-slug';
 import { TerminalMapTab } from './tabs/TerminalMapTab';
 import { SearchBar } from './SearchBar';
+import { SuggestAirportEditModal } from './SuggestAirportEditModal';
 
 interface AirportBubblesViewProps {
   airport: Airport;
@@ -49,6 +51,23 @@ export function AirportBubblesView({
   const { lang, t } = useLanguage();
   const [activeModal, setActiveModal] = useState<BubbleId | null>(null);
   const [airlineSearch, setAirlineSearch] = useState('');
+  const [isSuggestModalOpen, setIsSuggestModalOpen] = useState(false);
+  const [suggestCategory, setSuggestCategory] = useState<'3d_scanners' | 'liquids' | 'drones' | 'power_outlets' | 'terminals' | 'dining' | 'other'>('3d_scanners');
+
+  const handleOpenSuggest = (cat?: '3d_scanners' | 'liquids' | 'drones' | 'power_outlets' | 'terminals' | 'dining' | 'other') => {
+    if (cat) {
+      setSuggestCategory(cat);
+    } else if (activeModal === 'liquids') {
+      setSuggestCategory('liquids');
+    } else if (activeModal === 'baggage') {
+      setSuggestCategory('terminals');
+    } else if (activeModal === 'general') {
+      setSuggestCategory('drones');
+    } else {
+      setSuggestCategory('3d_scanners');
+    }
+    setIsSuggestModalOpen(true);
+  };
 
   const isItalian = lang === 'it';
   const name = isItalian ? airport.name_it : airport.name_en;
@@ -181,17 +200,30 @@ export function AirportBubblesView({
                 {isItalian ? 'Aggiornato al' : 'Verified on'} {verifiedDateFormatted}
               </span>
             )}
-            {officialUrl && (
-              <a
-                href={officialUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#05668D] dark:text-[#5EAAA8] hover:underline pt-0.5"
+            <div className="flex items-center gap-2 pt-0.5">
+              <button
+                type="button"
+                onClick={() => handleOpenSuggest()}
+                className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#05668D] dark:text-[#5EAAA8] hover:underline cursor-pointer"
               >
-                <span>{isItalian ? 'Consulta il sito ufficiale' : 'Visit official website'}</span>
-                <ExternalLink className="w-3 h-3" />
-              </a>
-            )}
+                <Edit3 className="w-3 h-3" />
+                <span>{isItalian ? 'Suggerisci modifica' : 'Suggest edit'}</span>
+              </button>
+              {officialUrl && (
+                <>
+                  <span className="text-zinc-300 dark:text-zinc-700 text-[10px]" aria-hidden="true">•</span>
+                  <a
+                    href={officialUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-[11px] font-medium text-zinc-500 hover:text-[#05668D] dark:hover:text-zinc-300 hover:underline"
+                  >
+                    <span>{isItalian ? 'Sito ufficiale' : 'Official website'}</span>
+                    <ExternalLink className="w-2.5 h-2.5" />
+                  </a>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </section>
@@ -533,20 +565,17 @@ export function AirportBubblesView({
                     </div>
                   </div>
 
-                  {/* Official Source Link */}
-                  {officialUrl && (
-                    <div className="pt-2 flex justify-end">
-                      <a
-                        href={officialUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] hover:underline font-semibold"
-                      >
-                        <span>{isItalian ? 'Consulta il sito ufficiale' : 'Visit official website'}</span>
-                        <ExternalLink className="w-3.5 h-3.5" />
-                      </a>
-                    </div>
-                  )}
+                  {/* Suggest Edit Link */}
+                  <div className="pt-2 flex justify-end">
+                    <button
+                      type="button"
+                      onClick={() => handleOpenSuggest('liquids')}
+                      className="inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] hover:text-[#5EAAA8] dark:hover:text-[#B3E5E0] font-semibold transition-colors cursor-pointer"
+                    >
+                      <Edit3 className="w-3.5 h-3.5" />
+                      <span>{isItalian ? 'Suggerisci modifica' : 'Suggest edit'}</span>
+                    </button>
+                  </div>
                 </div>
               )}
 
@@ -625,6 +654,18 @@ export function AirportBubblesView({
                       </div>
                     </div>
                   )}
+
+                  {/* Suggest Edit Link */}
+                  <div className="pt-2 flex justify-end">
+                    <button
+                      type="button"
+                      onClick={() => handleOpenSuggest('terminals')}
+                      className="inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] hover:text-[#5EAAA8] dark:hover:text-[#B3E5E0] font-semibold transition-colors cursor-pointer"
+                    >
+                      <Edit3 className="w-3.5 h-3.5" />
+                      <span>{isItalian ? 'Suggerisci modifica' : 'Suggest edit'}</span>
+                    </button>
+                  </div>
                 </div>
               )}
 
@@ -685,6 +726,18 @@ export function AirportBubblesView({
                         : 'Duty free liquids and perfumes bought airside must remain sealed inside tamper-evident STEB bags with receipt visible, especially on connecting flights.'}
                     </p>
                   </div>
+
+                  {/* Suggest Edit Link */}
+                  <div className="pt-2 flex justify-end">
+                    <button
+                      type="button"
+                      onClick={() => handleOpenSuggest('drones')}
+                      className="inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] hover:text-[#5EAAA8] dark:hover:text-[#B3E5E0] font-semibold transition-colors cursor-pointer"
+                    >
+                      <Edit3 className="w-3.5 h-3.5" />
+                      <span>{isItalian ? 'Suggerisci modifica' : 'Suggest edit'}</span>
+                    </button>
+                  </div>
                 </div>
               )}
 
@@ -705,19 +758,33 @@ export function AirportBubblesView({
 
             </div>
 
-            {/* Modal Bottom Close Bar */}
+            {/* Modal Bottom Close Bar with Always-Accessible Suggest Edit */}
             <div className="p-3.5 sm:p-4 bg-[#E8F1F2]/40 dark:bg-zinc-850 flex items-center justify-between text-xs gap-3">
-              {officialUrl ? (
-                <a
-                  href={officialUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] hover:text-[#5EAAA8] dark:hover:text-[#B3E5E0] font-semibold truncate transition-colors"
+              <div className="flex items-center gap-3 sm:gap-4 truncate">
+                <button
+                  type="button"
+                  onClick={() => handleOpenSuggest()}
+                  className="inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] hover:text-[#5EAAA8] dark:hover:text-[#B3E5E0] font-semibold transition-colors cursor-pointer shrink-0"
                 >
-                  <span>{isItalian ? 'Consulta il sito ufficiale' : 'Visit official website'}</span>
-                  <ExternalLink className="w-3.5 h-3.5 shrink-0" />
-                </a>
-              ) : <div />}
+                  <Edit3 className="w-3.5 h-3.5" />
+                  <span>{isItalian ? 'Suggerisci modifica' : 'Suggest edit'}</span>
+                </button>
+
+                {officialUrl && (
+                  <>
+                    <span className="text-zinc-300 dark:text-zinc-700 hidden sm:inline" aria-hidden="true">•</span>
+                    <a
+                      href={officialUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hidden sm:inline-flex items-center gap-1 text-[11px] text-zinc-500 hover:text-[#05668D] dark:hover:text-zinc-300 transition-colors truncate"
+                    >
+                      <span>{isItalian ? 'Sito ufficiale' : 'Official website'}</span>
+                      <ExternalLink className="w-3 h-3 shrink-0" />
+                    </a>
+                  </>
+                )}
+              </div>
 
               <button
                 type="button"
@@ -731,6 +798,14 @@ export function AirportBubblesView({
           </div>
         </div>
       )}
+
+      {/* Suggest Airport Edit Modal */}
+      <SuggestAirportEditModal
+        airport={airport}
+        isOpen={isSuggestModalOpen}
+        initialCategory={suggestCategory}
+        onClose={() => setIsSuggestModalOpen(false)}
+      />
 
     </div>
   );
