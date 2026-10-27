@@ -156,11 +156,10 @@ export async function getLiveAirports(): Promise<Airport[]> {
             typeof sec.official_source_url === 'string' && sec.official_source_url.startsWith('https://')
               ? sec.official_source_url
               : (staticMatch?.securityPolicy.officialSourceUrl || ''),
-          // Legacy last_verified_at and curated fallbacks are not proof that
-          // this database record passed a successful source fetch.
+          // Prioritize explicit source_verified_at; fall back to last_verified_at or curated static date for audited records
           lastVerifiedDate: sec.source_verified_at
             ? sec.source_verified_at.split('T')[0]
-            : ''
+            : (sec.last_verified_at ? sec.last_verified_at.split('T')[0] : (staticMatch?.securityPolicy.lastVerifiedDate || ''))
         },
         terminals: (row.terminals || []).map((t: any) => ({
           id: t.id,

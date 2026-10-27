@@ -3,16 +3,13 @@ import { Footer } from '@/components/Footer';
 import { CookieConsent } from '@/components/CookieConsent';
 import { AirportDossierInteractiveWrapper } from '@/components/AirportDossierInteractiveWrapper';
 import { LanguageProvider } from '@/lib/i18n';
-import { getAirportBreadcrumbStructuredData } from '@/lib/seo/structured-data';
+import { getAirportCombinedStructuredData } from '@/lib/seo/structured-data';
 import type { Airport, Language } from '@/types/airport';
 
 type Props = { airport: Airport; airports: Airport[]; lang: Language };
 
-const text = (it: string | undefined, en: string | undefined, lang: Language) => (lang === 'it' ? it : en);
-
 export function AirportSeoDossier({ airport, airports, lang }: Props) {
-  const displayName = text(airport.name_it, airport.name_en, lang) || airport.iata;
-  const breadcrumbs = getAirportBreadcrumbStructuredData(displayName, lang);
+  const structuredData = getAirportCombinedStructuredData(airport, lang);
 
   return (
     <LanguageProvider initialLang={lang}>
@@ -20,6 +17,7 @@ export function AirportSeoDossier({ airport, airports, lang }: Props) {
         <Header />
 
         <main className="flex-1 w-full px-4 sm:px-6 md:px-8 lg:px-12 pt-4 sm:pt-6 pb-16">
+          {/* Interactive 4-Bubble Minimalist Experience */}
           <AirportDossierInteractiveWrapper airport={airport} airports={airports} lang={lang} />
         </main>
 
@@ -27,7 +25,7 @@ export function AirportSeoDossier({ airport, airports, lang }: Props) {
         <CookieConsent />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs).replace(/</g, '\\u003c') }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }}
         />
       </div>
     </LanguageProvider>

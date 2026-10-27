@@ -21,7 +21,14 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://www.aero-info.eu'),
   title: 'AeroInfo — Informazioni utili sugli aeroporti',
   description: 'Informazioni verificate su sicurezza, liquidi, terminal e servizi negli aeroporti.',
-  alternates: { canonical: 'https://www.aero-info.eu/' },
+  alternates: {
+    canonical: 'https://www.aero-info.eu/',
+    languages: {
+      it: 'https://www.aero-info.eu/',
+      en: 'https://www.aero-info.eu/en',
+      'x-default': 'https://www.aero-info.eu/',
+    },
+  },
   openGraph: {
     title: 'AeroInfo — Informazioni utili sugli aeroporti',
     description: 'Informazioni verificate su sicurezza, liquidi, terminal e servizi negli aeroporti.',

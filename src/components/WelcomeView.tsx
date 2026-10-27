@@ -54,7 +54,6 @@ export function WelcomeView({ airports, onSelectAirport, children }: WelcomeView
           
           {/* Fase 1 */}
           <div className="rounded-2xl bg-white/90 dark:bg-zinc-900/90 p-5 flex flex-col items-center text-center shadow-xs hover:shadow-md transition-all group">
-            {/* Numero fase centrato */}
             <div className="mb-3 flex items-center justify-center">
               <span className="w-9 h-9 rounded-full bg-[#E8F1F2] dark:bg-zinc-800 text-[#05668D] dark:text-[#5EAAA8] font-mono font-black text-sm flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:bg-[#05668D] group-hover:text-white transition-all">
                 1
@@ -72,7 +71,6 @@ export function WelcomeView({ airports, onSelectAirport, children }: WelcomeView
 
           {/* Fase 2 */}
           <div className="rounded-2xl bg-white/90 dark:bg-zinc-900/90 p-5 flex flex-col items-center text-center shadow-xs hover:shadow-md transition-all group">
-            {/* Numero fase centrato */}
             <div className="mb-3 flex items-center justify-center">
               <span className="w-9 h-9 rounded-full bg-[#E8F1F2] dark:bg-zinc-800 text-[#05668D] dark:text-[#5EAAA8] font-mono font-black text-sm flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:bg-[#05668D] group-hover:text-white transition-all">
                 2
@@ -90,7 +88,6 @@ export function WelcomeView({ airports, onSelectAirport, children }: WelcomeView
 
           {/* Fase 3 */}
           <div className="rounded-2xl bg-white/90 dark:bg-zinc-900/90 p-5 flex flex-col items-center text-center shadow-xs hover:shadow-md transition-all group">
-            {/* Numero fase centrato con accento gold */}
             <div className="mb-3 flex items-center justify-center">
               <span className="w-9 h-9 rounded-full bg-amber-50 dark:bg-zinc-800 text-amber-700 dark:text-[#F4D35E] font-mono font-black text-sm flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:bg-[#F4D35E] group-hover:text-zinc-900 transition-all">
                 3

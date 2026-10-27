@@ -12,6 +12,22 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://www.aero-info.eu'),
   title: 'AeroInfo — Airport information for travelers',
   description: 'Verified airport information about security, baggage rules, terminals and services.',
+  alternates: {
+    canonical: 'https://www.aero-info.eu/en',
+    languages: {
+      it: 'https://www.aero-info.eu/',
+      en: 'https://www.aero-info.eu/en',
+      'x-default': 'https://www.aero-info.eu/',
+    },
+  },
+  openGraph: {
+    title: 'AeroInfo — Airport information for travelers',
+    description: 'Verified airport information about security, baggage rules, terminals and services.',
+    url: 'https://www.aero-info.eu/en',
+    siteName: 'AeroInfo',
+    locale: 'en_US',
+    type: 'website',
+  },
 };
 
 export default function EnglishRootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

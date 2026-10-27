@@ -34,10 +34,22 @@ export interface PendingSuggestionNotice {
   lastReportedAt: string;
 }
 
+export type SuggestCategory =
+  | 'liquids'
+  | 'baggage'
+  | 'general'
+  | 'map'
+  | 'terminals'
+  | '3d_scanners'
+  | 'drones'
+  | 'power_outlets'
+  | 'dining'
+  | 'other';
+
 export interface AirportSuggestion {
   id?: string;
   airportIata: string;
-  category: '3d_scanners' | 'liquids' | 'drones' | 'power_outlets' | 'terminals' | 'dining' | 'other';
+  category: SuggestCategory;
   details: string;
   sourceUrl?: string;
   requesterEmail?: string;

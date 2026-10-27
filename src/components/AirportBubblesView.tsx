@@ -20,14 +20,16 @@ import {
   Pill, 
   ShoppingBag, 
   Sparkles,
-  Search
+  Search,
+  Edit3
 } from 'lucide-react';
-import { Airport, Language } from '@/types/airport';
+import { Airport, Language, SuggestCategory } from '@/types/airport';
 import { useLanguage } from '@/lib/i18n';
 import { cleanOfficialWebsiteUrl } from '@/lib/aviation-authority';
 import { airportPath } from '@/lib/airport-slug';
 import { TerminalMapTab } from './tabs/TerminalMapTab';
 import { SearchBar } from './SearchBar';
+import { SuggestAirportEditModal } from './SuggestAirportEditModal';
 
 interface AirportBubblesViewProps {
   airport: Airport;
@@ -49,6 +51,25 @@ export function AirportBubblesView({
   const { lang, t } = useLanguage();
   const [activeModal, setActiveModal] = useState<BubbleId | null>(null);
   const [airlineSearch, setAirlineSearch] = useState('');
+  const [isSuggestModalOpen, setIsSuggestModalOpen] = useState(false);
+  const [suggestCategory, setSuggestCategory] = useState<SuggestCategory>('liquids');
+
+  const handleOpenSuggest = (cat?: SuggestCategory) => {
+    if (cat) {
+      setSuggestCategory(cat);
+    } else if (activeModal === 'liquids') {
+      setSuggestCategory('liquids');
+    } else if (activeModal === 'baggage') {
+      setSuggestCategory('baggage');
+    } else if (activeModal === 'general') {
+      setSuggestCategory('general');
+    } else if (activeModal === 'map') {
+      setSuggestCategory('map');
+    } else {
+      setSuggestCategory('liquids');
+    }
+    setIsSuggestModalOpen(true);
+  };
 
   const isItalian = lang === 'it';
   const name = isItalian ? airport.name_it : airport.name_en;
@@ -533,20 +554,17 @@ export function AirportBubblesView({
                     </div>
                   </div>
 
-                  {/* Official Source Link */}
-                  {officialUrl && (
-                    <div className="pt-2 flex justify-end">
-                      <a
-                        href={officialUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] hover:underline font-semibold"
-                      >
-                        <span>{isItalian ? 'Consulta il sito ufficiale' : 'Visit official website'}</span>
-                        <ExternalLink className="w-3.5 h-3.5" />
-                      </a>
-                    </div>
-                  )}
+                  {/* Suggest Edit Link */}
+                  <div className="pt-2 flex justify-end">
+                    <button
+                      type="button"
+                      onClick={() => handleOpenSuggest('liquids')}
+                      className="inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] hover:text-[#5EAAA8] dark:hover:text-[#B3E5E0] font-semibold transition-colors cursor-pointer"
+                    >
+                      <Edit3 className="w-3.5 h-3.5" />
+                      <span>{isItalian ? 'Suggerisci modifica' : 'Suggest edit'}</span>
+                    </button>
+                  </div>
                 </div>
               )}
 
@@ -625,6 +643,18 @@ export function AirportBubblesView({
                       </div>
                     </div>
                   )}
+
+                  {/* Suggest Edit Link */}
+                  <div className="pt-2 flex justify-end">
+                    <button
+                      type="button"
+                      onClick={() => handleOpenSuggest('baggage')}
+                      className="inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] hover:text-[#5EAAA8] dark:hover:text-[#B3E5E0] font-semibold transition-colors cursor-pointer"
+                    >
+                      <Edit3 className="w-3.5 h-3.5" />
+                      <span>{isItalian ? 'Suggerisci modifica' : 'Suggest edit'}</span>
+                    </button>
+                  </div>
                 </div>
               )}
 
@@ -685,6 +715,18 @@ export function AirportBubblesView({
                         : 'Duty free liquids and perfumes bought airside must remain sealed inside tamper-evident STEB bags with receipt visible, especially on connecting flights.'}
                     </p>
                   </div>
+
+                  {/* Suggest Edit Link */}
+                  <div className="pt-2 flex justify-end">
+                    <button
+                      type="button"
+                      onClick={() => handleOpenSuggest('general')}
+                      className="inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] hover:text-[#5EAAA8] dark:hover:text-[#B3E5E0] font-semibold transition-colors cursor-pointer"
+                    >
+                      <Edit3 className="w-3.5 h-3.5" />
+                      <span>{isItalian ? 'Suggerisci modifica' : 'Suggest edit'}</span>
+                    </button>
+                  </div>
                 </div>
               )}
 
@@ -699,6 +741,18 @@ export function AirportBubblesView({
                   {/* Interactive Terminal Map Tab */}
                   <div className="rounded-2xl overflow-hidden shadow-xs">
                     <TerminalMapTab airport={airport} />
+                  </div>
+
+                  {/* Suggest Edit Link */}
+                  <div className="pt-2 flex justify-end">
+                    <button
+                      type="button"
+                      onClick={() => handleOpenSuggest('map')}
+                      className="inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] hover:text-[#5EAAA8] dark:hover:text-[#B3E5E0] font-semibold transition-colors cursor-pointer"
+                    >
+                      <Edit3 className="w-3.5 h-3.5" />
+                      <span>{isItalian ? 'Suggerisci modifica' : 'Suggest edit'}</span>
+                    </button>
                   </div>
                 </div>
               )}
@@ -731,6 +785,14 @@ export function AirportBubblesView({
           </div>
         </div>
       )}
+
+      {/* Suggest Airport Edit Modal */}
+      <SuggestAirportEditModal
+        airport={airport}
+        isOpen={isSuggestModalOpen}
+        initialCategory={suggestCategory}
+        onClose={() => setIsSuggestModalOpen(false)}
+      />
 
     </div>
   );
