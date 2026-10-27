@@ -92,7 +92,7 @@ export function getAirportCombinedStructuredData(airport: Airport, lang: Languag
         '@type': 'ListItem',
         position: 1,
         name: isItalian ? 'Aeroporti' : 'Airports',
-        item: `${SITE_URL}/`,
+        item: isItalian ? `${SITE_URL}/` : `${SITE_URL}/en`,
       },
       {
         '@type': 'ListItem',

@@ -44,9 +44,9 @@ export function WelcomeView({ airports, onSelectAirport, children }: WelcomeView
       </div>
 
       {/* 4. Explanatory Caption below Search Bar with capital "Il" */}
-      <p className="text-center text-sm sm:text-base font-normal text-zinc-600 dark:text-zinc-300 max-w-xl mx-auto leading-relaxed pt-2 px-4">
+      <h2 className="text-center text-sm sm:text-base font-normal text-zinc-600 dark:text-zinc-300 max-w-xl mx-auto leading-relaxed pt-2 px-4">
         {t('minimalHeroSubtitle')}
-      </p>
+      </h2>
 
       {/* 5. 3 Step Cards - Pulite, con numeri al centro, senza icone e SENZA BORDI */}
       <div className="w-full max-w-4xl mx-auto pt-4 px-4">

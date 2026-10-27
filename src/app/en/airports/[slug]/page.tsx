@@ -20,21 +20,47 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const airport = await loadAirport(slug);
   if (!airport) return { robots: { index: false, follow: false } };
   const indexable = getAirportSeoStatus(airport) === 'indexable';
-  const title = `${airport.name_en} (${airport.iata}): security, liquids and terminals | AeroInfo`;
-  const description = `Security screening, baggage rules, terminals and travel information for ${airport.name_en} in ${airport.city_en}.`;
+
+  const has3D = Boolean(airport.securityPolicy?.has3DScanners);
+  const airportName = airport.name_en || airport.name_it;
+  const cityName = airport.city_en || airport.city_it;
+
+  const title = has3D
+    ? `${airportName} (${airport.iata}): 3D Scanners & Liquid Rules | AeroInfo`
+    : `${airportName} (${airport.iata}): Security Screening, Liquids & Terminals | AeroInfo`;
+
+  const description = has3D
+    ? `Airport security guide for ${airportName} (${airport.iata}): next-gen 3D scanners in use, carry-on liquids and electronics rules, terminals, and city transport.`
+    : `Security screening guide for ${airportName} (${airport.iata}): 100ml liquid limits, cabin baggage rules, terminals, and airport navigation in ${cityName}.`;
+
+  const canonicalUrl = new URL(airportPath(airport, 'en'), SITE_URL).toString();
+  const alternateIt = new URL(airportPath(airport, 'it'), SITE_URL).toString();
+
   return {
     title,
     description,
     alternates: {
-      canonical: new URL(airportPath(airport, 'en'), SITE_URL).toString(),
+      canonical: canonicalUrl,
       languages: {
-        it: new URL(airportPath(airport, 'it'), SITE_URL).toString(),
-        en: new URL(airportPath(airport, 'en'), SITE_URL).toString(),
-        'x-default': new URL(airportPath(airport, 'it'), SITE_URL).toString(),
+        it: alternateIt,
+        en: canonicalUrl,
+        'x-default': alternateIt,
       },
     },
     robots: { index: indexable, follow: true },
-    openGraph: { title, description, url: new URL(airportPath(airport, 'en'), SITE_URL).toString(), siteName: 'AeroInfo', locale: 'en_GB', type: 'article' },
+    openGraph: {
+      title,
+      description,
+      url: canonicalUrl,
+      siteName: 'AeroInfo',
+      locale: 'en_GB',
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary',
+      title,
+      description,
+    },
   };
 }
 

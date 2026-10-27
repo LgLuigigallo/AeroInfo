@@ -10,8 +10,8 @@ const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin']
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.aero-info.eu'),
-  title: 'AeroInfo — Airport information for travelers',
-  description: 'Verified airport information about security, baggage rules, terminals and services.',
+  title: 'AeroInfo — 3D Scanners, Liquid Rules & Airport Security Guide',
+  description: 'Everything you need to know before flying: 3D scanner availability, carry-on liquid limits, security wait times, and terminal guides for major airports.',
   alternates: {
     canonical: 'https://www.aero-info.eu/en',
     languages: {
@@ -21,12 +21,17 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'AeroInfo — Airport information for travelers',
-    description: 'Verified airport information about security, baggage rules, terminals and services.',
+    title: 'AeroInfo — 3D Scanners, Liquid Rules & Airport Security Guide',
+    description: 'Everything you need to know before flying: 3D scanner availability, carry-on liquid limits, security wait times, and terminal guides for major airports.',
     url: 'https://www.aero-info.eu/en',
     siteName: 'AeroInfo',
     locale: 'en_US',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'AeroInfo — 3D Scanners, Liquid Rules & Airport Security Guide',
+    description: 'Everything you need to know before flying: 3D scanner availability, carry-on liquid limits, security wait times, and terminal guides for major airports.',
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
