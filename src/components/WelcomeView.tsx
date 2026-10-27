@@ -1,10 +1,8 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
 import { Airport } from '@/types/airport';
 import { useLanguage } from '@/lib/i18n';
-import { airportPath } from '@/lib/airport-slug';
 import { AirplaneSkyAnimation } from './AirplaneSkyAnimation';
 
 interface WelcomeViewProps {
@@ -13,16 +11,9 @@ interface WelcomeViewProps {
   children?: React.ReactNode; // Slot for SearchBar
 }
 
-const POPULAR_IATAS = ['FCO', 'MXP', 'BGY', 'LIN', 'BLQ', 'NAP', 'CTA', 'PMO', 'BCN', 'MAD', 'CDG', 'AMS', 'LHR', 'FRA'];
-
 export function WelcomeView({ airports, onSelectAirport, children }: WelcomeViewProps) {
   const { lang, t } = useLanguage();
   const isItalian = lang === 'it';
-
-  // Extract popular airports in priority order
-  const popularAirports = POPULAR_IATAS
-    .map((code) => airports.find((a) => a.iata.toUpperCase() === code))
-    .filter((a): a is Airport => Boolean(a));
 
   return (
     <div className="w-full pt-1 sm:pt-3 pb-12 sm:pb-16 flex flex-col items-center">
@@ -114,32 +105,6 @@ export function WelcomeView({ airports, onSelectAirport, children }: WelcomeView
 
         </div>
       </div>
-
-      {/* 6. Scali più cercati in Italia ed Europa (Internal Crawlable Links per Googlebot e Viaggiatori) */}
-      {popularAirports.length > 0 && (
-        <section aria-label={isItalian ? 'Scali più cercati' : 'Popular airports'} className="w-full max-w-4xl mx-auto pt-8 px-4 text-center space-y-3">
-          <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
-            {isItalian ? 'Scali più cercati in Italia ed Europa' : 'Popular airports in Italy and Europe'}
-          </h2>
-          <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
-            {popularAirports.map((airport) => (
-              <Link
-                key={airport.iata}
-                href={airportPath(airport, lang)}
-                onClick={() => onSelectAirport(airport)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:border-[#05668D] dark:hover:border-[#5EAAA8] hover:text-[#05668D] dark:hover:text-[#5EAAA8] transition-all shadow-2xs group"
-              >
-                <span className="font-mono font-bold text-[#05668D] dark:text-[#5EAAA8] group-hover:scale-105 transition-transform">
-                  {airport.iata}
-                </span>
-                <span className="text-zinc-500 dark:text-zinc-400">
-                  {isItalian ? airport.name_it : airport.name_en}
-                </span>
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
 
     </div>
   );

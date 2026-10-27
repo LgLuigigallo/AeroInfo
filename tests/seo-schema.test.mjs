@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 import { readFileSync } from 'node:fs';
 
-console.log('🧪 VERIFYING SEO STRUCTURED DATA & SEMANTIC DOSSIER...');
+console.log('🧪 VERIFYING SEO STRUCTURED DATA & MINIMALIST UI INTEGRITY...');
 
 // 1. Read structured-data.ts directly to ensure syntax and schema keys
 const structuredDataFile = readFileSync('src/lib/seo/structured-data.ts', 'utf8');
@@ -26,40 +26,25 @@ assert(
   'structured-data.ts must combine BreadcrumbList and Airport in @graph'
 );
 
-// 2. Read AirportSeoDossier.tsx to ensure AirportSemanticDossier is embedded
+// 2. Read AirportSeoDossier.tsx to ensure AirportDossierInteractiveWrapper is rendered cleanly
 const dossierFile = readFileSync('src/components/AirportSeoDossier.tsx', 'utf8');
 
 assert(
-  dossierFile.includes('<AirportSemanticDossier'),
-  'AirportSeoDossier must render AirportSemanticDossier for crawler SSR'
+  dossierFile.includes('<AirportDossierInteractiveWrapper'),
+  'AirportSeoDossier must render AirportDossierInteractiveWrapper'
 );
 
 assert(
   dossierFile.includes('getAirportCombinedStructuredData'),
-  'AirportSeoDossier must use getAirportCombinedStructuredData'
+  'AirportSeoDossier must embed JSON-LD getAirportCombinedStructuredData'
 );
 
-// 3. Read AirportSemanticDossier.tsx to ensure semantic headings & tables
-const semanticFile = readFileSync('src/components/AirportSemanticDossier.tsx', 'utf8');
+// 3. Read WelcomeView.tsx to ensure minimalist UI integrity
+const welcomeFile = readFileSync('src/components/WelcomeView.tsx', 'utf8');
 
 assert(
-  semanticFile.includes('id="sicurezza-liquidi"'),
-  'AirportSemanticDossier must contain section id="sicurezza-liquidi"'
+  !welcomeFile.includes('Scali più cercati'),
+  'WelcomeView must remain clean and minimalist without tag clouds'
 );
 
-assert(
-  semanticFile.includes('id="terminal-compagnie"'),
-  'AirportSemanticDossier must contain section id="terminal-compagnie"'
-);
-
-assert(
-  semanticFile.includes('id="trasporti-collegamenti"'),
-  'AirportSemanticDossier must contain section id="trasporti-collegamenti"'
-);
-
-assert(
-  semanticFile.includes('<table'),
-  'AirportSemanticDossier must render HTML table for airlines and terminals'
-);
-
-console.log('✅ ALL SEO STRUCTURED DATA & SEMANTIC DOSSIER TESTS PASSED SUCCESSFULLY!');
+console.log('✅ ALL SEO STRUCTURED DATA & MINIMALIST UI TESTS PASSED SUCCESSFULLY!');

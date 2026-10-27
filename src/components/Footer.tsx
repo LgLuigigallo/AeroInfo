@@ -25,13 +25,6 @@ export function Footer() {
 
           <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 font-mono text-[11px] text-zinc-500 dark:text-zinc-400">
             <Link
-              href={lang === 'it' ? '/guide/liquidi-bagaglio-a-mano' : '/en/guides/liquids-in-carry-on-baggage'}
-              className="text-[#05668D] dark:text-[#5EAAA8] font-semibold hover:underline underline-offset-2 transition-colors"
-            >
-              {lang === 'it' ? 'Guida Liquidi & Scanner 3D' : 'Liquids & 3D Scanner Guide'}
-            </Link>
-            <span className="text-zinc-300 dark:text-zinc-700">•</span>
-            <Link
               href="/privacy"
               className="hover:text-[#05668D] dark:hover:text-white transition-colors underline-offset-2 hover:underline"
             >
