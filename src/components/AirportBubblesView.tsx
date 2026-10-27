@@ -200,30 +200,17 @@ export function AirportBubblesView({
                 {isItalian ? 'Aggiornato al' : 'Verified on'} {verifiedDateFormatted}
               </span>
             )}
-            <div className="flex items-center gap-2 pt-0.5">
-              <button
-                type="button"
-                onClick={() => handleOpenSuggest()}
-                className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#05668D] dark:text-[#5EAAA8] hover:underline cursor-pointer"
+            {officialUrl && (
+              <a
+                href={officialUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#05668D] dark:text-[#5EAAA8] hover:underline pt-0.5"
               >
-                <Edit3 className="w-3 h-3" />
-                <span>{isItalian ? 'Suggerisci modifica' : 'Suggest edit'}</span>
-              </button>
-              {officialUrl && (
-                <>
-                  <span className="text-zinc-300 dark:text-zinc-700 text-[10px]" aria-hidden="true">•</span>
-                  <a
-                    href={officialUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-[11px] font-medium text-zinc-500 hover:text-[#05668D] dark:hover:text-zinc-300 hover:underline"
-                  >
-                    <span>{isItalian ? 'Sito ufficiale' : 'Official website'}</span>
-                    <ExternalLink className="w-2.5 h-2.5" />
-                  </a>
-                </>
-              )}
-            </div>
+                <span>{isItalian ? 'Consulta il sito ufficiale' : 'Visit official website'}</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+            )}
           </div>
         </div>
       </section>
@@ -753,38 +740,36 @@ export function AirportBubblesView({
                   <div className="rounded-2xl overflow-hidden shadow-xs">
                     <TerminalMapTab airport={airport} />
                   </div>
+
+                  {/* Suggest Edit Link */}
+                  <div className="pt-2 flex justify-end">
+                    <button
+                      type="button"
+                      onClick={() => handleOpenSuggest('other')}
+                      className="inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] hover:text-[#5EAAA8] dark:hover:text-[#B3E5E0] font-semibold transition-colors cursor-pointer"
+                    >
+                      <Edit3 className="w-3.5 h-3.5" />
+                      <span>{isItalian ? 'Suggerisci modifica' : 'Suggest edit'}</span>
+                    </button>
+                  </div>
                 </div>
               )}
 
             </div>
 
-            {/* Modal Bottom Close Bar with Always-Accessible Suggest Edit */}
+            {/* Modal Bottom Close Bar */}
             <div className="p-3.5 sm:p-4 bg-[#E8F1F2]/40 dark:bg-zinc-850 flex items-center justify-between text-xs gap-3">
-              <div className="flex items-center gap-3 sm:gap-4 truncate">
-                <button
-                  type="button"
-                  onClick={() => handleOpenSuggest()}
-                  className="inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] hover:text-[#5EAAA8] dark:hover:text-[#B3E5E0] font-semibold transition-colors cursor-pointer shrink-0"
+              {officialUrl ? (
+                <a
+                  href={officialUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] hover:text-[#5EAAA8] dark:hover:text-[#B3E5E0] font-semibold truncate transition-colors"
                 >
-                  <Edit3 className="w-3.5 h-3.5" />
-                  <span>{isItalian ? 'Suggerisci modifica' : 'Suggest edit'}</span>
-                </button>
-
-                {officialUrl && (
-                  <>
-                    <span className="text-zinc-300 dark:text-zinc-700 hidden sm:inline" aria-hidden="true">•</span>
-                    <a
-                      href={officialUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hidden sm:inline-flex items-center gap-1 text-[11px] text-zinc-500 hover:text-[#05668D] dark:hover:text-zinc-300 transition-colors truncate"
-                    >
-                      <span>{isItalian ? 'Sito ufficiale' : 'Official website'}</span>
-                      <ExternalLink className="w-3 h-3 shrink-0" />
-                    </a>
-                  </>
-                )}
-              </div>
+                  <span>{isItalian ? 'Consulta il sito ufficiale' : 'Visit official website'}</span>
+                  <ExternalLink className="w-3.5 h-3.5 shrink-0" />
+                </a>
+              ) : <div />}
 
               <button
                 type="button"
