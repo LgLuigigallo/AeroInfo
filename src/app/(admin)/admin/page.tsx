@@ -180,7 +180,38 @@ export default function AdminPage() {
           {(section === 'suggestions' || section === 'feedback') && <label className="admin-select"><SlidersHorizontal size={15} /><select value={categoryFilter} onChange={(event) => { setCategoryFilter(event.target.value); setPage(1); }}><option value="">Tutte le categorie</option>{(section === 'suggestions' ? ['3d_scanners', 'liquids', 'drones', 'power_outlets', 'terminals', 'dining', 'other'] : ['suggestion', 'bug_report', 'inquiry', 'general']).map((value) => <option key={value} value={value}>{value.replaceAll('_', ' ')}</option>)}</select><ChevronDown size={14} /></label>}
           {(section === 'requests' || section === 'suggestions' || section === 'feedback' || section === 'syncs') && <div className="admin-date-filters"><label>Da<input type="date" value={dateFrom} onChange={(event) => { setDateFrom(event.target.value); setPage(1); }} /></label><label>A<input type="date" value={dateTo} onChange={(event) => { setDateTo(event.target.value); setPage(1); }} /></label></div>}
         </div>}
-        {section === 'requests' && <Requests rows={data.items} total={data.count || 0} onDetail={(row) => void openDetail('requests', row)} onApprove={(id) => void runAction('/api/admin/requests', 'POST', { id, action: 'approve' }, 'Richiesta approvata; resta nel ciclo automatico.')} onRun={(id) => void runAction('/api/admin/requests', 'POST', { id, action: 'run' }, (result) => `${result.linkedExistingAirport ? 'Richiesta collegata alla scheda esistente.' : 'Elaborazione completata.'} Email inviate: ${result.notificationsSent}. ${Array.isArray(result.notificationErrors) && result.notificationErrors.length ? 'Alcune notifiche o aggiornamenti hanno avuto errori.' : ''}`)} onCancel={(id) => { if (window.confirm('Annullare questa richiesta?')) void runAction('/api/admin/requests', 'POST', { id, action: 'cancel' }, 'Richiesta annullata.'); }} busy={working} />}
+        {section === 'requests' && <Requests
+          rows={data.items}
+          total={data.count || 0}
+          onDetail={(row) => void openDetail('requests', row)}
+          onApprove={(id) => void runAction('/api/admin/requests', 'POST', { id, action: 'approve' }, 'Richiesta approvata; resta nel ciclo automatico.')}
+          onRun={(row) => {
+            const currentIata = String(row.iata_code || row.resolved_iata || '');
+            let targetIata = currentIata && currentIata !== '—' ? currentIata : '';
+            if (!targetIata) {
+              const input = window.prompt(`Codice IATA non rilevato per "${row.query}". Inserisci il codice a 3 lettere (es. NAS):`);
+              if (!input) return;
+              if (!/^[A-Za-z]{3}$/.test(input.trim())) {
+                alert('Il codice IATA deve contenere esattamente 3 lettere.');
+                return;
+              }
+              targetIata = input.trim().toUpperCase();
+            }
+            void runAction('/api/admin/requests', 'POST', { id: String(row.id), action: 'run', iata_code: targetIata || undefined }, (result) => `${result.linkedExistingAirport ? 'Richiesta collegata alla scheda esistente.' : 'Elaborazione completata.'} Email inviate: ${result.notificationsSent}. ${Array.isArray(result.notificationErrors) && result.notificationErrors.length ? 'Alcune notifiche o aggiornamenti hanno avuto errori.' : ''}`);
+          }}
+          onAssignIata={(row) => {
+            const current = String(row.iata_code || row.resolved_iata || '');
+            const input = window.prompt(`Assegna o modifica codice IATA per "${row.query}" (es. NAS):`, current && current !== '—' ? current : '');
+            if (!input) return;
+            if (!/^[A-Za-z]{3}$/.test(input.trim())) {
+              alert('Il codice IATA deve contenere esattamente 3 lettere.');
+              return;
+            }
+            void runAction('/api/admin/requests', 'POST', { id: String(row.id), action: 'assign_iata', iata_code: input.trim().toUpperCase() }, 'Codice IATA assegnato.');
+          }}
+          onCancel={(id) => { if (window.confirm('Annullare questa richiesta?')) void runAction('/api/admin/requests', 'POST', { id, action: 'cancel' }, 'Richiesta annullata.'); }}
+          busy={working}
+        />}
         {(section === 'suggestions' || section === 'feedback') && <Moderation rows={data.items} kind={section} onDetail={(row) => void openModeration(row)} onStatus={(id, status) => void runAction('/api/admin/moderation', 'PATCH', { kind: section, id, status }, 'Stato aggiornato.')} busy={working} />}
         {(section === 'airports' || section === 'seo') && <Airports rows={airportItems} mode={section} onEdit={setEditingAirport} onEvaluate={(iata) => void runAction('/api/admin/seo', 'POST', { iata }, 'Valutazione SEO aggiornata.')} busy={working} />}
         {section === 'syncs' && <Syncs rows={data.items} iata={syncIata} setIata={setSyncIata} onRun={() => void runAction('/api/admin/syncs', 'POST', { iata: syncIata }, `Sincronizzazione ${syncIata.toUpperCase()} completata.`)} onDetail={setDetail} busy={working} />}
@@ -203,9 +234,29 @@ function Overview({ overview, onOpen }: { overview: Row | null; onOpen: (section
   return <div className="admin-overview"><div className="admin-welcome"><div><span className="admin-welcome-icon"><Activity size={21} /></span><div><h2>Panoramica del sito</h2><p>Stato delle richieste, della qualità dei contenuti e delle operazioni recenti.</p></div></div><button className="admin-secondary" onClick={() => onOpen('requests')}>Apri richieste <ArrowUpRight size={15} /></button></div><div className="admin-stat-grid">{cards.map(([label, value, target, Icon]) => <button className="admin-stat-card" key={target} onClick={() => onOpen(target)}><span className="admin-stat-icon"><Icon size={18} /></span><span className="admin-stat-value">{String(value ?? '—')}</span><span className="admin-stat-label">{label}</span><ArrowUpRight className="admin-stat-arrow" size={15} /></button>)}</div><section className="admin-panel"><div className="admin-panel-heading"><div><p className="admin-eyebrow">ATTIVITÀ OPERATIVA</p><h2>Ultime sincronizzazioni</h2></div><button className="admin-text-button" onClick={() => onOpen('syncs')}>Vedi tutte <ArrowUpRight size={14} /></button></div>{syncs.length ? <div className="admin-table-wrap"><table><thead><tr><th>Aeroporto</th><th>Esito</th><th>Modifiche</th><th>Data</th></tr></thead><tbody>{syncs.map((row) => <tr key={String(row.id)}><td><strong>{String(row.airport_iata)}</strong></td><td><Status value={String(row.status)} /></td><td>{row.changes_detected ? 'Rilevate' : 'Nessuna'}</td><td>{dateLabel(row.executed_at)}</td></tr>)}</tbody></table></div> : <Empty text="Nessuna sincronizzazione registrata." />}</section></div>;
 }
 
-function Requests({ rows, total, onDetail, onRun, onApprove, onCancel, busy }: { rows: Row[]; total: number; onDetail: (row: Row) => void; onRun: (id: string) => void; onApprove: (id: string) => void; onCancel: (id: string) => void; busy: boolean }) {
+function Requests({ rows, total, onDetail, onRun, onAssignIata, onApprove, onCancel, busy }: { rows: Row[]; total: number; onDetail: (row: Row) => void; onRun: (row: Row) => void; onAssignIata: (row: Row) => void; onApprove: (id: string) => void; onCancel: (id: string) => void; busy: boolean }) {
   if (!rows.length) return <Empty text="Nessuna richiesta corrisponde ai filtri." />;
-  return <section className="admin-panel"><div className="admin-panel-heading"><div><p className="admin-eyebrow">CODA AUTOMATICA</p><h2>{total} richieste</h2></div></div><div className="admin-table-wrap"><table><thead><tr><th>Ricerca</th><th>IATA</th><th>Stato</th><th>Revisione admin</th><th>Ricevuta</th><th>Programmata</th><th>Contatto</th><th>Azioni</th></tr></thead><tbody>{rows.map((row) => { const pending = ['queued', 'pending', 'queued_weekly'].includes(String(row.status)); return <tr key={String(row.id)}><td><button className="admin-row-link" onClick={() => onDetail(row)}>{String(row.query)}</button></td><td>{String(row.iata_code || '—')}{Boolean(row.existingAirportIata) && <span className="admin-cell-sub">Già presente nel catalogo</span>}</td><td><Status value={String(row.status)} /></td><td>{row.admin_reviewed_at ? <span className="admin-status green"><i />Approvata</span> : <span className="admin-private">Da valutare</span>}</td><td>{dateLabel(row.created_at)}</td><td>{dateLabel(row.scheduled_for)}</td><td><span className="admin-private">{row.hasRequesterEmail ? 'Email presente' : '—'}</span></td><td><div className="admin-actions">{pending && <><button className="admin-small-action" disabled={busy || Boolean(row.admin_reviewed_at)} onClick={() => onApprove(String(row.id))}>Approva</button><button className="admin-small-action" disabled={busy} onClick={() => onRun(String(row.id))}>{row.existingAirportIata ? 'Collega' : 'Avvia ora'}</button><button className="admin-small-icon danger" title="Annulla" disabled={busy} onClick={() => onCancel(String(row.id))}><X size={15} /></button></>}<button className="admin-small-icon" title="Dettagli" onClick={() => onDetail(row)}><ArrowUpRight size={15} /></button></div></td></tr>; })}</tbody></table></div></section>;
+  return <section className="admin-panel"><div className="admin-panel-heading"><div><p className="admin-eyebrow">CODA AUTOMATICA</p><h2>{total} richieste</h2></div></div><div className="admin-table-wrap"><table><thead><tr><th>Ricerca</th><th>IATA</th><th>Stato</th><th>Revisione admin</th><th>Ricevuta</th><th>Programmata</th><th>Contatto</th><th>Azioni</th></tr></thead><tbody>{rows.map((row) => {
+    const pending = ['queued', 'pending', 'queued_weekly'].includes(String(row.status));
+    const displayIata = row.iata_code ? String(row.iata_code) : row.resolved_iata ? `${String(row.resolved_iata)} (auto)` : null;
+    return <tr key={String(row.id)}>
+      <td><button className="admin-row-link" onClick={() => onDetail(row)}>{String(row.query)}</button></td>
+      <td>
+        {displayIata ? (
+          <button className="admin-text-button" title="Clicca per modificare IATA" onClick={() => onAssignIata(row)}><strong>{displayIata}</strong></button>
+        ) : (
+          <button className="admin-text-button" title="Assegna codice IATA" onClick={() => onAssignIata(row)}>+ Assegna IATA</button>
+        )}
+        {Boolean(row.existingAirportIata) && <span className="admin-cell-sub">Già presente nel catalogo</span>}
+      </td>
+      <td><Status value={String(row.status)} /></td>
+      <td>{row.admin_reviewed_at ? <span className="admin-status green"><i />Approvata</span> : <span className="admin-private">Da valutare</span>}</td>
+      <td>{dateLabel(row.created_at)}</td>
+      <td>{dateLabel(row.scheduled_for)}</td>
+      <td><span className="admin-private">{row.hasRequesterEmail ? 'Email presente' : '—'}</span></td>
+      <td><div className="admin-actions">{pending && <><button className="admin-small-action" disabled={busy || Boolean(row.admin_reviewed_at)} onClick={() => onApprove(String(row.id))}>Approva</button><button className="admin-small-action" disabled={busy} onClick={() => onRun(row)}>{row.existingAirportIata ? 'Collega' : 'Avvia ora'}</button><button className="admin-small-icon danger" title="Annulla" disabled={busy} onClick={() => onCancel(String(row.id))}><X size={15} /></button></>}<button className="admin-small-icon" title="Dettagli" onClick={() => onDetail(row)}><ArrowUpRight size={15} /></button></div></td>
+    </tr>;
+  })}</tbody></table></div></section>;
 }
 
 function Moderation({ rows, kind, onDetail, onStatus, busy }: { rows: Row[]; kind: 'suggestions' | 'feedback'; onDetail: (row: Row) => void; onStatus: (id: string, status: string) => void; busy: boolean }) {

@@ -28,7 +28,8 @@ export const NATIONAL_AVIATION_AUTHORITIES: Record<string, AuthorityPortal> = {
   US: { name: 'FAA / TSA Aviation Portal', url: 'https://www.tsa.gov', countryCode: 'US' },
   TR: { name: 'DHMİ - General Directorate of State Airports', url: 'https://www.dhmi.gov.tr', countryCode: 'TR' },
   IE: { name: 'DAA - Dublin Airport Authority', url: 'https://www.dublinairport.com', countryCode: 'IE' },
-  PL: { name: 'PPL - Polish Airports State Enterprise', url: 'https://www.polish-airports.com', countryCode: 'PL' }
+  PL: { name: 'PPL - Polish Airports State Enterprise', url: 'https://www.polish-airports.com', countryCode: 'PL' },
+  BS: { name: 'CAA Bahamas - Civil Aviation Authority Bahamas', url: 'https://caabahamas.gov.bs', countryCode: 'BS' }
 };
 
 export const GLOBAL_ICAO_FALLBACK = 'https://www.icao.int';
@@ -65,7 +66,8 @@ export const KNOWN_OFFICIAL_AIRPORT_DOMAINS: Record<string, string> = {
   LHR: 'https://www.heathrow.com',
   LGW: 'https://www.gatwickairport.com',
   MAD: 'https://www.aena.es/es/adolfo-suarez-madrid-barajas.html',
-  BCN: 'https://www.aena.es/es/josep-tarradellas-barcelona-el-prat.html'
+  BCN: 'https://www.aena.es/es/josep-tarradellas-barcelona-el-prat.html',
+  NAS: 'https://nassaulpia.com'
 };
 
 /**

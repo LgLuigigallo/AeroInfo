@@ -1816,6 +1816,170 @@ export const AVIATION_REGISTRY: Record<string, Airport> = {
       }
     ],
     lastUpdated: '2026-10-22'
+  },
+
+  // 🇧🇸 BAHAMAS / NASSAU (NAS) - Aeroporto Internazionale Lynden Pindling
+  NAS: {
+    id: 'nas',
+    iata: 'NAS',
+    icao: 'MYNN',
+    name_it: 'Aeroporto Internazionale Lynden Pindling',
+    name_en: 'Lynden Pindling International Airport',
+    city_it: 'Nassau',
+    city_en: 'Nassau',
+    country_it: 'Bahamas',
+    country_en: 'Bahamas',
+    countryCode: 'BS',
+    officialWebsite: 'https://nassaulpia.com',
+    coordinates: { lat: 25.039, lng: -77.466 },
+    difficultyRating: 2,
+    difficultyLabel_it: 'Snodo moderno con US Preclearance',
+    difficultyLabel_en: 'Modern hub with US Preclearance',
+    averageSecurityWaitMin: 25,
+    recommendedArrivalHours: { domestic: 2, international: 3 },
+    navigationAdvice_it: 'L\'aeroporto comprende tre terminal interconnessi: Terminal A (partenze USA con pre-controlli doganali CBP prima dell\'imbarco), Terminal B (arrivi internazionali) e Terminal C (partenze nazionali e voli internazionali non-USA). Per i voli verso gli Stati Uniti è fondamentale presentarsi con almeno 3 ore di anticipo.',
+    navigationAdvice_en: 'Three connected terminals: Terminal A (US Departures with full US CBP Preclearance before boarding), Terminal B (International Arrivals), and Terminal C (Domestic and non-US Departures). Arrive at least 3 hours prior to US-bound flights to clear US border controls.',
+    securityPolicy: {
+      has3DScanners: false,
+      scannersNote_it: 'Scanner radiogeni convenzionali conformi agli standard TSA e ICAO. Liquidi, computer e tablet devono essere estratti e controllati separatamente.',
+      scannersNote_en: 'Standard TSA and ICAO X-ray scanners. Liquids, laptops, and tablets must be placed in separate security bins.',
+      liquidsAllowance_it: 'Massimo 100ml per flacone in sacchetto trasparente richiudibile da 1 litro',
+      liquidsAllowance_en: 'Max 100ml per container in a 1-litre clear resealable plastic bag',
+      liquidsMustBeRemoved: true,
+      liquidsNote_it: 'Liquidi oltre 100ml ammessi solo se acquistati al duty-free dopo i controlli o imbarcati nel bagaglio in stiva.',
+      liquidsNote_en: 'Liquids over 100ml must be placed in checked hold luggage or bought duty-free airside.',
+      electronicsInBag: false,
+      electronicsNote_it: 'Laptop, tablet e grandi dispositivi elettronici devono essere rimossi dal bagaglio a mano.',
+      electronicsNote_en: 'Laptops, tablets, and large electronics must be removed from carry-on bags.',
+      droneAllowedInCabin: true,
+      droneAllowedInHold: false,
+      dronePolicy_it: 'Ammesso solo nel bagaglio a mano con batterie LiPo protette (max 100Wh). Per l\'utilizzo sull\'arcipelago è richiesta la registrazione preventiva alla CAA Bahamas.',
+      dronePolicy_en: 'Permitted in cabin luggage only with LiPo terminals isolated (max 100Wh). Operating drones in the Bahamas requires CAA Bahamas registration.',
+      maxPowerbankWh: 100,
+      powerbankPolicy_it: 'Ammessi esclusivamente nel bagaglio a mano fino a 100Wh (max 2 pezzi per passeggero). Severamente vietati in stiva.',
+      powerbankPolicy_en: 'Allowed in carry-on baggage only up to 100Wh (max 2 per traveler). Strictly prohibited in checked luggage.',
+      officialSourceUrl: 'https://nassaulpia.com',
+      lastVerifiedDate: '2026-10-27'
+    },
+    terminals: [
+      {
+        id: 't-usa',
+        name: 'Terminal A - U.S. Departures',
+        transferInfo_it: 'Terminal dedicato a tutte le partenze verso gli Stati Uniti con dogana e controlli CBP.',
+        transferInfo_en: 'Dedicated to US-bound flights with full US Customs and Border Protection Preclearance.'
+      },
+      {
+        id: 't-int-arr',
+        name: 'Terminal B - International Arrivals',
+        transferInfo_it: 'Terminal arrivi internazionali, immigrazione Bahamas, ritiro bagagli e dogana.',
+        transferInfo_en: 'Terminal for international arrivals, Bahamas immigration, baggage claim, and customs.'
+      },
+      {
+        id: 't-dom-int',
+        name: 'Terminal C - Domestic & International Non-U.S.',
+        transferInfo_it: 'Partenze per le altre isole delle Bahamas (Out Islands) e voli internazionali non verso gli USA (Regno Unito, Canada, Caraibi).',
+        transferInfo_en: 'Departures for Out Islands domestic flights and non-US international routes (UK, Canada, Caribbean).'
+      }
+    ],
+    airlines: [
+      { airlineName: 'Bahamasair', iataCode: 'UP', terminal: 'Terminal C' },
+      { airlineName: 'British Airways', iataCode: 'BA', terminal: 'Terminal C' },
+      { airlineName: 'American Airlines', iataCode: 'AA', terminal: 'Terminal A' },
+      { airlineName: 'Delta Air Lines', iataCode: 'DL', terminal: 'Terminal A' },
+      { airlineName: 'United Airlines', iataCode: 'UA', terminal: 'Terminal A' },
+      { airlineName: 'JetBlue', iataCode: 'B6', terminal: 'Terminal A' },
+      { airlineName: 'Air Canada', iataCode: 'AC', terminal: 'Terminal C' }
+    ],
+    amenities: [
+      {
+        id: 'nas-wifi',
+        category: 'wifi',
+        title_it: 'Rete Wi-Fi ad Alta Velocità',
+        title_en: 'High-Speed Wi-Fi Network',
+        terminal: 'Tutti i Terminal',
+        location_it: 'Disponibile gratuitamente in tutte le sale passeggeri',
+        location_en: 'Available free across all passenger areas',
+        details_it: 'Connessione gratuita illimitata "LPIA Free Wi-Fi".',
+        details_en: 'Complimentary unlimited "LPIA Free Wi-Fi" network.'
+      },
+      {
+        id: 'nas-power',
+        category: 'power_charging',
+        title_it: 'Torrette di ricarica USB e prese USA',
+        title_en: 'USB & US Power Charging Stations',
+        terminal: 'Terminal A & C',
+        location_it: 'Presso le poltrone dell\'area imbarchi',
+        location_en: 'Integrated into boarding gate seating',
+        details_it: 'Prese americane di tipo A/B a 120V e porte USB-A.',
+        details_en: 'Standard US 120V Type A/B sockets and USB-A outlets.'
+      },
+      {
+        id: 'nas-water',
+        category: 'water_refill',
+        title_it: 'Fontanelle d\'acqua potabile',
+        title_en: 'Drinking Water Refill Stations',
+        terminal: 'Tutti i Terminal',
+        location_it: 'Dopo i controlli di sicurezza vicino ai servizi igienici',
+        location_en: 'Airside near main restroom concourses',
+        details_it: 'Erogatori gratuiti per riempire borracce vuote prima del volo.',
+        details_en: 'Free refill stations for empty reusable bottles before boarding.'
+      }
+    ],
+    venues: [
+      {
+        id: 'nas-v1',
+        name: 'Dunkin\' Donuts LPIA',
+        category: 'cafe',
+        terminal: 'Terminal A & C',
+        location: 'Area Partenze airside',
+        hours: '05:00 - Ultimo volo',
+        isEarlyMorning: true,
+        serviceType: 'coffee_snack',
+        highlightNote_it: 'Caffè espresso, ciambelle e colazioni calde prima dell\'imbarco.',
+        highlightNote_en: 'Coffee, baked donuts and hot breakfast before flights.'
+      },
+      {
+        id: 'nas-v2',
+        name: 'Graycliff Divans Lounge & Restaurant',
+        category: 'dining',
+        terminal: 'Terminal A',
+        location: 'Airside di fronte al Gate B22',
+        hours: '07:00 - 19:00',
+        isEarlyMorning: false,
+        serviceType: 'table_service',
+        highlightNote_it: 'Cucina bahamense gourmet, cioccolato artigianale e lounge relax.',
+        highlightNote_en: 'Gourmet Bahamian cuisine, artisan chocolates and premium lounge.'
+      }
+    ],
+    transports: [
+      {
+        id: 'nas-trans-taxi',
+        type: 'taxi',
+        name_it: 'Taxi Ufficiali Bahamas Metered/Fixed Rate',
+        name_en: 'Official Bahamas Airport Taxis',
+        duration: '25-35 min',
+        frequency: 'Disponibili h24 all\'uscita Arrivi',
+        estimatedCost: '35,00 - 45,00 $ (circa 32 - 42 €)',
+        pickupLocation_it: 'Corsia taxi autorizzata all\'esterno del Terminal Arrivi',
+        pickupLocation_en: 'Authorized taxi rank directly outside Arrivals exit',
+        details_it: 'Tariffe regolamentate verso Downtown Nassau, Cable Beach e Paradise Island. Accettati dollari USA e Bahamian Dollars.',
+        details_en: 'Regulated rates to Downtown Nassau, Cable Beach, and Paradise Island. US and Bahamian Dollars accepted 1:1.'
+      },
+      {
+        id: 'nas-trans-car',
+        type: 'bus',
+        name_it: 'Autonoleggi e Navette Resort',
+        name_en: 'Rental Cars & Resort Shuttles',
+        duration: 'Variabile',
+        frequency: 'In base alla prenotazione',
+        estimatedCost: 'Incluso nel soggiorno o da 50 $/giorno',
+        pickupLocation_it: 'Hall noleggi al Terminal Arrivi',
+        pickupLocation_en: 'Car rental desks at Arrivals hall',
+        details_it: 'Desk per Avis, Budget, Hertz e pick-up point per i bus navetta dei resort di Nassau e Paradise Island.',
+        details_en: 'On-site desks for major car rentals and designated pickup for resort shuttle coaches.'
+      }
+    ],
+    lastUpdated: '2026-10-27'
   }
 };
 
@@ -1834,12 +1998,35 @@ export const CITY_TO_IATA: Record<string, string> = {
   ABUDHABI: 'AUH',
   TOKYO: 'HND',
 
-  // Americas
+  // Americas & Caribbean
   'NEW YORK': 'JFK',
   NEWYORK: 'JFK',
   MIAMI: 'MIA',
   CHICAGO: 'ORD',
   'LOS ANGELES': 'LAX',
+  BAHAMAS: 'NAS',
+  NASSAU: 'NAS',
+  'THE BAHAMAS': 'NAS',
+  MALDIVE: 'MLE',
+  MALDIVES: 'MLE',
+  MALE: 'MLE',
+  SEYCHELLES: 'SEZ',
+  MAURITIUS: 'MRU',
+  ZANZIBAR: 'ZNZ',
+  BARBADOS: 'BGI',
+  CUBA: 'HAV',
+  HAVANA: 'HAV',
+  AVANA: 'HAV',
+  JAMAICA: 'KIN',
+  KINGSTON: 'KIN',
+  CAPOVERDE: 'RAI',
+  'CAPO VERDE': 'RAI',
+  ISLANDA: 'KEF',
+  ICELAND: 'KEF',
+  REYKJAVIK: 'KEF',
+  MALTA: 'MLA',
+  CIPRO: 'LCA',
+  CYPRUS: 'LCA',
 
   // Italy
   ROMA: 'FCO',

@@ -1,0 +1,599 @@
+[
+  {
+    "group": "Core",
+    "name": "Robots.txt",
+    "path": "/robots.txt",
+    "status": 200,
+    "duration": 252,
+    "headers": {
+      "contentType": "text/plain; charset=utf-8",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "strictTransportSecurity": "max-age=63072000; includeSubDomains; preload",
+      "contentSecurityPolicy": true,
+      "xRobotsTag": null
+    },
+    "robotsContent": "User-Agent: *\nAllow: /\nDisallow: /api/\n\nUser-Agent: Googlebot\nAllow: /\nDisallow: /api/\n\nUser-Agent: Bingbot\nAllow: /\nDisallow: /api/\n\nUser-Agent: OAI-SearchBot\nAllow: /\nDisallow: /api/\n\nSitemap: https://www.aero-info.eu/sitemap.xml\n",
+    "hasSitemap": true,
+    "disallows": [
+      "Disallow: /api/",
+      "Disallow: /api/",
+      "Disallow: /api/",
+      "Disallow: /api/"
+    ]
+  },
+  {
+    "group": "Core",
+    "name": "Sitemap.xml",
+    "path": "/sitemap.xml",
+    "status": 200,
+    "duration": 914,
+    "headers": {
+      "contentType": "application/xml",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "strictTransportSecurity": "max-age=63072000; includeSubDomains; preload",
+      "contentSecurityPolicy": true,
+      "xRobotsTag": null
+    },
+    "sitemapCount": 79,
+    "sampleUrls": [
+      "https://www.aero-info.eu/",
+      "https://www.aero-info.eu/guide/liquidi-bagaglio-a-mano",
+      "https://www.aero-info.eu/en/guides/liquids-in-carry-on-baggage",
+      "https://www.aero-info.eu/aeroporti/aeroporto-di-milano-linate-enrico-forlanini-lin",
+      "https://www.aero-info.eu/en/airports/milan-linate-airport-lin"
+    ]
+  },
+  {
+    "group": "Home",
+    "name": "Home (IT)",
+    "path": "/",
+    "status": 200,
+    "duration": 49,
+    "headers": {
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "strictTransportSecurity": "max-age=63072000; includeSubDomains; preload",
+      "contentSecurityPolicy": true,
+      "xRobotsTag": null
+    },
+    "htmlLang": "it",
+    "title": "AeroInfo — Informazioni utili sugli aeroporti",
+    "metaDescription": "Informazioni verificate su sicurezza, liquidi, terminal e servizi negli aeroporti.",
+    "canonical": "https://www.aero-info.eu",
+    "alternates": [
+      {
+        "lang": "it",
+        "href": "https://www.aero-info.eu"
+      },
+      {
+        "lang": "en",
+        "href": "https://www.aero-info.eu/en"
+      },
+      {
+        "lang": "x-default",
+        "href": "https://www.aero-info.eu"
+      }
+    ],
+    "h1": [
+      "Tutto ciò che devi sapere prima di volare."
+    ],
+    "h2Count": 0,
+    "structuredDataTypes": [
+      "Organization",
+      "WebSite"
+    ],
+    "hasAirportSchema": false,
+    "hasBreadcrumbs": false,
+    "htmlSizeKb": "32.5"
+  },
+  {
+    "group": "Home",
+    "name": "Home (EN)",
+    "path": "/en",
+    "status": 200,
+    "duration": 329,
+    "headers": {
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "strictTransportSecurity": "max-age=63072000; includeSubDomains; preload",
+      "contentSecurityPolicy": true,
+      "xRobotsTag": null
+    },
+    "htmlLang": "en",
+    "title": "AeroInfo — Airport information for travelers",
+    "metaDescription": "Verified airport information about security, baggage rules, terminals and services.",
+    "canonical": "https://www.aero-info.eu/en",
+    "alternates": [
+      {
+        "lang": "it",
+        "href": "https://www.aero-info.eu"
+      },
+      {
+        "lang": "en",
+        "href": "https://www.aero-info.eu/en"
+      },
+      {
+        "lang": "x-default",
+        "href": "https://www.aero-info.eu"
+      }
+    ],
+    "h1": [
+      "Everything you need to know before flying."
+    ],
+    "h2Count": 0,
+    "structuredDataTypes": [
+      "Organization",
+      "WebSite"
+    ],
+    "hasAirportSchema": false,
+    "hasBreadcrumbs": false,
+    "htmlSizeKb": "29.1"
+  },
+  {
+    "group": "Redirects",
+    "name": "Short IATA Slug FCO (IT)",
+    "path": "/aeroporti/fco",
+    "status": 308,
+    "duration": 62,
+    "headers": {
+      "contentType": "text/plain",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "location": "/aeroporti/aeroporto-internazionale-leonardo-da-vinci-fiumicino-fco",
+      "strictTransportSecurity": "max-age=63072000; includeSubDomains; preload",
+      "contentSecurityPolicy": true,
+      "xRobotsTag": null
+    }
+  },
+  {
+    "group": "Redirects",
+    "name": "Short IATA Slug LHR (EN)",
+    "path": "/en/airports/lhr",
+    "status": 308,
+    "duration": 63,
+    "headers": {
+      "contentType": "text/plain",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "location": "/en/airports/london-heathrow-airport-lhr",
+      "strictTransportSecurity": "max-age=63072000; includeSubDomains; preload",
+      "contentSecurityPolicy": true,
+      "xRobotsTag": null
+    }
+  },
+  {
+    "group": "Redirects",
+    "name": "Short IATA Slug MXP (IT)",
+    "path": "/aeroporti/mxp",
+    "status": 308,
+    "duration": 80,
+    "headers": {
+      "contentType": "text/plain",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "location": "/aeroporti/aeroporto-di-milano-malpensa-mxp",
+      "strictTransportSecurity": "max-age=63072000; includeSubDomains; preload",
+      "contentSecurityPolicy": true,
+      "xRobotsTag": null
+    }
+  },
+  {
+    "group": "Airports IT",
+    "name": "Roma Fiumicino (FCO)",
+    "path": "/aeroporti/aeroporto-internazionale-leonardo-da-vinci-fiumicino-fco",
+    "status": 200,
+    "duration": 76,
+    "headers": {
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "strictTransportSecurity": "max-age=63072000; includeSubDomains; preload",
+      "contentSecurityPolicy": true,
+      "xRobotsTag": null
+    },
+    "htmlLang": "it",
+    "title": "Aeroporto Internazionale Leonardo da Vinci (Fiumicino) (FCO): sicurezza, liquidi e terminal | AeroInfo",
+    "metaDescription": "Regole di sicurezza, liquidi, terminal e informazioni di viaggio per Aeroporto Internazionale Leonardo da Vinci (Fiumicino), aeroporto di Roma.",
+    "robots": "index, follow",
+    "canonical": "https://www.aero-info.eu/aeroporti/aeroporto-internazionale-leonardo-da-vinci-fiumicino-fco",
+    "alternates": [
+      {
+        "lang": "it",
+        "href": "https://www.aero-info.eu/aeroporti/aeroporto-internazionale-leonardo-da-vinci-fiumicino-fco"
+      },
+      {
+        "lang": "en",
+        "href": "https://www.aero-info.eu/en/airports/leonardo-da-vinci-international-airport-fiumicino-fco"
+      },
+      {
+        "lang": "x-default",
+        "href": "https://www.aero-info.eu/aeroporti/aeroporto-internazionale-leonardo-da-vinci-fiumicino-fco"
+      }
+    ],
+    "h1": [
+      "Aeroporto Internazionale Leonardo da Vinci (Fiumicino)"
+    ],
+    "h2Count": 1,
+    "structuredDataTypes": [
+      "Organization",
+      "WebSite",
+      "BreadcrumbList",
+      "Airport"
+    ],
+    "hasAirportSchema": true,
+    "hasBreadcrumbs": true,
+    "htmlSizeKb": "465.0"
+  },
+  {
+    "group": "Airports IT",
+    "name": "Milano Malpensa (MXP)",
+    "path": "/aeroporti/aeroporto-di-milano-malpensa-mxp",
+    "status": 200,
+    "duration": 91,
+    "headers": {
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "strictTransportSecurity": "max-age=63072000; includeSubDomains; preload",
+      "contentSecurityPolicy": true,
+      "xRobotsTag": null
+    },
+    "htmlLang": "it",
+    "title": "Aeroporto di Milano Malpensa (MXP): sicurezza, liquidi e terminal | AeroInfo",
+    "metaDescription": "Regole di sicurezza, liquidi, terminal e informazioni di viaggio per Aeroporto di Milano Malpensa, aeroporto di Milano.",
+    "robots": "index, follow",
+    "canonical": "https://www.aero-info.eu/aeroporti/aeroporto-di-milano-malpensa-mxp",
+    "alternates": [
+      {
+        "lang": "it",
+        "href": "https://www.aero-info.eu/aeroporti/aeroporto-di-milano-malpensa-mxp"
+      },
+      {
+        "lang": "en",
+        "href": "https://www.aero-info.eu/en/airports/milan-malpensa-airport-mxp"
+      },
+      {
+        "lang": "x-default",
+        "href": "https://www.aero-info.eu/aeroporti/aeroporto-di-milano-malpensa-mxp"
+      }
+    ],
+    "h1": [
+      "Aeroporto di Milano Malpensa"
+    ],
+    "h2Count": 1,
+    "structuredDataTypes": [
+      "Organization",
+      "WebSite",
+      "BreadcrumbList",
+      "Airport"
+    ],
+    "hasAirportSchema": true,
+    "hasBreadcrumbs": true,
+    "htmlSizeKb": "436.3"
+  },
+  {
+    "group": "Airports IT",
+    "name": "Napoli Capodichino (NAP)",
+    "path": "/aeroporti/aeroporto-internazionale-di-napoli-capodichino-nap",
+    "status": 200,
+    "duration": 372,
+    "headers": {
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "strictTransportSecurity": "max-age=63072000; includeSubDomains; preload",
+      "contentSecurityPolicy": true,
+      "xRobotsTag": null
+    },
+    "htmlLang": "it",
+    "title": "Aeroporto Internazionale di Napoli-Capodichino (NAP): sicurezza, liquidi e terminal | AeroInfo",
+    "metaDescription": "Regole di sicurezza, liquidi, terminal e informazioni di viaggio per Aeroporto Internazionale di Napoli-Capodichino, aeroporto di Napoli.",
+    "robots": "index, follow",
+    "canonical": "https://www.aero-info.eu/aeroporti/aeroporto-internazionale-di-napoli-capodichino-nap",
+    "alternates": [
+      {
+        "lang": "it",
+        "href": "https://www.aero-info.eu/aeroporti/aeroporto-internazionale-di-napoli-capodichino-nap"
+      },
+      {
+        "lang": "en",
+        "href": "https://www.aero-info.eu/en/airports/naples-international-airport-nap"
+      },
+      {
+        "lang": "x-default",
+        "href": "https://www.aero-info.eu/aeroporti/aeroporto-internazionale-di-napoli-capodichino-nap"
+      }
+    ],
+    "h1": [
+      "Aeroporto Internazionale di Napoli-Capodichino"
+    ],
+    "h2Count": 1,
+    "structuredDataTypes": [
+      "Organization",
+      "WebSite",
+      "BreadcrumbList",
+      "Airport"
+    ],
+    "hasAirportSchema": true,
+    "hasBreadcrumbs": true,
+    "htmlSizeKb": "430.7"
+  },
+  {
+    "group": "Airports IT",
+    "name": "Bologna Marconi (BLQ)",
+    "path": "/aeroporti/aeroporto-di-bologna-guglielmo-marconi-blq",
+    "status": 200,
+    "duration": 285,
+    "headers": {
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "strictTransportSecurity": "max-age=63072000; includeSubDomains; preload",
+      "contentSecurityPolicy": true,
+      "xRobotsTag": null
+    },
+    "htmlLang": "it",
+    "title": "Aeroporto di Bologna-Guglielmo Marconi (BLQ): sicurezza, liquidi e terminal | AeroInfo",
+    "metaDescription": "Regole di sicurezza, liquidi, terminal e informazioni di viaggio per Aeroporto di Bologna-Guglielmo Marconi, aeroporto di Bologna.",
+    "robots": "index, follow",
+    "canonical": "https://www.aero-info.eu/aeroporti/aeroporto-di-bologna-guglielmo-marconi-blq",
+    "alternates": [
+      {
+        "lang": "it",
+        "href": "https://www.aero-info.eu/aeroporti/aeroporto-di-bologna-guglielmo-marconi-blq"
+      },
+      {
+        "lang": "en",
+        "href": "https://www.aero-info.eu/en/airports/bologna-guglielmo-marconi-airport-blq"
+      },
+      {
+        "lang": "x-default",
+        "href": "https://www.aero-info.eu/aeroporti/aeroporto-di-bologna-guglielmo-marconi-blq"
+      }
+    ],
+    "h1": [
+      "Aeroporto di Bologna-Guglielmo Marconi"
+    ],
+    "h2Count": 1,
+    "structuredDataTypes": [
+      "Organization",
+      "WebSite",
+      "BreadcrumbList",
+      "Airport"
+    ],
+    "hasAirportSchema": true,
+    "hasBreadcrumbs": true,
+    "htmlSizeKb": "429.2"
+  },
+  {
+    "group": "Airports IT",
+    "name": "Praga Václav Havel (PRG)",
+    "path": "/aeroporti/aeroporto-di-praga-v-clav-havel-prg",
+    "status": 200,
+    "duration": 200,
+    "headers": {
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "strictTransportSecurity": "max-age=63072000; includeSubDomains; preload",
+      "contentSecurityPolicy": true,
+      "xRobotsTag": null
+    },
+    "htmlLang": "it",
+    "title": "Aeroporto di Praga Václav Havel (PRG): sicurezza, liquidi e terminal | AeroInfo",
+    "metaDescription": "Regole di sicurezza, liquidi, terminal e informazioni di viaggio per Aeroporto di Praga Václav Havel, aeroporto di Praga.",
+    "robots": "index, follow",
+    "canonical": "https://www.aero-info.eu/aeroporti/aeroporto-di-praga-v-clav-havel-prg",
+    "alternates": [
+      {
+        "lang": "it",
+        "href": "https://www.aero-info.eu/aeroporti/aeroporto-di-praga-v-clav-havel-prg"
+      },
+      {
+        "lang": "en",
+        "href": "https://www.aero-info.eu/en/airports/v-clav-havel-airport-prague-prg"
+      },
+      {
+        "lang": "x-default",
+        "href": "https://www.aero-info.eu/aeroporti/aeroporto-di-praga-v-clav-havel-prg"
+      }
+    ],
+    "h1": [
+      "Aeroporto di Praga Václav Havel"
+    ],
+    "h2Count": 1,
+    "structuredDataTypes": [
+      "Organization",
+      "WebSite",
+      "BreadcrumbList",
+      "Airport"
+    ],
+    "hasAirportSchema": true,
+    "hasBreadcrumbs": true,
+    "htmlSizeKb": "436.6"
+  },
+  {
+    "group": "Airports EN",
+    "name": "London Heathrow (LHR)",
+    "path": "/en/airports/london-heathrow-airport-lhr",
+    "status": 200,
+    "duration": 426,
+    "headers": {
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "strictTransportSecurity": "max-age=63072000; includeSubDomains; preload",
+      "contentSecurityPolicy": true,
+      "xRobotsTag": null
+    },
+    "htmlLang": "en",
+    "title": "London Heathrow Airport (LHR): security, liquids and terminals | AeroInfo",
+    "metaDescription": "Security screening, baggage rules, terminals and travel information for London Heathrow Airport in London.",
+    "robots": "index, follow",
+    "canonical": "https://www.aero-info.eu/en/airports/london-heathrow-airport-lhr",
+    "alternates": [
+      {
+        "lang": "it",
+        "href": "https://www.aero-info.eu/aeroporti/aeroporto-di-londra-heathrow-lhr"
+      },
+      {
+        "lang": "en",
+        "href": "https://www.aero-info.eu/en/airports/london-heathrow-airport-lhr"
+      },
+      {
+        "lang": "x-default",
+        "href": "https://www.aero-info.eu/aeroporti/aeroporto-di-londra-heathrow-lhr"
+      }
+    ],
+    "h1": [
+      "London Heathrow Airport"
+    ],
+    "h2Count": 1,
+    "structuredDataTypes": [
+      "Organization",
+      "WebSite",
+      "BreadcrumbList",
+      "Airport"
+    ],
+    "hasAirportSchema": true,
+    "hasBreadcrumbs": true,
+    "htmlSizeKb": "422.1"
+  },
+  {
+    "group": "Airports EN",
+    "name": "Rome Fiumicino (FCO)",
+    "path": "/en/airports/leonardo-da-vinci-international-airport-fiumicino-fco",
+    "status": 200,
+    "duration": 60,
+    "headers": {
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "strictTransportSecurity": "max-age=63072000; includeSubDomains; preload",
+      "contentSecurityPolicy": true,
+      "xRobotsTag": null
+    },
+    "htmlLang": "en",
+    "title": "Leonardo da Vinci International Airport (Fiumicino) (FCO): security, liquids and terminals | AeroInfo",
+    "metaDescription": "Security screening, baggage rules, terminals and travel information for Leonardo da Vinci International Airport (Fiumicino) in Rome.",
+    "robots": "index, follow",
+    "canonical": "https://www.aero-info.eu/en/airports/leonardo-da-vinci-international-airport-fiumicino-fco",
+    "alternates": [
+      {
+        "lang": "it",
+        "href": "https://www.aero-info.eu/aeroporti/aeroporto-internazionale-leonardo-da-vinci-fiumicino-fco"
+      },
+      {
+        "lang": "en",
+        "href": "https://www.aero-info.eu/en/airports/leonardo-da-vinci-international-airport-fiumicino-fco"
+      },
+      {
+        "lang": "x-default",
+        "href": "https://www.aero-info.eu/aeroporti/aeroporto-internazionale-leonardo-da-vinci-fiumicino-fco"
+      }
+    ],
+    "h1": [
+      "Leonardo da Vinci International Airport (Fiumicino)"
+    ],
+    "h2Count": 1,
+    "structuredDataTypes": [
+      "Organization",
+      "WebSite",
+      "BreadcrumbList",
+      "Airport"
+    ],
+    "hasAirportSchema": true,
+    "hasBreadcrumbs": true,
+    "htmlSizeKb": "458.4"
+  },
+  {
+    "group": "Guides",
+    "name": "Liquids Guide (IT)",
+    "path": "/guide/liquidi-bagaglio-a-mano",
+    "status": 200,
+    "duration": 287,
+    "headers": {
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "strictTransportSecurity": "max-age=63072000; includeSubDomains; preload",
+      "contentSecurityPolicy": true,
+      "xRobotsTag": null
+    },
+    "htmlLang": "it",
+    "title": "Liquidi nel bagaglio a mano: limiti e regole per aeroporto | AeroInfo",
+    "metaDescription": "La regola dei 100 ml è generale, ma alcuni aeroporti pubblicano eccezioni. Scopri come controllare limiti, scanner e scali di transito.",
+    "canonical": "https://www.aero-info.eu/guide/liquidi-bagaglio-a-mano",
+    "alternates": [
+      {
+        "lang": "it",
+        "href": "https://www.aero-info.eu/guide/liquidi-bagaglio-a-mano"
+      },
+      {
+        "lang": "en",
+        "href": "https://www.aero-info.eu/en/guides/liquids-in-carry-on-baggage"
+      },
+      {
+        "lang": "x-default",
+        "href": "https://www.aero-info.eu/guide/liquidi-bagaglio-a-mano"
+      }
+    ],
+    "h1": [
+      "Liquidi nel bagaglio a mano: limiti e regole per aeroporto"
+    ],
+    "h2Count": 4,
+    "structuredDataTypes": [
+      "Organization",
+      "WebSite"
+    ],
+    "hasAirportSchema": false,
+    "hasBreadcrumbs": false,
+    "htmlSizeKb": "29.0"
+  },
+  {
+    "group": "Guides",
+    "name": "Liquids Guide (EN)",
+    "path": "/en/guides/liquids-in-carry-on-baggage",
+    "status": 200,
+    "duration": 376,
+    "headers": {
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "strictTransportSecurity": "max-age=63072000; includeSubDomains; preload",
+      "contentSecurityPolicy": true,
+      "xRobotsTag": null
+    },
+    "htmlLang": "en",
+    "title": "Liquids in carry-on baggage: limits by airport | AeroInfo",
+    "metaDescription": "The 100 ml rule is general, but some airports publish exceptions. Check limits, scanners and transfer airports before packing.",
+    "canonical": "https://www.aero-info.eu/en/guides/liquids-in-carry-on-baggage",
+    "alternates": [
+      {
+        "lang": "it",
+        "href": "https://www.aero-info.eu/guide/liquidi-bagaglio-a-mano"
+      },
+      {
+        "lang": "en",
+        "href": "https://www.aero-info.eu/en/guides/liquids-in-carry-on-baggage"
+      },
+      {
+        "lang": "x-default",
+        "href": "https://www.aero-info.eu/guide/liquidi-bagaglio-a-mano"
+      }
+    ],
+    "h1": [
+      "Liquids in carry-on baggage: limits by airport"
+    ],
+    "h2Count": 4,
+    "structuredDataTypes": [
+      "Organization",
+      "WebSite"
+    ],
+    "hasAirportSchema": false,
+    "hasBreadcrumbs": false,
+    "htmlSizeKb": "25.1"
+  },
+  {
+    "group": "Edge Cases",
+    "name": "Nonexistent Slug (404 test)",
+    "path": "/aeroporti/aeroporto-inesistente-xyz-999",
+    "status": 404,
+    "duration": 204,
+    "headers": {
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "strictTransportSecurity": "max-age=63072000; includeSubDomains; preload",
+      "contentSecurityPolicy": true,
+      "xRobotsTag": "noindex"
+    }
+  }
+]
