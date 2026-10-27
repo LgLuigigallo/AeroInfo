@@ -11,7 +11,7 @@ const STATIC_SEO_APPROVED_IATAS = new Set([
   'PRG', 'FCO', 'CIA', 'MXP', 'LIN', 'BGY', 'WAW', 'KRK', 'BUD', 'ATH',
   'ZRH', 'FRA', 'MUC', 'MAD', 'BCN', 'AMS', 'CDG', 'ORY', 'DUB', 'LIS',
   'VIE', 'CPH', 'ARN', 'HEL', 'LHR', 'LGW', 'HND', 'JFK', 'FUE', 'PMO', 'CTA',
-  'LPA', 'TFS',
+  'LPA', 'TFS', 'NAP', 'BRI', 'BLQ', 'PSA', 'BER',
 ]);
 
 function isMeaningful(value: string | undefined, minimum = 20): boolean {
@@ -99,7 +99,9 @@ export function getAirportSeoStatus(airport: Airport): AirportSeoStatus {
   const reasons = evaluateAirportSeoQuality(airport);
   if (airport.seoStatus === 'blocked') return 'blocked';
   if (airport.seoStatus === 'indexable') return reasons.length === 0 ? 'indexable' : 'blocked';
-  if (!airport.seoStatus && STATIC_SEO_APPROVED_IATAS.has(airport.iata.toUpperCase()) && reasons.length === 0) return 'indexable';
+  if ((!airport.seoStatus || airport.seoStatus === 'pending_quality') && STATIC_SEO_APPROVED_IATAS.has(airport.iata.toUpperCase()) && reasons.length === 0) {
+    return 'indexable';
+  }
   return airport.seoStatus || 'pending_quality';
 }
 

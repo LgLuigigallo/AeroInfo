@@ -111,6 +111,27 @@ export async function proxy(request: NextRequest) {
     const lang = italianSlug ? 'it' : 'en';
     if (hasStaticAirportSlug(slug, lang)) return NextResponse.next();
 
+    // Support short IATA codes or uppercase/lowercase IATA aliases (e.g. /aeroporti/fco, /aeroporti/FCO)
+    const upperSlug = slug.toUpperCase();
+    if (/^[A-Z0-9]{3}$/.test(upperSlug)) {
+      const staticAirportByIata = airportsData.find((a) => a.iata.toUpperCase() === upperSlug);
+      if (staticAirportByIata) {
+        const canonicalSlug = makeAirportSlug(staticAirportByIata, lang);
+        const destination = request.nextUrl.clone();
+        destination.pathname = lang === 'it' ? `/aeroporti/${canonicalSlug}` : `/en/airports/${canonicalSlug}`;
+        destination.search = '';
+        return NextResponse.redirect(destination, 308);
+      }
+
+      const dbSlug = await getAirportSlug(upperSlug);
+      if (dbSlug) {
+        const destination = request.nextUrl.clone();
+        destination.pathname = lang === 'it' ? `/aeroporti/${dbSlug}` : `/en/airports/${dbSlug}`;
+        destination.search = '';
+        return NextResponse.redirect(destination, 308);
+      }
+    }
+
     const isInDatabase = await isAirportSlugInDatabase(slug, lang === 'it' ? 'seo_slug_it' : 'seo_slug_en');
     if (isInDatabase === true) return NextResponse.next();
     if (isInDatabase === false) return notFoundResponse(lang);
