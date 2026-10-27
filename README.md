@@ -13,9 +13,9 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38bdf8?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
 [![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ecf8e?style=for-the-badge&logo=supabase)](https://supabase.com/)
 [![Vercel](https://img.shields.io/badge/Vercel-Production-white?style=for-the-badge&logo=vercel)](https://www.aero-info.eu)
-[![Security Audited](https://img.shields.io/badge/Security-A%2B%20Certified-emerald?style=for-the-badge&logo=securityscorecard)](https://www.aero-info.eu)
+[![Security](https://img.shields.io/badge/Security-tests%20available-emerald?style=for-the-badge&logo=securityscorecard)](tests/security.test.ts)
 
-[🌐 **Visita l'Applicazione Live**](https://www.aero-info.eu) • [💬 **Invia Feedback**](https://www.aero-info.eu/feedback) • [🔕 **Gestione Iscrizione**](https://www.aero-info.eu/unsubscribe) • [📄 **Report di Sicurezza**](tests/security.test.ts)
+[🌐 **Applicazione**](https://www.aero-info.eu) • [💬 **Feedback**](https://www.aero-info.eu/feedback) • [🔕 **Disiscrizione**](https://www.aero-info.eu/unsubscribe) • [🔐 **Privacy e Cookie Policy**](https://www.aero-info.eu/privacy) • [📄 **Test sicurezza**](tests/security.test.ts)
 
 </div>
 
@@ -82,9 +82,9 @@ Tutti i dati visualizzati provengono da canali ufficiali verificati o da un moto
 
 ---
 
-## 🔒 Sicurezza & Certificazione di Produzione
+## 🔒 Sicurezza e test
 
-Il progetto è stato sottoposto a una **security review approfondita** e soddisfa tutti i requisiti della suite automatizzata di test:
+Il repository include controlli automatici per le principali difese applicative. Il superamento della suite non costituisce una certificazione né sostituisce verifiche end-to-end sull'ambiente distribuito.
 
 ```
 🔒 AUTOMATED SECURITY TEST SUITE:
@@ -98,9 +98,33 @@ Il progetto è stato sottoposto a una **security review approfondita** e soddisf
   ✅ Risoluzione Autorità Ufficiali & Classificazione Aviazione Generale
 ```
 
-- **Row Level Security (RLS) su Supabase:** Le email degli utenti registrate nella tabella `airport_requests` sono inaccessibili al pubblico (`SELECT` negato ad `anon`) e consultabili unicamente dal `service_role` server-side.
-- **Fail-Closed Authorization:** Gli endpoint operativi `/api/cron/sync` e `/api/admin/seed` richiedono un Bearer token segreto a 256-bit (`CRON_SECRET` / `ADMIN_SECRET_KEY`).
-- **Zero Tracking Cookies:** Nessun cookie di profilazione o tracciamento invasivo di terze parti (piena conformità GDPR ed ePrivacy).
+- **API amministrative:** `/api/cron/sync` usa `CRON_SECRET`; la console `/admin` usa sessioni Supabase Auth verificate rispetto a `ADMIN_EMAILS`. `SUPABASE_SERVICE_ROLE_KEY` resta lato server.
+- **Verifiche online:** i controlli anonimi eseguiti il 2026-10-26 hanno ricevuto `401` dagli endpoint amministrativi protetti. Non coprono l'intero flusso admin autenticato, la concorrenza o ogni policy RLS.
+- **Privacy:** la policy è disponibile su [`/privacy`](https://www.aero-info.eu/privacy); verificare la configurazione del consenso e i trattamenti effettivi prima di formulare dichiarazioni di conformità.
+
+---
+
+## 🧭 Console amministrativa
+
+La console privata è disponibile su `/admin`. Il login usa Google tramite Supabase Auth; dopo l’accesso, il server autorizza solo le email elencate in `ADMIN_EMAILS` (separate da virgole). Le API admin verificano il token Supabase a ogni richiesta e usano `SUPABASE_SERVICE_ROLE_KEY` solo lato server.
+
+### Attivazione
+
+1. In Supabase abilita il provider Google e inserisci le credenziali OAuth del progetto. Configura l’URL callback mostrato da Supabase, normalmente `https://<project-ref>.supabase.co/auth/v1/callback`, nella console Google.
+2. In Supabase Authentication → URL Configuration, aggiungi `https://www.aero-info.eu/admin/callback` e l’URL locale di sviluppo, ad esempio `http://localhost:3000/admin/callback`, alla lista dei redirect consentiti.
+3. Imposta `ADMIN_EMAILS` nell’ambiente server (ad esempio `amministratore@dominio.it`). Mantieni `SUPABASE_SERVICE_ROLE_KEY` solo tra le variabili server, senza prefisso `NEXT_PUBLIC_`.
+4. Verifica che nel progetto Supabase di destinazione siano applicate tutte le migrazioni richieste dalla versione distribuita, consultando lo storico delle migrazioni e la documentazione del rilascio.
+
+La console gestisce la revisione e l’avvio/annullamento delle richieste, i suggerimenti e i feedback, il catalogo aeroporti, le valutazioni SEO, le sincronizzazioni singole e il registro append-only delle azioni. Le richieste restano nel ciclo automatico anche dopo l’approvazione; “Avvia ora” le elabora subito. Le modifiche al catalogo impostano un blocco di provenienza che impedisce al seeding statico successivo di sovrascriverle.
+
+Le email dei richiedenti non vengono incluse negli elenchi; sono accessibili solo nel dettaglio protetto. Se il login non è configurato o la migrazione non è stata applicata, la console resta chiusa.
+
+## 🚀 Rilascio e branch
+
+- `main` è il branch collegato alla produzione Vercel. Al 2026-10-26, `main` e `codex/admin-console` puntano al commit `0a781f4c`.
+- Il tag `backup/admin-console-2026-10-26` conserva un riferimento recuperabile a quella versione della console.
+- `codex/seo-geo-foundation` resta separato; le sue modifiche SEO non vanno considerate rilasciate in produzione senza verifica del deploy.
+- La copia locale può contenere modifiche non committate: prima di sincronizzarla, controllare `git status` e preservare il lavoro in corso.
 
 ---
 
@@ -126,7 +150,7 @@ AeroInfo/
 ├── src/
 │   ├── app/                         # Next.js App Router
 │   │   ├── api/
-│   │   │   ├── admin/seed/          # Endpoint autenticato di seeding Supabase
+│   │   │   ├── admin/               # API amministrative con verifica sessione Google
 │   │   │   ├── airports/            # API catalogo aeroporti
 │   │   │   │   ├── request/         # Richiesta indicizzazione nuovo aeroporto
 │   │   │   │   ├── suggest/         # Suggerimento modifiche community (con verifica)

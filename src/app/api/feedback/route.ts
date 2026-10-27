@@ -80,9 +80,7 @@ export async function POST(request: NextRequest) {
 
     console.info('💬 [FEEDBACK_RECEIVED]', {
       category: cleanCategory,
-      subject: cleanSubject,
-      sender: cleanEmail || cleanName || 'anonymous',
-      clientIp,
+      hasSender: Boolean(cleanEmail || cleanName),
       timestamp: new Date().toISOString()
     });
 
@@ -104,9 +102,9 @@ export async function POST(request: NextRequest) {
           .single();
 
         if (data?.id) savedId = data.id;
-        if (error) console.warn('Supabase site_feedback insert warning:', error.message);
-      } catch (dbErr) {
-        console.warn('Database note on site_feedback:', dbErr);
+        if (error) console.warn('Supabase site_feedback insert warning.');
+      } catch {
+        console.warn('Database note on site_feedback.');
       }
     }
 
@@ -128,8 +126,8 @@ export async function POST(request: NextRequest) {
           </div>
         `
       });
-    } catch (emailErr) {
-      console.warn('Email notification warning:', emailErr);
+    } catch {
+      console.warn('Email notification warning.');
     }
 
     return NextResponse.json({
@@ -138,8 +136,8 @@ export async function POST(request: NextRequest) {
       message_it: 'Grazie! Il tuo messaggio è stato inviato con successo al team di AeroInfo.',
       message_en: 'Thank you! Your feedback has been sent to the AeroInfo team.'
     });
-  } catch (error: any) {
-    console.error('Feedback submission error:', error);
+  } catch {
+    console.error('Feedback submission failed.');
     return NextResponse.json(
       { success: false, error: 'Internal server error processing feedback' },
       { status: 500 }

@@ -14,7 +14,7 @@ export interface SeedResult {
  * Seeds all certified airports and related tables to Supabase.
  * Safe to run multiple times (uses upsert on IATA code).
  */
-export async function seedAllAirportsToSupabase(airports: Airport[]): Promise<SeedResult> {
+export async function seedAllAirportsToSupabase(airports: Airport[], options: { allowAdminLocked?: boolean } = {}): Promise<SeedResult> {
   if (!supabase) {
     return {
       success: false,
@@ -33,12 +33,20 @@ export async function seedAllAirportsToSupabase(airports: Airport[]): Promise<Se
       // indexability on reseed; fill slugs once for new or legacy rows.
       const { data: existingSeo, error: seoReadError } = await supabase
         .from('airports')
-        .select('seo_status, seo_slug_it, seo_slug_en')
+        .select('seo_status, seo_slug_it, seo_slug_en, admin_content_locked')
         .eq('iata_code', ap.iata)
         .maybeSingle();
+      if (seoReadError && /admin_content_locked/i.test(seoReadError.message)) {
+        errors.push(`Admin protection migration is required before seeding ${ap.iata}.`);
+        continue;
+      }
       const schemaMissingSeo = Boolean(seoReadError && /seo_(status|slug_it|slug_en)|schema cache|column .* does not exist/i.test(seoReadError.message));
       if (seoReadError && !schemaMissingSeo) {
         errors.push(`Failed to read SEO fields for ${ap.iata}: ${seoReadError.message}`);
+        continue;
+      }
+      if (existingSeo?.admin_content_locked && !options.allowAdminLocked) {
+        inserted++;
         continue;
       }
       const seoPayload = schemaMissingSeo ? {} : {
@@ -137,7 +145,8 @@ export async function seedAllAirportsToSupabase(airports: Airport[]): Promise<Se
       }
 
       // 3. Terminals
-      await supabase.from('terminals').delete().eq('airport_id', airportId);
+      const terminalsDelete = await supabase.from('terminals').delete().eq('airport_id', airportId);
+      if (terminalsDelete.error) errors.push(`Failed to replace terminals for ${ap.iata}: ${terminalsDelete.error.message}`);
       if (ap.terminals.length > 0) {
         const terminalsPayload = ap.terminals.map((t) => ({
           airport_id: airportId,
@@ -146,11 +155,13 @@ export async function seedAllAirportsToSupabase(airports: Airport[]): Promise<Se
           transfer_info_en: t.transferInfo_en,
           is_unverified: Boolean(t.isUnverified)
         }));
-        await supabase.from('terminals').insert(terminalsPayload);
+        const terminalsInsert = await supabase.from('terminals').insert(terminalsPayload);
+        if (terminalsInsert.error) errors.push(`Failed to save terminals for ${ap.iata}: ${terminalsInsert.error.message}`);
       }
 
       // 4. Airlines
-      await supabase.from('airlines').delete().eq('airport_id', airportId);
+      const airlinesDelete = await supabase.from('airlines').delete().eq('airport_id', airportId);
+      if (airlinesDelete.error) errors.push(`Failed to replace airlines for ${ap.iata}: ${airlinesDelete.error.message}`);
       if (ap.airlines.length > 0) {
         const airlinesPayload = ap.airlines.map((a) => ({
           airport_id: airportId,
@@ -160,11 +171,13 @@ export async function seedAllAirportsToSupabase(airports: Airport[]): Promise<Se
           check_in_zone: a.checkInZone,
           is_unverified: Boolean(a.isUnverified)
         }));
-        await supabase.from('airlines').insert(airlinesPayload);
+        const airlinesInsert = await supabase.from('airlines').insert(airlinesPayload);
+        if (airlinesInsert.error) errors.push(`Failed to save airlines for ${ap.iata}: ${airlinesInsert.error.message}`);
       }
 
       // 5. Amenities
-      await supabase.from('amenities').delete().eq('airport_id', airportId);
+      const amenitiesDelete = await supabase.from('amenities').delete().eq('airport_id', airportId);
+      if (amenitiesDelete.error) errors.push(`Failed to replace amenities for ${ap.iata}: ${amenitiesDelete.error.message}`);
       if (ap.amenities.length > 0) {
         const amenitiesPayload = ap.amenities.map((am) => ({
           airport_id: airportId,
@@ -176,13 +189,17 @@ export async function seedAllAirportsToSupabase(airports: Airport[]): Promise<Se
           location_en: am.location_en,
           details_it: am.details_it,
           details_en: am.details_en,
-          is_unverified: Boolean(am.isUnverified)
+          is_unverified: Boolean(am.isUnverified),
+          unverified_note_it: am.details_it_unverified || null,
+          unverified_note_en: am.details_en_unverified || null,
         }));
-        await supabase.from('amenities').insert(amenitiesPayload);
+        const amenitiesInsert = await supabase.from('amenities').insert(amenitiesPayload);
+        if (amenitiesInsert.error) errors.push(`Failed to save amenities for ${ap.iata}: ${amenitiesInsert.error.message}`);
       }
 
       // 6. Venues
-      await supabase.from('venues').delete().eq('airport_id', airportId);
+      const venuesDelete = await supabase.from('venues').delete().eq('airport_id', airportId);
+      if (venuesDelete.error) errors.push(`Failed to replace venues for ${ap.iata}: ${venuesDelete.error.message}`);
       if (ap.venues.length > 0) {
         const venuesPayload = ap.venues.map((v) => ({
           airport_id: airportId,
@@ -194,11 +211,13 @@ export async function seedAllAirportsToSupabase(airports: Airport[]): Promise<Se
           is_24_hours: Boolean(v.is24Hours),
           is_unverified: Boolean(v.isUnverified)
         }));
-        await supabase.from('venues').insert(venuesPayload);
+        const venuesInsert = await supabase.from('venues').insert(venuesPayload);
+        if (venuesInsert.error) errors.push(`Failed to save venues for ${ap.iata}: ${venuesInsert.error.message}`);
       }
 
       // 7. Ground Transport
-      await supabase.from('ground_transports').delete().eq('airport_id', airportId);
+      const transportsDelete = await supabase.from('ground_transports').delete().eq('airport_id', airportId);
+      if (transportsDelete.error) errors.push(`Failed to replace ground transport for ${ap.iata}: ${transportsDelete.error.message}`);
       if (ap.transports.length > 0) {
         const transportsPayload = ap.transports.map((tr) => ({
           airport_id: airportId,
@@ -214,12 +233,13 @@ export async function seedAllAirportsToSupabase(airports: Airport[]): Promise<Se
           details_en: tr.details_en,
           is_unverified: Boolean(tr.isUnverified)
         }));
-        await supabase.from('ground_transports').insert(transportsPayload);
+        const transportsInsert = await supabase.from('ground_transports').insert(transportsPayload);
+        if (transportsInsert.error) errors.push(`Failed to save ground transport for ${ap.iata}: ${transportsInsert.error.message}`);
       }
 
       inserted++;
-    } catch (err: any) {
-      errors.push(`Error seeding airport ${ap.iata}: ${err.message}`);
+    } catch (err: unknown) {
+      errors.push(`Error seeding airport ${ap.iata}: ${err instanceof Error ? err.message : 'unknown error'}`);
     }
   }
 

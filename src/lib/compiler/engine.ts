@@ -250,7 +250,7 @@ export class AirportCompilerEngine {
     query: string,
     candidateIata?: string | null,
     specificRequestIds?: string[]
-  ): Promise<{ success: boolean; airport?: Airport; error?: string }> {
+  ): Promise<{ success: boolean; airport?: Airport; error?: string; notificationsSent?: number; notificationErrors?: string[] }> {
     const airport = this.resolveAirport(query, candidateIata);
     if (!airport) {
       return { success: false, error: `Could not resolve airport for query: "${query}"` };
@@ -258,22 +258,27 @@ export class AirportCompilerEngine {
 
     // 1. Seed to Supabase
     let publishedAirport = airport;
+    let notificationsSent = 0;
+    const notificationErrors: string[] = [];
     if (supabase) {
-      const seedResult = await seedAllAirportsToSupabase([airport]);
-      if (!seedResult.success && seedResult.errors.length > 0) {
-        console.warn(`Supabase seed warning for ${airport.iata}:`, seedResult.errors);
-        return { success: false, error: `Airport ${airport.iata} was not fully saved; request remains pending.` };
-      }
-      const { data: persistedSlugs } = await supabase
+      const { data: existingAirport, error: existingError } = await supabase
         .from('airports')
         .select('seo_slug_it, seo_slug_en')
         .eq('iata_code', airport.iata)
         .maybeSingle();
-      if (persistedSlugs?.seo_slug_it || persistedSlugs?.seo_slug_en) {
+      if (existingError) return { success: false, error: `Could not verify whether airport ${airport.iata} already exists.` };
+      if (!existingAirport) {
+        const seedResult = await seedAllAirportsToSupabase([airport]);
+        if (!seedResult.success && seedResult.errors.length > 0) {
+          console.warn(`Supabase seed warning for ${airport.iata}:`, seedResult.errors);
+          return { success: false, error: `Airport ${airport.iata} was not fully saved; request remains pending.` };
+        }
+      }
+      if (existingAirport?.seo_slug_it || existingAirport?.seo_slug_en) {
         publishedAirport = {
           ...airport,
-          seoSlugIt: persistedSlugs.seo_slug_it || undefined,
-          seoSlugEn: persistedSlugs.seo_slug_en || undefined,
+          seoSlugIt: existingAirport.seo_slug_it || undefined,
+          seoSlugEn: existingAirport.seo_slug_en || undefined,
         };
       }
 
@@ -283,7 +288,7 @@ export class AirportCompilerEngine {
         const cleanCity = sanitizePostgrestParam(airport.city_it);
         const cleanQuery = sanitizePostgrestParam(query);
         
-        let matchingRequests: any[] = [];
+        const matchingRequests: { id: string; requester_email: string | null; query: string; iata_code: string | null }[] = [];
 
         // If specific request IDs provided, fetch them directly
         if (specificRequestIds && specificRequestIds.length > 0) {
@@ -296,12 +301,15 @@ export class AirportCompilerEngine {
           }
         }
 
-        // Also query by IATA or query text for any additional pending subscribers
-        const { data: orData } = await supabase
-          .from('airport_requests')
-          .select('id, requester_email, query, iata_code')
-          .in('status', ['pending', 'queued', 'queued_weekly'])
-          .or(`iata_code.ilike.${cleanIata},query.ilike.%${cleanIata}%,query.ilike.%${cleanCity}%,query.ilike.%${cleanQuery}%`);
+        // Batch callers claim their full group before compiling. Do not pull
+        // fresh, unclaimed subscribers into a run after that claim boundary.
+        const { data: orData } = specificRequestIds?.length
+          ? { data: null }
+          : await supabase
+              .from('airport_requests')
+              .select('id, requester_email, query, iata_code')
+              .in('status', ['pending', 'queued', 'queued_weekly'])
+              .or(`iata_code.ilike.${cleanIata},query.ilike.%${cleanIata}%,query.ilike.%${cleanCity}%,query.ilike.%${cleanQuery}%`);
 
         if (orData) {
           for (const item of orData) {
@@ -312,34 +320,41 @@ export class AirportCompilerEngine {
         }
 
         if (matchingRequests.length > 0) {
-          for (const req of matchingRequests) {
+        for (const req of matchingRequests) {
             // Update request status to published
-            await supabase
+            const { data: updatedRequest } = await supabase
               .from('airport_requests')
               .update({
                 status: 'published',
                 iata_code: airport.iata,
                 updated_at: new Date().toISOString()
               })
-              .eq('id', req.id);
+              .eq('id', req.id)
+              .in('status', ['scraping', 'pending', 'queued', 'queued_weekly'])
+              .select('id')
+              .maybeSingle();
 
             // Send notification email if subscriber email is present
-            if (req.requester_email) {
-              await sendAirportPublishedEmail({
+            if (updatedRequest && req.requester_email) {
+              const emailResult = await sendAirportPublishedEmail({
                 to: req.requester_email,
                 airportName: airport.name_it,
                 airportIata: airport.iata,
                 airportUrl: `https://www.aero-info.eu${airportPath(publishedAirport, 'it')}`
               });
+              if (emailResult.success) notificationsSent++;
+              else notificationErrors.push(`Notification failed for request ${req.id}.`);
             }
           }
         }
-      } catch (err: any) {
-        console.warn('Error updating requests or sending notifications:', err.message);
+      } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : 'unknown error';
+        console.warn('Error updating requests or sending notifications:', message);
+        notificationErrors.push('Could not update all requests or send all notifications.');
       }
     }
 
-    return { success: true, airport };
+    return { success: true, airport, notificationsSent, notificationErrors };
   }
 
   /**
@@ -389,8 +404,22 @@ export class AirportCompilerEngine {
 
       for (const [key, requests] of grouped.entries()) {
         try {
-          const sample = requests[0];
-          const requestIds = requests.map((r) => r.id);
+          // Claim only rows that are still queued. This prevents a cron run and
+          // an admin-triggered run from processing the same request twice.
+          const requestedIds = requests.map((r) => r.id);
+          const { data: claimedRequests, error: claimError } = await supabase
+            .from('airport_requests')
+            .update({ status: 'scraping', updated_at: new Date().toISOString() })
+            .in('id', requestedIds)
+            .in('status', ['pending', 'queued', 'queued_weekly'])
+            .select('id, query, iata_code');
+          if (claimError) {
+            report.errors.push(`Could not claim requests for "${key}": ${claimError.message}`);
+            continue;
+          }
+          if (!claimedRequests?.length) continue;
+          const sample = claimedRequests[0];
+          const requestIds = claimedRequests.map((r) => r.id);
           const result = await this.compileAndPublishAirport(sample.query, sample.iata_code || key, requestIds);
 
           if (result.success && result.airport) {
@@ -399,13 +428,15 @@ export class AirportCompilerEngine {
             report.notifiedSubscribersCount += requests.filter((r) => Boolean(r.requester_email)).length;
           } else if (result.error) {
             report.errors.push(result.error);
+            await supabase.from('airport_requests').update({ status: 'queued', updated_at: new Date().toISOString(), scraped_data: { admin_or_cron_error: result.error } }).in('id', requestIds).eq('status', 'scraping');
           }
-        } catch (itemErr: any) {
-          report.errors.push(`Error compiling "${key}": ${itemErr.message}`);
+        } catch (itemErr: unknown) {
+          report.errors.push(`Error compiling "${key}": ${itemErr instanceof Error ? itemErr.message : 'unknown error'}`);
+          await supabase.from('airport_requests').update({ status: 'queued', updated_at: new Date().toISOString() }).in('id', requests.map((r) => r.id)).eq('status', 'scraping');
         }
       }
-    } catch (err: any) {
-      report.errors.push(`Fatal batch processing error: ${err.message}`);
+    } catch (err: unknown) {
+      report.errors.push(`Fatal batch processing error: ${err instanceof Error ? err.message : 'unknown error'}`);
     }
 
     return report;

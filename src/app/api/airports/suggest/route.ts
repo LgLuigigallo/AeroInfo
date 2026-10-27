@@ -46,8 +46,8 @@ export async function GET(request: NextRequest) {
             }
           });
         }
-      } catch (dbErr) {
-        console.warn('Database note on checking suggestions:', dbErr);
+      } catch {
+        console.warn('Database note on checking suggestions.');
       }
     }
 
@@ -146,7 +146,7 @@ export async function POST(request: NextRequest) {
     console.info('📝 [AIRPORT_SUGGESTION]', {
       iata: cleanIata,
       category: cleanCategory,
-      clientIp,
+      hasContact: Boolean(cleanEmail),
       timestamp: new Date().toISOString()
     });
 
@@ -179,9 +179,9 @@ export async function POST(request: NextRequest) {
           .single();
 
         if (data?.id) suggestionId = data.id;
-        if (error) console.warn('Supabase airport_suggestions insert warning:', error.message);
+        if (error) console.warn('Supabase airport_suggestions insert warning.');
       } catch (dbErr) {
-        console.warn('Database note on airport_suggestions:', dbErr);
+        console.warn('Database note on airport_suggestions.');
       }
     }
 
@@ -204,8 +204,8 @@ export async function POST(request: NextRequest) {
           </div>
         `
       });
-    } catch (emailErr) {
-      console.warn('Admin notification email warning:', emailErr);
+    } catch {
+      console.warn('Admin notification email warning.');
     }
 
     return NextResponse.json({
@@ -214,8 +214,8 @@ export async function POST(request: NextRequest) {
       message_it: 'Suggerimento registrato! Verrà verificato in background con le fonti ufficiali durante il prossimo ciclo automatico di sincronizzazione.',
       message_en: 'Suggestion registered! It will be verified in the background against official airport sources during the next automated sync cycle.'
     });
-  } catch (error: any) {
-    console.error('Airport suggestion error:', error);
+  } catch {
+    console.error('Airport suggestion submission failed.');
     return NextResponse.json(
       { success: false, error: 'Internal server error processing airport suggestion' },
       { status: 500 }

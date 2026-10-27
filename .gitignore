@@ -33,10 +33,17 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 !.env.example
+client_secret_*.json
 
 # vercel & supabase temp
 .vercel
 supabase/.temp/
+
+# media & remotion artifacts
+video/
+*.mp4
+test_still_*.png
+tests/reports/
 
 # typescript
 *.tsbuildinfo

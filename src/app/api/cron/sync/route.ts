@@ -56,6 +56,7 @@ export async function GET(request: NextRequest) {
               const { data: policyRow, error: policyReadError } = await supabase.from('security_policies').select('id').eq('airport_id', airportRow.id).maybeSingle();
               if (policyReadError) throw policyReadError;
               const policy = res.extractedPolicy;
+              const verifiedThisRun = Boolean(policy.lastVerifiedDate);
               const payload = {
                 ...(typeof policy.has3DScanners === 'boolean' ? { has_3d_scanners: policy.has3DScanners } : {}),
                 ...(typeof policy.liquidsMustBeRemoved === 'boolean' ? { liquids_must_be_removed: policy.liquidsMustBeRemoved } : {}),
@@ -65,7 +66,7 @@ export async function GET(request: NextRequest) {
                 ...(typeof policy.electronicsInBag === 'boolean' ? { electronics_in_bag: policy.electronicsInBag } : {}),
                 ...(typeof policy.electronicsUnverified === 'boolean' ? { electronics_unverified: policy.electronicsUnverified } : {}),
                 official_source_url: res.sourceUrl,
-                source_verified_at: policy.lastVerifiedDate ? `${policy.lastVerifiedDate}T00:00:00.000Z` : res.timestamp,
+                ...(verifiedThisRun ? { source_verified_at: `${policy.lastVerifiedDate}T00:00:00.000Z` } : {}),
               };
               const policyWrite = policyRow?.id
                 ? await supabase.from('security_policies').update(payload).eq('id', policyRow.id)
