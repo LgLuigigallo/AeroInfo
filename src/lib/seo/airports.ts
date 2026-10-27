@@ -114,7 +114,16 @@ export async function getIndexableAirports(): Promise<Airport[]> {
 
 export async function getAirportBySlug(slug: string, lang: Language): Promise<Airport | null> {
   const airports = await getSeoAirports();
-  return airports.find((airport) => makeAirportSlug(airport, lang) === slug) || null;
+  const normalizedSlug = slug.toLowerCase();
+  return (
+    airports.find((airport) => makeAirportSlug(airport, lang) === slug) ||
+    airports.find((airport) => makeAirportSlug(airport, lang === 'it' ? 'en' : 'it') === slug) ||
+    airports.find((airport) => {
+      const iata = airport.iata.toLowerCase();
+      return normalizedSlug === iata || normalizedSlug.endsWith(`-${iata}`);
+    }) ||
+    null
+  );
 }
 
 export async function getAirportByIata(iata: string): Promise<Airport | null> {

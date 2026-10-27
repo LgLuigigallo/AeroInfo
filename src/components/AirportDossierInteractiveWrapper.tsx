@@ -2,20 +2,23 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { Header } from './Header';
 import { AirportBubblesView } from './AirportBubblesView';
-import { LanguageProvider, useLanguage } from '@/lib/i18n';
+import { useLanguage } from '@/lib/i18n';
 import { airportPath } from '@/lib/airport-slug';
 import { Airport, Language } from '@/types/airport';
 
 interface AirportDossierInteractiveWrapperProps {
   airport: Airport;
   airports: Airport[];
-  lang: Language;
+  lang?: Language;
 }
 
-function InnerInteractive({ airport, airports, lang }: AirportDossierInteractiveWrapperProps) {
+export function AirportDossierInteractiveWrapper({
+  airport,
+  airports
+}: AirportDossierInteractiveWrapperProps) {
   const router = useRouter();
+  const { lang } = useLanguage();
 
   const handleBack = () => {
     router.push(lang === 'it' ? '/' : '/en');
@@ -34,13 +37,5 @@ function InnerInteractive({ airport, airports, lang }: AirportDossierInteractive
         onSelectAirport={handleSelectAirport}
       />
     </div>
-  );
-}
-
-export function AirportDossierInteractiveWrapper(props: AirportDossierInteractiveWrapperProps) {
-  return (
-    <LanguageProvider>
-      <InnerInteractive {...props} />
-    </LanguageProvider>
   );
 }

@@ -301,16 +301,14 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
                           const hasMixed = rules && rules.length > 1 && rules.some(r => r.has3DScanners) && rules.some(r => !r.has3DScanners);
                           if (hasMixed) {
                             return (
-                              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono font-medium rounded bg-blue-500/10 text-blue-700 dark:text-blue-300 border border-blue-500/20">
-                                <span className="w-1 h-1 rounded-full bg-blue-500" />
+                              <span className="inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono font-medium rounded-md bg-blue-500/10 text-blue-700 dark:text-blue-300">
                                 {lang === 'it' ? '3D / 100ml' : '3D / 100ml'}
                               </span>
                             );
                           }
                           if (airport.securityPolicy.has3DScanners) {
                             return (
-                              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono font-medium rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
-                                <span className="w-1 h-1 rounded-full bg-emerald-500" />
+                              <span className="inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono font-medium rounded-md bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
                                 Scanner 3D
                               </span>
                             );
@@ -577,27 +575,16 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
                         key={code}
                         type="button"
                         onClick={() => handleSelect(ap)}
-                        className="px-2.5 py-1.5 rounded-md bg-zinc-50 dark:bg-zinc-800/40 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-left transition-colors border border-zinc-200/60 dark:border-zinc-800/80 flex items-center justify-between cursor-pointer group"
+                        className="px-2.5 py-1.5 rounded-lg bg-zinc-50 dark:bg-zinc-800/40 hover:bg-[#E8F1F2]/70 dark:hover:bg-zinc-800 text-left transition-colors border border-zinc-200/60 dark:border-zinc-800/80 flex items-center justify-between cursor-pointer group"
                       >
                         <div className="flex items-center gap-1.5 truncate">
-                          <span className="font-mono font-bold text-xs text-zinc-900 dark:text-white">
+                          <span className="font-mono font-bold text-xs text-zinc-900 dark:text-white group-hover:text-[#05668D] dark:group-hover:text-[#5EAAA8] transition-colors">
                             {ap.iata}
                           </span>
                           <span className="text-[11px] text-zinc-500 dark:text-zinc-400 truncate">
                             {lang === 'it' ? ap.city_it : ap.city_en}
                           </span>
                         </div>
-                        {(() => {
-                          const rules = ap.securityPolicy.terminalRules;
-                          const hasMixed = rules && rules.length > 1 && rules.some(r => r.has3DScanners) && rules.some(r => !r.has3DScanners);
-                          if (hasMixed) {
-                            return <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" title={lang === 'it' ? 'Regole miste per terminal' : 'Mixed terminal rules'} />;
-                          }
-                          if (ap.securityPolicy.has3DScanners) {
-                            return <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" title="Scanner 3D" />;
-                          }
-                          return null;
-                        })()}
                       </button>
                     );
                   })}

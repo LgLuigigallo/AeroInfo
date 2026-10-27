@@ -459,7 +459,39 @@ export function LanguageProvider({
 
   const setLang = (newLang: Language) => {
     setLangState(newLang);
-    localStorage.setItem('aeroinfo_lang', newLang);
+    try {
+      localStorage.setItem('aeroinfo_lang', newLang);
+
+      // Instant seamless URL synchronization without triggering a page reload
+      if (typeof window !== 'undefined') {
+        const path = window.location.pathname;
+        let newPath = path;
+
+        if (newLang === 'en') {
+          if (path === '/') {
+            newPath = '/en';
+          } else if (path.startsWith('/aeroporti/')) {
+            newPath = path.replace(/^\/aeroporti\//, '/en/airports/');
+          } else if (path.startsWith('/guide/liquidi-bagaglio-a-mano')) {
+            newPath = '/en/guides/liquids-in-carry-on-baggage';
+          }
+        } else {
+          if (path === '/en' || path === '/en/') {
+            newPath = '/';
+          } else if (path.startsWith('/en/airports/')) {
+            newPath = path.replace(/^\/en\/airports\//, '/aeroporti/');
+          } else if (path.startsWith('/en/guides/liquids-in-carry-on-baggage')) {
+            newPath = '/guide/liquidi-bagaglio-a-mano';
+          }
+        }
+
+        if (newPath !== path) {
+          window.history.replaceState(null, '', newPath + window.location.search + window.location.hash);
+        }
+      }
+    } catch {
+      // safe fallback
+    }
   };
 
   const t = (key: string): string => {

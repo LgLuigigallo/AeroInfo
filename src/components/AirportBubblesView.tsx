@@ -25,6 +25,7 @@ import {
 import { Airport, Language } from '@/types/airport';
 import { useLanguage } from '@/lib/i18n';
 import { cleanOfficialWebsiteUrl } from '@/lib/aviation-authority';
+import { airportPath } from '@/lib/airport-slug';
 import { TerminalMapTab } from './tabs/TerminalMapTab';
 import { SearchBar } from './SearchBar';
 
@@ -54,6 +55,19 @@ export function AirportBubblesView({
   const city = isItalian ? airport.city_it : airport.city_en;
   const country = isItalian ? airport.country_it : airport.country_en;
   const policy = airport.securityPolicy;
+
+  // Synchronize browser URL bar instantly on language change without reloading
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const targetPath = airportPath(airport, lang);
+      if (
+        window.location.pathname !== targetPath &&
+        (window.location.pathname.startsWith('/aeroporti/') || window.location.pathname.startsWith('/en/airports/'))
+      ) {
+        window.history.replaceState(null, '', targetPath + window.location.search + window.location.hash);
+      }
+    }
+  }, [airport, lang]);
 
   // Clean source URL
   const officialUrl = policy.officialSourceUrl 
