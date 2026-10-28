@@ -30,6 +30,7 @@ import { AmenitiesTab } from './tabs/AmenitiesTab';
 import { TransportTab } from './tabs/TransportTab';
 import { SuggestAirportEditModal } from './SuggestAirportEditModal';
 import { UnverifiedBadge } from './UnverifiedBadge';
+import { CountryFlag } from './CountryFlag';
 
 interface AirportDetailProps {
   airport: Airport;
@@ -189,8 +190,14 @@ export function AirportDetail({ airport, onSelectAirport }: AirportDetailProps) 
               </span>
             </div>
 
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-white tracking-tight">
-              {lang === 'it' ? airport.name_it : airport.name_en}
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-white tracking-tight flex items-center gap-2.5 flex-wrap">
+              <span>{lang === 'it' ? airport.name_it : airport.name_en}</span>
+              {airport.countryCode && (
+                <CountryFlag 
+                  countryCode={airport.countryCode} 
+                  countryName={lang === 'it' ? airport.country_it : airport.country_en} 
+                />
+              )}
             </h2>
           </div>
 

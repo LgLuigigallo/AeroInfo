@@ -30,6 +30,7 @@ import { airportPath } from '@/lib/airport-slug';
 import { TerminalMapTab } from './tabs/TerminalMapTab';
 import { SearchBar } from './SearchBar';
 import { SuggestAirportEditModal } from './SuggestAirportEditModal';
+import { CountryFlag } from './CountryFlag';
 
 interface AirportBubblesViewProps {
   airport: Airport;
@@ -148,20 +149,13 @@ export function AirportBubblesView({
                   {airport.icao}
                 </span>
               )}
-              {policy.has3DScanners ? (
-                <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
-                  <CheckCircle2 className="w-3 h-3" />
-                  {isItalian ? 'Scanner 3D EDS-CB C3' : '3D EDS-CB C3 Scanners'}
-                </span>
-              ) : (
-                <span className="inline-flex items-center gap-1 text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400">
-                  {isItalian ? 'Scanner Tradizionali (100ml)' : 'Standard Scanners (100ml)'}
-                </span>
-              )}
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-white tracking-tight">
-              {name}
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-white tracking-tight flex items-center gap-2.5 flex-wrap">
+              <span>{name}</span>
+              {airport.countryCode && (
+                <CountryFlag countryCode={airport.countryCode} countryName={country} />
+              )}
             </h1>
             <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
               {city}, {country}

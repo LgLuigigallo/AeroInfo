@@ -80,13 +80,13 @@ export function Header({ onResetHome }: HeaderProps) {
             <span className="font-mono text-[11px] tracking-tight">{t('verifiedOfficial')}</span>
           </div>
 
-          {/* Feedback Link */}
+          {/* Feedback Link (Desktop only; on mobile feedback is in the footer) */}
           <Link
             href="/feedback"
-            className="inline-flex items-center gap-1.5 text-xs text-zinc-700 dark:text-zinc-300 hover:text-[#05668D] dark:hover:text-white font-medium px-2.5 py-1.5 rounded-full bg-white dark:bg-zinc-900 hover:bg-[#E8F1F2]/60 dark:hover:bg-zinc-800 transition-all shadow-2xs"
+            className="hidden sm:inline-flex items-center gap-1.5 text-xs text-zinc-700 dark:text-zinc-300 hover:text-[#05668D] dark:hover:text-white font-medium px-2.5 py-1.5 rounded-full bg-white dark:bg-zinc-900 hover:bg-[#E8F1F2]/60 dark:hover:bg-zinc-800 transition-all shadow-2xs"
           >
             <MessageSquare className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
-            <span className="font-mono text-[11px] tracking-tight hidden sm:inline">Feedback</span>
+            <span className="font-mono text-[11px] tracking-tight">Feedback</span>
           </Link>
 
           {/* Minimalist Flag-based Language Switcher */}

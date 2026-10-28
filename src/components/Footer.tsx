@@ -49,6 +49,15 @@ export function Footer() {
             >
               {t('footerUnsubscribe')}
             </Link>
+            <span className="text-zinc-300 dark:text-zinc-700">•</span>
+            <a
+              href="/sitemap.xml"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#05668D] dark:hover:text-white transition-colors underline-offset-2 hover:underline"
+            >
+              Sitemap
+            </a>
           </div>
         </div>
 
