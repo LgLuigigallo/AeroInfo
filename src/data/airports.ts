@@ -3348,8 +3348,8 @@ export const airportsData: Airport[] = [
       has3DScanners: true,
       scannersNote_it: 'Varchi di sicurezza ad alta tecnologia con tecnologia 3D CT su più linee.',
       scannersNote_en: 'High-tech screening lanes featuring 3D CT equipment on multiple checkpoints.',
-      liquidsAllowance_it: 'Nelle corsie con scanner 3D i liquidi possono rimanere nel bagaglio a mano.',
-      liquidsAllowance_en: 'On 3D scanner lanes liquids can stay inside carry-on baggage.',
+      liquidsAllowance_it: 'In linea con gli standard europei, i singoli flaconi non devono superare i 100ml. Nelle corsie con scanner 3D CT i liquidi e i dispositivi elettronici possono rimanere all\'interno del bagaglio a mano.',
+      liquidsAllowance_en: 'In line with European standards, individual containers must not exceed 100ml. On 3D CT scanner lanes, liquids and laptops can stay inside carry-on baggage.',
       liquidsMustBeRemoved: false,
       liquidsUnverified: false,
       electronicsInBag: true,
@@ -3366,7 +3366,7 @@ export const airportsData: Airport[] = [
       powerbankPolicy_en: 'Max 100Wh in cabin luggage.',
       powerbankUnverified: false,
       officialSourceUrl: 'https://www.flughafen-zuerich.ch/en/passengers/fly/all-about-the-flight/what-is-allowed-in-your-baggage',
-      lastVerifiedDate: '2026-10-18'
+      lastVerifiedDate: '2026-10-28'
     },
     terminals: [
       { id: 'zrh-main', name: 'Airside Center (Dock A, B/D, E)', transferInfo_it: 'Tutti i moli convergono nell\'Airside Center. Dock E collegato dallo Skymetro (2 min).', transferInfo_en: 'All concourses link to Airside Center. Dock E served by Skymetro (2 min).' }
@@ -3385,7 +3385,7 @@ export const airportsData: Airport[] = [
     transports: [
       { id: 'zrh-tr-1', type: 'train', name_it: 'Treni FFS / S-Bahn (S2, S16, S24 per Zürich HB)', name_en: 'SBB Rail / S-Bahn (S2, S16, S24 to Zurich HB)', duration: '9-12 min', frequency: 'Ogni 5-10 minuti', estimatedCost: 'CHF 7.00 (~€7.40)', pickupLocation_it: 'Stazione ferroviaria sotterranea sotto l\'Airport Shopping Center', pickupLocation_en: 'Underground rail station below Airport Shopping Center', details_it: 'Treni continui e rapidissimi direttamente nel cuore di Zurigo.', details_en: 'Ultra-frequent trains directly into central Zurich.' }
     ],
-    lastUpdated: '2026-10-18'
+    lastUpdated: '2026-10-28'
   },
 
   // =========================================================================
@@ -3415,8 +3415,8 @@ export const airportsData: Airport[] = [
       has3DScanners: true,
       scannersNote_it: 'Progressiva installazione di scanner 3D CT nelle corsie di sicurezza del Terminal 1 e 2.',
       scannersNote_en: 'Progressive rollout of 3D CT scanners across screening lanes in Terminal 1 and 2.',
-      liquidsAllowance_it: 'Nelle corsie dotate di nuovi scanner tomografici i liquidi rimangono nel bagaglio a mano.',
-      liquidsAllowance_en: 'On lanes equipped with new CT scanners, liquids stay inside carry-on luggage.',
+      liquidsAllowance_it: 'Limite provvisorio UE di 100ml a flacone. Nelle corsie dotate di nuovi scanner tomografici CT 3D i liquidi e i dispositivi elettronici rimangono all\'interno del bagaglio a mano senza estrarli.',
+      liquidsAllowance_en: 'Temporary EU 100ml container cap applies. On lanes equipped with new CT 3D scanners, liquids and laptops remain inside your carry-on luggage.',
       liquidsMustBeRemoved: false,
       liquidsUnverified: false,
       electronicsInBag: true,
@@ -3433,7 +3433,7 @@ export const airportsData: Airport[] = [
       powerbankPolicy_en: 'Maximum 100Wh allowed in cabin luggage.',
       powerbankUnverified: false,
       officialSourceUrl: 'https://www.frankfurt-airport.com/en/flights-and-transfer/security-customs.html',
-      lastVerifiedDate: '2026-10-18'
+      lastVerifiedDate: '2026-10-28'
     },
     terminals: [
       { id: 'fra-t1', name: 'Terminal 1', transferInfo_it: 'Hub Lufthansa, Star Alliance e stazioni ferroviarie (Fernbahnhof per ICE e Regionalbahnhof per S-Bahn).', transferInfo_en: 'Lufthansa, Star Alliance hub and railway stations.' },
@@ -3453,7 +3453,7 @@ export const airportsData: Airport[] = [
     transports: [
       { id: 'fra-tr-1', type: 'train', name_it: 'S-Bahn (S8 / S9 per Frankfurt Hbf)', name_en: 'S-Bahn (S8 / S9 to Frankfurt Hbf)', duration: '11-14 min', frequency: 'Ogni 15 minuti', estimatedCost: '€5.80', pickupLocation_it: 'Regionalbahnhof (sotterraneo Terminal 1)', pickupLocation_en: 'Regionalbahnhof (underground Terminal 1)', details_it: 'Treno suburbano rapido e frequente direttamente alla stazione centrale.', details_en: 'Frequent commuter train directly into Frankfurt Central Station.' }
     ],
-    lastUpdated: '2026-10-18'
+    lastUpdated: '2026-10-28'
   },
   {
     id: 'muc',
@@ -3479,8 +3479,8 @@ export const airportsData: Airport[] = [
       has3DScanners: true,
       scannersNote_it: 'Terminal 2 pesantemente equipaggiato con scanner TC intelligenti.',
       scannersNote_en: 'Terminal 2 extensively fitted with smart CT scanners.',
-      liquidsAllowance_it: 'Liquidi e cosmetici possono rimanere nel bagaglio a mano sulle corsie con scanner tomografici.',
-      liquidsAllowance_en: 'Liquids and toiletries can remain inside carry-on luggage on CT lanes.',
+      liquidsAllowance_it: 'Limite provvisorio UE di max 100ml per flacone. Sulle corsie con scanner tomografici CT (Terminal 2 e nuove corsie T1) liquidi e apparecchi elettronici rimangono all\'interno del bagaglio a mano.',
+      liquidsAllowance_en: 'Temporary EU 100ml container cap applies. On lanes with modern CT scanners (Terminal 2 and new T1 lanes), liquids and electronic devices remain inside carry-on luggage.',
       liquidsMustBeRemoved: false,
       liquidsUnverified: false,
       electronicsInBag: true,
@@ -3497,7 +3497,7 @@ export const airportsData: Airport[] = [
       powerbankPolicy_en: 'Max 100Wh in cabin only.',
       powerbankUnverified: false,
       officialSourceUrl: 'https://www.munich-airport.com/security-checks-262106',
-      lastVerifiedDate: '2026-10-18'
+      lastVerifiedDate: '2026-10-28'
     },
     terminals: [
       { id: 'muc-t1', name: 'Terminal 1', transferInfo_it: 'Moduli A, B, C, D, E per compagnie non-Star Alliance.', transferInfo_en: 'Modules A, B, C, D, E for non-Star Alliance airlines.' },
@@ -3515,7 +3515,7 @@ export const airportsData: Airport[] = [
     transports: [
       { id: 'muc-tr-1', type: 'train', name_it: 'S-Bahn (Linee S1 e S8 per München Hbf)', name_en: 'S-Bahn (Lines S1 and S8 to Munich Hbf)', duration: '40 min', frequency: 'Ogni 10 minuti', estimatedCost: '€13.70', pickupLocation_it: 'Stazione S-Bahn centrale MAC', pickupLocation_en: 'Central MAC S-Bahn station', details_it: 'Due linee alternate per la stazione centrale e Marienplatz.', details_en: 'Two alternating lines reaching central station and Marienplatz.' }
     ],
-    lastUpdated: '2026-10-18'
+    lastUpdated: '2026-10-28'
   },
 
   // =========================================================================
@@ -3545,8 +3545,8 @@ export const airportsData: Airport[] = [
       has3DScanners: true,
       scannersNote_it: 'Scanner EDSCB con tecnologia 3D attivi in diversi varchi di T4 e T1.',
       scannersNote_en: '3D EDSCB scanners active across select T4 and T1 lanes.',
-      liquidsAllowance_it: 'Nelle corsie con nuovi scanner 3D è consentito portare liquidi senza estrazione.',
-      liquidsAllowance_en: 'Liquids can stay inside carry-on luggage on 3D lanes.',
+      liquidsAllowance_it: 'Limite provvisorio UE di 100ml per flacone. Nelle corsie con nuovi scanner 3D CT i liquidi e i dispositivi elettronici possono rimanere all\'interno del bagaglio a mano senza estrarli.',
+      liquidsAllowance_en: 'Temporary EU 100ml container cap in place. On lanes with new 3D CT scanners, liquids and electronic devices can stay inside carry-on luggage without being unpacked.',
       liquidsMustBeRemoved: false,
       liquidsUnverified: false,
       electronicsInBag: true,
@@ -3563,7 +3563,7 @@ export const airportsData: Airport[] = [
       powerbankPolicy_en: 'Max 100Wh per passenger in cabin.',
       powerbankUnverified: false,
       officialSourceUrl: 'https://www.aena.es/es/pasajeros/equipajes-controles/seguridad.html',
-      lastVerifiedDate: '2026-10-18'
+      lastVerifiedDate: '2026-10-28'
     },
     terminals: [
       { id: 'mad-t123', name: 'Terminal 1, 2, 3', transferInfo_it: 'SkyTeam, Air Europa, Ryanair e vettori internazionali.', transferInfo_en: 'SkyTeam, Air Europa, Ryanair.' },
@@ -3581,7 +3581,7 @@ export const airportsData: Airport[] = [
     transports: [
       { id: 'mad-tr-1', type: 'metro', name_it: 'Metro Linea 8 (per Nuevos Ministerios)', name_en: 'Metro Line 8 (to Nuevos Ministerios)', duration: '12-15 min', frequency: 'Ogni 5 minuti', estimatedCost: '€4.50-5.00', pickupLocation_it: 'Stazioni metro T1-T2-T3 e T4', pickupLocation_en: 'Metro stations at T1-T2-T3 and T4', details_it: 'Metropolitana rapida direttamente al centro finanziario di Madrid.', details_en: 'Fast subway into Madrid business district.' }
     ],
-    lastUpdated: '2026-10-18'
+    lastUpdated: '2026-10-28'
   },
   {
     id: 'bcn',
@@ -3607,8 +3607,8 @@ export const airportsData: Airport[] = [
       has3DScanners: true,
       scannersNote_it: 'Scanner 3D attivi in diverse corsie di sicurezza del Terminal 1.',
       scannersNote_en: '3D scanners operational on multiple lanes in Terminal 1.',
-      liquidsAllowance_it: 'Sulle corsie 3D i liquidi possono restare all\'interno del bagaglio a mano.',
-      liquidsAllowance_en: 'On 3D lanes liquids can remain inside carry-on luggage.',
+      liquidsAllowance_it: 'Limite provvisorio UE di 100ml per flacone. Nelle corsie con nuovi scanner 3D CT i liquidi e i dispositivi elettronici possono rimanere all\'interno del bagaglio a mano senza estrarli.',
+      liquidsAllowance_en: 'Temporary EU 100ml container cap in place. On lanes with new 3D CT scanners, liquids and electronic devices can stay inside carry-on luggage without being unpacked.',
       liquidsMustBeRemoved: false,
       liquidsUnverified: false,
       electronicsInBag: true,
@@ -3625,7 +3625,7 @@ export const airportsData: Airport[] = [
       powerbankPolicy_en: 'Maximum 100Wh per passenger in carry-on.',
       powerbankUnverified: false,
       officialSourceUrl: 'https://www.aena.es/es/pasajeros/equipajes-controles/seguridad.html',
-      lastVerifiedDate: '2026-10-18'
+      lastVerifiedDate: '2026-10-28'
     },
     terminals: [
       { id: 'bcn-t1', name: 'Terminal 1', transferInfo_it: 'Vueling hub, Iberia, Star Alliance, SkyTeam, Emirates.', transferInfo_en: 'Vueling hub, legacy carriers.' },
@@ -3644,7 +3644,7 @@ export const airportsData: Airport[] = [
     transports: [
       { id: 'bcn-tr-1', type: 'bus', name_it: 'Aerobús (A1 per T1 / A2 per T2)', name_en: 'Aerobús (A1 for T1 / A2 for T2)', duration: '25-35 min', frequency: 'Ogni 5-10 minuti', estimatedCost: '€7.25', pickupLocation_it: 'Piazzale bus fronte arrivi T1 e T2', pickupLocation_en: 'Bus terminal outside arrivals T1 and T2', details_it: 'Navetta espresso per Plaça de Catalunya e Plaça d\'Espanya.', details_en: 'Express shuttle bus to Plaça de Catalunya and Plaça d\'Espanya.' }
     ],
-    lastUpdated: '2026-10-18'
+    lastUpdated: '2026-10-28'
   },
 
   // =========================================================================
@@ -3674,8 +3674,8 @@ export const airportsData: Airport[] = [
       has3DScanners: true,
       scannersNote_it: 'Il 100% delle corsie di sicurezza a Schiphol è dotato di scanner tomografici CT 3D all\'avanguardia.',
       scannersNote_en: '100% of security checkpoints at Schiphol feature cutting-edge 3D CT scanners.',
-      liquidsAllowance_it: 'I liquidi e i cosmetici possono rimanere all\'interno del bagaglio a mano. Schiphol consiglia comunque di non superare contenitori da 100ml se si viaggia verso aeroporti privi di scanner 3D.',
-      liquidsAllowance_en: 'Liquids can stay inside carry-on luggage. Schiphol advises bringing 100ml flacons if transiting through non-CT airports.',
+      liquidsAllowance_it: 'In ottemperanza alla normativa provvisoria UE, ciascun flacone non deve superare i 100ml. Grazie agli scanner CT 3D presenti su tutti i varchi, i liquidi e i computer possono rimanere all\'interno del bagaglio a mano senza estrarli.',
+      liquidsAllowance_en: 'Under temporary EU regulations, individual liquid containers must not exceed 100ml each. Thanks to 100% 3D CT scanners, liquids and electronics stay packed inside your cabin bag without unpacking.',
       liquidsMustBeRemoved: false,
       liquidsUnverified: false,
       electronicsInBag: true,
@@ -3691,8 +3691,8 @@ export const airportsData: Airport[] = [
       powerbankPolicy_it: 'Massimo 100Wh consentiti nel bagaglio a mano.',
       powerbankPolicy_en: 'Maximum 100Wh permitted in cabin bag.',
       powerbankUnverified: false,
-      officialSourceUrl: 'https://www.schiphol.nl/en/prepare-for-your-flight-at-schiphol/prepare-for-security/',
-      lastVerifiedDate: '2026-10-18'
+      officialSourceUrl: 'https://www.schiphol.nl/en/page/liquids-in-hand-baggage/',
+      lastVerifiedDate: '2026-10-28'
     },
     terminals: [
       { id: 'ams-main', name: 'Schiphol Single Terminal (Hall 1, 2, 3)', transferInfo_it: 'Unico immenso edificio diviso in Departure Halls 1, 2 e 3.', transferInfo_en: 'Single mega-terminal divided into Departure Halls 1, 2, and 3.' }
@@ -3761,7 +3761,7 @@ export const airportsData: Airport[] = [
       powerbankPolicy_en: 'Max 100Wh in cabin baggage. Forbidden in hold.',
       powerbankUnverified: false,
       officialSourceUrl: 'https://www.parisaeroport.fr/passagers/passagers-preparer-vol/bagages-surete',
-      lastVerifiedDate: '2026-10-16'
+      lastVerifiedDate: '2026-10-28'
     },
     terminals: [
       { id: 'cdg-t1', name: 'Terminal 1', transferInfo_it: 'Design circolare. Star Alliance e compagnie internazionali.', transferInfo_en: 'Circular design. Star Alliance and international carriers.' },
@@ -3794,7 +3794,7 @@ export const airportsData: Airport[] = [
     transports: [
       { id: 'cdg-tr-1', type: 'train', name_it: 'RER B (Treno Suburbano per Parigi)', name_en: 'RER B (Suburban Train to Paris)', duration: '35 min', frequency: 'Ogni 10-15 minuti', estimatedCost: '€11.80', pickupLocation_it: 'Stazione Aeroporto CDG 1 (T3) e CDG 2 (T2)', pickupLocation_en: 'Stations CDG 1 (T3) and CDG 2 (T2)', details_it: 'Arriva a Gare du Nord e Châtelet-Les Halles.', details_en: 'Reaches Gare du Nord and Châtelet-Les Halles.' }
     ],
-    lastUpdated: '2026-10-17'
+    lastUpdated: '2026-10-28'
   },
   {
     id: 'ory',
@@ -3842,7 +3842,7 @@ export const airportsData: Airport[] = [
       powerbankPolicy_en: 'Max 100Wh per passenger.',
       powerbankUnverified: false,
       officialSourceUrl: 'https://www.parisaeroport.fr/passagers/passagers-preparer-vol/bagages-surete',
-      lastVerifiedDate: '2026-10-18'
+      lastVerifiedDate: '2026-10-28'
     },
     terminals: [
       { id: 'ory-main', name: 'Orly 1, 2, 3, 4', transferInfo_it: 'Settori interconnessi.', transferInfo_en: 'Connected concourses.' }
@@ -3873,7 +3873,7 @@ export const airportsData: Airport[] = [
     transports: [
       { id: 'ory-tr-1', type: 'metro', name_it: 'Metropolitana Linea 14 (per Châtelet)', name_en: 'Metro Line 14 (to Châtelet)', duration: '25 min', frequency: 'Ogni 3-5 minuti', estimatedCost: '€10.30', pickupLocation_it: 'Stazione sotterranea fronte Orly 3', pickupLocation_en: 'Underground station facing Orly 3', details_it: 'Il collegamento più rapido per il centro.', details_en: 'Fastest link to center.' }
     ],
-    lastUpdated: '2026-10-18'
+    lastUpdated: '2026-10-28'
   },
 
   // =========================================================================
@@ -3901,10 +3901,10 @@ export const airportsData: Airport[] = [
     navigationAdvice_en: 'Features US Preclearance facility in Terminal 2.',
     securityPolicy: {
       has3DScanners: true,
-      scannersNote_it: 'Nuovi scanner C3 installati in diverse corsie.',
-      scannersNote_en: 'New C3 scanners installed across several lanes.',
-      liquidsAllowance_it: 'Sulle corsie con scanner C3 i liquidi possono rimanere nel bagaglio.',
-      liquidsAllowance_en: 'Liquids can stay in bag on C3 lanes.',
+      scannersNote_it: 'Tutti i varchi dei Terminal 1 e 2 sono dotati di scanner tomografici C3. Tuttavia, in recepimento della direttiva provvisoria UE, vige il limite di 100ml per flacone.',
+      scannersNote_en: 'All screening lanes in T1 and T2 feature C3 scanners. However, under temporary EU rules, the 100ml container cap remains in effect.',
+      liquidsAllowance_it: 'Flaconi fino a 100ml ciascuno. Grazie ai nuovi scanner C3 presenti in entrambi i terminal, i liquidi e i dispositivi elettronici possono rimanere all\'interno del bagaglio a mano senza estrarli.',
+      liquidsAllowance_en: 'Containers up to 100ml each. Thanks to C3 scanners across all lanes, liquids and laptops can stay packed inside your cabin bag.',
       liquidsMustBeRemoved: false,
       liquidsUnverified: false,
       electronicsInBag: true,
@@ -3920,8 +3920,8 @@ export const airportsData: Airport[] = [
       powerbankPolicy_it: 'Massimo 100Wh consentiti solo a bordo.',
       powerbankPolicy_en: 'Max 100Wh allowed on board.',
       powerbankUnverified: false,
-      officialSourceUrl: 'https://www.dublinairport.com/at-the-airport/security',
-      lastVerifiedDate: '2026-10-18'
+      officialSourceUrl: 'https://www.dublinairport.com/at-the-airport/security/security-faqs',
+      lastVerifiedDate: '2026-10-28'
     },
     terminals: [
       { id: 'dub-t1', name: 'Terminal 1', transferInfo_it: 'Ryanair hub.', transferInfo_en: 'Ryanair hub.' },
@@ -3982,8 +3982,8 @@ export const airportsData: Airport[] = [
       powerbankPolicy_it: 'Max 100Wh nel bagaglio a mano.',
       powerbankPolicy_en: 'Max 100Wh in cabin luggage.',
       powerbankUnverified: false,
-      officialSourceUrl: 'https://www.ana.pt/en/content-topic/plan-your-trip',
-      lastVerifiedDate: '2026-10-18'
+      officialSourceUrl: 'https://www.ana.pt/en/lis/passenger-guide/what-you-need-to-know/security-control',
+      lastVerifiedDate: '2026-10-28'
     },
     terminals: [
       { id: 'lis-t1', name: 'Terminal 1', transferInfo_it: 'Tutti gli arrivi e partenze TAP.', transferInfo_en: 'All arrivals and TAP departures.' },
@@ -4027,8 +4027,8 @@ export const airportsData: Airport[] = [
       has3DScanners: true,
       scannersNote_it: 'Scanner tomografici 3D installati nelle corsie del Terminal 3.',
       scannersNote_en: '3D CT scanners operational in Terminal 3.',
-      liquidsAllowance_it: 'Nelle corsie con scanner 3D è possibile lasciare i liquidi nel bagaglio.',
-      liquidsAllowance_en: 'Liquids can stay in bag on 3D CT lanes.',
+      liquidsAllowance_it: 'Limite provvisorio UE di 100ml per singolo flacone. Nelle corsie con scanner 3D tomografici del Terminal 3, i liquidi e i dispositivi elettronici possono rimanere all\'interno del bagaglio a mano senza estrarli.',
+      liquidsAllowance_en: 'Temporary EU 100ml container cap applies. On 3D CT lanes in Terminal 3, liquids and laptops can stay inside carry-on baggage without unpacking.',
       liquidsMustBeRemoved: false,
       liquidsUnverified: false,
       electronicsInBag: true,
@@ -4045,7 +4045,7 @@ export const airportsData: Airport[] = [
       powerbankPolicy_en: 'Max 100Wh in carry-on.',
       powerbankUnverified: false,
       officialSourceUrl: 'https://www.viennaairport.com/passagiere/flughafen/sicherheitskontrolle',
-      lastVerifiedDate: '2026-10-18'
+      lastVerifiedDate: '2026-10-28'
     },
     terminals: [
       { id: 'vie-t3', name: 'Terminal 3', transferInfo_it: 'Austrian Airlines & Star Alliance hub.', transferInfo_en: 'Austrian Airlines & Star Alliance hub.' }
@@ -4062,7 +4062,7 @@ export const airportsData: Airport[] = [
     transports: [
       { id: 'vie-tr-1', type: 'train', name_it: 'City Airport Train (CAT - Non-stop)', name_en: 'City Airport Train (CAT - Non-stop)', duration: '16 min', frequency: 'Ogni 30 minuti', estimatedCost: '€14.90', pickupLocation_it: 'Stazione sotterranea', pickupLocation_en: 'Underground station', details_it: 'Treno espresso no-stop direttamente per Wien Mitte.', details_en: 'Non-stop express to Wien Mitte.' }
     ],
-    lastUpdated: '2026-10-18'
+    lastUpdated: '2026-10-28'
   },
   {
     id: 'cph',
@@ -4088,8 +4088,8 @@ export const airportsData: Airport[] = [
       has3DScanners: true,
       scannersNote_it: 'Presenza di scanner 3D CT nelle corsie di sicurezza centrali.',
       scannersNote_en: '3D CT scanners operating in central checkpoints.',
-      liquidsAllowance_it: 'Nelle corsie con tecnologia 3D i liquidi possono rimanere nel bagaglio a mano.',
-      liquidsAllowance_en: 'Liquids can stay inside carry-on luggage on 3D lanes.',
+      liquidsAllowance_it: 'Limite provvisorio UE di max 100ml a contenitore. Nelle corsie dotate di tecnologia 3D CT i liquidi e i computer portatili possono rimanere all\'interno del bagaglio a mano.',
+      liquidsAllowance_en: 'Temporary EU 100ml container cap applies. On lanes equipped with 3D CT technology, liquids and laptops can stay inside your cabin bag.',
       liquidsMustBeRemoved: false,
       liquidsUnverified: false,
       electronicsInBag: true,
@@ -4106,7 +4106,7 @@ export const airportsData: Airport[] = [
       powerbankPolicy_en: 'Max 100Wh in cabin only.',
       powerbankUnverified: false,
       officialSourceUrl: 'https://www.cph.dk/en/practical/security',
-      lastVerifiedDate: '2026-10-18'
+      lastVerifiedDate: '2026-10-28'
     },
     terminals: [
       { id: 'cph-main', name: 'Terminal 2 & 3', transferInfo_it: 'Complesso pedonale continuo.', transferInfo_en: 'Seamless walkable passenger hall.' }
@@ -4123,7 +4123,7 @@ export const airportsData: Airport[] = [
     transports: [
       { id: 'cph-tr-1', type: 'metro', name_it: 'Metropolitana M2 (diretta per Nørreport)', name_en: 'Metro Line M2 (direct to Nørreport)', duration: '13 min', frequency: 'Ogni 4-6 minuti (h24)', estimatedCost: 'DKK 36 (~€4.80)', pickupLocation_it: 'Stazione interna Terminal 3', pickupLocation_en: 'Indoor station at Terminal 3', details_it: 'Metropolitana automatica 24/7 per il centro.', details_en: '24/7 automated metro straight downtown.' }
     ],
-    lastUpdated: '2026-10-18'
+    lastUpdated: '2026-10-28'
   },
   {
     id: 'arn',
@@ -4149,13 +4149,35 @@ export const airportsData: Airport[] = [
       has3DScanners: true,
       scannersNote_it: 'Terminal 5 dotato di scanner 3D CT di ultima generazione.',
       scannersNote_en: 'Terminal 5 features modern 3D CT scanners.',
-      liquidsAllowance_it: 'Al nuovo varco del Terminal 5 i liquidi possono rimanere all\'interno del bagaglio a mano.',
-      liquidsAllowance_en: 'Liquids stay inside carry-on luggage at new T5 checkpoint.',
+      terminalRules: [
+        {
+          terminalName: 'Terminal 5 (Scanner 3D CT)',
+          has3DScanners: true,
+          liquidsAllowedInBag: true,
+          bottleAllowance_it: 'Max 100ml per flacone (direttiva UE). Possono rimanere nella valigia senza estrarli.',
+          bottleAllowance_en: 'Max 100ml per container (EU rule). Can remain inside bag without unpacking.',
+          electronicsInBag: true,
+          notes_it: 'Varco centralizzato 3D: laptop e sacchetto liquidi restano nella valigia.',
+          notes_en: 'Central 3D checkpoint: laptops and liquids stay inside carry-on luggage.'
+        },
+        {
+          terminalName: 'Terminal 2 & 4 (Corsie standard)',
+          has3DScanners: false,
+          liquidsAllowedInBag: false,
+          bottleAllowance_it: 'Limite 100ml in busta trasparente da 1 litro da estrarre',
+          bottleAllowance_en: '100ml limit in 1-litre clear plastic bag to be removed',
+          electronicsInBag: false,
+          notes_it: 'Controlli convenzionali: estrarre sacchetto liquidi e dispositivi elettronici.',
+          notes_en: 'Standard screening: remove liquids bag and electronic devices.'
+        }
+      ],
+      liquidsAllowance_it: 'Al nuovo varco del Terminal 5 i liquidi (max 100ml a flacone) possono rimanere all\'interno del bagaglio a mano; al Terminal 2 vanno estratti nella busta trasparente.',
+      liquidsAllowance_en: 'At Terminal 5 3D checkpoint liquids (max 100ml per container) stay inside carry-on luggage; at Terminal 2 they must be removed in a clear bag.',
       liquidsMustBeRemoved: false,
       liquidsUnverified: false,
       electronicsInBag: true,
-      electronicsNote_it: 'Computer e dispositivi elettronici restano nella borsa.',
-      electronicsNote_en: 'Laptops and electronics stay inside your bag.',
+      electronicsNote_it: 'Computer e dispositivi elettronici restano nella borsa al Terminal 5; da estrarre al T2.',
+      electronicsNote_en: 'Laptops and electronics stay inside your bag at T5; unpacked at T2.',
       electronicsUnverified: false,
       droneAllowedInCabin: true,
       droneAllowedInHold: false,
@@ -4167,7 +4189,7 @@ export const airportsData: Airport[] = [
       powerbankPolicy_en: 'Max 100Wh allowed on board.',
       powerbankUnverified: false,
       officialSourceUrl: 'https://www.swedavia.com/arlanda/security-control/',
-      lastVerifiedDate: '2026-10-18'
+      lastVerifiedDate: '2026-10-28'
     },
     terminals: [
       { id: 'arn-t5', name: 'Terminal 5', transferInfo_it: 'Hub principale internazionale e SAS.', transferInfo_en: 'Main international hub.' }
@@ -4210,8 +4232,8 @@ export const airportsData: Airport[] = [
       has3DScanners: true,
       scannersNote_it: 'Tutte le corsie a Helsinki sono dotate di scanner 3D CT.',
       scannersNote_en: 'All screening lanes feature 3D CT scanners.',
-      liquidsAllowance_it: 'I liquidi possono rimanere all\'interno del bagaglio a mano senza estrarli.',
-      liquidsAllowance_en: 'Liquids can stay inside carry-on luggage.',
+      liquidsAllowance_it: 'In conformità alla direttiva UE provvisoria, ciascun flacone deve avere capienza max 100ml. Grazie al 100% di scanner 3D CT su tutte le corsie, i liquidi e i dispositivi elettronici rimangono all\'interno del bagaglio a mano senza estrarli.',
+      liquidsAllowance_en: 'Under temporary EU rules, individual containers must not exceed 100ml. Thanks to 100% 3D CT scanners across all lanes, liquids and electronics stay packed inside your cabin bag without unpacking.',
       liquidsMustBeRemoved: false,
       liquidsUnverified: false,
       electronicsInBag: true,
@@ -4228,7 +4250,7 @@ export const airportsData: Airport[] = [
       powerbankPolicy_en: 'Max 100Wh allowed in cabin only.',
       powerbankUnverified: false,
       officialSourceUrl: 'https://www.finavia.fi/en/airports/helsinki-airport/before-flight/security-control',
-      lastVerifiedDate: '2026-10-18'
+      lastVerifiedDate: '2026-10-28'
     },
     terminals: [
       { id: 'hel-main', name: 'Terminal Unificato Helsinki', transferInfo_it: 'Tutti i voli operano dall\'unico terminal.', transferInfo_en: 'All flights operate from unified terminal.' }
@@ -4245,7 +4267,7 @@ export const airportsData: Airport[] = [
     transports: [
       { id: 'hel-tr-1', type: 'train', name_it: 'Ring Rail Line (Treni I e P per Helsinki Centrale)', name_en: 'Ring Rail Line (I and P Trains to Central)', duration: '28 min', frequency: 'Ogni 10 minuti', estimatedCost: '€4.10', pickupLocation_it: 'Stazione sotterranea interna', pickupLocation_en: 'Underground station inside', details_it: 'Treno diretto per la stazione centrale.', details_en: 'Direct rail link to central station.' }
     ],
-    lastUpdated: '2026-10-18'
+    lastUpdated: '2026-10-28'
   },
 
   // =========================================================================
@@ -4321,7 +4343,7 @@ export const airportsData: Airport[] = [
       powerbankPolicy_en: 'Max 100Wh in cabin.',
       powerbankUnverified: false,
       officialSourceUrl: 'https://www.heathrow.com/at-the-airport/airport-security',
-      lastVerifiedDate: '2026-10-17'
+      lastVerifiedDate: '2026-10-28'
     },
     terminals: [
       { id: 'lhr-t2', name: 'Terminal 2', transferInfo_it: 'Star Alliance Hub.', transferInfo_en: 'Star Alliance Hub.' },
@@ -4418,7 +4440,7 @@ export const airportsData: Airport[] = [
       powerbankPolicy_en: 'Powerbanks up to 100Wh allowed in cabin only.',
       powerbankUnverified: false,
       officialSourceUrl: 'https://www.gatwickairport.com/passenger-guide/security.html',
-      lastVerifiedDate: '2026-10-20'
+      lastVerifiedDate: '2026-10-28'
     },
     terminals: [
       { id: 'lgw-north', name: 'North Terminal', transferInfo_it: 'Dedicato a easyJet, Emirates, Qatar Airways e voli transatlantici.', transferInfo_en: 'Handles easyJet, Emirates, Qatar Airways and transatlantic routes.' },
@@ -4480,7 +4502,7 @@ export const airportsData: Airport[] = [
       { id: 'lgw-tr-1', type: 'train', name_it: 'Gatwick Express (Non-stop per London Victoria)', name_en: 'Gatwick Express (Non-stop to London Victoria)', duration: '30 min', frequency: 'Ogni 15 minuti', estimatedCost: '£21.80', pickupLocation_it: 'Stazione ferroviaria Gatwick South Terminal', pickupLocation_en: 'Gatwick South Terminal railway station', details_it: 'Treno espresso no-stop ogni 15 minuti direttamente per London Victoria.', details_en: 'Non-stop express train every 15 minutes straight to London Victoria.' },
       { id: 'lgw-tr-2', type: 'train', name_it: 'Treni Thameslink / Southern (per London Bridge e St Pancras)', name_en: 'Thameslink / Southern Trains (to London Bridge & St Pancras)', duration: '32-45 min', frequency: 'Ogni 10 minuti', estimatedCost: '£13.50-£18.00', pickupLocation_it: 'Stazione ferroviaria Gatwick South Terminal', pickupLocation_en: 'Gatwick South Terminal railway station', details_it: 'Collegamenti ferroviari frequenti per London Bridge, Blackfriars e St Pancras International.', details_en: 'Frequent direct commuter trains to London Bridge, Blackfriars, and St Pancras International.' }
     ],
-    lastUpdated: '2026-10-20'
+    lastUpdated: '2026-10-28'
   },
   {
     id: 'jfk',

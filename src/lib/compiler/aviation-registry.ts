@@ -1088,8 +1088,8 @@ export const AVIATION_REGISTRY: Record<string, Airport> = {
       has3DScanners: true,
       scannersNote_it: 'Presenza di moderni scanner computarizzati CT 3D su diverse corsie del Terminal 1. Nei varchi CT i liquidi e i dispositivi elettronici possono rimanere all\'interno del bagaglio a mano.',
       scannersNote_en: 'Advanced CT 3D computer tomography scanners deployed across multiple lanes in T1. In CT lanes liquids and electronic devices remain inside hand luggage.',
-      liquidsAllowance_it: 'Fino a 2 litri nelle corsie con scanner CT 3D; limite tradizionale 100ml nelle corsie convenzionali',
-      liquidsAllowance_en: 'Up to 2 liters in CT 3D lanes; traditional 100ml limit in standard security lanes',
+      liquidsAllowance_it: 'Limite provvisorio UE di 100ml a flacone. Nelle corsie con scanner CT 3D del Terminal 1 i liquidi e i dispositivi elettronici possono rimanere all\'interno del bagaglio a mano senza estrarli; nelle corsie convenzionali si applica la regola classica del sacchetto trasparente.',
+      liquidsAllowance_en: 'Temporary EU 100ml container cap applies. In Terminal 1 CT 3D lanes, liquids and electronics stay packed inside your bag; in standard lanes, traditional plastic bag extraction is required.',
       liquidsMustBeRemoved: false,
       liquidsNote_it: 'Regola differenziata in base alla corsia assegnata: seguire le istruzioni del personale di sicurezza al varco.',
       liquidsNote_en: 'Lane-dependent rule: follow directions from security agents at your assigned lane.',
@@ -1109,8 +1109,8 @@ export const AVIATION_REGISTRY: Record<string, Airport> = {
           has3DScanners: true,
           liquidsAllowedInBag: true,
           electronicsInBag: true,
-          bottleAllowance_it: 'Liquidi consentiti nel bagaglio (varco CT)',
-          bottleAllowance_en: 'Liquids allowed inside luggage (CT lane)',
+          bottleAllowance_it: 'Max 100ml per flacone (direttiva UE); restano nella valigia',
+          bottleAllowance_en: 'Max 100ml per container (EU cap); stay inside bag',
           notes_it: 'Corsie con scanner CT 3D attive per la maggioranza dei voli internazionali.',
           notes_en: 'CT 3D scanner lanes active for most international departures.'
         },
@@ -1126,7 +1126,7 @@ export const AVIATION_REGISTRY: Record<string, Airport> = {
         }
       ],
       officialSourceUrl: 'https://ber.berlin-airport.de/en/flying/security-controls.html',
-      lastVerifiedDate: '2026-10-22'
+      lastVerifiedDate: '2026-10-28'
     },
     terminals: [
       {
