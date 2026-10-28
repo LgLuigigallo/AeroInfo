@@ -83,8 +83,15 @@ export function getAirportFaqStructuredData(airport: Airport, lang: Language) {
   const isItalian = lang === 'it';
   const displayName = (isItalian ? airport.name_it : airport.name_en) || airport.iata;
   const city = (isItalian ? airport.city_it : airport.city_en) || '';
-  const policy = airport.securityPolicy;
-  const has3D = Boolean(policy?.has3DScanners);
+  const country = (isItalian ? airport.country_it : airport.country_en) || '';
+
+  const domHours = airport.recommendedArrivalHours?.domestic || 2;
+  const intHours = airport.recommendedArrivalHours?.international || 3;
+  const waitMin = airport.averageSecurityWaitMin || 15;
+
+  const mapsUrl = airport.coordinates
+    ? `https://www.google.com/maps/dir/?api=1&destination=${airport.coordinates.lat},${airport.coordinates.lng}`
+    : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${displayName} ${city}`)}`;
 
   const questions: Array<{
     '@type': 'Question';
@@ -92,46 +99,7 @@ export function getAirportFaqStructuredData(airport: Airport, lang: Language) {
     acceptedAnswer: { '@type': 'Answer'; text: string };
   }> = [];
 
-  // 1. Regole liquidi
-  questions.push({
-    '@type': 'Question',
-    name: isItalian
-      ? `Quali sono le regole sui liquidi nel bagaglio a mano a ${displayName} (${airport.iata})?`
-      : `What are the carry-on liquids rules at ${displayName} (${airport.iata})?`,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: isItalian
-        ? (has3D
-            ? `${displayName} (${airport.iata}) dispone di scanner tomografici 3D EDS-CB C3 di nuova generazione. ${policy?.liquidsAllowance_it || 'I liquidi possono rimanere all’interno del bagaglio a mano.'}`
-            : `A ${displayName} (${airport.iata}) si applica la normativa standard sui liquidi: contenitori di capienza massima 100 ml ciascuno, inseriti in un'unica busta trasparente richiudibile da massimo 1 litro, da presentare separatamente ai varchi.`)
-        : (has3D
-            ? `${displayName} (${airport.iata}) is equipped with next-gen 3D EDS-CB C3 scanners. ${policy?.liquidsAllowance_en || 'Liquids can stay inside carry-on luggage.'}`
-            : `At ${displayName} (${airport.iata}), standard security rules apply: containers must be no larger than 100ml each, placed in a single transparent resealable bag of up to 1 litre, and screened separately.`),
-    },
-  });
-
-  // 2. Dispositivi elettronici & Scanner 3D
-  questions.push({
-    '@type': 'Question',
-    name: isItalian
-      ? `Bisogna estrarre computer portatili e liquidi ai controlli di ${displayName}?`
-      : `Do I need to take laptops and liquids out of my bag at ${displayName} security?`,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: isItalian
-        ? (policy?.electronicsInBag
-            ? `No, grazie ai varchi con scanner tomografici 3D a ${displayName}, computer portatili, tablet e liquidi possono rimanere all'interno del bagaglio a mano.`
-            : `Sì, ai controlli di sicurezza di ${displayName} è obbligatorio estrarre computer portatili, tablet e la busta dei liquidi per riporli separatamente nelle vaschette prima del controllo a raggi X.`)
-        : (policy?.electronicsInBag
-            ? `No, thanks to advanced 3D scanning technology at ${displayName}, laptops, tablets, and liquids can remain inside your carry-on luggage.`
-            : `Yes, at ${displayName} security screening you must take out laptops, tablets, and your liquids bag to place them in separate trays for X-ray inspection.`),
-    },
-  });
-
-  // 3. Anticipo consigliato in aeroporto
-  const domHours = airport.recommendedArrivalHours?.domestic || 2;
-  const intHours = airport.recommendedArrivalHours?.international || 3;
-  const waitMin = airport.averageSecurityWaitMin || 15;
+  // 1. Anticipo consigliato in aeroporto
   questions.push({
     '@type': 'Question',
     name: isItalian
@@ -145,7 +113,7 @@ export function getAirportFaqStructuredData(airport: Airport, lang: Language) {
     },
   });
 
-  // 4. Trasporti verso il centro
+  // 2. Trasporti verso il centro
   if (airport.transports && airport.transports.length > 0) {
     const transportSummary = airport.transports
       .slice(0, 3)
@@ -160,11 +128,44 @@ export function getAirportFaqStructuredData(airport: Airport, lang: Language) {
       acceptedAnswer: {
         '@type': 'Answer',
         text: isItalian
-          ? `L'aeroporto di ${displayName} (${airport.iata}) è collegato al centro di ${city} tramite: ${transportSummary}. Sono inoltre disponibili servizi taxi ufficiali e navette.`
-          : `${displayName} (${airport.iata}) is connected to ${city} city centre via: ${transportSummary}. Official airport taxis and express shuttles are also available.`,
+          ? `L'aeroporto di ${displayName} (${airport.iata}) è collegato al centro di ${city} tramite: ${transportSummary}. Sono inoltre disponibili servizi taxi ufficiali con tariffario esposto.`
+          : `${displayName} (${airport.iata}) is connected to ${city} city centre via: ${transportSummary}. Official airport taxis with posted flat fares are also available.`,
       },
     });
   }
+
+  // 3. Indirizzo, coordinate e indicazioni stradali
+  questions.push({
+    '@type': 'Question',
+    name: isItalian
+      ? `Dove si trova ${displayName} e come ottenere indicazioni stradali?`
+      : `Where is ${displayName} located and how do I get driving directions?`,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: isItalian
+        ? `${displayName} si trova a ${city}, ${country} (coordinate: ${airport.coordinates?.lat?.toFixed(4)}° N, ${airport.coordinates?.lng?.toFixed(4)}° E). È possibile calcolare il percorso e le indicazioni stradali dirette su Google Maps all'indirizzo: ${mapsUrl}`
+        : `${displayName} is located in ${city}, ${country} (coordinates: ${airport.coordinates?.lat?.toFixed(4)}° N, ${airport.coordinates?.lng?.toFixed(4)}° E). Direct driving directions can be opened on Google Maps at: ${mapsUrl}`,
+    },
+  });
+
+  // 4. Codici identificativi IATA, ICAO e sito ufficiale
+  const icaoText = airport.icao ? ` (codice ICAO: ${airport.icao})` : '';
+  const icaoTextEn = airport.icao ? ` (ICAO code: ${airport.icao})` : '';
+  const websiteText = airport.officialWebsite ? ` Il sito web ufficiale dell'aeroporto è: ${airport.officialWebsite}` : '';
+  const websiteTextEn = airport.officialWebsite ? ` The official airport website is: ${airport.officialWebsite}` : '';
+
+  questions.push({
+    '@type': 'Question',
+    name: isItalian
+      ? `Quali sono i codici identificativi e il sito ufficiale di ${displayName}?`
+      : `What are the official codes and website for ${displayName}?`,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: isItalian
+        ? `Il codice IATA di ${displayName} è ${airport.iata}${icaoText}.${websiteText}`
+        : `The IATA code for ${displayName} is ${airport.iata}${icaoTextEn}.${websiteTextEn}`,
+    },
+  });
 
   return {
     '@type': 'FAQPage',
