@@ -2,17 +2,24 @@ export const INDEXNOW_KEY = 'a7f92026ae70info4892c90e1f3a8b21';
 export const INDEXNOW_HOST = 'www.aero-info.eu';
 export const INDEXNOW_KEY_LOCATION = `https://${INDEXNOW_HOST}/${INDEXNOW_KEY}.txt`;
 export const INDEXNOW_ENDPOINT = 'https://api.indexnow.org/indexnow';
+export const INDEXNOW_FALLBACK_ENDPOINTS = [
+  'https://api.indexnow.org/indexnow',
+  'https://yandex.com/indexnow',
+  'https://www.bing.com/indexnow',
+];
 
 export interface IndexNowResponse {
   success: boolean;
   statusCode: number;
   message: string;
   submittedCount: number;
+  endpointUsed?: string;
 }
 
 /**
  * Submit a list of changed or new URLs directly to the IndexNow protocol.
  * Supported by Microsoft Bing, Copilot, Seznam, Yandex and other search engines.
+ * Utilizes multi-endpoint failover across the IndexNow network for maximum resilience.
  */
 export async function submitToIndexNow(urls: string[]): Promise<IndexNowResponse> {
   if (!urls || urls.length === 0) {
@@ -47,35 +54,43 @@ export async function submitToIndexNow(urls: string[]): Promise<IndexNowResponse
     urlList: cleanUrls,
   };
 
-  try {
-    const res = await fetch(INDEXNOW_ENDPOINT, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-      },
-      body: JSON.stringify(payload),
-    });
+  let lastStatus = 500;
+  let lastMessage = '';
 
-    // 200: OK
-    // 202: Accepted (IndexNow received the URL submission successfully)
-    const success = res.status === 200 || res.status === 202;
-    const text = await res.text().catch(() => '');
+  for (const endpoint of INDEXNOW_FALLBACK_ENDPOINTS) {
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+        },
+        body: JSON.stringify(payload),
+      });
 
-    return {
-      success,
-      statusCode: res.status,
-      message: success 
-        ? `Successfully submitted ${cleanUrls.length} URLs to IndexNow.` 
-        : `IndexNow returned status ${res.status}: ${text || 'Submission rejected'}`,
-      submittedCount: cleanUrls.length,
-    };
-  } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : String(err);
-    return {
-      success: false,
-      statusCode: 500,
-      message: `Failed to connect to IndexNow API: ${message}`,
-      submittedCount: cleanUrls.length,
-    };
+      // 200: OK, 202: Accepted (IndexNow received the URL submission successfully)
+      if (res.status === 200 || res.status === 202) {
+        return {
+          success: true,
+          statusCode: res.status,
+          message: `Successfully submitted ${cleanUrls.length} URLs to IndexNow via ${new URL(endpoint).hostname}.`,
+          submittedCount: cleanUrls.length,
+          endpointUsed: endpoint,
+        };
+      }
+
+      lastStatus = res.status;
+      const text = await res.text().catch(() => '');
+      lastMessage = `${new URL(endpoint).hostname} returned ${res.status}: ${text || 'Rejected'}`;
+    } catch (err) {
+      lastStatus = 500;
+      lastMessage = `${new URL(endpoint).hostname} connection error: ${err instanceof Error ? err.message : String(err)}`;
+    }
   }
+
+  return {
+    success: false,
+    statusCode: lastStatus,
+    message: lastMessage || 'All IndexNow endpoints rejected the submission.',
+    submittedCount: cleanUrls.length,
+  };
 }
