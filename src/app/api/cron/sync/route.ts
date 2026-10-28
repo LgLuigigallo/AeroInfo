@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { scraperEngine } from '@/lib/scraper/engine';
 import { supabase, getLiveAirports, isSupabaseAdminConfigured } from '@/lib/supabase';
 import { airportCompilerEngine } from '@/lib/compiler/engine';
-import { evaluateAirportSeoQuality, saveAirportSeoEvaluation } from '@/lib/seo/airports';
+import { evaluateAirportSeoQuality, saveAirportSeoEvaluation, SITE_URL } from '@/lib/seo/airports';
+import { submitToIndexNow } from '@/lib/seo/indexnow';
+import { airportPath } from '@/lib/airport-slug';
 
 export const maxDuration = 60;
 
@@ -45,6 +47,7 @@ export async function GET(request: NextRequest) {
 
     // 3. Persist only facts extracted from an explicit official security rule.
     const persistenceErrors: string[] = [];
+    const urlsForIndexNow = new Set<string>();
     if (supabase) {
       try {
         for (const res of syncResults) {
@@ -128,6 +131,16 @@ export async function GET(request: NextRequest) {
                   ? 'indexable'
                   : 'pending_quality';
             await saveAirportSeoEvaluation(refreshedAirport, status, reasons);
+
+            // Collect URLs for IndexNow if newly indexable, updated, or compiled this run
+            if (status === 'indexable') {
+              const wasNotIndexable = originalAirport.seoStatus !== 'indexable';
+              const wasCompiledThisRun = compileReport.publishedIatas.includes(refreshedAirport.iata);
+              if (wasNotIndexable || verifiedThisRun || wasCompiledThisRun) {
+                urlsForIndexNow.add(`${SITE_URL}${airportPath(refreshedAirport, 'it')}`);
+                urlsForIndexNow.add(`${SITE_URL}${airportPath(refreshedAirport, 'en')}`);
+              }
+            }
           }
 
           // 5. Keep the operational crawl record for diagnostics.
@@ -149,11 +162,45 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    // 6. IndexNow Notification for search engines (Bing, Copilot, Seznam, Yandex)
+    let indexNowReport: {
+      submittedCount: number;
+      success: boolean;
+      statusCode?: number;
+      message: string;
+    } | null = null;
+
+    if (urlsForIndexNow.size > 0) {
+      urlsForIndexNow.add(`${SITE_URL}/`);
+      urlsForIndexNow.add(`${SITE_URL}/en`);
+
+      try {
+        const urlsList = Array.from(urlsForIndexNow);
+        console.info(`📡 [CRON_SYNC] Submitting ${urlsList.length} updated URLs to IndexNow...`);
+        const indexNowResult = await submitToIndexNow(urlsList);
+        indexNowReport = {
+          submittedCount: indexNowResult.submittedCount,
+          success: indexNowResult.success,
+          statusCode: indexNowResult.statusCode,
+          message: indexNowResult.message,
+        };
+        console.info('✅ [CRON_SYNC] IndexNow submission complete:', indexNowReport);
+      } catch (err) {
+        console.warn('⚠️ [CRON_SYNC] IndexNow submission warning:', err);
+        indexNowReport = {
+          submittedCount: 0,
+          success: false,
+          message: err instanceof Error ? err.message : 'IndexNow submission failed',
+        };
+      }
+    }
+
     return NextResponse.json({
       success: persistenceErrors.length === 0,
       executionDate: new Date().toISOString(),
       compileReport,
       airportsProcessed: syncResults.length,
+      indexNowReport,
       syncResults,
       persistenceErrors,
     }, { status: persistenceErrors.length ? 500 : 200 });

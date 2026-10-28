@@ -22,8 +22,8 @@ assert(
 );
 
 assert(
-  structuredDataFile.includes("'@graph': [breadcrumbs, airportEntity]"),
-  'structured-data.ts must combine BreadcrumbList and Airport in @graph'
+  structuredDataFile.includes("'@graph': [breadcrumbs, airportEntity, faqEntity]"),
+  'structured-data.ts must combine BreadcrumbList, Airport, and FAQPage in @graph'
 );
 
 // 2. Read AirportSeoDossier.tsx to ensure AirportDossierInteractiveWrapper is rendered cleanly

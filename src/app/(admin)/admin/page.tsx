@@ -213,7 +213,7 @@ export default function AdminPage() {
           busy={working}
         />}
         {(section === 'suggestions' || section === 'feedback') && <Moderation rows={data.items} kind={section} onDetail={(row) => void openModeration(row)} onStatus={(id, status) => void runAction('/api/admin/moderation', 'PATCH', { kind: section, id, status }, 'Stato aggiornato.')} busy={working} />}
-        {(section === 'airports' || section === 'seo') && <Airports rows={airportItems} mode={section} onEdit={setEditingAirport} onEvaluate={(iata) => void runAction('/api/admin/seo', 'POST', { iata }, 'Valutazione SEO aggiornata.')} busy={working} />}
+        {(section === 'airports' || section === 'seo') && <Airports rows={airportItems} mode={section} onEdit={setEditingAirport} onEvaluate={(iata) => void runAction('/api/admin/seo', 'POST', { iata }, 'Valutazione SEO aggiornata.')} onIndexNow={() => void runAction('/api/admin/indexnow', 'POST', {}, (res) => `IndexNow: inviati ${res.submittedCount} URL ai motori di ricerca.`)} busy={working} />}
         {section === 'syncs' && <Syncs rows={data.items} iata={syncIata} setIata={setSyncIata} onRun={() => void runAction('/api/admin/syncs', 'POST', { iata: syncIata }, `Sincronizzazione ${syncIata.toUpperCase()} completata.`)} onDetail={setDetail} busy={working} />}
         {section === 'audit' && <Audit rows={data.items} />}
         <Pagination page={data.page || page} pageSize={data.pageSize || 20} count={data.count || 0} onPage={setPage} />
@@ -264,9 +264,21 @@ function Moderation({ rows, kind, onDetail, onStatus, busy }: { rows: Row[]; kin
   return <section className="admin-panel"><div className="admin-table-wrap"><table><thead><tr><th>{kind === 'suggestions' ? 'Aeroporto' : 'Oggetto'}</th><th>Categoria</th><th>Stato</th><th>Ricevuto</th><th>Contatto</th><th>Gestione</th></tr></thead><tbody>{rows.map((row) => <tr key={String(row.id)}><td><button className="admin-row-link" onClick={() => onDetail(row)}>{String(row.airport_iata || row.subject)}</button></td><td>{String(row.category || '—')}</td><td><Status value={String(row.status)} /></td><td>{dateLabel(row.created_at)}</td><td><span className="admin-private">Apri dettaglio</span></td><td><div className="admin-actions"><button className="admin-small-action" disabled={busy} onClick={() => onDetail(row)}>Dettaglio</button><select className="admin-inline-select" aria-label="Cambia stato" value={String(row.status)} disabled={busy} onChange={(event) => onStatus(String(row.id), event.target.value)}>{(kind === 'suggestions' ? ['pending_verification', 'verified', 'unconfirmed'] : ['new', 'reviewed', 'resolved']).map((status) => <option key={status} value={status}>{labelStatus[status]}</option>)}</select></div></td></tr>)}</tbody></table></div></section>;
 }
 
-function Airports({ rows, mode, onEdit, onEvaluate, busy }: { rows: (AirportRecord & { seoReasons?: string[] })[]; mode: 'airports' | 'seo'; onEdit: (airport: AirportRecord) => void; onEvaluate: (iata: string) => void; busy: boolean }) {
+function Airports({ rows, mode, onEdit, onEvaluate, onIndexNow, busy }: { rows: (AirportRecord & { seoReasons?: string[] })[]; mode: 'airports' | 'seo'; onEdit: (airport: AirportRecord) => void; onEvaluate: (iata: string) => void; onIndexNow?: () => void; busy: boolean }) {
   if (!rows.length) return <Empty text="Nessun aeroporto corrisponde ai filtri." />;
-  return <section className="admin-panel"><div className="admin-table-wrap"><table><thead><tr><th>Aeroporto</th><th>Città e paese</th><th>Stato SEO</th><th>Verifica fonte</th><th>Motivi/azioni</th></tr></thead><tbody>{rows.map((airport) => <tr key={airport.iata}><td><strong>{airport.iata}</strong><span className="admin-cell-sub">{airport.name_it}</span></td><td>{airport.city_it}, {airport.country_it}</td><td><Status value={String(airport.seoStatus || 'pending_quality')} /></td><td>{airport.securityPolicy.lastVerifiedDate || 'Non verificata'}</td><td><div className="admin-actions">{airport.seoReasons?.length ? <span className="admin-reason-count">{airport.seoReasons.length} requisiti</span> : <span className="admin-reason-count good">Qualità OK</span>}<button className="admin-small-action" disabled={busy} onClick={() => onEvaluate(airport.iata)}>Rivaluta SEO</button>{mode === 'airports' && <button className="admin-small-action" onClick={() => onEdit(airport)}>Modifica</button>}</div></td></tr>)}</tbody></table></div></section>;
+  return <section className="admin-panel">
+    {mode === 'seo' && onIndexNow && (
+      <div className="admin-panel-heading" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+        <div>
+          <p className="admin-eyebrow">INDICIZZAZIONE ISTANTANEA</p>
+          <h2 style={{ fontSize: '1.1rem', margin: 0 }}>Protocollo IndexNow (Bing / Copilot / Yandex)</h2>
+        </div>
+        <button className="admin-primary" disabled={busy} onClick={onIndexNow} style={{ fontSize: '0.85rem' }}>
+          Notifica tutti gli URL a IndexNow
+        </button>
+      </div>
+    )}
+    <div className="admin-table-wrap"><table><thead><tr><th>Aeroporto</th><th>Città e paese</th><th>Stato SEO</th><th>Verifica fonte</th><th>Motivi/azioni</th></tr></thead><tbody>{rows.map((airport) => <tr key={airport.iata}><td><strong>{airport.iata}</strong><span className="admin-cell-sub">{airport.name_it}</span></td><td>{airport.city_it}, {airport.country_it}</td><td><Status value={String(airport.seoStatus || 'pending_quality')} /></td><td>{airport.securityPolicy.lastVerifiedDate || 'Non verificata'}</td><td><div className="admin-actions">{airport.seoReasons?.length ? <span className="admin-reason-count">{airport.seoReasons.length} requisiti</span> : <span className="admin-reason-count good">Qualità OK</span>}<button className="admin-small-action" disabled={busy} onClick={() => onEvaluate(airport.iata)}>Rivaluta SEO</button>{mode === 'airports' && <button className="admin-small-action" onClick={() => onEdit(airport)}>Modifica</button>}</div></td></tr>)}</tbody></table></div></section>;
 }
 
 function AirportEditor({ airport, busy, onClose, onSave }: { airport: AirportRecord; busy: boolean; onClose: () => void; onSave: (airport: AirportRecord) => void }) {

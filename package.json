@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node tests/run-security-suite.mjs && npm run test:admin:unit",
+    "test": "node tests/run-security-suite.mjs && npm run test:admin:unit && node tests/seo-schema.test.mjs && node tests/indexnow.test.mjs",
     "test:admin:unit": "node tests/admin-security.test.mjs",
     "test:admin:staging": "node tests/admin-security-live.mjs"
   },
