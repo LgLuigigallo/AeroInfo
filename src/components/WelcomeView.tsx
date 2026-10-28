@@ -4,7 +4,6 @@ import React from 'react';
 import { Airport } from '@/types/airport';
 import { useLanguage } from '@/lib/i18n';
 import { AirplaneSkyAnimation } from './AirplaneSkyAnimation';
-import { AirportDepartureBoard } from './AirportDepartureBoard';
 
 interface WelcomeViewProps {
   airports: Airport[];
@@ -32,11 +31,11 @@ export function WelcomeView({ airports, onSelectAirport, children }: WelcomeView
         </div>
       </div>
 
-      {/* 2. Full-Width Hero Title (Aeronautical Airport Departure Board) */}
-      <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 md:px-8 text-center pt-1 sm:pt-2">
-        <h1 className="tracking-tight text-center">
-          <span className="sr-only">{t('minimalHeroTitle')}</span>
-          <AirportDepartureBoard text={t('minimalHeroTitle')} enableAnimation={true} />
+      {/* 2. Full-Width Hero Title (Two clean lines for maximum readability & aesthetic balance) */}
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 text-center pt-1 sm:pt-2">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] xl:text-[62px] font-black tracking-tight text-[#05668D] dark:text-white leading-[1.12]">
+          <span className="block">{t('minimalHeroTitleLine1')}</span>
+          <span className="block text-[#05668D] dark:text-zinc-100">{t('minimalHeroTitleLine2')}</span>
         </h1>
       </div>
 

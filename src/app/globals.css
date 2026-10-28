@@ -78,27 +78,7 @@ body {
   animation: cloudDriftSlow 24s ease-in-out infinite;
 }
 
-@keyframes flapDown {
-  0% {
-    transform: perspective(300px) rotateX(-90deg);
-    opacity: 0.3;
-  }
-  60% {
-    transform: perspective(300px) rotateX(15deg);
-    opacity: 1;
-  }
-  100% {
-    transform: perspective(300px) rotateX(0deg);
-    opacity: 1;
-  }
-}
-
-.animate-flap-down {
-  animation: flapDown 0.45s cubic-bezier(0.2, 0.8, 0.3, 1) backwards;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .animate-flap-down,
   .animate-cloud-drift {
     animation: none !important;
   }

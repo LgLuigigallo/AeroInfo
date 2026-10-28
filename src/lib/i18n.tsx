@@ -21,6 +21,14 @@ export const translations: Translations = {
     it: 'Tutto ciò che devi sapere prima di volare.',
     en: 'Everything you need to know before flying.'
   },
+  minimalHeroTitleLine1: {
+    it: 'Tutto ciò che devi sapere',
+    en: 'Everything you need to know'
+  },
+  minimalHeroTitleLine2: {
+    it: 'prima di volare',
+    en: 'before flying'
+  },
   minimalHeroSubtitle: {
     it: 'Il sito per avere a portata di click tutte le informazioni essenziali di un aeroporto',
     en: 'The site to get all essential airport information with a single click'
