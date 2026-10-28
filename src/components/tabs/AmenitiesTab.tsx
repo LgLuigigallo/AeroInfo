@@ -61,7 +61,7 @@ export function AmenitiesTab({ airport }: AmenitiesTabProps) {
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-        {airport.amenities.map((item) => (
+        {(airport.amenities || []).map((item) => (
           <div
             key={item.id}
             className="p-4 sm:p-5 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-2xs space-y-3"

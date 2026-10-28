@@ -53,9 +53,9 @@ export function TerminalMapTab({ airport }: TerminalMapTabProps) {
     }
     if (airport.terminals && airport.terminals.length > 0) {
       return airport.terminals.map((t) => ({
-        id: t.id,
-        name_it: t.name,
-        name_en: t.name
+        id: t.id || t.name || 'terminal',
+        name_it: t.name || 'Terminal',
+        name_en: t.name || 'Terminal'
       }));
     }
     return [{ id: 'main', name_it: 'Terminal Passeggeri', name_en: 'Passenger Terminal' }];

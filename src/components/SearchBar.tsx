@@ -89,15 +89,15 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
     if (query.trim().length > 0) {
       const q = query.toLowerCase().trim();
       const filtered = sourceList.filter((a) => {
-        return (
-          a.iata.toLowerCase().includes(q) ||
-          a.icao.toLowerCase().includes(q) ||
-          a.name_it.toLowerCase().includes(q) ||
-          a.name_en.toLowerCase().includes(q) ||
-          a.city_it.toLowerCase().includes(q) ||
-          a.city_en.toLowerCase().includes(q) ||
-          a.country_it.toLowerCase().includes(q) ||
-          a.country_en.toLowerCase().includes(q)
+        return Boolean(
+          (a.iata && a.iata.toLowerCase().includes(q)) ||
+          (a.icao && a.icao.toLowerCase().includes(q)) ||
+          (a.name_it && a.name_it.toLowerCase().includes(q)) ||
+          (a.name_en && a.name_en.toLowerCase().includes(q)) ||
+          (a.city_it && a.city_it.toLowerCase().includes(q)) ||
+          (a.city_en && a.city_en.toLowerCase().includes(q)) ||
+          (a.country_it && a.country_it.toLowerCase().includes(q)) ||
+          (a.country_en && a.country_en.toLowerCase().includes(q))
         );
       });
       setResults(filtered);

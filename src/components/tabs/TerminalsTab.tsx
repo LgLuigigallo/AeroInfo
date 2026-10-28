@@ -14,13 +14,13 @@ export function TerminalsTab({ airport }: TerminalsTabProps) {
   const { lang, t } = useLanguage();
   const [airlineFilter, setAirlineFilter] = useState('');
 
-  const filteredAirlines = airport.airlines.filter((item) => {
+  const filteredAirlines = (airport.airlines || []).filter((item) => {
     if (!airlineFilter.trim()) return true;
     const q = airlineFilter.toLowerCase().trim();
-    return (
-      item.airlineName.toLowerCase().includes(q) ||
-      item.iataCode.toLowerCase().includes(q) ||
-      item.terminal.toLowerCase().includes(q)
+    return Boolean(
+      (item.airlineName && item.airlineName.toLowerCase().includes(q)) ||
+      (item.iataCode && item.iataCode.toLowerCase().includes(q)) ||
+      (item.terminal && item.terminal.toLowerCase().includes(q))
     );
   });
 
@@ -33,11 +33,11 @@ export function TerminalsTab({ airport }: TerminalsTabProps) {
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {airport.terminals.map((term) => {
+          {(airport.terminals || []).map((term) => {
             const secRule = airport.securityPolicy.terminalRules?.find((r) => 
-              r.terminalName.toLowerCase().includes(term.name.toLowerCase()) ||
-              term.name.toLowerCase().includes(r.terminalName.toLowerCase()) ||
-              r.terminalName.toLowerCase().includes(term.id.toLowerCase())
+              (r.terminalName && term.name && r.terminalName.toLowerCase().includes(term.name.toLowerCase())) ||
+              (term.name && r.terminalName && term.name.toLowerCase().includes(r.terminalName.toLowerCase())) ||
+              (r.terminalName && term.id && r.terminalName.toLowerCase().includes(term.id.toLowerCase()))
             );
 
             return (

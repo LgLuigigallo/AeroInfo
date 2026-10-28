@@ -43,7 +43,7 @@ export async function getLiveAirports(): Promise<Airport[]> {
   }
 
   try {
-    const { data: dbAirports, error } = await supabase
+    const fetchPromise = supabase
       .from('airports')
       .select(`
         *,
@@ -55,7 +55,17 @@ export async function getLiveAirports(): Promise<Airport[]> {
         ground_transports (*)
       `);
 
+    // 5-second resilient timeout to protect SSR from hanging on slow network or cold start
+    const timeoutPromise = new Promise<{ data: null; error: { message: string } }>((resolve) => {
+      setTimeout(() => resolve({ data: null, error: { message: 'Supabase query timed out after 5000ms' } }), 5000);
+    });
+
+    const { data: dbAirports, error } = (await Promise.race([fetchPromise, timeoutPromise])) as any;
+
     if (error || !dbAirports || dbAirports.length === 0) {
+      if (error) {
+        console.warn('⚠️ [SUPABASE_RESILIENCE] Falling back to certified dataset:', error.message || error);
+      }
       return airportsData;
     }
 

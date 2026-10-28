@@ -32,8 +32,12 @@ export function AirportFaqSection({ airport, lang }: AirportFaqSectionProps) {
     ? cleanOfficialWebsiteUrl(airport.officialWebsite, airport.iata)
     : null;
 
-  // Google Maps Directions destination URL using coordinates or name + city
-  const mapsUrl = airport.coordinates
+  // Google Maps Directions destination URL with strict coordinate and finiteness check
+  const hasValidCoords = Number.isFinite(airport.coordinates?.lat) &&
+    Number.isFinite(airport.coordinates?.lng) &&
+    (airport.coordinates.lat !== 0 || airport.coordinates.lng !== 0);
+
+  const mapsUrl = hasValidCoords
     ? `https://www.google.com/maps/dir/?api=1&destination=${airport.coordinates.lat},${airport.coordinates.lng}`
     : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name} ${city}`)}`;
 
@@ -90,7 +94,7 @@ export function AirportFaqSection({ airport, lang }: AirportFaqSectionProps) {
                     <strong className="text-zinc-700 dark:text-zinc-200">ICAO:</strong> {airport.icao} • <strong className="text-zinc-700 dark:text-zinc-200">IATA:</strong> {airport.iata}
                   </p>
                 )}
-                {airport.coordinates && (
+                {hasValidCoords && (
                   <p className="font-mono text-[11px] text-zinc-500 dark:text-zinc-400">
                     {airport.coordinates.lat.toFixed(4)}° N, {airport.coordinates.lng.toFixed(4)}° E
                   </p>
