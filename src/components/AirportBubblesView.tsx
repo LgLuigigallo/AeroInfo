@@ -31,6 +31,7 @@ import { TerminalMapTab } from './tabs/TerminalMapTab';
 import { SearchBar } from './SearchBar';
 import { SuggestAirportEditModal } from './SuggestAirportEditModal';
 import { CountryFlag } from './CountryFlag';
+import { AirportFaqSection } from './AirportFaqSection';
 
 interface AirportBubblesViewProps {
   airport: Airport;
@@ -363,6 +364,9 @@ export function AirportBubblesView({
 
         </div>
       </section>
+
+      {/* Clean & Semantic FAQ Accordions for Travelers and Search Engines */}
+      <AirportFaqSection airport={airport} lang={lang} />
 
       {/* MODAL / SHEET DETAIL OVERLAY */}
       {activeModal && (
