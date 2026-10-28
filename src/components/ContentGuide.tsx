@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { GuideContent, GuideLanguage } from '@/lib/seo/content-guides';
+import { getGuideStructuredData } from '@/lib/seo/structured-data';
 
 type Props = { content: GuideContent; lang: GuideLanguage };
 
@@ -9,6 +10,14 @@ export function ContentGuide({ content, lang }: Props) {
     dateStyle: 'long',
     timeZone: 'UTC',
   }).format(new Date(`${content.reviewedAt}T00:00:00Z`));
+
+  const structuredData = getGuideStructuredData(
+    content.title,
+    content.description,
+    content.path,
+    content.reviewedAt,
+    lang
+  );
 
   return (
     <main className="min-h-screen bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
@@ -58,6 +67,10 @@ export function ContentGuide({ content, lang }: Props) {
           </ul>
         </section>
       </article>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }}
+      />
     </main>
   );
 }
