@@ -5706,6 +5706,170 @@ export const airportsData: Airport[] = [
     }
   ],
   "lastUpdated": "2026-10-21"
+},
+{
+  "id": "vce",
+  "iata": "VCE",
+  "icao": "LIPZ",
+  "name_it": "Aeroporto di Venezia Marco Polo",
+  "name_en": "Venice Marco Polo Airport",
+  "city_it": "Venezia",
+  "city_en": "Venice",
+  "country_it": "Italia",
+  "country_en": "Italy",
+  "countryCode": "IT",
+  "officialWebsite": "https://www.veneziaairport.it",
+  "officialMapUrl": "https://www.veneziaairport.it/in-aeroporto/mappa-dell-aeroporto.html",
+  "coordinates": { "lat": 45.5053, "lng": 12.3519 },
+  "difficultyRating": 2,
+  "difficultyLabel_it": "Agevole & Ben Collegato (Accesso diretto a Bus e Motoscafi)",
+  "difficultyLabel_en": "Smooth & Well Connected (Direct access to Bus & Water Taxis)",
+  "averageSecurityWaitMin": 12,
+  "recommendedArrivalHours": { "domestic": 2, "international": 3 },
+  "navigationAdvice_it": "Terminal unico su tre livelli: arrivi al piano terra, controlli di sicurezza e partenze al primo piano. Corsie EDS-CB C3 attive sui varchi centrali. Un percorso coperto con tappeti mobili (Moving Walkway) collega il primo piano direttamente alla Darsena per i vaporetti Alilaguna e water taxi.",
+  "navigationAdvice_en": "Single three-level terminal: arrivals on ground floor, security and departures on first floor. EDS-CB C3 lanes operational at central checkpoints. An elevated covered walkway with moving belts links directly to the water docks for Alilaguna boats and water taxis.",
+  "securityPolicy": {
+    "has3DScanners": true,
+    "scannersNote_it": "Varchi dotati di nuovi scanner EDS-CB C3 sulle corsie centrali: liquidi e dispositivi elettronici possono rimanere nel bagaglio a mano sulle corsie abilitate.",
+    "scannersNote_en": "Checkpoints equipped with next-gen EDS-CB C3 scanners on central lanes: liquids and electronics can remain inside carry-on baggage on designated lanes.",
+    "terminalRules": [
+      {
+        "terminalName": "Corsie Centrali 3D C3",
+        "has3DScanners": true,
+        "liquidsAllowedInBag": true,
+        "bottleAllowance_it": "Liquidi e flaconi fino a 100ml possono rimanere all'interno del bagaglio a mano",
+        "bottleAllowance_en": "Liquids and bottles up to 100ml can remain inside carry-on luggage",
+        "electronicsInBag": true,
+        "notes_it": "Non occorre estrarre portatili, tablet o cosmetici sulle corsie abilitate.",
+        "notes_en": "No need to remove laptops, tablets or cosmetics on designated lanes."
+      },
+      {
+        "terminalName": "Corsie Tradizionali Ausiliarie",
+        "has3DScanners": false,
+        "liquidsAllowedInBag": false,
+        "bottleAllowance_it": "Massimo 100ml in busta trasparente richiudibile da 1 litro",
+        "bottleAllowance_en": "Max 100ml in transparent resealable 1-litre bag",
+        "electronicsInBag": false,
+        "notes_it": "Estrarre separatamente liquidi e dispositivi elettronici.",
+        "notes_en": "Remove liquids and electronics into trays."
+      }
+    ],
+    "liquidsAllowance_it": "Contenitori fino a 100ml in busta trasparente da 1 litro; sulle corsie dotate di nuovi scanner C3 i liquidi e i dispositivi restano all'interno del bagaglio a mano.",
+    "liquidsAllowance_en": "Containers up to 100ml in a 1-litre transparent bag; on lanes equipped with next-gen C3 scanners, liquids and electronics remain inside carry-on luggage.",
+    "liquidsMustBeRemoved": false,
+    "liquidsUnverified": false,
+    "electronicsInBag": true,
+    "electronicsNote_it": "Sui varchi C3 portatili e tablet restano nella borsa; sui varchi convenzionali vanno estratti.",
+    "electronicsNote_en": "On C3 lanes laptops and tablets remain in bag; unpack on conventional lanes.",
+    "electronicsUnverified": false,
+    "droneAllowedInCabin": true,
+    "droneAllowedInHold": false,
+    "dronePolicy_it": "Ammesso nel bagaglio a mano con batterie LiPo isolate (max 100Wh). Divieto di sorvolo sulla laguna e centro storico di Venezia.",
+    "dronePolicy_en": "Allowed in cabin with isolated LiPo batteries (max 100Wh). Strict no-fly zone across Venice lagoon and historical center.",
+    "droneUnverified": false,
+    "maxPowerbankWh": 100,
+    "powerbankPolicy_it": "Consentiti esclusivamente nel bagaglio a mano fino a 100Wh.",
+    "powerbankPolicy_en": "Allowed in carry-on baggage only up to 100Wh.",
+    "powerbankUnverified": false,
+    "officialSourceUrl": "https://www.veneziaairport.it/in-aeroporto/controlli-di-sicurezza.html",
+    "lastVerifiedDate": "2026-10-29"
+  },
+  "terminals": [
+    {
+      "id": "vce-main",
+      "name": "Terminal Passeggeri Unico",
+      "transferInfo_it": "Terminal unico su tre livelli. Controlli di sicurezza al primo piano. Percorso pedonale coperto Moving Walkway verso la Darsena motoscafi.",
+      "transferInfo_en": "Single three-level terminal. Security screening on first floor. Covered elevated Moving Walkway connects to water docks.",
+      "isUnverified": false
+    }
+  ],
+  "airlines": [
+    { "airlineName": "ITA Airways", "iataCode": "AZ", "terminal": "Terminal Passeggeri", "checkInZone": "Banchi 10-22", "isUnverified": false },
+    { "airlineName": "easyJet", "iataCode": "U2", "terminal": "Terminal Passeggeri", "checkInZone": "Banchi 30-45", "isUnverified": false },
+    { "airlineName": "Ryanair", "iataCode": "FR", "terminal": "Terminal Passeggeri", "checkInZone": "Banchi 50-65", "isUnverified": false },
+    { "airlineName": "Air France", "iataCode": "AF", "terminal": "Terminal Passeggeri", "checkInZone": "Banchi 23-29", "isUnverified": false }
+  ],
+  "amenities": [
+    {
+      "id": "vce-wifi",
+      "category": "wifi",
+      "title_it": "Venice Airport Free Wi-Fi",
+      "title_en": "Venice Airport Free Wi-Fi",
+      "location_it": "In tutta l'aerostazione",
+      "location_en": "Terminal-wide",
+      "details_it": "Accesso internet Wi-Fi gratuito e illimitato su tutta l'area del terminal.",
+      "details_en": "Free unlimited high-speed Wi-Fi internet access across all terminal areas.",
+      "isUnverified": false
+    },
+    {
+      "id": "vce-power",
+      "category": "power_charging",
+      "title_it": "Colonnine di ricarica dispositivi",
+      "title_en": "Device Charging Stations",
+      "location_it": "Area imbarchi e gate",
+      "location_en": "Boarding gate areas",
+      "details_it": "Prese elettriche 230V e porte USB disponibili nelle sale d'attesa partenze.",
+      "details_en": "230V power sockets and USB outlets available in departure waiting lounges.",
+      "isUnverified": false
+    }
+  ],
+  "venues": [
+    {
+      "id": "vce-ven-1",
+      "name": "Bricco Café",
+      "category": "dining",
+      "terminal": "Piano Partenze",
+      "location": "Prima dei controlli",
+      "hours": "05:00 - 21:00",
+      "is24Hours": false,
+      "isUnverified": false
+    }
+  ],
+  "transports": [
+    {
+      "id": "vce-tr-1",
+      "type": "bus",
+      "name_it": "ATVO Venezia Express (per Piazzale Roma)",
+      "name_en": "ATVO Venice Express (to Piazzale Roma)",
+      "duration": "20 min",
+      "frequency": "Ogni 20-30 minuti",
+      "estimatedCost": "€10.00 (€18.00 A/R)",
+      "pickupLocation_it": "Corsia bus fronte uscita Arrivi (fermata 2)",
+      "pickupLocation_en": "Bus bay outside Arrivals exit (stop 2)",
+      "details_it": "Bus no-stop con aria condizionata e vano bagagli per Piazzale Roma (Venezia Centro).",
+      "details_en": "Non-stop express bus with luggage hold directly to Piazzale Roma (Venice Centre).",
+      "isUnverified": false
+    },
+    {
+      "id": "vce-tr-2",
+      "type": "bus",
+      "name_it": "Motoscafo Alilaguna (Linee Blu / Arancio / Rossa)",
+      "name_en": "Alilaguna Water Bus (Blue / Orange / Red Lines)",
+      "duration": "45-70 min",
+      "frequency": "Ogni 30-60 minuti",
+      "estimatedCost": "€15.00 (€27.00 A/R)",
+      "pickupLocation_it": "Darsena aeroporto (raggiungibile con Moving Walkway dal 1° piano)",
+      "pickupLocation_en": "Airport boat dock (via covered Moving Walkway from 1st floor)",
+      "details_it": "Navigazione diretta attraverso la laguna verso San Marco, Rialto, Fondamente Nove e Lido.",
+      "details_en": "Scenic water transfer across the lagoon to St. Mark's Square, Rialto, and Lido.",
+      "isUnverified": false
+    },
+    {
+      "id": "vce-tr-3",
+      "type": "bus",
+      "name_it": "ATVO Mestre Express (per Stazione FS Mestre)",
+      "name_en": "ATVO Mestre Express (to Mestre Train Station)",
+      "duration": "17 min",
+      "frequency": "Ogni 20-30 minuti",
+      "estimatedCost": "€10.00",
+      "pickupLocation_it": "Corsia bus fronte uscita Arrivi (fermata 3)",
+      "pickupLocation_en": "Bus bay outside Arrivals exit (stop 3)",
+      "details_it": "Collegamento rapido per la stazione ferroviaria di Venezia Mestre per treni Alta Velocità Frecciarossa e Italo.",
+      "details_en": "Fast connection to Venice Mestre Railway Station for high-speed Frecciarossa and Italo trains.",
+      "isUnverified": false
+    }
+  ],
+  "lastUpdated": "2026-10-29"
 }
 ];
 

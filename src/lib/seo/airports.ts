@@ -11,7 +11,7 @@ const STATIC_SEO_APPROVED_IATAS = new Set([
   'PRG', 'FCO', 'CIA', 'MXP', 'LIN', 'BGY', 'WAW', 'KRK', 'BUD', 'ATH',
   'ZRH', 'FRA', 'MUC', 'MAD', 'BCN', 'AMS', 'CDG', 'ORY', 'DUB', 'LIS',
   'VIE', 'CPH', 'ARN', 'HEL', 'LHR', 'LGW', 'HND', 'JFK', 'FUE', 'PMO', 'CTA',
-  'LPA', 'TFS', 'NAP', 'BRI', 'BLQ', 'PSA', 'BER',
+  'LPA', 'TFS', 'NAP', 'BRI', 'BLQ', 'PSA', 'BER', 'VCE',
 ]);
 
 function isMeaningful(value: string | undefined, minimum = 20): boolean {
