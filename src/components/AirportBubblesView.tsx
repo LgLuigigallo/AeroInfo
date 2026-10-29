@@ -137,8 +137,8 @@ export function AirportBubblesView({
         </div>
       </div>
 
-      {/* Airport Identification Card (Clean & Minimal with Palette Harmony) */}
-      <section className="rounded-3xl bg-white/95 dark:bg-zinc-900/90 border border-[#B3E5E0]/40 dark:border-zinc-800 p-5 sm:p-7 shadow-xs">
+      {/* Airport Identification Card (Clean & Minimal - Borderless) */}
+      <section className="rounded-3xl bg-white/95 dark:bg-zinc-900/90 p-5 sm:p-7 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div className="space-y-1.5">
             <div className="flex flex-wrap items-center gap-2">
@@ -188,7 +188,7 @@ export function AirportBubblesView({
 
           {/* Verification Badge & Source */}
           <div className="flex flex-col items-start sm:items-end gap-1 text-xs">
-            <div className="inline-flex items-center gap-1.5 text-[#05668D] dark:text-[#5EAAA8] font-medium bg-[#E8F1F2] dark:bg-zinc-800/80 px-2.5 py-1 rounded-full border border-[#B3E5E0]/40 dark:border-zinc-800 shadow-2xs">
+            <div className="inline-flex items-center gap-1.5 text-[#05668D] dark:text-[#5EAAA8] font-medium bg-[#E8F1F2] dark:bg-zinc-800/80 px-2.5 py-1 rounded-full shadow-2xs">
               <ShieldCheck className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
               <span>{t('verifiedOfficial')}</span>
             </div>
@@ -226,7 +226,7 @@ export function AirportBubblesView({
           <button
             type="button"
             onClick={() => setActiveModal('liquids')}
-            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 border border-[#B3E5E0]/40 dark:border-zinc-800 hover:border-[#5EAAA8]/70 hover:-translate-y-1 hover:shadow-lg transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-4 h-full"
+            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-4 h-full"
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between">
@@ -261,7 +261,7 @@ export function AirportBubblesView({
           <button
             type="button"
             onClick={() => setActiveModal('baggage')}
-            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 border border-[#B3E5E0]/40 dark:border-zinc-800 hover:border-[#05668D]/70 hover:-translate-y-1 hover:shadow-lg transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-4 h-full"
+            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-4 h-full"
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between">
@@ -296,7 +296,7 @@ export function AirportBubblesView({
           <button
             type="button"
             onClick={() => setActiveModal('general')}
-            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 border border-[#F4D35E]/40 dark:border-zinc-800 hover:border-[#F4D35E]/80 hover:-translate-y-1 hover:shadow-lg transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-4 h-full"
+            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-4 h-full"
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between">
@@ -331,7 +331,7 @@ export function AirportBubblesView({
           <button
             type="button"
             onClick={() => setActiveModal('map')}
-            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 border border-[#B3E5E0]/40 dark:border-zinc-800 hover:border-[#5EAAA8]/70 hover:-translate-y-1 hover:shadow-lg transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-4 h-full"
+            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-4 h-full"
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between">

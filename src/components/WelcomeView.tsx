@@ -54,7 +54,7 @@ export function WelcomeView({ airports, onSelectAirport, children }: WelcomeView
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4 w-full">
           
           {/* Fase 1 */}
-          <div className="rounded-2xl bg-white/95 dark:bg-zinc-900/90 border border-[#B3E5E0]/40 dark:border-zinc-800 hover:border-[#5EAAA8]/60 p-5 flex flex-col items-center text-center shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group">
+          <div className="rounded-2xl bg-white/95 dark:bg-zinc-900/90 p-5 flex flex-col items-center text-center shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group">
             <div className="mb-3 flex items-center justify-center">
               <span className="w-9 h-9 rounded-full bg-[#E8F1F2] dark:bg-zinc-800 text-[#05668D] dark:text-[#5EAAA8] font-mono font-black text-sm flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:bg-[#05668D] group-hover:text-white transition-all">
                 1
@@ -71,7 +71,7 @@ export function WelcomeView({ airports, onSelectAirport, children }: WelcomeView
           </div>
 
           {/* Fase 2 */}
-          <div className="rounded-2xl bg-white/95 dark:bg-zinc-900/90 border border-[#B3E5E0]/40 dark:border-zinc-800 hover:border-[#5EAAA8]/60 p-5 flex flex-col items-center text-center shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group">
+          <div className="rounded-2xl bg-white/95 dark:bg-zinc-900/90 p-5 flex flex-col items-center text-center shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group">
             <div className="mb-3 flex items-center justify-center">
               <span className="w-9 h-9 rounded-full bg-[#E8F1F2] dark:bg-zinc-800 text-[#5EAAA8] font-mono font-black text-sm flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:bg-[#5EAAA8] group-hover:text-white transition-all">
                 2
@@ -88,7 +88,7 @@ export function WelcomeView({ airports, onSelectAirport, children }: WelcomeView
           </div>
 
           {/* Fase 3 */}
-          <div className="rounded-2xl bg-white/95 dark:bg-zinc-900/90 border border-[#F4D35E]/30 dark:border-zinc-800 hover:border-[#F4D35E]/70 p-5 flex flex-col items-center text-center shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group">
+          <div className="rounded-2xl bg-white/95 dark:bg-zinc-900/90 p-5 flex flex-col items-center text-center shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group">
             <div className="mb-3 flex items-center justify-center">
               <span className="w-9 h-9 rounded-full bg-[#F4D35E]/20 dark:bg-zinc-800 text-amber-800 dark:text-[#F4D35E] font-mono font-black text-sm flex items-center justify-center shadow-2xs group-hover:scale-105 group-hover:bg-[#F4D35E] group-hover:text-zinc-950 transition-all">
                 3

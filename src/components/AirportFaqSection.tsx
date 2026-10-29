@@ -43,7 +43,7 @@ export function AirportFaqSection({ airport, lang }: AirportFaqSectionProps) {
 
   return (
     <div className="w-full pt-2">
-      <details className="group rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800/80 shadow-2xs overflow-hidden transition-all duration-200">
+      <details className="group rounded-2xl bg-white dark:bg-zinc-900 shadow-xs overflow-hidden transition-all duration-200">
         <summary className="flex items-center justify-between p-3.5 sm:p-4 cursor-pointer list-none select-none hover:bg-zinc-50/60 dark:hover:bg-zinc-850/60 transition-colors">
           <div className="flex items-center gap-2.5">
             <span className="font-mono text-[11px] font-black px-2 py-0.5 rounded-md bg-[#E8F1F2] dark:bg-zinc-800 text-[#05668D] dark:text-[#5EAAA8]">
@@ -65,12 +65,12 @@ export function AirportFaqSection({ airport, lang }: AirportFaqSectionProps) {
           </div>
         </summary>
 
-        {/* Expandable Clean Details Grid */}
-        <div className="p-4 sm:p-5 border-t border-zinc-100 dark:border-zinc-800/80 bg-zinc-50/30 dark:bg-zinc-900/40 text-xs sm:text-sm space-y-4">
+        {/* Expandable Clean Details Grid - Borderless */}
+        <div className="p-4 sm:p-5 bg-zinc-50/30 dark:bg-zinc-900/40 text-xs sm:text-sm space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-4">
             
             {/* 1. Info e Contatti Aeroporto con Google Maps */}
-            <div className="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-zinc-850 border border-zinc-100 dark:border-zinc-800 shadow-2xs space-y-2.5">
+            <div className="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-zinc-850 shadow-2xs space-y-2.5">
               <div className="flex items-center gap-2 text-zinc-900 dark:text-white font-bold text-xs">
                 <MapPin className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
                 <span>{isItalian ? 'Indirizzo & Contatti' : 'Location & Contacts'}</span>
@@ -130,7 +130,7 @@ export function AirportFaqSection({ airport, lang }: AirportFaqSectionProps) {
             </div>
 
             {/* 2. Anticipo Orario e Tempi di Attesa */}
-            <div className="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-zinc-850 border border-zinc-100 dark:border-zinc-800 shadow-2xs space-y-2.5">
+            <div className="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-zinc-850 shadow-2xs space-y-2.5">
               <div className="flex items-center gap-2 text-zinc-900 dark:text-white font-bold text-xs">
                 <Clock className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
                 <span>{isItalian ? 'Anticipo in Aeroporto' : 'Arrival Time & Screening'}</span>
@@ -151,7 +151,7 @@ export function AirportFaqSection({ airport, lang }: AirportFaqSectionProps) {
             </div>
 
             {/* 3. Trasporti verso la Città */}
-            <div className="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-zinc-850 border border-zinc-100 dark:border-zinc-800 shadow-2xs space-y-2.5">
+            <div className="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-zinc-850 shadow-2xs space-y-2.5">
               <div className="flex items-center gap-2 text-zinc-900 dark:text-white font-bold text-xs">
                 <Navigation className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
                 <span>{isItalian ? 'Collegamenti Centro Città' : 'City Transport Links'}</span>
