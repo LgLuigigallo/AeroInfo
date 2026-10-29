@@ -47,16 +47,16 @@ export function Header({ onResetHome }: HeaderProps) {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/95 dark:bg-zinc-950/95 transition-colors">
+    <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/95 dark:bg-zinc-950/95 border-b border-[#E8F1F2] dark:border-zinc-800/80 transition-colors">
       <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 h-16 flex items-center justify-between gap-3">
         {/* Brand with Aeronautical Styling */}
         <button
           type="button"
           onClick={handleBrandClick}
-          className="flex items-center gap-3 text-left cursor-pointer group shrink-0"
+          className="flex items-center gap-3 text-left cursor-pointer group shrink-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#05668D] focus-visible:ring-offset-2"
           title={lang === 'it' ? 'Torna alla pagina iniziale' : 'Return to home page'}
         >
-          <div className="w-8 h-8 rounded-lg bg-[#05668D] dark:bg-zinc-100 flex items-center justify-center text-white dark:text-[#05668D] shadow-xs group-hover:scale-105 transition-transform">
+          <div className="w-8.5 h-8.5 rounded-xl bg-[#05668D] dark:bg-zinc-100 flex items-center justify-center text-white dark:text-[#05668D] shadow-xs group-hover:scale-105 transition-all">
             <Plane className="w-4 h-4 -rotate-45" />
           </div>
           <div>
@@ -75,15 +75,15 @@ export function Header({ onResetHome }: HeaderProps) {
         {/* Right Actions: Official Source Tag, Feedback & Flag Switcher */}
         <div className="flex items-center gap-1.5 sm:gap-3">
           {/* Official Verification Tag */}
-          <div className="hidden md:inline-flex items-center gap-1.5 text-xs text-zinc-700 dark:text-zinc-300 font-medium px-2.5 py-1.5 rounded-full bg-[#E8F1F2]/80 dark:bg-zinc-900 shadow-2xs">
+          <div className="hidden md:inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] font-medium px-2.5 py-1.5 rounded-full bg-[#E8F1F2] dark:bg-zinc-900 border border-[#B3E5E0]/40 dark:border-zinc-800 shadow-2xs">
             <ShieldCheck className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
             <span className="font-mono text-[11px] tracking-tight">{t('verifiedOfficial')}</span>
           </div>
 
-          {/* Feedback Link (Desktop only; on mobile feedback is in the footer) */}
+          {/* Feedback Link */}
           <Link
             href="/feedback"
-            className="hidden sm:inline-flex items-center gap-1.5 text-xs text-zinc-700 dark:text-zinc-300 hover:text-[#05668D] dark:hover:text-white font-medium px-2.5 py-1.5 rounded-full bg-white dark:bg-zinc-900 hover:bg-[#E8F1F2]/60 dark:hover:bg-zinc-800 transition-all shadow-2xs"
+            className="hidden sm:inline-flex items-center gap-1.5 text-xs text-zinc-700 dark:text-zinc-300 hover:text-[#05668D] dark:hover:text-white font-medium px-2.5 py-1.5 rounded-full bg-white dark:bg-zinc-900 hover:bg-[#E8F1F2] dark:hover:bg-zinc-800 border border-zinc-200/80 dark:border-zinc-800 transition-all shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#05668D]"
           >
             <MessageSquare className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
             <span className="font-mono text-[11px] tracking-tight">Feedback</span>
@@ -91,14 +91,15 @@ export function Header({ onResetHome }: HeaderProps) {
 
           {/* Minimalist Flag-based Language Switcher */}
           <div 
-            className="flex items-center rounded-full bg-[#E8F1F2]/80 dark:bg-zinc-900 p-0.5 shadow-2xs text-xs font-mono"
+            className="flex items-center rounded-full bg-[#E8F1F2] dark:bg-zinc-900 p-0.5 border border-[#B3E5E0]/50 dark:border-zinc-800 shadow-2xs text-xs font-mono"
             role="group"
             aria-label="Language selector"
           >
             <button
               type="button"
               onClick={() => setLang('it')}
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-all cursor-pointer ${
+              aria-pressed={lang === 'it'}
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#05668D] ${
                 lang === 'it'
                   ? 'bg-[#05668D] text-white font-bold shadow-xs'
                   : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
@@ -111,7 +112,8 @@ export function Header({ onResetHome }: HeaderProps) {
             <button
               type="button"
               onClick={() => setLang('en')}
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-all cursor-pointer ${
+              aria-pressed={lang === 'en'}
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#05668D] ${
                 lang === 'en'
                   ? 'bg-[#05668D] text-white font-bold shadow-xs'
                   : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'

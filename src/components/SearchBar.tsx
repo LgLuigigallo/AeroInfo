@@ -255,7 +255,7 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
 
       {/* Autocomplete Dropdown */}
       {isOpen && (
-        <div className="absolute left-0 right-0 mt-2 bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl z-50 overflow-hidden divide-y divide-[#E8F1F2] dark:divide-zinc-800/80 animate-in fade-in-50 duration-150">
+        <div className="absolute left-0 right-0 mt-2 bg-white dark:bg-zinc-900 rounded-2xl shadow-xl border border-[#B3E5E0]/40 dark:border-zinc-800 z-50 overflow-hidden divide-y divide-[#E8F1F2] dark:divide-zinc-800/80 animate-in fade-in-50 duration-150">
           {/* Query Results */}
           {query.trim().length > 0 ? (
             <div className="p-1.5 max-h-84 overflow-y-auto">
@@ -267,10 +267,10 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
                       key={airport.id}
                       type="button"
                       onClick={() => handleSelect(airport)}
-                      className={`w-full flex items-center justify-between p-2.5 rounded-lg text-left transition-all cursor-pointer ${
+                      className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left transition-all cursor-pointer ${
                         isSelected
-                          ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white'
-                          : 'hover:bg-zinc-50 dark:hover:bg-zinc-800/50 text-zinc-700 dark:text-zinc-200'
+                          ? 'bg-[#E8F1F2] dark:bg-zinc-800 text-zinc-900 dark:text-white'
+                          : 'hover:bg-[#E8F1F2]/50 dark:hover:bg-zinc-800/50 text-zinc-700 dark:text-zinc-200'
                       }`}
                     >
                       <div className="flex items-center gap-3">
@@ -301,20 +301,20 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
                           const hasMixed = rules && rules.length > 1 && rules.some(r => r.has3DScanners) && rules.some(r => !r.has3DScanners);
                           if (hasMixed) {
                             return (
-                              <span className="inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono font-medium rounded-md bg-blue-500/10 text-blue-700 dark:text-blue-300">
+                              <span className="inline-flex items-center px-2 py-0.5 text-[10px] font-mono font-medium rounded-md bg-[#5EAAA8]/15 text-[#05668D] dark:text-[#5EAAA8] border border-[#5EAAA8]/30">
                                 {lang === 'it' ? '3D / 100ml' : '3D / 100ml'}
                               </span>
                             );
                           }
                           if (airport.securityPolicy.has3DScanners) {
                             return (
-                              <span className="inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono font-medium rounded-md bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
+                              <span className="inline-flex items-center px-2 py-0.5 text-[10px] font-mono font-medium rounded-md bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
                                 Scanner 3D
                               </span>
                             );
                           }
                           return (
-                            <span className="hidden sm:inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono text-zinc-500 dark:text-zinc-400">
+                            <span className="hidden sm:inline-flex items-center px-2 py-0.5 text-[10px] font-mono text-zinc-600 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 rounded-md border border-zinc-200/80 dark:border-zinc-700">
                               100ml Standard
                             </span>
                           );
@@ -502,7 +502,7 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
                       <button
                         type="submit"
                         disabled={isSubmittingRequest}
-                        className="w-full inline-flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-100 text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 shadow-xs"
+                        className="w-full inline-flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-[#05668D] hover:bg-[#05668D]/90 text-white text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 shadow-xs"
                       >
                         {isSubmittingRequest ? (
                           <>
@@ -511,7 +511,7 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
                           </>
                         ) : (
                           <>
-                            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                            <Sparkles className="w-3.5 h-3.5 text-[#F4D35E]" />
                             <span>{t('requestAirportBtn')}</span>
                           </>
                         )}

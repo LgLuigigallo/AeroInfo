@@ -137,8 +137,8 @@ export function AirportBubblesView({
         </div>
       </div>
 
-      {/* Airport Identification Card (Clean & Minimal - No Heavy Borders) */}
-      <section className="rounded-3xl bg-white dark:bg-zinc-900 p-5 sm:p-7 shadow-xs">
+      {/* Airport Identification Card (Clean & Minimal with Palette Harmony) */}
+      <section className="rounded-3xl bg-white/95 dark:bg-zinc-900/90 border border-[#B3E5E0]/40 dark:border-zinc-800 p-5 sm:p-7 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div className="space-y-1.5">
             <div className="flex flex-wrap items-center gap-2">
@@ -188,7 +188,7 @@ export function AirportBubblesView({
 
           {/* Verification Badge & Source */}
           <div className="flex flex-col items-start sm:items-end gap-1 text-xs">
-            <div className="inline-flex items-center gap-1.5 text-zinc-600 dark:text-zinc-300 font-medium bg-[#E8F1F2]/60 dark:bg-zinc-800/80 px-2.5 py-1 rounded-full shadow-2xs">
+            <div className="inline-flex items-center gap-1.5 text-[#05668D] dark:text-[#5EAAA8] font-medium bg-[#E8F1F2] dark:bg-zinc-800/80 px-2.5 py-1 rounded-full border border-[#B3E5E0]/40 dark:border-zinc-800 shadow-2xs">
               <ShieldCheck className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
               <span>{t('verifiedOfficial')}</span>
             </div>
@@ -226,7 +226,7 @@ export function AirportBubblesView({
           <button
             type="button"
             onClick={() => setActiveModal('liquids')}
-            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer flex flex-col justify-between space-y-4 h-full"
+            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 border border-[#B3E5E0]/40 dark:border-zinc-800 hover:border-[#5EAAA8]/70 hover:-translate-y-1 hover:shadow-lg transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-4 h-full"
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between">
@@ -261,7 +261,7 @@ export function AirportBubblesView({
           <button
             type="button"
             onClick={() => setActiveModal('baggage')}
-            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer flex flex-col justify-between space-y-4 h-full"
+            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 border border-[#B3E5E0]/40 dark:border-zinc-800 hover:border-[#05668D]/70 hover:-translate-y-1 hover:shadow-lg transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-4 h-full"
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between">
@@ -296,21 +296,21 @@ export function AirportBubblesView({
           <button
             type="button"
             onClick={() => setActiveModal('general')}
-            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer flex flex-col justify-between space-y-4 h-full"
+            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 border border-[#F4D35E]/40 dark:border-zinc-800 hover:border-[#F4D35E]/80 hover:-translate-y-1 hover:shadow-lg transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-4 h-full"
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-zinc-800 text-amber-600 dark:text-[#F4D35E] flex items-center justify-center group-hover:scale-105 transition-transform">
+                <div className="w-12 h-12 rounded-2xl bg-[#F4D35E]/20 dark:bg-zinc-800 text-amber-800 dark:text-[#F4D35E] flex items-center justify-center group-hover:scale-105 transition-transform">
                   <Sparkles className="w-6 h-6" />
                 </div>
-                <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-50 dark:bg-zinc-800 text-amber-700 dark:text-[#F4D35E] flex items-center gap-1 group-hover:bg-[#F4D35E] group-hover:text-zinc-900 transition-colors">
+                <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#F4D35E]/20 dark:bg-zinc-800 text-amber-800 dark:text-[#F4D35E] flex items-center gap-1 group-hover:bg-[#F4D35E] group-hover:text-zinc-950 transition-colors">
                   <span>{t('bubbleTapToExplore')}</span>
                   <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                 </span>
               </div>
 
               <div>
-                <h3 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-[#F4D35E] transition-colors">
+                <h3 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-white group-hover:text-amber-700 dark:group-hover:text-[#F4D35E] transition-colors">
                   {t('bubbleGeneral')}
                 </h3>
                 <p className="mt-1 text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 line-clamp-3 leading-relaxed">
@@ -321,7 +321,7 @@ export function AirportBubblesView({
               </div>
             </div>
 
-            <div className="pt-2 flex items-center gap-2 text-xs font-medium text-amber-700 dark:text-[#F4D35E]">
+            <div className="pt-2 flex items-center gap-2 text-xs font-medium text-amber-800 dark:text-[#F4D35E]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#F4D35E] shrink-0" />
               <span className="truncate">{isItalian ? 'Droni, batterie max 100Wh, farmaci essenziali' : 'Drones, 100Wh batteries, critical meds'}</span>
             </div>
@@ -331,11 +331,11 @@ export function AirportBubblesView({
           <button
             type="button"
             onClick={() => setActiveModal('map')}
-            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer flex flex-col justify-between space-y-4 h-full"
+            className="group text-left p-5 sm:p-6 rounded-3xl bg-white dark:bg-zinc-900 border border-[#B3E5E0]/40 dark:border-zinc-800 hover:border-[#5EAAA8]/70 hover:-translate-y-1 hover:shadow-lg transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-4 h-full"
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <div className="w-12 h-12 rounded-2xl bg-[#B3E5E0]/30 dark:bg-zinc-800 text-[#05668D] dark:text-[#5EAAA8] flex items-center justify-center group-hover:scale-105 transition-transform">
+                <div className="w-12 h-12 rounded-2xl bg-[#5EAAA8]/20 dark:bg-zinc-800 text-[#05668D] dark:text-[#5EAAA8] flex items-center justify-center group-hover:scale-105 transition-transform">
                   <MapIcon className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#E8F1F2] dark:bg-zinc-800 text-[#05668D] dark:text-[#5EAAA8] flex items-center gap-1 group-hover:bg-[#5EAAA8] group-hover:text-white transition-colors">
@@ -677,8 +677,9 @@ export function AirportBubblesView({
                     <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
                       {isItalian ? policy.dronePolicy_it : policy.dronePolicy_en}
                     </p>
-                    <div className="text-[11px] text-zinc-500 pt-1">
-                      ⚠️ {isItalian ? 'Le batterie del drone devono essere rimosse e trasportate in cabina.' : 'Drone batteries must be detached and carried in cabin.'}
+                    <div className="text-[11px] text-amber-700 dark:text-amber-400 font-medium flex items-center gap-1.5 pt-1">
+                      <AlertTriangle className="w-3.5 h-3.5 shrink-0 text-amber-500" />
+                      <span>{isItalian ? 'Le batterie del drone devono essere rimosse e trasportate in cabina.' : 'Drone batteries must be detached and carried in cabin.'}</span>
                     </div>
                   </div>
 
@@ -696,8 +697,9 @@ export function AirportBubblesView({
                     <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
                       {isItalian ? policy.powerbankPolicy_it : policy.powerbankPolicy_en}
                     </p>
-                    <div className="text-[11px] text-red-600 dark:text-red-400 font-semibold pt-1">
-                      ⛔ {isItalian ? 'MAI nel bagaglio registrato in stiva: rischio di incendio a bordo.' : 'NEVER pack loose lithium batteries in checked luggage.'}
+                    <div className="text-[11px] text-rose-600 dark:text-rose-400 font-semibold flex items-center gap-1.5 pt-1">
+                      <AlertTriangle className="w-3.5 h-3.5 shrink-0 text-rose-500" />
+                      <span>{isItalian ? 'MAI nel bagaglio registrato in stiva: rischio di incendio a bordo.' : 'NEVER pack loose lithium batteries in checked luggage.'}</span>
                     </div>
                   </div>
 
