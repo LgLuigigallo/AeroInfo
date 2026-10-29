@@ -47,4 +47,22 @@ assert(
   'WelcomeView must remain clean and minimalist without tag clouds'
 );
 
+assert(
+  !welcomeFile.includes('border-[#B3E5E0]') && !welcomeFile.includes('border-[#F4D35E]'),
+  'WelcomeView step cards must remain 100% borderless'
+);
+
+// 4. Verify borderless guarantee on AirportBubblesView and AirportFaqSection
+const bubblesFile = readFileSync('src/components/AirportBubblesView.tsx', 'utf8');
+assert(
+  !bubblesFile.includes('border-[#B3E5E0]') && !bubblesFile.includes('border-[#F4D35E]'),
+  'AirportBubblesView bubbles and ID card must remain 100% borderless'
+);
+
+const faqFile = readFileSync('src/components/AirportFaqSection.tsx', 'utf8');
+assert(
+  !faqFile.includes('border border-zinc') && !faqFile.includes('border-t border-zinc'),
+  'AirportFaqSection container and cards must remain 100% borderless'
+);
+
 console.log('✅ ALL SEO STRUCTURED DATA & MINIMALIST UI TESTS PASSED SUCCESSFULLY!');
