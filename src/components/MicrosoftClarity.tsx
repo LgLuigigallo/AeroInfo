@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 const COOKIE_STORAGE_KEY = 'aeroinfo_cookie_consent_v1';
 
 export function MicrosoftClarity({ projectId }: { projectId?: string }) {
-  const clarityId = projectId || process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID;
+  const clarityId = projectId || process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID || 'z5db8kalka';
 
   useEffect(() => {
     if (!clarityId) return;
