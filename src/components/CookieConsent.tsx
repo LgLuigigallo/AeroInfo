@@ -29,10 +29,15 @@ export function CookieConsent() {
       } else {
         const parsed: CookiePreferences = JSON.parse(stored);
         setAnalyticsEnabled(Boolean(parsed.analytics));
-        if (typeof window !== 'undefined' && (window as any).gtag) {
-          (window as any).gtag('consent', 'update', {
-            analytics_storage: parsed.analytics ? 'granted' : 'denied',
-          });
+        if (typeof window !== 'undefined') {
+          if ((window as any).gtag) {
+            (window as any).gtag('consent', 'update', {
+              analytics_storage: parsed.analytics ? 'granted' : 'denied',
+            });
+          }
+          if ((window as any).clarity) {
+            (window as any).clarity('consent', Boolean(parsed.analytics));
+          }
         }
       }
     } catch {
@@ -65,11 +70,16 @@ export function CookieConsent() {
     setIsOpen(false);
     setIsModalOpen(false);
 
-    // Synchronize with Google Consent Mode v2
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('consent', 'update', {
-        analytics_storage: analytics ? 'granted' : 'denied',
-      });
+    // Synchronize with Google Consent Mode v2 & Microsoft Clarity
+    if (typeof window !== 'undefined') {
+      if ((window as any).gtag) {
+        (window as any).gtag('consent', 'update', {
+          analytics_storage: analytics ? 'granted' : 'denied',
+        });
+      }
+      if ((window as any).clarity) {
+        (window as any).clarity('consent', analytics);
+      }
     }
   };
 

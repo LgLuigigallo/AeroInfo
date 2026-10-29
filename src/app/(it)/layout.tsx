@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/react';
 import { GoogleAnalytics } from '@/components/GoogleAnalytics';
+import { MicrosoftClarity } from '@/components/MicrosoftClarity';
 import { SiteStructuredData } from '@/components/SiteStructuredData';
 import '../globals.css';
 
@@ -58,6 +59,7 @@ export default function ItalianRootLayout({ children }: Readonly<{ children: Rea
         {children}
         <Analytics />
         <GoogleAnalytics />
+        <MicrosoftClarity />
       </body>
     </html>
   );
