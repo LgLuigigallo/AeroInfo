@@ -15,7 +15,8 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const targetIata = searchParams.get('iata')?.toUpperCase();
 
-  if (process.env.NODE_ENV === 'production') {
+  const isLocalDev = process.env.NODE_ENV === 'development' && !cronSecret;
+  if (!isLocalDev) {
     if (!cronSecret || authHeader !== `Bearer ${cronSecret}`) {
       return NextResponse.json({ error: 'Unauthorized: invalid or missing cron secret' }, { status: 401 });
     }
@@ -86,8 +87,26 @@ export async function GET(request: NextRequest) {
               const { data: existingVenues, error: venuesError } = await supabase
                 .from('venues').select('id, name').eq('airport_id', airportRow.id);
               if (venuesError) throw venuesError;
+
+              const inserts: Array<{
+                airport_id: string;
+                name: string;
+                category: string;
+                terminal: string;
+                location: string;
+                hours: string | null;
+                is_24_hours: boolean;
+                is_unverified: boolean;
+              }> = [];
+              const updateOps: Promise<{ error: unknown }>[] = [];
+              const seenNames = new Set<string>();
+
               for (const venue of verifiedVenues) {
-                const existing = existingVenues?.find((item) => item.name.trim().toLocaleLowerCase() === venue.name.trim().toLocaleLowerCase());
+                const normName = venue.name.trim().toLocaleLowerCase();
+                if (seenNames.has(normName)) continue;
+                seenNames.add(normName);
+
+                const existing = existingVenues?.find((item) => item.name.trim().toLocaleLowerCase() === normName);
                 const payload = {
                   airport_id: airportRow.id,
                   name: venue.name,
@@ -98,10 +117,23 @@ export async function GET(request: NextRequest) {
                   is_24_hours: Boolean(venue.is24Hours),
                   is_unverified: false,
                 };
-                const write = existing
-                  ? await supabase.from('venues').update(payload).eq('id', existing.id)
-                  : await supabase.from('venues').insert(payload);
-                if (write.error) throw write.error;
+
+                if (existing) {
+                  updateOps.push(Promise.resolve(supabase.from('venues').update(payload).eq('id', existing.id)));
+                } else {
+                  inserts.push(payload);
+                }
+              }
+
+              if (inserts.length > 0) {
+                const { error: insertError } = await supabase.from('venues').insert(inserts);
+                if (insertError) throw insertError;
+              }
+              if (updateOps.length > 0) {
+                const updateResults = await Promise.all(updateOps);
+                for (const updateRes of updateResults) {
+                  if (updateRes.error) throw updateRes.error;
+                }
               }
             }
           }

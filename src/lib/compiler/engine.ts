@@ -425,7 +425,7 @@ export class AirportCompilerEngine {
           if (result.success && result.airport) {
             report.compiledAirportsCount++;
             report.publishedIatas.push(result.airport.iata);
-            report.notifiedSubscribersCount += requests.filter((r) => Boolean(r.requester_email)).length;
+            report.notifiedSubscribersCount += result.notificationsSent || 0;
           } else if (result.error) {
             report.errors.push(result.error);
             await supabase.from('airport_requests').update({ status: 'queued', updated_at: new Date().toISOString(), scraped_data: { admin_or_cron_error: result.error } }).in('id', requestIds).eq('status', 'scraping');

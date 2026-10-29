@@ -42,7 +42,9 @@ supabase/.temp/
 # media & remotion artifacts
 video/
 *.mp4
+*.pdf
 test_still_*.png
+test_*.png
 tests/reports/
 
 # typescript
