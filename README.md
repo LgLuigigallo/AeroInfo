@@ -2,11 +2,11 @@
 
 # ✈️ AeroInfo
 
-**Guida e Informazioni per Viaggiatori Aeroportuali**
+**Smart Airport Guide & Traveler Intelligence**
 
-*Tutto ciò che serve prima di volare: liquidi 100ml e scanner 3D, regole droni e batterie, terminal, punti di ricarica e servizi — informazioni verificate con le fonti ufficiali degli scali.*
+*Everything you need to know before flying: 100ml liquid rules, 3D CT scanners, drone and battery regulations, terminals, charging stations, and transit options — verified against official airport authority sources.*
 
-[![Dominio Ufficiale](https://img.shields.io/badge/Dominio-www.aero--info.eu-0284c7?style=for-the-badge&logo=spaceship)](https://www.aero-info.eu)
+[![Official Domain](https://img.shields.io/badge/Domain-www.aero--info.eu-0284c7?style=for-the-badge&logo=spaceship)](https://www.aero-info.eu)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19-blue?style=for-the-badge&logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
@@ -14,160 +14,160 @@
 [![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ecf8e?style=for-the-badge&logo=supabase)](https://supabase.com/)
 [![Vercel](https://img.shields.io/badge/Vercel-Production-white?style=for-the-badge&logo=vercel)](https://www.aero-info.eu)
 
-[🌐 **Applicazione**](https://www.aero-info.eu) • [💬 **Feedback**](https://www.aero-info.eu/feedback) • [🔕 **Disiscrizione**](https://www.aero-info.eu/unsubscribe) • [🔐 **Privacy e Cookie Policy**](https://www.aero-info.eu/privacy)
+[🌐 **Web App**](https://www.aero-info.eu) • [💬 **Feedback**](https://www.aero-info.eu/feedback) • [🔕 **Unsubscribe**](https://www.aero-info.eu/unsubscribe) • [🔐 **Privacy & Cookie Policy**](https://www.aero-info.eu/privacy)
 
 </div>
 
 ---
 
-## 📖 Panoramica del Progetto
+## 📖 Project Overview
 
-**AeroInfo** ([aero-info.eu](https://www.aero-info.eu)) è un portale web moderno e veloce progettato per i viaggiatori. L'obiettivo è permettere a chiunque di conoscere con esattezza le regole del proprio scalo di partenza o transito (presenza di scanner tomografici 3D, limiti sui liquidi nel bagaglio a mano, gestione dispositivi elettronici, terminal e servizi essenziali) in pochi istanti.
+**AeroInfo** ([aero-info.eu](https://www.aero-info.eu)) is a modern, high-performance web platform designed for international air travelers. Its core principle is **"2-Click to Info"**: enabling passengers to quickly check security checkpoint policies (3D scanner availability, liquid limitations, laptop extraction rules, terminal layouts, and essential services) in seconds.
 
-Tutte le informazioni pubblicate vengono verificate con i canali e le normative ufficiali degli enti aeroportuali. Le segnalazioni o le richieste della community passano attraverso un processo di convalida prima di essere integrate nel catalogo.
-
----
-
-## 🌟 Funzionalità Principali
-
-### 🔍 1. Ricerca Rapida & Esperienza Utente
-- **Interfaccia Pulita:** Homepage essenziale e priva di distrazioni, ottimizzata per mobile e desktop.
-- Ricerca istantanea per **codice IATA** (es. `FCO`, `MXP`, `NAP`, `BGY`, `VCE`, `JFK`, `DXB`), codice ICAO, nome dell'aeroporto, città o nazione.
-- **Scorciatoia globale:** premi `/` o `Cmd+K` da qualsiasi punto della pagina per cercare subito.
-- Cronologia delle ricerche recenti salvata localmente nel browser, senza cookie invasivi.
-- Possibilità di richiedere l'inserimento di nuovi aeroporti con notifica via email (conforme GDPR).
-
-### 🛡️ 2. Regolamenti Sicurezza & Scanner 3D (EDS-CB C3)
-- Distinzione chiara tra aeroporti con **scanner tomografici 3D operativi** (in cui liquidi oltre 100ml e laptop possono rimanere nel bagaglio a mano) e aeroporti con **normative standard** (limite 100ml in bustina trasparente richiudibile ed estrazione ai varchi).
-- Informazioni dettagliate sul trasporto di **droni, batterie al litio e powerbank** (cabina vs stiva).
-- Consigli sui tempi di attesa stimati e anticipo suggerito all'arrivo in aeroporto.
-
-### 🛩️ 3. Classificazione Aviazione Generale
-- Riconoscimento e segnalazione dedicata per scali non aperti al traffico di linea o riservati all'aviazione generale e commerciale privata (es. Roma Urbe `QUR`), con avvisi specifici per i passeggeri.
-
-### 🌐 4. Risoluzione Fonti Istituzionali
-- Validazione rigorosa dei collegamenti esterni che rimandano esclusivamente ai portali istituzionali degli enti di gestione e autorità di aviazione civile (ENAC, ADR, SEA, AENA, DGAC, ecc.), escludendo link a motori di ricerca o fonti non autorevoli.
-
-### 💡 5. Segnalazioni della Community
-- Possibilità per gli utenti di inviare suggerimenti o aggiornamenti sulle schede degli aeroporti.
-- Le modifiche vengono registrate e verificate con le fonti ufficiali prima della pubblicazione.
-
-### 🗺️ 6. Guida ai Terminal & Servizi
-- Dettaglio su concourse, gate, punti di ricarica dispositivi (prese 230V e USB), fontanelle d'acqua potabile gratuite, negozi e ristorazione.
-
-### 🍪 7. Privacy e Conformità GDPR
-- Gestione trasparente del consenso cookie con salvataggio locale.
-- Totale assenza di tracker invasivi di terze parti o pixel di profilazione commerciale.
-- Pagina dedicata [`/unsubscribe`](https://www.aero-info.eu/unsubscribe) per cancellarsi in un click dalle notifiche di aggiornamento.
-
-### 🌍 8. Bilingue & Accessibile (IT / EN)
-- Supporto multilingua completo (Italiano e Inglese) con memorizzazione della preferenza.
-- Supporto nativo per Dark e Light mode, contrasti curati, navigazione completa da tastiera e supporto screen reader.
+All published airport intelligence is verified against official airport authority channels and regulatory standards. Community suggestions undergo validation prior to catalog publication.
 
 ---
 
-## 🔒 Sicurezza e Affidabilità
+## 🌟 Key Features
 
-Il codice include difese applicative verificate tramite suite di test automatizzati:
+### 🔍 1. Fast & Frictionless Search Experience
+- **Minimalist Interface:** Clean, distraction-free home view optimized for mobile and desktop screens alike.
+- Instant search by **IATA code** (e.g. `FCO`, `MXP`, `NAP`, `BGY`, `VCE`, `JFK`, `DXB`), ICAO code, airport name, city, or country.
+- **Global Keyboard Shortcut:** Press `/` or `Cmd+K` anywhere on the page to open search instantly.
+- Localized search history stored securely in the browser without invasive third-party tracking.
+- Airport catalog request system allowing travelers to request new airport additions with opt-in GDPR-compliant email notifications.
 
-- **Protezione XSS & Injection:** Sanificazione rigorosa dell'output e dei parametri PostgREST/AST.
-- **Validazione Input:** Verifica conforme a RFC 5322 per gli indirizzi email e restrizioni sulla dimensione dei payload.
-- **Rate Limiting:** Controllo della frequenza delle richieste per prevenire abusi sugli endpoint pubblici.
-- **HTTP Security Headers:** Content Security Policy (CSP), HSTS a 2 anni con preload, X-Frame-Options DENY, nosniff, Referrer-Policy e Permissions-Policy.
-- **Protezione SSRF:** Filtro restrittivo sulle chiamate outbound verso IP privati, loopback e metadati cloud.
-- **Routing Sicuro:** Protezione Edge con redirezioni canoniche 308 e gestione centralizzata degli errori 404/500 tramite Next.js App Router.
+### 🛡️ 2. Security Checkpoint Regulations & 3D Scanners (EDS-CB C3)
+- Clear distinction between airports equipped with **operational 3D CT scanners** (where liquids over 100ml and electronics can remain inside carry-on luggage) and airports following **standard regulations** (100ml container limits in clear resealable bags, extracted at the checkpoint).
+- Detailed rules for **drones, lithium batteries, and power banks** (cabin allowance vs. cargo hold bans).
+- Estimated wait times and recommended terminal arrival advance notice.
+
+### 🛩️ 3. General Aviation & Private Flight Classification
+- Dedicated classification and warning banners for non-commercial airfields or hubs reserved for general/private aviation (e.g., Rome Urbe `QUR`), preventing consumer booking errors.
+
+### 🌐 4. Official Authority Resolution
+- Strict validation that exclusively links to primary airport authority and civil aviation portals (ENAC, ADR, SEA, AENA, DGAC, etc.), filtering out search engines or unverified aggregators.
+
+### 💡 5. Community Suggestions & Updates
+- Interactive floating prompt allowing travelers to submit updates or corrections.
+- Submissions are logged, cross-checked against official airport sources, and verified before being published.
+
+### 🗺️ 6. Terminal Layouts & Amenities
+- Terminal concourse overviews, gate areas, charging spots (230V outlets and USB ports), free drinking water fountains, dining, and duty-free options.
+
+### 🍪 7. Privacy & GDPR Compliance
+- Transparent, lightweight cookie consent with local storage persistence.
+- Zero third-party tracking cookies or advertising pixels.
+- Dedicated [`/unsubscribe`](https://www.aero-info.eu/unsubscribe) portal for one-click opt-out from notification updates.
+
+### 🌍 8. Bilingual & Accessible (IT / EN)
+- First-class English and Italian language support with persistent user preferences.
+- Native Dark and Light mode support, accessible contrast ratios, full keyboard navigation, and screen reader friendliness.
 
 ---
 
-## 🧭 Area Riservata
+## 🔒 Security & Reliability
 
-AeroInfo include un'area amministrativa protetta (`/admin`) dedicata alla moderazione delle segnalazioni inviate dagli utenti, alla gestione del catalogo e al controllo dei cicli di sincronizzazione.
+The application codebase incorporates defense-in-depth measures verified through an automated test suite:
 
-- L'accesso è strettamente limitato agli account autorizzati tramite autenticazione sicura OAuth.
-- Le operazioni amministrative sono tracciate in un registro di audit interno.
-- Le credenziali e le chiavi ad alto privilegio (`service_role`) operano esclusivamente lato server e non sono mai esposte al client.
+- **XSS & Injection Defenses:** Strict HTML escaping and PostgREST AST query sanitization.
+- **Input Validation:** RFC 5322 compliance for email addresses and strict payload size limits.
+- **Rate Limiting:** Sliding-window rate limiters protecting public endpoints from automated abuse.
+- **HTTP Security Headers:** Content Security Policy (CSP), 2-year HSTS with preload, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, and `Permissions-Policy`.
+- **SSRF Protection:** Outbound URL validation blocking private IPs, loopback, and cloud metadata targets.
+- **Resilient Edge Routing:** Canonical 308 IATA redirects and centralized 404/500 error boundaries handled directly by Next.js App Router.
 
 ---
 
-## 🛠️ Stack Tecnologico
+## 🧭 Restricted Admin Area
 
-| Layer | Tecnologie Utilizzate |
+AeroInfo includes an authenticated management console (`/admin`) for reviewing community suggestions, managing the airport catalog, and monitoring synchronization schedules.
+
+- Access is restricted to authorized administrative accounts via OAuth authentication.
+- Administrative operations are recorded in an internal audit trail.
+- High-privilege credentials (`service_role`) are strictly kept on the server and never exposed to the client browser.
+
+---
+
+## 🛠️ Technology Stack
+
+| Layer | Technologies |
 | :--- | :--- |
 | **Frontend** | [Next.js 16](https://nextjs.org/) (App Router, Turbopack, Partial Prefetching, Cache Components), [React 19](https://react.dev/), [Tailwind CSS v4](https://tailwindcss.com/) |
-| **Icone & UI** | [Lucide React](https://lucide.dev/), font Geist (self-hosted) |
+| **Icons & UI** | [Lucide React](https://lucide.dev/), Geist font family (self-hosted) |
 | **Backend & Routing** | Next.js Serverless Route Handlers & Edge Proxy |
-| **Database** | [Supabase](https://supabase.com/) (PostgreSQL con Row Level Security) |
-| **Parser & Scraper** | [Cheerio](https://cheerio.js.org/), validatore SSRF outbound, motore di sincronizzazione automatizzato |
-| **Email Transazionali** | [Nodemailer](https://nodemailer.com/) (Gmail SMTP) & [Resend](https://resend.com/) con fallback |
-| **Hosting & CDN** | [Vercel](https://vercel.com/) (Anycast Edge Network, Vercel Cron, SSL automatico) |
-| **Dominio & DNS** | [Spaceship](https://www.spaceship.com/) + DNS Anycast Vercel (`aero-info.eu`) |
+| **Database** | [Supabase](https://supabase.com/) (PostgreSQL with Row Level Security) |
+| **Parser & Scraping** | [Cheerio](https://cheerio.js.org/), SSRF outbound validator, automated sync engine |
+| **Transactional Email** | [Nodemailer](https://nodemailer.com/) (Gmail SMTP) & [Resend](https://resend.com/) with fallback |
+| **Hosting & CDN** | [Vercel](https://vercel.com/) (Anycast Edge Network, Vercel Cron, Automated SSL) |
+| **Domain & DNS** | [Spaceship](https://www.spaceship.com/) + Vercel Anycast DNS (`aero-info.eu`) |
 
 ---
 
-## 📁 Struttura del Progetto
+## 📁 Project Structure
 
 ```
 AeroInfo/
 ├── src/
 │   ├── app/                         # Next.js App Router
-│   │   ├── (admin)/                 # Console amministrativa protetta
-│   │   ├── (en)/                    # Pagine e rotte localizzate in lingua inglese
-│   │   ├── (it)/                    # Pagine e rotte localizzate in lingua italiana
-│   │   ├── api/                     # Endpoint API (catalogo, richieste, feedback, cron)
-│   │   ├── feedback/                # Modulo feedback utenti
-│   │   ├── unsubscribe/             # Portale disiscrizione notifiche GDPR
-│   │   ├── not-found.tsx            # Pagina 404 personalizzata
-│   │   ├── robots.ts                # Configurazione robots.txt
-│   │   ├── sitemap.xml/             # Generazione dinamica sitemap.xml
-│   │   └── layout.tsx               # Root layout con metadata OpenGraph
-│   ├── components/                  # Componenti UI (Header, Footer, SearchBar, Dossier)
-│   ├── data/                        # Dataset di base aeroporti
-│   ├── lib/                         # Utility di business logic, sicurezza, email e database
-│   ├── proxy.ts                     # Edge proxy per redirect IATA e routing canonico
-│   └── types/                       # Definizioni TypeScript
-├── supabase/                        # Schema del database e migrazioni PostgreSQL
-├── tests/                           # Suite di test automatizzati (sicurezza, SEO, admin)
-└── next.config.ts                   # Configurazione Next.js e Security Headers
+│   │   ├── (admin)/                 # Restricted admin console
+│   │   ├── (en)/                    # Localized English routes and pages
+│   │   ├── (it)/                    # Localized Italian routes and pages
+│   │   ├── api/                     # Backend API handlers (catalog, requests, feedback, cron)
+│   │   ├── feedback/                # Feedback submission page
+│   │   ├── unsubscribe/             # GDPR notification opt-out portal
+│   │   ├── not-found.tsx            # Branded 404 error page
+│   │   ├── robots.ts                # Dynamic robots.txt generation
+│   │   ├── sitemap.xml/             # Dynamic sitemap.xml generation
+│   │   └── layout.tsx               # Root layout with metadata and OpenGraph configuration
+│   ├── components/                  # UI components (Header, Footer, SearchBar, Dossier)
+│   ├── data/                        # Curated static airport dataset
+│   ├── lib/                         # Business logic, security, email, and database clients
+│   ├── proxy.ts                     # Edge proxy for IATA redirects and canonical routing
+│   └── types/                       # TypeScript interfaces and definitions
+├── supabase/                        # Database schema and PostgreSQL migrations
+├── tests/                           # Automated test suites (security, SEO, admin unit)
+└── next.config.ts                   # Next.js configuration and security headers
 ```
 
 ---
 
-## 💻 Sviluppo Locale
+## 💻 Local Development
 
-### Prerequisiti
+### Prerequisites
 - Node.js 20+
-- npm o pnpm
+- npm or pnpm
 
-### Installazione e avvio
+### Quickstart
 
 ```bash
-# 1. Clona il repository
-git clone https://github.com/luigigallo12/AeroInfo.git
+# 1. Clone the repository
+git clone https://github.com/LgLuigigallo/AeroInfo.git
 cd AeroInfo
 
-# 2. Installa le dipendenze
+# 2. Install dependencies
 npm install
 
-# 3. Configura le variabili d'ambiente (copia dal template)
+# 3. Configure environment variables (copy from example template)
 cp .env.example .env.local
 
-# 4. Avvia il server di sviluppo
+# 4. Start the development server
 npm run dev
 
-# 5. Esegui la suite di test
+# 5. Run automated test suites
 npm test
 
-# 6. Verifica la build di produzione
+# 6. Verify production build
 npm run build
 ```
 
-L'applicazione sarà raggiungibile su `http://localhost:3000`.
+The application will be accessible at `http://localhost:3000`.
 
 ---
 
-## 👨‍💻 Autore & Manutenzione
+## 👨‍💻 Author & Maintenance
 
-Sviluppato e curato da **Luigi Gallo**.
+Developed and maintained by **Luigi Gallo**.
 
 - 📧 Email: [vireontech@gmail.com](mailto:vireontech@gmail.com)
 - 💼 LinkedIn: [linkedin.com/in/luigigallo12](https://www.linkedin.com/in/luigigallo12)
@@ -175,7 +175,7 @@ Sviluppato e curato da **Luigi Gallo**.
 
 ---
 
-## 📄 Licenza
+## 📄 License
 
-Questo progetto è rilasciato sotto licenza [MIT](LICENSE).  
-I marchi e i dati operativi aeroportuali citati appartengono ai rispettivi enti e autorità di gestione.
+This project is licensed under the [MIT License](LICENSE).  
+Airport names, marks, and operating regulations remain the property of their respective governing authorities.
