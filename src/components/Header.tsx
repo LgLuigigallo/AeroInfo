@@ -75,7 +75,7 @@ export function Header({ onResetHome }: HeaderProps) {
         {/* Right Actions: Official Source Tag, Feedback & Flag Switcher */}
         <div className="flex items-center gap-1.5 sm:gap-3">
           {/* Official Verification Tag */}
-          <div className="hidden md:inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] font-medium px-2.5 py-1.5 rounded-full bg-[#E8F1F2] dark:bg-zinc-900 border border-[#B3E5E0]/40 dark:border-zinc-800 shadow-2xs">
+          <div className="hidden md:inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] font-medium px-2.5 py-1.5 rounded-full bg-[#E8F1F2] dark:bg-zinc-900 shadow-2xs">
             <ShieldCheck className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
             <span className="font-mono text-[11px] tracking-tight">{t('verifiedOfficial')}</span>
           </div>
@@ -83,7 +83,7 @@ export function Header({ onResetHome }: HeaderProps) {
           {/* Feedback Link */}
           <Link
             href="/feedback"
-            className="hidden sm:inline-flex items-center gap-1.5 text-xs text-zinc-700 dark:text-zinc-300 hover:text-[#05668D] dark:hover:text-white font-medium px-2.5 py-1.5 rounded-full bg-white dark:bg-zinc-900 hover:bg-[#E8F1F2] dark:hover:bg-zinc-800 border border-zinc-200/80 dark:border-zinc-800 transition-all shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#05668D]"
+            className="hidden sm:inline-flex items-center gap-1.5 text-xs text-zinc-700 dark:text-zinc-300 hover:text-[#05668D] dark:hover:text-white font-medium px-2.5 py-1.5 rounded-full bg-[#E8F1F2]/60 hover:bg-[#E8F1F2] dark:bg-zinc-900 dark:hover:bg-zinc-800 transition-all shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#05668D]"
           >
             <MessageSquare className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
             <span className="font-mono text-[11px] tracking-tight">Feedback</span>
@@ -91,7 +91,7 @@ export function Header({ onResetHome }: HeaderProps) {
 
           {/* Minimalist Flag-based Language Switcher */}
           <div 
-            className="flex items-center rounded-full bg-[#E8F1F2] dark:bg-zinc-900 p-0.5 border border-[#B3E5E0]/50 dark:border-zinc-800 shadow-2xs text-xs font-mono"
+            className="flex items-center rounded-full bg-[#E8F1F2] dark:bg-zinc-900 p-0.5 shadow-2xs text-xs font-mono"
             role="group"
             aria-label="Language selector"
           >

@@ -52,17 +52,35 @@ assert(
   'WelcomeView step cards must remain 100% borderless'
 );
 
-// 4. Verify borderless guarantee on AirportBubblesView and AirportFaqSection
+// 4. Verify borderless guarantee on AirportBubblesView, AirportFaqSection, and Header
 const bubblesFile = readFileSync('src/components/AirportBubblesView.tsx', 'utf8');
 assert(
   !bubblesFile.includes('border-[#B3E5E0]') && !bubblesFile.includes('border-[#F4D35E]'),
   'AirportBubblesView bubbles and ID card must remain 100% borderless'
 );
 
+const headerFile = readFileSync('src/components/Header.tsx', 'utf8');
+assert(
+  !headerFile.includes('border border-[#B3E5E0]') && !headerFile.includes('border border-zinc-200'),
+  'Header action tags and language switcher must remain 100% borderless'
+);
+
 const faqFile = readFileSync('src/components/AirportFaqSection.tsx', 'utf8');
 assert(
   !faqFile.includes('border border-zinc') && !faqFile.includes('border-t border-zinc'),
   'AirportFaqSection container and cards must remain 100% borderless'
+);
+
+// 5. Verify SEO internal links in Footer and cross-linking in AirportBubblesView
+const footerFile = readFileSync('src/components/Footer.tsx', 'utf8');
+assert(
+  footerFile.includes('/guide/liquidi-bagaglio-a-mano') && footerFile.includes('/en/guides/liquids-in-carry-on-baggage'),
+  'Footer must include crawlable links to the liquids guide in IT and EN'
+);
+
+assert(
+  bubblesFile.includes('otherCityAirports.map') && bubblesFile.includes('<Link') && bubblesFile.includes('airportPath(match, lang)'),
+  'AirportBubblesView must use crawlable <Link> tags for metropolitan area cross-linking'
 );
 
 console.log('✅ ALL SEO STRUCTURED DATA & MINIMALIST UI TESTS PASSED SUCCESSFULLY!');

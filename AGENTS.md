@@ -20,5 +20,6 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
   2. The Airport Identification Card & Official Verification Badge in `AirportBubblesView.tsx`.
   3. The 3 homepage step/guide cards in `WelcomeView.tsx`.
   4. The FAQ container (`<details>`) and inner FAQ cards in `AirportFaqSection.tsx`.
+  5. The Header action items (Official Verification Tag, Feedback pill, and Language switcher pill) in `Header.tsx`.
 - **EXCEPTION**: ONLY if the user explicitly and directly requests a border on a specific element. Never re-add borders under any other circumstances.
 

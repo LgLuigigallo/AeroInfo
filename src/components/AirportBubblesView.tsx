@@ -118,14 +118,17 @@ export function AirportBubblesView({
       
       {/* Top Header & Search Bar Navigation */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3">
-        <button
-          type="button"
-          onClick={onBack}
+        <Link
+          href={isItalian ? '/' : '/en'}
+          onClick={(e) => {
+            e.preventDefault();
+            onBack();
+          }}
           className="inline-flex items-center gap-2 text-xs font-semibold text-zinc-600 dark:text-zinc-400 hover:text-[#05668D] dark:hover:text-white transition-colors cursor-pointer group"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
           <span>{isItalian ? '← Cambia aeroporto' : '← Change airport'}</span>
-        </button>
+        </Link>
 
         <div className="w-full sm:w-80">
           <SearchBar
@@ -165,23 +168,46 @@ export function AirportBubblesView({
             {airport.otherCityAirports && airport.otherCityAirports.length > 0 && (
               <div className="flex flex-wrap items-center gap-1.5 pt-1 text-xs">
                 <span className="text-zinc-400 font-medium">{isItalian ? 'Stessa area:' : 'Same area:'}</span>
-                {airport.otherCityAirports.map((other) => (
-                  <button
-                    key={other.iata}
-                    type="button"
-                    onClick={() => {
-                      const match = airports.find((a) => a.iata.toUpperCase() === other.iata.toUpperCase());
-                      if (match) onSelectAirport(match);
-                    }}
-                    className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#E8F1F2]/70 hover:bg-[#5EAAA8]/20 dark:bg-zinc-800 text-[#05668D] dark:text-[#5EAAA8] font-semibold transition-colors cursor-pointer text-xs"
-                    title={isItalian ? other.name_it : other.name_en}
-                  >
-                    <span>{other.iata}</span>
-                    <span className="text-[11px] font-normal text-zinc-500 dark:text-zinc-400">
-                      ({isItalian ? other.name_it : other.name_en})
-                    </span>
-                  </button>
-                ))}
+                {airport.otherCityAirports.map((other) => {
+                  const match = airports.find((a) => a.iata.toUpperCase() === other.iata.toUpperCase());
+                  const href = match ? airportPath(match, lang) : undefined;
+                  const label = isItalian ? other.name_it : other.name_en;
+
+                  return href ? (
+                    <Link
+                      key={other.iata}
+                      href={href}
+                      onClick={(e) => {
+                        if (match) {
+                          e.preventDefault();
+                          onSelectAirport(match);
+                        }
+                      }}
+                      className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#E8F1F2]/70 hover:bg-[#5EAAA8]/20 dark:bg-zinc-800 text-[#05668D] dark:text-[#5EAAA8] font-semibold transition-colors cursor-pointer text-xs"
+                      title={label}
+                    >
+                      <span>{other.iata}</span>
+                      <span className="text-[11px] font-normal text-zinc-500 dark:text-zinc-400">
+                        ({label})
+                      </span>
+                    </Link>
+                  ) : (
+                    <button
+                      key={other.iata}
+                      type="button"
+                      onClick={() => {
+                        if (match) onSelectAirport(match);
+                      }}
+                      className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#E8F1F2]/70 hover:bg-[#5EAAA8]/20 dark:bg-zinc-800 text-[#05668D] dark:text-[#5EAAA8] font-semibold transition-colors cursor-pointer text-xs"
+                      title={label}
+                    >
+                      <span>{other.iata}</span>
+                      <span className="text-[11px] font-normal text-zinc-500 dark:text-zinc-400">
+                        ({label})
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
             )}
           </div>

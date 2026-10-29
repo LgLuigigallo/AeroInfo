@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Plane, MessageSquare } from 'lucide-react';
+import { Plane, MessageSquare, Droplets } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 
 export function Footer() {
@@ -61,20 +61,10 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Linea 2: Copyright & Contatti/Feedback */}
+        {/* Linea 2: Copyright, Mail & LinkedIn a sinistra | Guida Liquidi & Feedback a destra */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-1 font-mono text-[10.5px] text-zinc-400 dark:text-zinc-500">
-          <div>
+          <div className="flex flex-wrap items-center gap-2">
             <span>{lang === 'it' ? '© 2026 AeroInfo • Tutti i diritti riservati' : '© 2026 AeroInfo • All rights reserved'}</span>
-          </div>
-
-          <div className="flex items-center gap-2.5">
-            <Link
-              href="/feedback"
-              className="inline-flex items-center gap-1 hover:text-[#05668D] dark:hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#05668D]"
-            >
-              <MessageSquare className="w-3.5 h-3.5 text-[#5EAAA8]" />
-              <span>Feedback</span>
-            </Link>
             <span className="text-zinc-300 dark:text-zinc-700">•</span>
             <a
               href="mailto:vireontech@gmail.com"
@@ -94,6 +84,24 @@ export function Footer() {
                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
               </svg>
             </a>
+          </div>
+
+          <div className="flex items-center gap-2.5">
+            <Link
+              href={lang === 'it' ? '/guide/liquidi-bagaglio-a-mano' : '/en/guides/liquids-in-carry-on-baggage'}
+              className="inline-flex items-center gap-1 hover:text-[#05668D] dark:hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#05668D]"
+            >
+              <Droplets className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
+              <span>{lang === 'it' ? 'Guida Liquidi' : 'Liquids Guide'}</span>
+            </Link>
+            <span className="text-zinc-300 dark:text-zinc-700">•</span>
+            <Link
+              href="/feedback"
+              className="inline-flex items-center gap-1 hover:text-[#05668D] dark:hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#05668D]"
+            >
+              <MessageSquare className="w-3.5 h-3.5 text-[#5EAAA8]" />
+              <span>Feedback</span>
+            </Link>
           </div>
         </div>
 
