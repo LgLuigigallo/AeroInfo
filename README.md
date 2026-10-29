@@ -132,38 +132,6 @@ AeroInfo/
 
 ---
 
-## 💻 Local Development
-
-### Prerequisites
-- Node.js 20+
-- npm or pnpm
-
-### Quickstart
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/LgLuigigallo/AeroInfo.git
-cd AeroInfo
-
-# 2. Install dependencies
-npm install
-
-# 3. Configure environment variables (copy from example template)
-cp .env.example .env.local
-
-# 4. Start the development server
-npm run dev
-
-# 5. Run automated test suites
-npm test
-
-# 6. Verify production build
-npm run build
-```
-
-The application will be accessible at `http://localhost:3000`.
-
----
 
 ## 👨‍💻 Author & Maintenance
 
