@@ -30,10 +30,11 @@
 - [x] **P0.4 Schema stato SEO in Production** — 2026-10-26. Tabella `public.airports` dotata di campi `seo_status`, slug bilingue, timestamp di verifica e motivi di blocco.
 - [x] **P0.5 Idoneità automatica & Gate di Qualità** — 2026-10-27. `evaluateAirportSeoQuality` e `getAirportSeoStatus` applicano regole severe: solo dati sostanziali, fonti HTTPS ufficiali, assenza di testi segnaposto e coordinate valide abilitano lo stato `indexable`. Roma Urbe (QUR) bloccato categoricamente (`blocked`) in quanto aviazione generale.
 - [x] **P0.6 Scrittura e timestamp delle verifiche** — 2026-10-27. `source_verified_at` valorizzato esclusivamente in presenza di verifica esplicita con data; persistenza sicura senza inventare date storiche.
-- [ ] **P0.7 Audit e arricchimento fatti 47 record** — In corso.
-  - [x] **Lotto Italia (12/12):** Verificate regole scanner 3D C3 / 2 Litri (BLQ, BGY, FCO, LIN, MXP) e regola standard 100 ml per gli altri (BRI, CIA, CTA, NAP, PMO, PSA; QUR bloccato).
+- [x] **P0.7 Audit e arricchimento fatti catalogo (48/48 scali commerciali)** — 2026-10-30.
+  - [x] **Lotto Italia (13/13):** Regole scanner 3D C3 / 2 Litri (BLQ, BGY, FCO, LIN, MXP, VCE) e regola standard 100 ml (BRI, CIA, CTA, NAP, PMO, PSA); bonifica completa di VCE Marco Polo (da segnaposto generico a scheda certificata); QUR bloccato (aviazione generale).
   - [x] **Lotto Internazionale Primario (4/4):** AMS (100 ml con scanner CT), ARN (T2 100 ml con estrazione / T5 senza estrazione), DUB (2 L rollout C3 completato), BER (T1 corsie 1 e 5 / T2 fino a 2 L; corsie tradizionali 100 ml).
-  - [ ] **Lotto Internazionale Secondario (Rimanenti 31 record):** Audit puntuale delle fonti ufficiali di sicurezza e bagagli per il resto del catalogo (es. FRA, MUC, CDG, ORY, LHR, LGW, MAD, BCN, ZRH, VIE, HEL, CPH, LIS, WAW, KRK, BUD, ATH, HND, JFK, FUE, LPA, TFS, ecc.).
+  - [x] **Lotto Internazionale Secondario (31/31):** DXB (CT T3, limite 100ml GCAA, Metro Red Line), PMI (Moduli A-D, standard Aena 100ml), IBZ (T1 2 livelli, Aena 100ml), STR (T1-4, S-Bahn S2/S3, standard 100ml), HKG (Smart channels CT, Airport Express), RAK (ONDA, T1-2, obbligo boarding pass cartacea), HER (autorità YPA/HCAA, standard 100ml), NAS (US CBP Preclearance T-A, LPIA 100ml), DJG (EGSA Alger, standard 100ml), oltre a tutti gli altri scali europei ed extra-europei (FRA, MUC, CDG, ORY, LHR, LGW, MAD, BCN, ZRH, VIE, HEL, CPH, LIS, WAW, KRK, BUD, ATH, HND, JFK, FUE, LPA, TFS).
+  - [x] **Risultato:** 48 aeroporti commerciali `indexable` (con 0 motivi di blocco nei controlli automatici di qualità), 1 aeroporto `blocked` (QUR). La sitemap dinamica include ora **100 URL bilingui**.
 
 ---
 
@@ -66,6 +67,6 @@
 
 ---
 
-## Focus Operativo Corrente: Fix P0.7 (Audit Dati & Fonti Internazionali)
+## Focus Operativo Corrente: P3.5 Misurazione & Indexing Monitor
 
-Obiettivo: Revisionare sistematicamente i 31 aeroporti internazionali rimanenti, verificare l'accuratezza delle regole di sicurezza (in particolare l'adozione degli scanner EDS-CB C3 da 2 Litri vs limite standard 100 ml), accertare che l'URL della fonte ufficiale punti direttamente alla sezione di sicurezza dell'aeroporto e confermare `source_verified_at`.
+Obiettivo: Monitorare in Google Search Console e Bing Webmaster Tools l'indicizzazione dei 100 URL della sitemap aggiornata, verificare il traffico organico in ingresso verso i dossier aeroportuali e verificare eventuali citazioni o referral da motori di risposta AI (Perplexity, ChatGPT Search con utm_source).
