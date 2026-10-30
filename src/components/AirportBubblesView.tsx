@@ -647,7 +647,7 @@ export function AirportBubblesView({
                           value={airlineSearch}
                           onChange={(e) => setAirlineSearch(e.target.value)}
                           placeholder={isItalian ? 'Filtra compagnia...' : 'Filter airline...'}
-                          className="px-3 py-1.5 text-xs rounded-xl border border-zinc-200/70 dark:border-zinc-700 bg-white dark:bg-zinc-800/80 w-36 sm:w-48 shadow-2xs focus:outline-none focus:ring-1 focus:ring-[#05668D]"
+                          className="px-3 py-1.5 text-xs rounded-xl bg-white dark:bg-zinc-800/80 w-36 sm:w-48 shadow-2xs focus:outline-none focus:ring-1 focus:ring-[#05668D]"
                         />
                       </div>
                       <div className="max-h-36 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs">

@@ -9,7 +9,7 @@ export function Footer() {
   const { lang, t } = useLanguage();
 
   return (
-    <footer className="mt-auto w-full py-6 px-4 sm:px-6 md:px-8 lg:px-12 border-t border-[#E8F1F2] dark:border-zinc-800/80 text-zinc-500 dark:text-zinc-400 text-xs transition-colors">
+    <footer className="mt-auto w-full py-6 px-4 sm:px-6 md:px-8 lg:px-12 text-zinc-500 dark:text-zinc-400 text-xs transition-colors">
       <div className="w-full flex flex-col gap-2.5">
         
         {/* Linea 1: Brand / Info sincronizzazione & Link Legali/Navigazione */}
