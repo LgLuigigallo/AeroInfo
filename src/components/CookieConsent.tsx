@@ -80,6 +80,7 @@ export function CookieConsent() {
       if ((window as any).clarity) {
         (window as any).clarity('consent', analytics);
       }
+      window.dispatchEvent(new CustomEvent('cookie-consent-updated', { detail: { analytics } }));
     }
   };
 

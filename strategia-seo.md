@@ -66,10 +66,16 @@
   - [x] **P3.2b Q&A mirate per dossier aeroportuali:** Integrazione in `AirportFaqSection` e in `getAirportFaqStructuredData` delle domande ad alto intento di ricerca (Regole liquidi e scanner 3D C3 per scalo, estrazione laptop/tablet, regole internazionali ICAO/EASA per powerbank e batterie al litio in cabina vs stiva vietata, anticipo orario, trasporti e indicazioni Google Maps). 100% borderless e validato Schema.org.
 - [x] **P3.3 Fonti, fiducia e citabilità AI** — 2026-10-30 Production. Collegamento diretto alla fonte istituzionale autoritativa verificata per ciascuno dei 48 scali commerciali, timestamp di verifica esplicito, link diretti a percorsi Google Maps e distinzione formale delle procedure operative.
 - [x] **P3.4 Dati strutturati Schema.org** — 2026-10-28 Production. `@graph` unificato (Organization, WebSite, BreadcrumbList, Airport, FAQPage) valido e conforme per Rich Snippets.
-- [ ] **P3.5 Misurazione continuativa & Indexing Monitor** — Monitoraggio periodico in Google Search Console del passaggio dei 100 URL da "Rilevate" a "Indicizzate", impressioni e CTR; controllo referral motori AI (`utm_source=chatgpt.com`, `perplexity.ai`) e sessioni Clarity.
+- [x] **P3.5 Misurazione continuativa, GEO Referrals & Indexing Monitor** — 2026-10-30 Production.
+  - Verifica live di crawlability sui 100 URL della sitemap: 100% HTTP 200, canonical autoreferenziali, corretti tag alternate bilingui e zero direttive `noindex` non intenzionali.
+  - Motore di tracciamento GEO & AI Referrals integrato in `GoogleAnalytics.tsx`: rileva accessi da ChatGPT Search, Perplexity AI, Claude, Copilot e Gemini e spedisce l'evento custom `ai_search_referral` a GA4, registrando contestualmente il tag di sessione `ai_engine` in Microsoft Clarity per il replay delle visite.
+  - Console Admin con monitoraggio di qualità SEO e trigger manuale/automatico IndexNow.
 
 ---
 
-## Focus Operativo Corrente: P3.5 Misurazione & Indexing Monitor
+## Monitoraggio operativo continuativo: Checklist periodica
 
-Obiettivo: Monitorare in Google Search Console e Bing Webmaster Tools l'indicizzazione dei 100 URL della sitemap aggiornata, verificare il traffico organico in ingresso verso i dossier aeroportuali e verificare eventuali citazioni o referral da motori di risposta AI (Perplexity, ChatGPT Search con utm_source).
+1. **Google Search Console:** Verifica settimanale del passaggio graduale dei 100 URL bilingui da "Rilevate" a "Indicizzate" (crawling fisiologico senza forzature).
+2. **Bing Webmaster Tools & IndexNow:** Controllo dell'indice Bing e dell'avvenuta elaborazione degli URL inoltrati.
+3. **GA4 & GEO Traffic:** Monitoraggio degli eventi custom `ai_search_referral` e delle landing page più citate dai modelli di linguaggio.
+4. **Microsoft Clarity:** Analisi delle sessioni per accertare l'usabilità borderless su mobile/desktop e l'assenza di frizioni durante la consultazione dei dati di sicurezza e liquidi.
