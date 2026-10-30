@@ -89,6 +89,12 @@ export function getAirportFaqStructuredData(airport: Airport, lang: Language) {
   const intHours = airport.recommendedArrivalHours?.international || 3;
   const waitMin = airport.averageSecurityWaitMin || 15;
 
+  const security = airport.securityPolicy;
+  const has3D = Boolean(security?.has3DScanners);
+  const liquidsAllowance = security ? (isItalian ? security.liquidsAllowance_it : security.liquidsAllowance_en) : '';
+  const scannersNote = security ? (isItalian ? security.scannersNote_it : security.scannersNote_en) : '';
+  const electronicsInBag = Boolean(security?.electronicsInBag);
+
   const mapsUrl = airport.coordinates
     ? `https://www.google.com/maps/dir/?api=1&destination=${airport.coordinates.lat},${airport.coordinates.lng}`
     : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${displayName} ${city}`)}`;
@@ -99,7 +105,41 @@ export function getAirportFaqStructuredData(airport: Airport, lang: Language) {
     acceptedAnswer: { '@type': 'Answer'; text: string };
   }> = [];
 
-  // 1. Anticipo consigliato in aeroporto
+  // 1. Regole liquidi e scanner 3D EDS-CB C3
+  const liquidsAnswerIt = has3D
+    ? `Nello scalo di ${displayName} (${airport.iata}) sono operative corsie di sicurezza con scanner tomografici 3D EDS-CB C3: ${scannersNote || liquidsAllowance}. ${electronicsInBag ? 'Dispositivi elettronici come laptop e tablet possono rimanere all’interno del bagaglio a mano.' : 'I dispositivi elettronici devono essere estratti se richiesto dal personale di sicurezza.'}`
+    : `All'aeroporto di ${displayName} (${airport.iata}) si applica la normativa di sicurezza standard: i liquidi sono consentiti esclusivamente in contenitori singoli da massimo 100 ml ciascuno, racchiusi in una busta trasparente e richiudibile della capienza massima di 1 litro. Dispositivi elettronici e liquidi devono essere estratti e riposti nelle vaschette ai controlli.`;
+
+  const liquidsAnswerEn = has3D
+    ? `At ${displayName} (${airport.iata}), security screening checkpoints equipped with EDS-CB C3 3D scanners are operational: ${scannersNote || liquidsAllowance}. ${electronicsInBag ? 'Electronic devices (laptops and tablets) can remain inside your cabin baggage.' : 'Electronic devices must be removed if requested by screening staff.'}`
+    : `At ${displayName} (${airport.iata}), standard aviation security regulations apply: liquids are permitted only in individual containers of maximum 100ml each, placed in a single transparent, resealable bag of up to 1-litre capacity. Liquids and large electronic devices must be removed for separate screening at security.`;
+
+  questions.push({
+    '@type': 'Question',
+    name: isItalian
+      ? `Quali sono le regole sui liquidi e la presenza di scanner 3D a ${displayName}?`
+      : `What are the liquids rules and 3D scanner guidelines at ${displayName}?`,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: isItalian ? liquidsAnswerIt : liquidsAnswerEn,
+    },
+  });
+
+  // 2. Powerbank e batterie al litio nel bagaglio a mano
+  questions.push({
+    '@type': 'Question',
+    name: isItalian
+      ? `Come vanno trasportate le powerbank e le batterie al litio sui voli da ${displayName}?`
+      : `How should powerbanks and lithium batteries be carried on flights from ${displayName}?`,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: isItalian
+        ? `Tutte le powerbank, le batterie al litio sciolte di ricambio e le sigarette elettroniche devono essere trasportate esclusivamente nel bagaglio a mano (con potenza massima di 100 Wh, oppure fino a 160 Wh previa autorizzazione della compagnia aerea). È severamente vietato imbarcare powerbank nel bagaglio registrato da stiva per norme internazionali di prevenzione incendi (ICAO/EASA).`
+        : `All powerbanks, spare lithium batteries, and e-cigarettes must strictly be packed inside your cabin carry-on baggage (rated up to 100 Wh, or up to 160 Wh with prior airline approval). Transporting powerbanks in checked hold luggage is strictly prohibited under international aviation safety regulations (ICAO/EASA).`,
+    },
+  });
+
+  // 3. Anticipo consigliato in aeroporto
   questions.push({
     '@type': 'Question',
     name: isItalian
@@ -113,7 +153,7 @@ export function getAirportFaqStructuredData(airport: Airport, lang: Language) {
     },
   });
 
-  // 2. Trasporti verso il centro
+  // 4. Trasporti verso il centro
   if (airport.transports && airport.transports.length > 0) {
     const transportSummary = airport.transports
       .slice(0, 3)
@@ -134,7 +174,7 @@ export function getAirportFaqStructuredData(airport: Airport, lang: Language) {
     });
   }
 
-  // 3. Indirizzo, coordinate e indicazioni stradali
+  // 5. Indirizzo, coordinate e indicazioni stradali
   questions.push({
     '@type': 'Question',
     name: isItalian
@@ -148,7 +188,7 @@ export function getAirportFaqStructuredData(airport: Airport, lang: Language) {
     },
   });
 
-  // 4. Codici identificativi IATA, ICAO e sito ufficiale
+  // 6. Codici identificativi IATA, ICAO e sito ufficiale
   const icaoText = airport.icao ? ` (codice ICAO: ${airport.icao})` : '';
   const icaoTextEn = airport.icao ? ` (ICAO code: ${airport.icao})` : '';
   const websiteText = airport.officialWebsite ? ` Il sito web ufficiale dell'aeroporto è: ${airport.officialWebsite}` : '';

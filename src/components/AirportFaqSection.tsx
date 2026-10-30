@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ChevronDown, ExternalLink, MapPin, Clock, Navigation } from 'lucide-react';
+import { ChevronDown, ExternalLink, MapPin, Clock, Navigation, ShieldCheck, BatteryCharging } from 'lucide-react';
 import { cleanOfficialWebsiteUrl } from '@/lib/aviation-authority';
 import type { Airport, Language } from '@/types/airport';
 
@@ -13,10 +13,14 @@ interface AirportFaqSectionProps {
 /**
  * Ultra-minimalist, single-row collapsible FAQ & Airport Details bar.
  * Keeps the page completely clean by default (one slim discrete row).
- * Expands on tap to show non-redundant practical details:
- * - Airport info, clickable address with Google Maps directions, coordinates & official website
- * - Recommended arrival timing & average security wait
- * - Ground transport to the city centre
+ * Expands on tap to show comprehensive, authoritative travel details:
+ * 1. Liquids & 3D Scanner Regulations (EDS-CB C3 vs standard 100ml)
+ * 2. Lithium Batteries & Powerbank Safety Rules (Cabin only)
+ * 3. Recommended Arrival Timing & Security Screening Wait
+ * 4. Ground Transport to the City Centre (Durations & Costs)
+ * 5. Location, Google Maps Directions & Official Website Link
+ * 
+ * 100% Borderless Minimalist Aesthetic enforced.
  */
 export function AirportFaqSection({ airport, lang }: AirportFaqSectionProps) {
   const isItalian = lang === 'it';
@@ -27,6 +31,12 @@ export function AirportFaqSection({ airport, lang }: AirportFaqSectionProps) {
   const domHours = airport.recommendedArrivalHours?.domestic || 2;
   const intHours = airport.recommendedArrivalHours?.international || 3;
   const waitMin = airport.averageSecurityWaitMin || 15;
+
+  const security = airport.securityPolicy;
+  const has3D = Boolean(security?.has3DScanners);
+  const liquidsAllowance = security ? (isItalian ? security.liquidsAllowance_it : security.liquidsAllowance_en) : '';
+  const scannersNote = security ? (isItalian ? security.scannersNote_it : security.scannersNote_en) : '';
+  const electronicsInBag = Boolean(security?.electronicsInBag);
 
   const officialUrl = airport.officialWebsite 
     ? cleanOfficialWebsiteUrl(airport.officialWebsite, airport.iata)
@@ -51,8 +61,8 @@ export function AirportFaqSection({ airport, lang }: AirportFaqSectionProps) {
             </span>
             <span className="text-xs sm:text-sm font-semibold text-zinc-700 dark:text-zinc-200">
               {isItalian 
-                ? `FAQ, contatti e info pratiche su ${name}` 
-                : `FAQ, contacts & practical info for ${name}`}
+                ? `FAQ, sicurezza liquidi e info pratiche su ${name}` 
+                : `FAQ, liquids rules & travel info for ${name}`}
             </span>
           </div>
           <div className="flex items-center gap-2">
@@ -65,11 +75,128 @@ export function AirportFaqSection({ airport, lang }: AirportFaqSectionProps) {
           </div>
         </summary>
 
-        {/* Expandable Clean Details Grid - Borderless */}
+        {/* Expandable Clean Details Grid - 100% Borderless */}
         <div className="p-4 sm:p-5 bg-zinc-50/30 dark:bg-zinc-900/40 text-xs sm:text-sm space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4">
             
-            {/* 1. Info e Contatti Aeroporto con Google Maps */}
+            {/* 1. Regole Liquidi & Scanner 3D */}
+            <div className="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-zinc-850 shadow-2xs space-y-2.5 md:col-span-2 lg:col-span-1">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2 text-zinc-900 dark:text-white font-bold text-xs">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
+                  <span>{isItalian ? 'Regole Liquidi & Scanner 3D' : 'Liquids & 3D Scanners'}</span>
+                </div>
+                <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full ${
+                  has3D 
+                    ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300' 
+                    : 'bg-[#E8F1F2] dark:bg-zinc-800 text-[#05668D] dark:text-[#5EAAA8]'
+                }`}>
+                  {has3D ? 'Scanner 3D C3' : (isItalian ? 'Standard 100 ml' : 'Standard 100ml')}
+                </span>
+              </div>
+              <div className="space-y-1.5 text-xs text-zinc-600 dark:text-zinc-300">
+                <p>
+                  {has3D ? (
+                    isItalian
+                      ? `Nello scalo sono attive corsie con scanner tomografici 3D EDS-CB C3. ${scannersNote || liquidsAllowance}`
+                      : `Checkpoints equipped with EDS-CB C3 3D scanners are operational. ${scannersNote || liquidsAllowance}`
+                  ) : (
+                    isItalian
+                      ? `Vige la normativa standard: liquidi ammessi solo in flaconi da massimo 100 ml ciascuno, riposti in una busta trasparente da 1 litro.`
+                      : `Standard security rules apply: liquids allowed in containers of max 100ml each, inside a clear 1-litre resealable bag.`
+                  )}
+                </p>
+                <p className="text-[11.5px] text-zinc-500 dark:text-zinc-400">
+                  <strong className="text-zinc-700 dark:text-zinc-200">
+                    {isItalian ? 'Dispositivi elettronici:' : 'Electronic devices:'}
+                  </strong>{' '}
+                  {electronicsInBag 
+                    ? (isItalian ? 'Laptop e tablet possono rimanere all’interno del bagaglio a mano.' : 'Laptops and tablets can remain inside carry-on luggage.')
+                    : (isItalian ? 'Vanno estratti e inseriti nelle apposite vaschette.' : 'Must be removed and screened in separate trays.')}
+                </p>
+              </div>
+            </div>
+
+            {/* 2. Powerbank & Batterie al Litio */}
+            <div className="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-zinc-850 shadow-2xs space-y-2.5">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2 text-zinc-900 dark:text-white font-bold text-xs">
+                  <BatteryCharging className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
+                  <span>{isItalian ? 'Powerbank & Batterie' : 'Powerbanks & Batteries'}</span>
+                </div>
+                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-800 dark:text-amber-300">
+                  {isItalian ? 'Solo a mano' : 'Cabin only'}
+                </span>
+              </div>
+              <div className="space-y-1.5 text-xs text-zinc-600 dark:text-zinc-300">
+                <p>
+                  {isItalian
+                    ? 'Le powerbank, le batterie al litio sciolte e le sigarette elettroniche devono essere portate esclusivamente nel bagaglio a mano.'
+                    : 'Powerbanks, spare lithium batteries, and e-cigarettes must strictly be carried inside cabin hand baggage.'}
+                </p>
+                <p className="text-[11.5px] text-zinc-500 dark:text-zinc-400">
+                  {isItalian
+                    ? 'Limite tipico: max 100 Wh (fino a 160 Wh su autorizzazione). Severamente vietate in stiva.'
+                    : 'Standard rating: up to 100 Wh (up to 160 Wh with airline permit). Strictly forbidden in checked hold luggage.'}
+                </p>
+              </div>
+            </div>
+
+            {/* 3. Anticipo Orario e Tempi di Attesa */}
+            <div className="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-zinc-850 shadow-2xs space-y-2.5">
+              <div className="flex items-center gap-2 text-zinc-900 dark:text-white font-bold text-xs">
+                <Clock className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
+                <span>{isItalian ? 'Anticipo in Aeroporto' : 'Arrival Time & Screening'}</span>
+              </div>
+              <div className="space-y-1.5 text-xs text-zinc-600 dark:text-zinc-300">
+                <p>
+                  <strong className="text-zinc-700 dark:text-zinc-200">{isItalian ? 'Voli Nazionali / Schengen:' : 'Domestic / Schengen:'}</strong> {domHours} {isItalian ? 'ore prima' : 'hours early'}
+                </p>
+                <p>
+                  <strong className="text-zinc-700 dark:text-zinc-200">{isItalian ? 'Voli Internazionali:' : 'International flights:'}</strong> {intHours} {isItalian ? 'ore prima' : 'hours early'}
+                </p>
+                <p className="text-[11.5px] text-zinc-500 dark:text-zinc-400 pt-0.5">
+                  {isItalian
+                    ? `Attesa media ai varchi stimata in circa ${waitMin} minuti.`
+                    : `Average security screening wait is around ${waitMin} minutes.`}
+                </p>
+              </div>
+            </div>
+
+            {/* 4. Trasporti verso la Città */}
+            <div className="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-zinc-850 shadow-2xs space-y-2.5">
+              <div className="flex items-center gap-2 text-zinc-900 dark:text-white font-bold text-xs">
+                <Navigation className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
+                <span>{isItalian ? 'Collegamenti Centro Città' : 'City Transport Links'}</span>
+              </div>
+              <div className="space-y-1.5 text-xs text-zinc-600 dark:text-zinc-300">
+                {airport.transports && airport.transports.length > 0 ? (
+                  <ul className="space-y-1">
+                    {airport.transports.slice(0, 2).map((t) => (
+                      <li key={t.id || t.name_it} className="truncate">
+                        <strong className="text-zinc-700 dark:text-zinc-200">
+                          {isItalian ? t.name_it : t.name_en}:
+                        </strong>{' '}
+                        <span className="font-mono text-[11px] text-zinc-500 dark:text-zinc-400">
+                          ~{t.duration} ({t.estimatedCost})
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-[11.5px] text-zinc-500 dark:text-zinc-400">
+                    {isItalian
+                      ? `Servizi taxi ufficiali, navette bus e collegamenti stradali diretti per ${city}.`
+                      : `Official taxis, express airport buses, and direct road links to ${city}.`}
+                  </p>
+                )}
+                <p className="text-[11px] text-zinc-400 dark:text-zinc-500 pt-0.5">
+                  {isItalian ? 'Taxi con tariffario ufficiale esposto' : 'Official taxis with posted flat fares'}
+                </p>
+              </div>
+            </div>
+
+            {/* 5. Info e Contatti Aeroporto con Google Maps */}
             <div className="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-zinc-850 shadow-2xs space-y-2.5">
               <div className="flex items-center gap-2 text-zinc-900 dark:text-white font-bold text-xs">
                 <MapPin className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
@@ -126,60 +253,6 @@ export function AirportFaqSection({ airport, lang }: AirportFaqSectionProps) {
                     </a>
                   )}
                 </div>
-              </div>
-            </div>
-
-            {/* 2. Anticipo Orario e Tempi di Attesa */}
-            <div className="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-zinc-850 shadow-2xs space-y-2.5">
-              <div className="flex items-center gap-2 text-zinc-900 dark:text-white font-bold text-xs">
-                <Clock className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
-                <span>{isItalian ? 'Anticipo in Aeroporto' : 'Arrival Time & Screening'}</span>
-              </div>
-              <div className="space-y-1.5 text-xs text-zinc-600 dark:text-zinc-300">
-                <p>
-                  <strong className="text-zinc-700 dark:text-zinc-200">{isItalian ? 'Voli Nazionali / Schengen:' : 'Domestic / Schengen:'}</strong> {domHours} {isItalian ? 'ore prima' : 'hours early'}
-                </p>
-                <p>
-                  <strong className="text-zinc-700 dark:text-zinc-200">{isItalian ? 'Voli Internazionali:' : 'International flights:'}</strong> {intHours} {isItalian ? 'ore prima' : 'hours early'}
-                </p>
-                <p className="text-[11.5px] text-zinc-500 dark:text-zinc-400 pt-0.5">
-                  {isItalian
-                    ? `Attesa media ai varchi stimata in circa ${waitMin} minuti.`
-                    : `Average security screening wait is around ${waitMin} minutes.`}
-                </p>
-              </div>
-            </div>
-
-            {/* 3. Trasporti verso la Città */}
-            <div className="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-zinc-850 shadow-2xs space-y-2.5">
-              <div className="flex items-center gap-2 text-zinc-900 dark:text-white font-bold text-xs">
-                <Navigation className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
-                <span>{isItalian ? 'Collegamenti Centro Città' : 'City Transport Links'}</span>
-              </div>
-              <div className="space-y-1.5 text-xs text-zinc-600 dark:text-zinc-300">
-                {airport.transports && airport.transports.length > 0 ? (
-                  <ul className="space-y-1">
-                    {airport.transports.slice(0, 2).map((t) => (
-                      <li key={t.id || t.name_it} className="truncate">
-                        <strong className="text-zinc-700 dark:text-zinc-200">
-                          {isItalian ? t.name_it : t.name_en}:
-                        </strong>{' '}
-                        <span className="font-mono text-[11px] text-zinc-500 dark:text-zinc-400">
-                          ~{t.duration} ({t.estimatedCost})
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="text-[11.5px] text-zinc-500 dark:text-zinc-400">
-                    {isItalian
-                      ? `Servizi taxi ufficiali, navette bus e collegamenti stradali diretti per ${city}.`
-                      : `Official taxis, express airport buses, and direct road links to ${city}.`}
-                  </p>
-                )}
-                <p className="text-[11px] text-zinc-400 dark:text-zinc-500 pt-0.5">
-                  {isItalian ? 'Taxi con tariffario ufficiale esposto' : 'Official taxis with posted flat fares'}
-                </p>
               </div>
             </div>
 

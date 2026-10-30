@@ -61,9 +61,12 @@
 ### P3 — Contenuti, GEO e misurazione
 
 - [x] **P3.1 Template dossier** — 2026-10-27 Production. `AirportSeoDossier` e `AirportBubblesView` rendono identità, sicurezza/liquidi, terminal, compagnie, servizi, trasporti, FAQ e fonti ufficiali.
-- [x] **P3.2a Guida liquidi/scanner IT/EN** — 2026-10-27 Production. Route `/guide/liquidi-bagaglio-a-mano` e `/en/guides/liquids-in-carry-on-baggage` live con fonti europee primarie e aggiornamento visibile.
+- [x] **P3.2 Intenti, contenuti e FAQ GEO (IT/EN)** — 2026-10-30 Production.
+  - [x] **P3.2a Guida liquidi/scanner IT/EN:** Route `/guide/liquidi-bagaglio-a-mano` e `/en/guides/liquids-in-carry-on-baggage` live con fonti primarie UE/nazionali e data di aggiornamento visibile.
+  - [x] **P3.2b Q&A mirate per dossier aeroportuali:** Integrazione in `AirportFaqSection` e in `getAirportFaqStructuredData` delle domande ad alto intento di ricerca (Regole liquidi e scanner 3D C3 per scalo, estrazione laptop/tablet, regole internazionali ICAO/EASA per powerbank e batterie al litio in cabina vs stiva vietata, anticipo orario, trasporti e indicazioni Google Maps). 100% borderless e validato Schema.org.
+- [x] **P3.3 Fonti, fiducia e citabilità AI** — 2026-10-30 Production. Collegamento diretto alla fonte istituzionale autoritativa verificata per ciascuno dei 48 scali commerciali, timestamp di verifica esplicito, link diretti a percorsi Google Maps e distinzione formale delle procedure operative.
 - [x] **P3.4 Dati strutturati Schema.org** — 2026-10-28 Production. `@graph` unificato (Organization, WebSite, BreadcrumbList, Airport, FAQPage) valido e conforme per Rich Snippets.
-- [ ] **P3.5 Misurazione continuativa** — Monitoraggio settimanale in Google Search Console del passaggio dei 78 URL da "Scansionate" a "Indicizzate", impressioni e CTR; controllo referral AI (`utm_source=chatgpt.com`).
+- [ ] **P3.5 Misurazione continuativa & Indexing Monitor** — Monitoraggio periodico in Google Search Console del passaggio dei 100 URL da "Rilevate" a "Indicizzate", impressioni e CTR; controllo referral motori AI (`utm_source=chatgpt.com`, `perplexity.ai`) e sessioni Clarity.
 
 ---
 

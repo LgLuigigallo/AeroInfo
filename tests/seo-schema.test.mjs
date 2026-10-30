@@ -26,6 +26,12 @@ assert(
   'structured-data.ts must combine BreadcrumbList, Airport, and FAQPage in @graph'
 );
 
+assert(
+  structuredDataFile.includes('Quali sono le regole sui liquidi e la presenza di scanner 3D') &&
+  structuredDataFile.includes('Come vanno trasportate le powerbank e le batterie al litio'),
+  'structured-data.ts must include high-intent questions on liquids and lithium powerbanks'
+);
+
 // 2. Read AirportSeoDossier.tsx to ensure AirportDossierInteractiveWrapper is rendered cleanly
 const dossierFile = readFileSync('src/components/AirportSeoDossier.tsx', 'utf8');
 
@@ -73,8 +79,13 @@ assert(
 
 const faqFile = readFileSync('src/components/AirportFaqSection.tsx', 'utf8');
 assert(
-  !faqFile.includes('border border-zinc') && !faqFile.includes('border-t border-zinc'),
+  !faqFile.includes('border'),
   'AirportFaqSection container and cards must remain 100% borderless'
+);
+
+assert(
+  faqFile.includes('Regole Liquidi & Scanner 3D') && faqFile.includes('Powerbank & Batterie'),
+  'AirportFaqSection must render structured answers for liquids and powerbanks'
 );
 
 // 5. Verify SEO internal links in Footer and cross-linking in AirportBubblesView
