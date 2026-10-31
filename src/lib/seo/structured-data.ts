@@ -105,6 +105,20 @@ export function getAirportFaqStructuredData(airport: Airport, lang: Language) {
     acceptedAnswer: { '@type': 'Answer'; text: string };
   }> = [];
 
+  // 0. Domanda cardine sulle informazioni generali e controlli dell'aeroporto (High-Intent SEO/GEO)
+  questions.push({
+    '@type': 'Question',
+    name: isItalian
+      ? `Quali sono le informazioni utili e le regole di sicurezza all'Aeroporto di ${displayName} (${airport.iata})?`
+      : `What are the essential travel and security details for ${displayName} (${airport.iata})?`,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: isItalian
+        ? `L'Aeroporto di ${displayName} (${airport.iata}) serve ${city}, ${country}. ${has3D ? 'Lo scalo è provvisto di scanner tomografici 3D EDS-CB C3 che consentono di lasciare liquidi e PC nel bagaglio a mano.' : 'Si applica la normativa europea standard sui liquidi (max 100 ml per flacone in sacchetto da 1 litro).' } Powerbank e batterie al litio vanno riposte esclusivamente nel bagaglio a mano. Si raccomanda di arrivare con ${domHours} ore di anticipo per voli nazionali e ${intHours} ore per internazionali (tempo medio controlli: ~${waitMin} min).`
+        : `${displayName} (${airport.iata}) serves ${city}, ${country}. ${has3D ? 'Security checkpoints feature EDS-CB C3 3D scanners: liquids and laptops can stay inside cabin baggage.' : 'Standard European liquids rule applies (max 100ml containers in 1L clear bag).' } Powerbanks and lithium batteries are permitted in cabin baggage only. Recommended arrival is ${domHours}h before domestic and ${intHours}h before international flights (average security wait: ~${waitMin} min).`,
+    },
+  });
+
   // 1. Regole liquidi e scanner 3D EDS-CB C3
   const liquidsAnswerIt = has3D
     ? `Nello scalo di ${displayName} (${airport.iata}) sono operative corsie di sicurezza con scanner tomografici 3D EDS-CB C3: ${scannersNote || liquidsAllowance}. ${electronicsInBag ? 'Dispositivi elettronici come laptop e tablet possono rimanere all’interno del bagaglio a mano.' : 'I dispositivi elettronici devono essere estratti se richiesto dal personale di sicurezza.'}`
