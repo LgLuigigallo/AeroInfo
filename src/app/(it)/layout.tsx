@@ -20,8 +20,8 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.aero-info.eu'),
-  title: 'AeroInfo — Scanner 3D, Regole Liquidi e Controlli Aeroporto',
-  description: 'Tutto ciò che devi sapere prima di volare: presenza di scanner 3D EDS-CB, regole liquidi nel bagaglio a mano, tempi di attesa e servizi nei principali aeroporti.',
+  title: 'AeroInfo — Info Aeroporti, Scanner 3D, Regole Liquidi e Terminal',
+  description: 'Tutte le informazioni sui principali aeroporti: scanner 3D EDS-CB, regole liquidi e bagaglio a mano, tempi di attesa ai controlli e terminal prima del volo.',
   alternates: {
     canonical: 'https://www.aero-info.eu/',
     languages: {
@@ -31,8 +31,8 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'AeroInfo — Scanner 3D, Regole Liquidi e Controlli Aeroporto',
-    description: 'Tutto ciò che devi sapere prima di volare: presenza di scanner 3D EDS-CB, regole liquidi nel bagaglio a mano, tempi di attesa e servizi nei principali aeroporti.',
+    title: 'AeroInfo — Info Aeroporti, Scanner 3D, Regole Liquidi e Terminal',
+    description: 'Tutte le informazioni sui principali aeroporti: scanner 3D EDS-CB, regole liquidi e bagaglio a mano, tempi di attesa ai controlli e terminal prima del volo.',
     url: 'https://www.aero-info.eu/',
     siteName: 'AeroInfo',
     locale: 'it_IT',
@@ -40,8 +40,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary',
-    title: 'AeroInfo — Scanner 3D, Regole Liquidi e Controlli Aeroporto',
-    description: 'Tutto ciò che devi sapere prima di volare: presenza di scanner 3D EDS-CB, regole liquidi nel bagaglio a mano, tempi di attesa e servizi nei principali aeroporti.',
+    title: 'AeroInfo — Info Aeroporti, Scanner 3D, Regole Liquidi e Terminal',
+    description: 'Tutte le informazioni sui principali aeroporti: scanner 3D EDS-CB, regole liquidi e bagaglio a mano, tempi di attesa ai controlli e terminal prima del volo.',
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,

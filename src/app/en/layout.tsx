@@ -11,8 +11,8 @@ const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin']
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.aero-info.eu'),
-  title: 'AeroInfo — 3D Scanners, Liquid Rules & Airport Security Guide',
-  description: 'Everything you need to know before flying: 3D scanner availability, carry-on liquid limits, security wait times, and terminal guides for major airports.',
+  title: 'AeroInfo — Airport Info, 3D Scanners, Liquid Rules & Terminals',
+  description: 'Comprehensive airport information and travel guides: next-gen 3D scanners, carry-on liquid limits, baggage rules, wait times, and terminal guides for major airports.',
   alternates: {
     canonical: 'https://www.aero-info.eu/en',
     languages: {
@@ -22,8 +22,8 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'AeroInfo — 3D Scanners, Liquid Rules & Airport Security Guide',
-    description: 'Everything you need to know before flying: 3D scanner availability, carry-on liquid limits, security wait times, and terminal guides for major airports.',
+    title: 'AeroInfo — Airport Info, 3D Scanners, Liquid Rules & Terminals',
+    description: 'Comprehensive airport information and travel guides: next-gen 3D scanners, carry-on liquid limits, baggage rules, wait times, and terminal guides for major airports.',
     url: 'https://www.aero-info.eu/en',
     siteName: 'AeroInfo',
     locale: 'en_US',
@@ -31,8 +31,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary',
-    title: 'AeroInfo — 3D Scanners, Liquid Rules & Airport Security Guide',
-    description: 'Everything you need to know before flying: 3D scanner availability, carry-on liquid limits, security wait times, and terminal guides for major airports.',
+    title: 'AeroInfo — Airport Info, 3D Scanners, Liquid Rules & Terminals',
+    description: 'Comprehensive airport information and travel guides: next-gen 3D scanners, carry-on liquid limits, baggage rules, wait times, and terminal guides for major airports.',
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,

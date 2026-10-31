@@ -26,12 +26,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const cityName = airport.city_en || airport.city_it;
 
   const title = has3D
-    ? `${airportName} (${airport.iata}): 3D Scanners & Liquid Rules | AeroInfo`
-    : `${airportName} (${airport.iata}): Security Screening, Liquids & Terminals | AeroInfo`;
+    ? `${airportName} (${airport.iata}) Airport Info: 3D Scanners, Liquids & Terminal Guide | AeroInfo`
+    : `${airportName} (${airport.iata}) Airport Info: Security Screening, Liquids & Terminals | AeroInfo`;
 
   const description = has3D
-    ? `Airport security guide for ${airportName} (${airport.iata}): next-gen 3D scanners in use, carry-on liquids and electronics rules, terminals, and city transport.`
-    : `Security screening guide for ${airportName} (${airport.iata}): 100ml liquid limits, cabin baggage rules, terminals, and airport navigation in ${cityName}.`;
+    ? `Complete airport information and security guide for ${airportName} (${airport.iata}): next-gen 3D scanners in use, carry-on liquids and electronics rules, terminals, and city transport in ${cityName}.`
+    : `Complete airport information and security guide for ${airportName} (${airport.iata}): 100ml liquid limits, cabin baggage rules, security wait times, and terminal navigation in ${cityName}.`;
 
   const canonicalUrl = new URL(airportPath(airport, 'en'), SITE_URL).toString();
   const alternateIt = new URL(airportPath(airport, 'it'), SITE_URL).toString();

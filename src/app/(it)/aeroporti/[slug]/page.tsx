@@ -24,12 +24,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const has3D = Boolean(airport.securityPolicy?.has3DScanners);
   const title = has3D
-    ? `${airport.name_it} (${airport.iata}): Scanner 3D e Regole Liquidi | AeroInfo`
-    : `${airport.name_it} (${airport.iata}): Controlli Sicurezza, Liquidi e Terminal | AeroInfo`;
+    ? `Informazioni Aeroporto ${airport.name_it} (${airport.iata}): Scanner 3D, Liquidi e Terminal | AeroInfo`
+    : `Informazioni Aeroporto ${airport.name_it} (${airport.iata}): Controlli Sicurezza, Liquidi e Terminal | AeroInfo`;
 
   const description = has3D
-    ? `Guida ai controlli di ${airport.name_it} (${airport.iata}): presenza di scanner 3D per non estrarre liquidi e PC, regole bagagli, terminal e collegamenti per ${airport.city_it}.`
-    : `Guida ai controlli di sicurezza a ${airport.name_it} (${airport.iata}): limite liquidi 100ml in busta trasparente, regole bagaglio a mano, terminal e tempi di attesa.`;
+    ? `Tutte le informazioni sull'aeroporto di ${airport.name_it} (${airport.iata}): presenza di scanner 3D per non estrarre liquidi e PC, regole bagagli, terminal e collegamenti per ${airport.city_it}.`
+    : `Tutte le informazioni sull'aeroporto di ${airport.name_it} (${airport.iata}): controlli di sicurezza, limite liquidi 100ml in busta trasparente, regole bagaglio a mano, terminal e tempi di attesa.`;
 
   const canonicalUrl = new URL(airportPath(airport, 'it'), SITE_URL).toString();
   const alternateEn = new URL(airportPath(airport, 'en'), SITE_URL).toString();

@@ -157,7 +157,7 @@ export function AirportBubblesView({
             </div>
 
             <h1 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-white tracking-tight flex items-center gap-2.5 flex-wrap">
-              <span>{name}</span>
+              <span>{isItalian ? `Informazioni ${name.startsWith('Aeroporto') ? name : `Aeroporto ${name}`}` : `${name} — Airport Information`}</span>
               {airport.countryCode && (
                 <CountryFlag countryCode={airport.countryCode} countryName={country} />
               )}
@@ -235,6 +235,52 @@ export function AirportBubblesView({
                 <ExternalLink className="w-3 h-3" />
               </a>
             )}
+          </div>
+        </div>
+
+        {/* Definitive AI Overview & Traveler Information Block (100% Borderless) */}
+        <div className="mt-5 pt-4 bg-zinc-50/80 dark:bg-zinc-800/40 rounded-2xl p-4 sm:p-5 space-y-3">
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-[#05668D] text-white">
+              {isItalian ? 'Riepilogo Info' : 'Quick Facts'}
+            </span>
+            <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+              {isItalian ? `Informazioni essenziali per chi parte da ${airport.iata}` : `Essential travel information for ${airport.iata}`}
+            </h2>
+          </div>
+
+          <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
+            {isItalian ? (
+              <>
+                L&apos;aeroporto di <strong>{name} ({airport.iata})</strong> serve l&apos;area di <strong>{city}</strong>. {policy.has3DScanners ? 'Ai varchi di sicurezza sono attivi scanner tomografici 3D EDS-CB C3: puoi lasciare liquidi e computer portatili all’interno del bagaglio a mano.' : 'Ai varchi di sicurezza si applica la normativa europea standard: liquidi ammessi solo in flaconi da massimo 100 ml riposti in un unico sacchetto trasparente da 1 litro.'} Powerbank e batterie al litio sono ammesse <strong>esclusivamente nel bagaglio a mano</strong> (vietate nella stiva). Si consiglia di arrivare in aeroporto con <strong>{airport.recommendedArrivalHours?.domestic || 2} ore di anticipo</strong> per i voli nazionali/Schengen e <strong>{airport.recommendedArrivalHours?.international || 3} ore</strong> per i voli internazionali; il tempo medio stimato ai controlli è di circa {airport.averageSecurityWaitMin || 15} minuti.
+              </>
+            ) : (
+              <>
+                <strong>{name} ({airport.iata})</strong> serves the <strong>{city}</strong> metropolitan area. {policy.has3DScanners ? 'Security checkpoints feature next-generation EDS-CB C3 3D scanners: liquids and laptops can stay inside your cabin bag.' : 'Standard European aviation rules apply: liquids must be in individual containers of up to 100ml placed in a single 1-litre clear bag.'} Powerbanks and spare lithium batteries are permitted <strong>in carry-on baggage only</strong> (strictly forbidden in checked hold luggage). Recommended arrival is <strong>{airport.recommendedArrivalHours?.domestic || 2} hours prior</strong> for domestic/Schengen flights and <strong>{airport.recommendedArrivalHours?.international || 3} hours</strong> for international flights; average security wait time is approximately {airport.averageSecurityWaitMin || 15} minutes.
+              </>
+            )}
+          </p>
+
+          {/* Quick Metric Badges */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-xs font-mono">
+            <div className="p-2.5 rounded-xl bg-white dark:bg-zinc-850 shadow-2xs">
+              <span className="text-[10px] text-zinc-400 block">{isItalian ? 'Scanner 3D' : '3D Scanners'}</span>
+              <span className={`font-bold ${policy.has3DScanners ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-700 dark:text-zinc-200'}`}>
+                {policy.has3DScanners ? 'EDS-CB C3 (Attivi)' : (isItalian ? 'Standard 100ml' : 'Standard 100ml')}
+              </span>
+            </div>
+            <div className="p-2.5 rounded-xl bg-white dark:bg-zinc-850 shadow-2xs">
+              <span className="text-[10px] text-zinc-400 block">{isItalian ? 'Anticipo' : 'Arrival'}</span>
+              <span className="font-bold text-zinc-700 dark:text-zinc-200">{airport.recommendedArrivalHours?.domestic || 2}h / {airport.recommendedArrivalHours?.international || 3}h</span>
+            </div>
+            <div className="p-2.5 rounded-xl bg-white dark:bg-zinc-850 shadow-2xs">
+              <span className="text-[10px] text-zinc-400 block">{isItalian ? 'Attesa Varchi' : 'Security Wait'}</span>
+              <span className="font-bold text-[#05668D] dark:text-[#5EAAA8]">~{airport.averageSecurityWaitMin || 15} min</span>
+            </div>
+            <div className="p-2.5 rounded-xl bg-white dark:bg-zinc-850 shadow-2xs">
+              <span className="text-[10px] text-zinc-400 block">{isItalian ? 'Powerbank' : 'Powerbanks'}</span>
+              <span className="font-bold text-amber-700 dark:text-amber-400">{isItalian ? 'Solo Cabina' : 'Cabin Only'}</span>
+            </div>
           </div>
         </div>
       </section>

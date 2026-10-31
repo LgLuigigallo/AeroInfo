@@ -99,4 +99,15 @@ assert(
   'AirportBubblesView must use crawlable <Link> tags for metropolitan area cross-linking'
 );
 
+// 6. Verify AI Overview Definitional Summary & High-Intent "Informazioni" Target
+assert(
+  bubblesFile.includes('Informazioni') && bubblesFile.includes('Riepilogo Info') && bubblesFile.includes('Attesa Varchi'),
+  'AirportBubblesView must render high-density AI Overview executive summary and key metrics'
+);
+
+assert(
+  welcomeFile.includes('Informazioni e regole sui principali aeroporti') && welcomeFile.includes('featuredAirports.map'),
+  'WelcomeView must render crawlable airport directory cards for broad keywords (info aeroporti)'
+);
+
 console.log('✅ ALL SEO STRUCTURED DATA & MINIMALIST UI TESTS PASSED SUCCESSFULLY!');
