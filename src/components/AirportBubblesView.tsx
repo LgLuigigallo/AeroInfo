@@ -27,6 +27,7 @@ import { Airport, Language, SuggestCategory } from '@/types/airport';
 import { useLanguage } from '@/lib/i18n';
 import { cleanOfficialWebsiteUrl } from '@/lib/aviation-authority';
 import { airportPath } from '@/lib/airport-slug';
+import { trackGuideClick } from '@/lib/analytics';
 import { TerminalMapTab } from './tabs/TerminalMapTab';
 import { SearchBar } from './SearchBar';
 import { SuggestAirportEditModal } from './SuggestAirportEditModal';
@@ -578,12 +579,23 @@ export function AirportBubblesView({
                     </div>
                   </div>
 
-                  {/* Suggest Edit Link */}
-                  <div className="pt-2 flex justify-end">
+                  {/* Link to Comprehensive Liquids Guide & Suggest Edit */}
+                  <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <Link
+                      href={isItalian ? '/guide/liquidi-bagaglio-a-mano' : '/en/guides/liquids-in-carry-on-baggage'}
+                      onClick={() => trackGuideClick('airport_liquids_tab', lang)}
+                      className="inline-flex items-center gap-1.5 text-xs text-zinc-500 hover:text-[#05668D] dark:hover:text-[#5EAAA8] font-mono transition-colors"
+                    >
+                      <Droplets className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
+                      <span className="underline underline-offset-2">
+                        {isItalian ? 'Consulta la guida completa sui liquidi' : 'Read full carry-on liquids guide'}
+                      </span>
+                    </Link>
+
                     <button
                       type="button"
                       onClick={() => handleOpenSuggest('liquids')}
-                      className="inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] hover:text-[#5EAAA8] dark:hover:text-[#B3E5E0] font-semibold transition-colors cursor-pointer"
+                      className="inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] hover:text-[#5EAAA8] dark:hover:text-[#B3E5E0] font-semibold transition-colors cursor-pointer self-end sm:self-auto"
                     >
                       <Edit3 className="w-3.5 h-3.5" />
                       <span>{isItalian ? 'Suggerisci modifica' : 'Suggest edit'}</span>

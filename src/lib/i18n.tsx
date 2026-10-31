@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { trackLanguageSwitch } from '@/lib/analytics';
 import { Language } from '@/types/airport';
 
 interface Translations {
@@ -466,6 +467,9 @@ export function LanguageProvider({
   }, []);
 
   const setLang = (newLang: Language) => {
+    if (newLang !== lang) {
+      trackLanguageSwitch(newLang, lang);
+    }
     setLangState(newLang);
     try {
       localStorage.setItem('aeroinfo_lang', newLang);

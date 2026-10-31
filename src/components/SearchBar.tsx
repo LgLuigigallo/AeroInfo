@@ -6,6 +6,7 @@ import { useLanguage } from '@/lib/i18n';
 import { Airport } from '@/types/airport';
 import { airportsData, searchAirports } from '@/data/airports';
 import { isGeneralAviationAirport } from '@/lib/aviation-authority';
+import { trackSearchBarClick, trackAirportSelect } from '@/lib/analytics';
 
 interface SearchBarProps {
   selectedAirport: Airport | null;
@@ -188,6 +189,7 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
   };
 
   const handleSelect = (airport: Airport) => {
+    trackAirportSelect(airport.iata, lang === 'it' ? airport.name_it : airport.name_en);
     onSelectAirport(airport);
     setIsOpen(false);
     setQuery('');
@@ -226,7 +228,13 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
             setQuery(e.target.value);
             setIsOpen(true);
           }}
-          onFocus={() => setIsOpen(true)}
+          onFocus={() => {
+            setIsOpen(true);
+            trackSearchBarClick('home_hero', lang);
+          }}
+          onClick={() => {
+            trackSearchBarClick('home_hero', lang);
+          }}
           placeholder={t('searchPlaceholder')}
           className="w-full pl-12 pr-24 py-4 rounded-2xl bg-white dark:bg-zinc-900 border-2 border-[#B3E5E0] hover:border-[#5EAAA8] text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 text-sm sm:text-base tracking-tight focus:outline-none focus:border-[#05668D] focus:ring-4 focus:ring-[#B3E5E0]/30 shadow-sm hover:shadow-md focus:shadow-lg transition-all"
         />

@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Plane, ShieldCheck, MessageSquare } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
+import { trackLanguageSwitch } from '@/lib/analytics';
 
 interface HeaderProps {
   onResetHome?: () => void;
@@ -97,7 +98,10 @@ export function Header({ onResetHome }: HeaderProps) {
           >
             <button
               type="button"
-              onClick={() => setLang('it')}
+              onClick={() => {
+                if (lang !== 'it') trackLanguageSwitch('it', lang);
+                setLang('it');
+              }}
               aria-pressed={lang === 'it'}
               className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#05668D] ${
                 lang === 'it'
@@ -111,7 +115,10 @@ export function Header({ onResetHome }: HeaderProps) {
             </button>
             <button
               type="button"
-              onClick={() => setLang('en')}
+              onClick={() => {
+                if (lang !== 'en') trackLanguageSwitch('en', lang);
+                setLang('en');
+              }}
               aria-pressed={lang === 'en'}
               className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#05668D] ${
                 lang === 'en'
