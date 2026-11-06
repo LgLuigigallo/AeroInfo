@@ -30,8 +30,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     : `${airportName} (${airport.iata}) Airport Info: Security Screening, Liquids & Terminals | AeroInfo`;
 
   const description = has3D
-    ? `Complete airport information and security guide for ${airportName} (${airport.iata}): next-gen 3D scanners in use, carry-on liquids and electronics rules, terminals, and city transport in ${cityName}.`
-    : `Complete airport information and security guide for ${airportName} (${airport.iata}): 100ml liquid limits, cabin baggage rules, security wait times, and terminal navigation in ${cityName}.`;
+    ? `${airportName} (${airport.iata}) airport guide: next-gen 3D scanners, liquids & cabin baggage rules. Verified exclusively from official sources, updated every 24h.`
+    : `${airportName} (${airport.iata}) airport guide: 100ml liquid limits, cabin baggage rules & terminals. Verified exclusively from official sources, updated every 24h.`;
 
   const canonicalUrl = new URL(airportPath(airport, 'en'), SITE_URL).toString();
   const alternateIt = new URL(airportPath(airport, 'it'), SITE_URL).toString();

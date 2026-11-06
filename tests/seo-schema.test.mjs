@@ -95,11 +95,34 @@ assert(
 );
 
 assert(
+  footerFile.includes('/scanner-3d-aeroporti') && footerFile.includes('/en/3d-scanners-airports'),
+  'Footer must include crawlable links to the 3D scanners hub in IT and EN'
+);
+
+assert(
   bubblesFile.includes('otherCityAirports.map') && bubblesFile.includes('<Link') && bubblesFile.includes('airportPath(match, lang)'),
   'AirportBubblesView must use crawlable <Link> tags for metropolitan area cross-linking'
 );
 
-// 6. Verify AI Overview Definitional Summary & High-Intent "Informazioni" Target
+// 6. Verify 3D Scanners Super-Hub Component & Structured Data Integrity
+const scannersHubFile = readFileSync('src/components/ScannersHubClient.tsx', 'utf8');
+assert(
+  !scannersHubFile.includes('border'),
+  'ScannersHubClient must remain 100% borderless'
+);
+
+assert(
+  structuredDataFile.includes('getScannersHubStructuredData'),
+  'structured-data.ts must export getScannersHubStructuredData'
+);
+
+const sitemapFile = readFileSync('src/app/sitemap.xml/route.ts', 'utf8');
+assert(
+  sitemapFile.includes('/scanner-3d-aeroporti') && sitemapFile.includes('/en/3d-scanners-airports'),
+  'Sitemap must include 3D scanners hub in IT and EN'
+);
+
+// 7. Verify AI Overview Definitional Summary & High-Intent "Informazioni" Target
 assert(
   bubblesFile.includes('Informazioni') && bubblesFile.includes('Riepilogo Info') && bubblesFile.includes('Attesa Varchi'),
   'AirportBubblesView must render high-density AI Overview executive summary and key metrics'
@@ -108,6 +131,22 @@ assert(
 assert(
   welcomeFile.includes('Informazioni e regole sui principali aeroporti') && welcomeFile.includes('featuredAirports.map'),
   'WelcomeView must render crawlable airport directory cards for broad keywords (info aeroporti)'
+);
+
+// 8. Verify SERP Meta Descriptions explicitly cite official sources and 24h updates
+const layoutItFile = readFileSync('src/app/(it)/layout.tsx', 'utf8');
+const layoutEnFile = readFileSync('src/app/en/layout.tsx', 'utf8');
+const airportPageItFile = readFileSync('src/app/(it)/aeroporti/[slug]/page.tsx', 'utf8');
+const airportPageEnFile = readFileSync('src/app/en/airports/[slug]/page.tsx', 'utf8');
+
+assert(
+  layoutItFile.includes('fonti ufficiali ogni 24h') && layoutEnFile.includes('official airport sources and updated every 24h'),
+  'Home layouts must explicitly state official sources and 24h updates in meta descriptions'
+);
+
+assert(
+  airportPageItFile.includes('fonti ufficiali aggiornati ogni 24h') && airportPageEnFile.includes('official sources, updated every 24h'),
+  'Airport detail pages must explicitly state official sources and 24h updates in meta descriptions'
 );
 
 console.log('✅ ALL SEO STRUCTURED DATA & MINIMALIST UI TESTS PASSED SUCCESSFULLY!');

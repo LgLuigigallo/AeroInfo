@@ -28,8 +28,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     : `Informazioni Aeroporto ${airport.name_it} (${airport.iata}): Controlli Sicurezza, Liquidi e Terminal | AeroInfo`;
 
   const description = has3D
-    ? `Tutte le informazioni sull'aeroporto di ${airport.name_it} (${airport.iata}): presenza di scanner 3D per non estrarre liquidi e PC, regole bagagli, terminal e collegamenti per ${airport.city_it}.`
-    : `Tutte le informazioni sull'aeroporto di ${airport.name_it} (${airport.iata}): controlli di sicurezza, limite liquidi 100ml in busta trasparente, regole bagaglio a mano, terminal e tempi di attesa.`;
+    ? `Informazioni ${airport.name_it} (${airport.iata}): presenza scanner 3D per non estrarre liquidi e PC, varchi e terminal. Dati da fonti ufficiali aggiornati ogni 24h.`
+    : `Informazioni ${airport.name_it} (${airport.iata}): limite liquidi 100ml in busta trasparente, regole bagagli, varchi e terminal. Dati da fonti ufficiali aggiornati ogni 24h.`;
 
   const canonicalUrl = new URL(airportPath(airport, 'it'), SITE_URL).toString();
   const alternateEn = new URL(airportPath(airport, 'en'), SITE_URL).toString();

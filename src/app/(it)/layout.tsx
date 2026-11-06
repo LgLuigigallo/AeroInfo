@@ -21,7 +21,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.aero-info.eu'),
   title: 'AeroInfo — Info Aeroporti, Scanner 3D, Regole Liquidi e Terminal',
-  description: 'Tutte le informazioni sui principali aeroporti: scanner 3D EDS-CB, regole liquidi e bagaglio a mano, tempi di attesa ai controlli e terminal prima del volo.',
+  description: 'Tutte le regole su liquidi, bagagli e scanner 3D prima del volo. Informazioni verificate da fonti ufficiali ogni 24h per superare i controlli in tranquillità.',
   alternates: {
     canonical: 'https://www.aero-info.eu/',
     languages: {
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'AeroInfo — Info Aeroporti, Scanner 3D, Regole Liquidi e Terminal',
-    description: 'Tutte le informazioni sui principali aeroporti: scanner 3D EDS-CB, regole liquidi e bagaglio a mano, tempi di attesa ai controlli e terminal prima del volo.',
+    description: 'Tutte le regole su liquidi, bagagli e scanner 3D prima del volo. Informazioni verificate da fonti ufficiali ogni 24h per superare i controlli in tranquillità.',
     url: 'https://www.aero-info.eu/',
     siteName: 'AeroInfo',
     locale: 'it_IT',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary',
     title: 'AeroInfo — Info Aeroporti, Scanner 3D, Regole Liquidi e Terminal',
-    description: 'Tutte le informazioni sui principali aeroporti: scanner 3D EDS-CB, regole liquidi e bagaglio a mano, tempi di attesa ai controlli e terminal prima del volo.',
+    description: 'Tutte le regole su liquidi, bagagli e scanner 3D prima del volo. Informazioni verificate da fonti ufficiali ogni 24h per superare i controlli in tranquillità.',
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
