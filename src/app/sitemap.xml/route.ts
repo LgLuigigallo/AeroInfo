@@ -33,6 +33,13 @@ async function generateSitemapXml(): Promise<string> {
   addUrl(guideIt, `${liquidsGuide.it.reviewedAt}T00:00:00.000Z`, { it: guideIt, en: guideEn });
   addUrl(guideEn, `${liquidsGuide.en.reviewedAt}T00:00:00.000Z`, { it: guideIt, en: guideEn });
 
+  // 3D Scanners Hub
+  const hubIt = `${SITE_URL}/scanner-3d-aeroporti`;
+  const hubEn = `${SITE_URL}/en/3d-scanners-airports`;
+  const today = '2026-10-31T00:00:00.000Z';
+  addUrl(hubIt, today, { it: hubIt, en: hubEn });
+  addUrl(hubEn, today, { it: hubIt, en: hubEn });
+
   // Airports
   for (const airport of airports) {
     if (getAirportSeoStatus(airport) !== 'indexable') continue;

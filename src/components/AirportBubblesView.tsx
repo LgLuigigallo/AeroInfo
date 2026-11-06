@@ -21,7 +21,8 @@ import {
   ShoppingBag, 
   Sparkles,
   Search,
-  Edit3
+  Edit3,
+  Share2
 } from 'lucide-react';
 import { Airport, Language, SuggestCategory } from '@/types/airport';
 import { useLanguage } from '@/lib/i18n';
@@ -56,6 +57,42 @@ export function AirportBubblesView({
   const [airlineSearch, setAirlineSearch] = useState('');
   const [isSuggestModalOpen, setIsSuggestModalOpen] = useState(false);
   const [suggestCategory, setSuggestCategory] = useState<SuggestCategory>('liquids');
+  const [isCopied, setIsCopied] = useState(false);
+
+  const handleShare = async () => {
+    const shareTitle = isItalian
+      ? `Regole Aeroporto ${name} (${airport.iata})`
+      : `Airport Rules & Info: ${name} (${airport.iata})`;
+    const shareText = isItalian
+      ? `✈️ Controlli sicurezza, liquidi e scanner per ${name} (${airport.iata}) su AeroInfo:`
+      : `✈️ Security rules, liquids and 3D scanners for ${name} (${airport.iata}) on AeroInfo:`;
+    const shareUrl = typeof window !== 'undefined'
+      ? window.location.href
+      : `https://www.aero-info.eu${airportPath(airport, lang)}`;
+
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      try {
+        await navigator.share({
+          title: shareTitle,
+          text: shareText,
+          url: shareUrl,
+        });
+        return;
+      } catch {
+        // user dismissed or native share unsupported
+      }
+    }
+
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      try {
+        await navigator.clipboard.writeText(`${shareText} ${shareUrl}`);
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 2500);
+      } catch {
+        // clipboard unavailable
+      }
+    }
+  };
 
   const handleOpenSuggest = (cat?: SuggestCategory) => {
     if (cat) {
@@ -214,7 +251,7 @@ export function AirportBubblesView({
           </div>
 
           {/* Verification Badge & Source */}
-          <div className="flex flex-col items-start sm:items-end gap-1 text-xs">
+          <div className="flex flex-col items-start sm:items-end gap-1.5 text-xs">
             <div className="inline-flex items-center gap-1.5 text-[#05668D] dark:text-[#5EAAA8] font-medium bg-[#E8F1F2] dark:bg-zinc-800/80 px-2.5 py-1 rounded-full shadow-2xs">
               <ShieldCheck className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
               <span>{t('verifiedOfficial')}</span>
@@ -224,17 +261,28 @@ export function AirportBubblesView({
                 {isItalian ? 'Aggiornato al' : 'Verified on'} {verifiedDateFormatted}
               </span>
             )}
-            {officialUrl && (
-              <a
-                href={officialUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#05668D] dark:text-[#5EAAA8] hover:underline pt-0.5"
+            <div className="flex flex-wrap items-center gap-2 pt-0.5">
+              {officialUrl && (
+                <a
+                  href={officialUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#05668D] dark:text-[#5EAAA8] hover:underline"
+                >
+                  <span>{isItalian ? 'Sito ufficiale' : 'Official website'}</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              )}
+              <button
+                type="button"
+                onClick={handleShare}
+                className="inline-flex items-center gap-1 text-[11px] font-semibold text-zinc-600 dark:text-zinc-300 hover:text-[#05668D] dark:hover:text-[#5EAAA8] bg-zinc-100 dark:bg-zinc-800 hover:bg-[#E8F1F2] dark:hover:bg-zinc-700/80 px-2.5 py-1 rounded-full transition-colors cursor-pointer shadow-2xs"
+                title={t('shareWithBuddy')}
               >
-                <span>{isItalian ? 'Consulta il sito ufficiale' : 'Visit official website'}</span>
-                <ExternalLink className="w-3 h-3" />
-              </a>
-            )}
+                <Share2 className="w-3 h-3 text-[#05668D] dark:text-[#5EAAA8]" />
+                <span>{isCopied ? t('linkCopied') : t('shareWithBuddy')}</span>
+              </button>
+            </div>
           </div>
         </div>
 

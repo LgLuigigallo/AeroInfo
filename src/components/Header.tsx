@@ -24,16 +24,11 @@ function ItalyFlagIcon({ className = 'w-4 h-3' }: { className?: string }) {
 function UKFlagIcon({ className = 'w-4 h-3' }: { className?: string }) {
   return (
     <svg className={`${className} rounded-[2px] shadow-2xs overflow-hidden shrink-0 inline-block`} viewBox="0 0 60 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <clipPath id="ukClip">
-        <rect width="60" height="30" rx="2" />
-      </clipPath>
-      <g clipPath="url(#ukClip)">
-        <rect width="60" height="30" fill="#012169" />
-        <path d="M0 0L60 30M60 0L0 30" stroke="#FFFFFF" strokeWidth="6" />
-        <path d="M0 0L60 30M60 0L0 30" stroke="#C8102E" strokeWidth="3" />
-        <path d="M30 0V30M0 15H60" stroke="#FFFFFF" strokeWidth="10" />
-        <path d="M30 0V30M0 15H60" stroke="#C8102E" strokeWidth="6" />
-      </g>
+      <rect width="60" height="30" fill="#012169" />
+      <path d="M0 0L60 30M60 0L0 30" stroke="#FFFFFF" strokeWidth="6" />
+      <path d="M0 0L60 30M60 0L0 30" stroke="#C8102E" strokeWidth="3" />
+      <path d="M30 0V30M0 15H60" stroke="#FFFFFF" strokeWidth="10" />
+      <path d="M30 0V30M0 15H60" stroke="#C8102E" strokeWidth="6" />
     </svg>
   );
 }
@@ -48,7 +43,7 @@ export function Header({ onResetHome }: HeaderProps) {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/95 dark:bg-zinc-950/95 transition-colors">
+    <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/95 dark:bg-zinc-950/95 transform-gpu will-change-transform">
       <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 h-16 flex items-center justify-between gap-3">
         {/* Brand with Aeronautical Styling */}
         <button
@@ -65,7 +60,7 @@ export function Header({ onResetHome }: HeaderProps) {
               <span className="font-extrabold text-base tracking-tight text-zinc-900 dark:text-white leading-none group-hover:underline">
                 Aero<span className="text-[#5EAAA8] font-semibold">Info</span>
               </span>
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" title="System Online" />
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0 inline-block" title="System Online" />
             </div>
             <span className="text-[9.5px] uppercase font-mono tracking-widest text-zinc-500 dark:text-zinc-400 block mt-0.5">
               Airport Intelligence
@@ -103,7 +98,7 @@ export function Header({ onResetHome }: HeaderProps) {
                 setLang('it');
               }}
               aria-pressed={lang === 'it'}
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#05668D] ${
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#05668D] ${
                 lang === 'it'
                   ? 'bg-[#05668D] text-white font-bold shadow-xs'
                   : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
@@ -120,7 +115,7 @@ export function Header({ onResetHome }: HeaderProps) {
                 setLang('en');
               }}
               aria-pressed={lang === 'en'}
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#05668D] ${
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#05668D] ${
                 lang === 'en'
                   ? 'bg-[#05668D] text-white font-bold shadow-xs'
                   : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'

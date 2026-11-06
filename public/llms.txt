@@ -1,0 +1,45 @@
+# AeroInfo — Airport Security Rules, 3D Scanners & Passenger Logistics
+
+> AeroInfo (https://www.aero-info.eu) provides verified, up-to-date security screening rules, EDS-CB C3 3D scanner status, liquid allowances, powerbank regulations, and terminal logistics for commercial airports across Italy, Europe, and major international hubs.
+
+## Overview & Core Principles
+
+- **3D Scanners (EDS-CB C3):** At airports equipped with approved next-generation 3D computed tomography (CT) scanners (such as Rome Fiumicino FCO, Milan Malpensa MXP, Milan Linate LIN, Prague PRG T2, Dublin DUB), passengers may leave liquids, toiletries, and electronics (laptops/tablets) inside their cabin bags. Note that individual airport limits (e.g., up to 2 litres vs standard limits) are subject to current European and national aviation regulations.
+- **Standard Checkpoints (Non-C3):** At airports with conventional screening (e.g. Naples NAP, Palermo PMO, Catania CTA, Paris Beauvais BVA), the EU standard 100 ml rule applies: all liquids, gels, creams, and aerosols must be in containers of max 100 ml, stored inside a single transparent resealable 1-litre plastic bag, and extracted during screening.
+- **Powerbanks & Spare Lithium Batteries:** Under international ICAO/EASA regulations, powerbanks and spare lithium batteries are strictly permitted **in carry-on luggage only**. They are **strictly forbidden** in checked hold luggage due to fire safety hazards.
+- **Transit Caution:** Travelers flying from a 3D scanner airport to or through a standard airport must adhere to the strictest rule of any transit or return airport on their itinerary.
+
+## Comprehensive Guides & Comparative Hubs
+
+- [Elenco Aeroporti con Scanner 3D C3 (Italian)](https://www.aero-info.eu/scanner-3d-aeroporti): Mappa e lista completa degli aeroporti con scanner tomografici 3D operativi in Italia ed Europa, regole liquidi e avviso sul volo di ritorno.
+- [3D Airport Scanners Directory (English)](https://www.aero-info.eu/en/3d-scanners-airports): Complete directory of airports with next-gen 3D CT scanners, liquid allowances, and transfer guidelines.
+- [Guida Liquidi Bagaglio a Mano (Italian)](https://www.aero-info.eu/guide/liquidi-bagaglio-a-mano): Regole generali UE sui liquidi, eccezioni per scanner 3D C3, medicinali, alimenti per neonati e checklist pre-partenza.
+- [Liquids in Carry-On Baggage Guide (English)](https://www.aero-info.eu/en/guides/liquids-in-carry-on-baggage): General EU liquid rules, 3D scanner exceptions, medicines, baby food, and transfer advice.
+
+## Key Italian Airport Profiles
+
+- [Roma Fiumicino (FCO)](https://www.aero-info.eu/aeroporti/fiumicino): Scanner 3D C3 attivi al T1 e T3, liquidi e PC possono rimanere nel bagaglio.
+- [Milano Malpensa (MXP)](https://www.aero-info.eu/aeroporti/malpensa): Scanner 3D C3 attivi al Terminal 1.
+- [Milano Linate (LIN)](https://www.aero-info.eu/aeroporti/linate): Scanner 3D C3 su tutte le linee di sicurezza.
+- [Bergamo Orio al Serio (BGY)](https://www.aero-info.eu/aeroporti/bergamo-orio-al-serio): Scanner 3D C3 attivi sui varchi principali.
+- [Bologna Guglielmo Marconi (BLQ)](https://www.aero-info.eu/aeroporti/bologna): Scanner 3D C3 attivi.
+- [Venezia Marco Polo (VCE)](https://www.aero-info.eu/aeroporti/venezia-marco-polo): Scanner 3D C3 operativi.
+- [Napoli Capodichino (NAP)](https://www.aero-info.eu/aeroporti/napoli): Regola standard 100 ml, estrazione liquidi e PC obbligatoria.
+- [Catania Fontanarossa (CTA)](https://www.aero-info.eu/aeroporti/catania): Regola standard 100 ml.
+- [Palermo Falcone Borsellino (PMO)](https://www.aero-info.eu/aeroporti/palermo): Regola standard 100 ml.
+- [Bari Karol Wojtyla (BRI)](https://www.aero-info.eu/aeroporti/bari): Regola standard 100 ml.
+- [Pisa Galileo Galilei (PSA)](https://www.aero-info.eu/aeroporti/pisa): Regola standard 100 ml.
+- [Roma Ciampino (CIA)](https://www.aero-info.eu/aeroporti/ciampino): Regola standard 100 ml.
+
+## Key International Airport Profiles
+
+- [London Heathrow (LHR)](https://www.aero-info.eu/en/airports/london-heathrow): UK security policy, next-gen CT rollout in progress.
+- [London Gatwick (LGW)](https://www.aero-info.eu/en/airports/london-gatwick): South and North terminal security checkpoints.
+- [Paris Charles de Gaulle (CDG)](https://www.aero-info.eu/en/airports/paris-charles-de-gaulle): Terminal-specific checkpoints and transfer guidance.
+- [Frankfurt Airport (FRA)](https://www.aero-info.eu/en/airports/frankfurt): Terminal 1 & 2 security screening policies.
+- [Amsterdam Schiphol (AMS)](https://www.aero-info.eu/en/airports/amsterdam-schiphol): CT security lanes active, liquids in bag.
+- [Madrid Barajas (MAD)](https://www.aero-info.eu/en/airports/madrid-barajas): Aena security regulations.
+- [Barcelona El Prat (BCN)](https://www.aero-info.eu/en/airports/barcelona-el-prat): T1 and T2 screening procedures.
+- [Prague Václav Havel (PRG)](https://www.aero-info.eu/en/airports/prague): Terminal 2 3D CT scanners (Schengen) vs Terminal 1 (Non-Schengen).
+- [Dublin Airport (DUB)](https://www.aero-info.eu/en/airports/dublin): C3 scanners operational across T1 and T2.
+- [Berlin Brandenburg (BER)](https://www.aero-info.eu/en/airports/berlin-brandenburg): T1 lanes 1 & 5 and T2 next-generation screening.

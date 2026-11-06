@@ -70,6 +70,12 @@
   - Verifica live di crawlability sui 100 URL della sitemap: 100% HTTP 200, canonical autoreferenziali, corretti tag alternate bilingui e zero direttive `noindex` non intenzionali.
   - Motore di tracciamento GEO & AI Referrals integrato in `GoogleAnalytics.tsx`: rileva accessi da ChatGPT Search, Perplexity AI, Claude, Copilot e Gemini e spedisce l'evento custom `ai_search_referral` a GA4, registrando contestualmente il tag di sessione `ai_engine` in Microsoft Clarity per il replay delle visite.
   - Console Admin con monitoraggio di qualità SEO e trigger manuale/automatico IndexNow.
+- [x] **P3.6 Super-Hub Comparativo Scanner 3D C3 (IT/EN)** — 2026-10-31 Sprint 2.
+  - Implementate e compilate le route `/scanner-3d-aeroporti` e `/en/3d-scanners-airports` con Partial Prerendering (PPR), filtri interattivi live (Tutti, Scanner 3D, Standard 100ml, Italia, Estero) e ricerca per scalo.
+  - Box di allerta su "Il paradosso del volo di ritorno e degli scali di transito".
+  - Dati strutturati Schema.org `@graph` completi (`WebPage`, `BreadcrumbList`, `FAQPage`, `ItemList`).
+  - Integrazione nella sitemap XML (102 URL totali) e cross-linking bidirezionale nel `Footer` e in `public/llms.txt`.
+  - Design 100% borderless verificato con suite di test `npm test` e `npm run build`.
 
 ---
 

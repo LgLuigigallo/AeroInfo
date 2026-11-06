@@ -329,3 +329,120 @@ export function getGuideStructuredData(
     '@graph': [articleEntity, faqEntity],
   };
 }
+
+export function getScannersHubStructuredData(airports: Airport[], lang: Language) {
+  const isItalian = lang === 'it';
+  const path = isItalian ? '/scanner-3d-aeroporti' : '/en/3d-scanners-airports';
+  const url = `${SITE_URL}${path}`;
+
+  const title = isItalian
+    ? 'Scanner 3D negli Aeroporti: Dove Sono Attivi e Regole Liquidi | AeroInfo'
+    : '3D Airport Scanners: Active Airports & Liquid Rules | AeroInfo';
+
+  const description = isItalian
+    ? 'Elenco aggiornato degli aeroporti con scanner tomografici 3D EDS-CB C3 in Italia ed Europa. Scopri dove puoi portare liquidi e PC nel bagaglio a mano senza estrarli.'
+    : 'Updated list of airports with next-gen EDS-CB C3 3D scanners in Italy and Europe. Check where you can leave liquids and laptops inside carry-on luggage.';
+
+  const breadcrumbs = {
+    '@type': 'BreadcrumbList',
+    '@id': `${url}#breadcrumb`,
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: isItalian ? 'Home' : 'Home',
+        item: isItalian ? `${SITE_URL}/` : `${SITE_URL}/en`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: isItalian ? 'Scanner 3D Aeroporti' : '3D Airport Scanners',
+        item: url,
+      },
+    ],
+  };
+
+  const webPage = {
+    '@type': 'WebPage',
+    '@id': `${url}#webpage`,
+    name: title,
+    description,
+    url,
+    inLanguage: isItalian ? 'it' : 'en',
+    publisher: { '@id': `${SITE_URL}/#organization` },
+  };
+
+  const faqEntity = {
+    '@type': 'FAQPage',
+    '@id': `${url}#faq`,
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: isItalian
+          ? 'Cosa sono gli scanner tomografici 3D EDS-CB C3 negli aeroporti?'
+          : 'What are EDS-CB C3 3D scanners in airports?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: isItalian
+            ? 'Gli scanner EDS-CB C3 sono apparecchiature tomografiche volumetriche di nuova generazione che creano una scansione 3D ad alta definizione del bagaglio a mano. Permettono ai passeggeri di lasciare computer portatili, tablet e liquidi all’interno della borsa durante i controlli di sicurezza.'
+            : 'EDS-CB C3 scanners are next-generation computed tomography (CT) systems that generate high-definition 3D volumetric images of carry-on bags. They allow passengers to leave laptops, tablets, and liquids inside luggage during security screening.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: isItalian
+          ? 'La presenza di scanner 3D permette sempre di portare flaconi oltre 100 ml?'
+          : 'Does having 3D scanners always allow liquids over 100ml?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: isItalian
+            ? 'Non in tutti gli scali. Sebbene gli scanner C3 siano tecnicamente idonei ad analizzare volumi superiori, la normativa europea e le circolari ENAC hanno temporaneamente uniformato il limite a 100 ml per contenitore in diversi scali. Il vantaggio principale resta la possibilità di non dover estrarre i liquidi e i dispositivi elettronici dal bagaglio.'
+            : 'Not at every airport. While C3 scanners can technically screen larger volumes, regulatory standards across Europe currently maintain the 100ml container rule in most hubs while keeping the major benefit of not needing to unpack liquids and laptops.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: isItalian
+          ? 'Cosa succede al volo di ritorno se l’aeroporto di destinazione non ha gli scanner 3D?'
+          : 'What happens on the return flight or transfer if the other airport lacks 3D scanners?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: isItalian
+            ? 'Se parti da un aeroporto con scanner 3D ma rientri da uno scalo privo di scanner C3, al ritorno si applicheranno le regole tradizionali: flaconi da massimo 100 ml chiusi in un sacchetto trasparente da 1 litro. I liquidi superiori a 100 ml acquistati prima della partenza verranno sequestrati ai varchi di ritorno.'
+            : 'If you depart from an airport with 3D scanners but return from one with conventional screening, standard rules apply on your return: containers up to 100ml in a 1-litre clear bag. Any liquid containers exceeding 100ml packed before leaving will be confiscated.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: isItalian
+          ? 'Devo estrarre computer e tablet dallo zaino con gli scanner 3D?'
+          : 'Do I need to take laptops and tablets out of my bag with 3D scanners?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: isItalian
+            ? 'No. Nelle corsie di sicurezza dotate di scanner 3D operativi, laptop, tablet e dispositivi elettronici possono rimanere riposti all’interno del trolley o dello zaino.'
+            : 'No. At security lanes equipped with operational 3D scanners, laptops, tablets, and electronics can remain inside your carry-on luggage.',
+        },
+      },
+    ],
+  };
+
+  const c3Airports = airports.filter((a) => a.securityPolicy?.has3DScanners);
+  const itemList = {
+    '@type': 'ItemList',
+    '@id': `${url}#itemlist`,
+    name: isItalian ? 'Aeroporti con Scanner 3D C3' : 'Airports with 3D C3 Scanners',
+    numberOfItems: c3Airports.length,
+    itemListElement: c3Airports.slice(0, 30).map((airport, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: `${airport.iata} - ${isItalian ? airport.name_it : airport.name_en}`,
+      url: `${SITE_URL}${airportPath(airport, lang)}`,
+    })),
+  };
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [webPage, breadcrumbs, faqEntity, itemList],
+  };
+}

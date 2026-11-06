@@ -106,6 +106,14 @@ export const translations: Translations = {
     it: 'Consulta il sito ufficiale',
     en: 'Visit official website'
   },
+  shareWithBuddy: {
+    it: 'Invia a chi viaggia con te',
+    en: 'Share with travel buddy'
+  },
+  linkCopied: {
+    it: 'Link copiato negli appunti!',
+    en: 'Link copied to clipboard!'
+  },
   bubbleClose: {
     it: 'Chiudi',
     en: 'Close'
@@ -435,36 +443,10 @@ export function LanguageProvider({
 }) {
   const [lang, setLangState] = useState<Language>(initialLang);
 
+  // Sync state if initialLang changes across page transitions without layout shifts
   useEffect(() => {
-    // 1. Explicit path route check (e.g. /en or /en/...)
-    if (typeof window !== 'undefined' && window.location.pathname.startsWith('/en')) {
-      setLangState('en');
-      return;
-    }
-
-    // 2. Check if user already manually selected and saved a language preference
-    const saved = localStorage.getItem('aeroinfo_lang') as Language;
-    if (saved === 'it' || saved === 'en') {
-      setLangState(saved);
-      return;
-    }
-
-    // 3. Automatically detect device/browser language
-    try {
-      const languages = (typeof navigator !== 'undefined' && navigator.languages && navigator.languages.length > 0)
-        ? navigator.languages
-        : [navigator.language || 'it'];
-
-      const hasItalian = languages.some((l) => l && l.toLowerCase().startsWith('it'));
-      if (hasItalian) {
-        setLangState('it');
-      } else {
-        setLangState('en');
-      }
-    } catch {
-      setLangState('it');
-    }
-  }, []);
+    setLangState(initialLang);
+  }, [initialLang]);
 
   const setLang = (newLang: Language) => {
     if (newLang !== lang) {
@@ -484,6 +466,8 @@ export function LanguageProvider({
             newPath = '/en';
           } else if (path.startsWith('/aeroporti/')) {
             newPath = path.replace(/^\/aeroporti\//, '/en/airports/');
+          } else if (path.startsWith('/scanner-3d-aeroporti')) {
+            newPath = '/en/3d-scanners-airports';
           } else if (path.startsWith('/guide/liquidi-bagaglio-a-mano')) {
             newPath = '/en/guides/liquids-in-carry-on-baggage';
           }
@@ -492,6 +476,8 @@ export function LanguageProvider({
             newPath = '/';
           } else if (path.startsWith('/en/airports/')) {
             newPath = path.replace(/^\/en\/airports\//, '/aeroporti/');
+          } else if (path.startsWith('/en/3d-scanners-airports')) {
+            newPath = '/scanner-3d-aeroporti';
           } else if (path.startsWith('/en/guides/liquids-in-carry-on-baggage')) {
             newPath = '/guide/liquidi-bagaglio-a-mano';
           }

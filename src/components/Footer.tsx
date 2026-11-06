@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Plane, MessageSquare, Droplets } from 'lucide-react';
+import { Plane, MessageSquare, Droplets, Sparkles } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 import { trackGuideClick } from '@/lib/analytics';
 
@@ -88,6 +88,14 @@ export function Footer() {
           </div>
 
           <div className="flex items-center gap-2.5">
+            <Link
+              href={lang === 'it' ? '/scanner-3d-aeroporti' : '/en/3d-scanners-airports'}
+              className="inline-flex items-center gap-1 hover:text-[#05668D] dark:hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#05668D]"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
+              <span>{lang === 'it' ? 'Scanner 3D' : '3D Scanners'}</span>
+            </Link>
+            <span className="text-zinc-300 dark:text-zinc-700">•</span>
             <Link
               href={lang === 'it' ? '/guide/liquidi-bagaglio-a-mano' : '/en/guides/liquids-in-carry-on-baggage'}
               onClick={() => trackGuideClick('footer', lang)}
