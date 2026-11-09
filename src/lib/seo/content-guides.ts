@@ -1,4 +1,4 @@
-export type GuideLanguage = 'it' | 'en';
+export type GuideLanguage = 'it' | 'en' | 'es';
 
 export type GuideContent = {
   path: string;
@@ -82,6 +82,41 @@ export const liquidsGuide: Record<GuideLanguage, GuideContent> = {
       { label: 'European Commission — Information for air travellers', href: 'https://transport.ec.europa.eu/transport-modes/air/aviation-security/information-air-travellers_en' },
       { label: 'Aeroporti di Roma — press releases (Fiumicino announcement, 25 July 2025)', href: 'https://www.adr.it/comunicati-stampa' },
       { label: 'Heathrow — Security and baggage FAQs', href: 'https://www.heathrow.com/customer-support/faq/faq-security' },
+    ],
+  },
+  es: {
+    path: '/es/guides/liquids-in-carry-on-baggage',
+    title: 'Líquidos en el equipaje de mano: límites y reglas por aeropuerto',
+    description: 'La regla de los 100 ml es general, pero algunos aeropuertos publican excepciones. Descubre cómo verificar límites, escáneres y escalas de tránsito.',
+    introduction: 'El límite puede variar según el aeropuerto y el control de seguridad. No supongas una excepción solo por la presencia de escáneres nuevos: comprueba siempre las instrucciones oficiales del aeropuerto de salida y de cualquier escala.',
+    reviewedAt: '2026-10-25',
+    sections: [
+      {
+        heading: 'La regla general en la Unión Europea',
+        paragraphs: [
+          { text: 'La información para viajeros de la Comisión Europea indica como norma general envases de hasta 100 ml dentro de una bolsa transparente con autocierre de no más de 1 litro. Se prevén excepciones para medicamentos indispensables, alimentos infantiles y leche para el viaje.', sourceIndex: 0 },
+          { text: 'La categoría abarca geles, cremas, aerosoles, pasta de dientes y productos de textura similar. Revisa siempre la web de tu aeropuerto: esta guía no reemplaza las instrucciones de tu vuelo.' },
+        ],
+      },
+      {
+        heading: 'Las instrucciones pueden variar de un aeropuerto a otro',
+        paragraphs: [
+          { text: 'Algunos aeropuertos publican límites diferentes cuando los controles cuentan con escáneres tomográficos aprobados (EDS-CB C3), permitiendo envases de hasta 2 litros sin sacarlos del equipaje durante la inspección.', sourceIndex: 1 },
+          { text: 'Estos ejemplos corresponden a normativas específicas. No garantizan que el mismo límite se aplique en todos los terminales o escalas de conexión; comprueba siempre la fuente oficial antes de preparar tu equipaje.', sourceIndex: 2 },
+        ],
+      },
+      {
+        heading: 'Qué comprobar antes de salir',
+        paragraphs: [
+          { text: '1. Busca la página oficial de “seguridad” o “equipaje de mano” del aeropuerto. 2. Comprueba si las reglas aplican a tu terminal. 3. Si tienes escalas, revisa las normas del siguiente aeropuerto. 4. Si no encuentras una excepción explícita, prepara los líquidos siguiendo la norma de 100 ml y 1 litro.' },
+          { text: 'El límite de líquidos aplica al control de seguridad; las dimensiones y peso del equipaje dependen de la aerolínea.' },
+        ],
+      },
+    ],
+    sources: [
+      { label: 'Comisión Europea — Información para viajeros aéreos', href: 'https://transport.ec.europa.eu/transport-modes/air/aviation-security/information-air-travellers_en' },
+      { label: 'Aeroporti di Roma — Comunicados oficiales (Fiumicino)', href: 'https://www.adr.it/comunicati-stampa' },
+      { label: 'Heathrow — Preguntas frecuentes sobre seguridad y equipaje', href: 'https://www.heathrow.com/customer-support/faq/faq-security' },
     ],
   },
 };

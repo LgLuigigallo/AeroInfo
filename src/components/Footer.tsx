@@ -20,7 +20,7 @@ export function Footer() {
             <span className="font-bold text-zinc-800 dark:text-zinc-200">AeroInfo</span>
             <span className="text-zinc-300 dark:text-zinc-700">•</span>
             <span className="text-zinc-500 dark:text-zinc-400">
-              {lang === 'it' ? 'Fonti ufficiali verificate ogni 24h' : 'Official sources verified every 24h'}
+              {lang === 'it' ? 'Fonti ufficiali verificate ogni 24h' : (lang === 'es' ? 'Fuentes oficiales verificadas cada 24h' : 'Official sources verified every 24h')}
             </span>
           </div>
 
@@ -46,6 +46,7 @@ export function Footer() {
             <span className="text-zinc-300 dark:text-zinc-700">•</span>
             <Link
               href="/unsubscribe"
+              rel="nofollow"
               className="hover:text-[#05668D] dark:hover:text-white transition-colors underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#05668D]"
             >
               {t('footerUnsubscribe')}
@@ -65,7 +66,7 @@ export function Footer() {
         {/* Linea 2: Copyright, Mail & LinkedIn a sinistra | Guida Liquidi & Feedback a destra */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-1 font-mono text-[10.5px] text-zinc-400 dark:text-zinc-500">
           <div className="flex flex-wrap items-center gap-2">
-            <span>{lang === 'it' ? '© 2026 AeroInfo • Tutti i diritti riservati' : '© 2026 AeroInfo • All rights reserved'}</span>
+            <span>{lang === 'it' ? '© 2026 AeroInfo • Tutti i diritti riservati' : (lang === 'es' ? '© 2026 AeroInfo • Todos los derechos reservados' : '© 2026 AeroInfo • All rights reserved')}</span>
             <span className="text-zinc-300 dark:text-zinc-700">•</span>
             <a
               href="mailto:vireontech@gmail.com"
@@ -89,24 +90,25 @@ export function Footer() {
 
           <div className="flex items-center gap-2.5">
             <Link
-              href={lang === 'it' ? '/scanner-3d-aeroporti' : '/en/3d-scanners-airports'}
+              href={lang === 'it' ? '/scanner-3d-aeroporti' : (lang === 'es' ? '/es/3d-scanners-airports' : '/en/3d-scanners-airports')}
               className="inline-flex items-center gap-1 hover:text-[#05668D] dark:hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#05668D]"
             >
               <Sparkles className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
-              <span>{lang === 'it' ? 'Scanner 3D' : '3D Scanners'}</span>
+              <span>{lang === 'it' ? 'Scanner 3D' : (lang === 'es' ? 'Escáneres 3D' : '3D Scanners')}</span>
             </Link>
             <span className="text-zinc-300 dark:text-zinc-700">•</span>
             <Link
-              href={lang === 'it' ? '/guide/liquidi-bagaglio-a-mano' : '/en/guides/liquids-in-carry-on-baggage'}
+              href={lang === 'it' ? '/guide/liquidi-bagaglio-a-mano' : (lang === 'es' ? '/es/guides/liquids-in-carry-on-baggage' : '/en/guides/liquids-in-carry-on-baggage')}
               onClick={() => trackGuideClick('footer', lang)}
               className="inline-flex items-center gap-1 hover:text-[#05668D] dark:hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#05668D]"
             >
               <Droplets className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
-              <span>{lang === 'it' ? 'Guida Liquidi' : 'Liquids Guide'}</span>
+              <span>{lang === 'it' ? 'Guida Liquidi' : (lang === 'es' ? 'Guía Líquidos' : 'Liquids Guide')}</span>
             </Link>
             <span className="text-zinc-300 dark:text-zinc-700">•</span>
             <Link
               href="/feedback"
+              rel="nofollow"
               className="inline-flex items-center gap-1 hover:text-[#05668D] dark:hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#05668D]"
             >
               <MessageSquare className="w-3.5 h-3.5 text-[#5EAAA8]" />

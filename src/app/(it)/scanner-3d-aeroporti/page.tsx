@@ -22,6 +22,7 @@ export const metadata: Metadata = {
     languages: {
       it: canonical,
       en: alternate,
+      es: `${SITE_URL}/es/3d-scanners-airports`,
       'x-default': canonical,
     },
   },

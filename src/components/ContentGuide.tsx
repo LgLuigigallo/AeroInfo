@@ -6,7 +6,9 @@ type Props = { content: GuideContent; lang: GuideLanguage };
 
 export function ContentGuide({ content, lang }: Props) {
   const italian = lang === 'it';
-  const reviewedDate = new Intl.DateTimeFormat(italian ? 'it-IT' : 'en-GB', {
+  const spanish = lang === 'es';
+  const locale = italian ? 'it-IT' : (spanish ? 'es-ES' : 'en-GB');
+  const reviewedDate = new Intl.DateTimeFormat(locale, {
     dateStyle: 'long',
     timeZone: 'UTC',
   }).format(new Date(`${content.reviewedAt}T00:00:00Z`));
@@ -22,22 +24,22 @@ export function ContentGuide({ content, lang }: Props) {
   return (
     <main className="min-h-screen bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
       <article className="mx-auto max-w-3xl space-y-8 px-4 py-10 sm:px-6 sm:py-14">
-        <nav aria-label={italian ? 'Percorso di navigazione' : 'Breadcrumb'} className="text-sm text-zinc-500">
+        <nav aria-label={italian ? 'Percorso di navigazione' : (spanish ? 'Ruta de navegación' : 'Breadcrumb')} className="text-sm text-zinc-500">
           <ol className="flex flex-wrap gap-2">
-            <li><Link className="underline" href="/">AeroInfo</Link></li>
+            <li><Link className="underline" href={italian ? '/' : (spanish ? '/es' : '/en')}>AeroInfo</Link></li>
             <li aria-hidden="true">/</li>
-            <li aria-current="page">{italian ? 'Guide' : 'Guides'}</li>
+            <li aria-current="page">{italian ? 'Guide' : (spanish ? 'Guías' : 'Guides')}</li>
           </ol>
         </nav>
 
         <header className="space-y-4 border-b border-zinc-200 pb-7 dark:border-zinc-800">
           <p className="text-xs font-semibold uppercase tracking-widest text-blue-600 dark:text-blue-400">
-            {italian ? 'Guida di viaggio' : 'Travel guide'}
+            {italian ? 'Guida di viaggio' : (spanish ? 'Guía de viaje' : 'Travel guide')}
           </p>
           <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">{content.title}</h1>
           <p className="text-lg leading-8 text-zinc-600 dark:text-zinc-300">{content.introduction}</p>
           <p className="text-sm text-zinc-500">
-            {italian ? 'Fonti controllate il' : 'Sources checked on'}{' '}
+            {italian ? 'Fonti controllate il' : (spanish ? 'Fuentes comprobadas el' : 'Sources checked on')}{' '}
             <time dateTime={content.reviewedAt}>{reviewedDate}</time>.
           </p>
         </header>

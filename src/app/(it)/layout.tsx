@@ -27,6 +27,7 @@ export const metadata: Metadata = {
     languages: {
       it: 'https://www.aero-info.eu/',
       en: 'https://www.aero-info.eu/en',
+      es: 'https://www.aero-info.eu/es',
       'x-default': 'https://www.aero-info.eu/',
     },
   },
@@ -53,7 +54,7 @@ export const metadata: Metadata = {
 
 export default function ItalianRootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="it" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+    <html lang="it" className={`${geistSans.variable} ${geistMono.variable} dark h-full antialiased`}>
       <body className="min-h-full flex flex-col font-sans">
         <SiteStructuredData />
         {children}

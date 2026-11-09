@@ -1,4 +1,4 @@
-export type Language = 'it' | 'en';
+export type Language = 'it' | 'en' | 'es';
 export type AirportSeoStatus = 'pending_quality' | 'indexable' | 'blocked';
 
 export type AmenityCategory = 
@@ -237,6 +237,7 @@ export interface Airport {
   seoStatus?: AirportSeoStatus;
   seoSlugIt?: string;
   seoSlugEn?: string;
+  seoSlugEs?: string;
   seoLastEvaluatedAt?: string;
   seoBlockReasons?: string[];
   createdAt?: string;
@@ -244,10 +245,13 @@ export interface Airport {
   icao: string;
   name_it: string;
   name_en: string;
+  name_es?: string;
   city_it: string;
   city_en: string;
+  city_es?: string;
   country_it: string;
   country_en: string;
+  country_es?: string;
   countryCode: string;
   officialWebsite: string;
   

@@ -122,7 +122,9 @@ export async function getAirportBySlug(slug: string, lang: Language): Promise<Ai
   const normalizedSlug = slug.toLowerCase();
   return (
     airports.find((airport) => makeAirportSlug(airport, lang) === slug) ||
-    airports.find((airport) => makeAirportSlug(airport, lang === 'it' ? 'en' : 'it') === slug) ||
+    airports.find((airport) => makeAirportSlug(airport, 'it') === slug) ||
+    airports.find((airport) => makeAirportSlug(airport, 'en') === slug) ||
+    airports.find((airport) => makeAirportSlug(airport, 'es') === slug) ||
     airports.find((airport) => {
       const iata = airport.iata.toLowerCase();
       return normalizedSlug === iata || normalizedSlug.endsWith(`-${iata}`);

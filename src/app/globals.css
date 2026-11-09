@@ -1,10 +1,29 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
+  /* AeroInfo Dark Brand Palette (Default Theme) */
+  --background: #001a2c;
+  --foreground: #cfe8e1;
+
+  /* Official Brand Colors */
+  --color-aero-mint: #cfe8e1;
+  --color-aero-navy: #002941;
+  --color-aero-coral: #fd6e6e;
+
+  /* Surface & Elevation Tones */
+  --color-aero-surface: #002941;
+  --color-aero-surface-elevated: #003756;
+  --color-aero-ice: #003756;
+  --color-aero-teal: #cfe8e1;
+  --color-aero-gold: #fd6e6e;
+}
+
+/* Optional Light Mode Override when explicit light class is set */
+html:not(.dark) {
   --background: #fbfbfb;
   --foreground: #0a0a0a;
-
-  /* Custom AeroInfo Palette */
   --color-aero-ice: #e8f1f2;
   --color-aero-mint: #b3e5e0;
   --color-aero-teal: #5eaaa8;
@@ -15,20 +34,24 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-aero-ice: #e8f1f2;
-  --color-aero-mint: #b3e5e0;
-  --color-aero-teal: #5eaaa8;
-  --color-aero-navy: #05668d;
-  --color-aero-gold: #f4d35e;
+
+  /* Brand Palette Overrides for Dark Mode Elegance */
+  --color-zinc-950: #001a2c; /* Canvas background (Deep Midnight Navy) */
+  --color-zinc-900: #002941; /* Primary Surface / Cards / Bubbles (Midnight Navy) */
+  --color-zinc-850: #00304c; /* Intermediate elevation */
+  --color-zinc-800: #003756; /* Elevated chips, pills, secondary cards */
+  --color-zinc-700: #00456c;
+  --color-zinc-100: #cfe8e1; /* Pale Mint text & icons */
+
+  --color-aero-navy: #002941;
+  --color-aero-mint: #cfe8e1;
+  --color-aero-coral: #fd6e6e;
+  --color-aero-ice: var(--color-aero-ice);
+  --color-aero-teal: var(--color-aero-teal);
+  --color-aero-gold: var(--color-aero-gold);
+
   --font-sans: var(--font-geist-sans), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #09090b;
-    --foreground: #f4f4f5;
-  }
 }
 
 body {
@@ -47,14 +70,12 @@ body {
 
 /* Editorial subtle dot grid */
 .bg-dot-pattern {
-  background-image: radial-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(207, 232, 225, 0.06) 1px, transparent 1px);
   background-size: 20px 20px;
 }
 
-@media (prefers-color-scheme: dark) {
-  .bg-dot-pattern {
-    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  }
+html:not(.dark) .bg-dot-pattern {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 1px);
 }
 
 /* Smooth transitions */

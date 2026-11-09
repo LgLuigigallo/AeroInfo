@@ -52,7 +52,7 @@ function MainContent() {
   // Sync back button / popstate with airport selection
   useEffect(() => {
     const handlePopState = () => {
-      if (window.location.pathname === '/' || window.location.pathname === '/en') {
+      if (window.location.pathname === '/' || window.location.pathname === '/en' || window.location.pathname === '/es') {
         setSelectedAirport(null);
       }
     };
@@ -73,14 +73,14 @@ function MainContent() {
   const handleResetHome = () => {
     setSelectedAirport(null);
     try {
-      window.history.pushState({}, '', lang === 'it' ? '/' : '/en');
+      window.history.pushState({}, '', lang === 'it' ? '/' : (lang === 'es' ? '/es' : '/en'));
     } catch {
-      router.push('/');
+      router.push(lang === 'it' ? '/' : (lang === 'es' ? '/es' : '/en'));
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#FBFBFB] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 flex flex-col font-sans selection:bg-[#05668D] selection:text-white">
+    <div className="min-h-screen bg-[#FBFBFB] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 flex flex-col font-sans selection:bg-[#FD6E6E] selection:text-[#002941]">
       <Header onResetHome={handleResetHome} />
 
       <main className="flex-1 w-full flex flex-col items-center">

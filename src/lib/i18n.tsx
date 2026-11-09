@@ -8,146 +8,147 @@ interface Translations {
   [key: string]: {
     it: string;
     en: string;
+    es?: string;
   };
 }
 
 export const translations: Translations = {
   // Navigation & Branding
-  brandName: { it: 'AeroInfo', en: 'AeroInfo' },
+  brandName: { it: 'AeroInfo', en: 'AeroInfo' , es: 'AeroInfo' },
   tagline: { 
     it: 'L\'aggregatore essenziale per chi viaggia nei principali aeroporti del mondo.', 
     en: 'The essential intelligence aggregator for travelers in global airports.' 
-  },
+  , es: 'El agregador esencial para quienes viajan por los principales aeropuertos del mundo.' },
   minimalHeroTitle: {
     it: 'Tutto ciò che devi sapere prima di volare.',
     en: 'Everything you need to know before flying.'
-  },
+  , es: 'Todo lo que necesitas saber antes de volar.' },
   minimalHeroTitleLine1: {
     it: 'Tutto ciò che devi sapere',
     en: 'Everything you need to know'
-  },
+  , es: 'Todo lo que necesitas saber' },
   minimalHeroTitleLine2: {
     it: 'prima di volare',
     en: 'before flying'
-  },
+  , es: 'antes de volar' },
   minimalHeroSubtitle: {
     it: 'Il sito per avere a portata di click tutte le informazioni essenziali di un aeroporto',
     en: 'The site to get all essential airport information with a single click'
-  },
+  , es: 'Toda la información esencial del aeropuerto a un solo clic' },
   step1: {
     it: "Cerca l'aeroporto",
     en: 'Search airport'
-  },
+  , es: 'Busca el aeropuerto' },
   step1Desc: {
     it: 'Inserisci il nome, la città o il codice IATA.',
     en: 'Enter airport name, city or 3-letter IATA code.'
-  },
+  , es: 'Introduce el nombre, ciudad o código IATA.' },
   step2: {
     it: 'Leggi le info che ti servono',
     en: 'Read what you need'
-  },
+  , es: 'Lee la información que necesitas' },
   step2Desc: {
     it: 'Apri subito le 4 bolle rapide senza muri di testo.',
     en: 'Instantly view the 4 quick bubbles without text walls.'
-  },
+  , es: 'Abre al instante las 4 burbujas rápidas sin muros de texto.' },
   step3: {
     it: 'Parti senza problemi',
     en: 'Travel hassle-free'
-  },
+  , es: 'Viaja sin problemas' },
   step3Desc: {
     it: 'Supera i controlli di sicurezza in totale serenità.',
     en: 'Clear security checkpoints with complete peace of mind.'
-  },
+  , es: 'Pasa los controles de seguridad con total tranquilidad.' },
   bubbleLiquids: {
     it: 'Regole dei liquidi',
     en: 'Liquids rules'
-  },
+  , es: 'Reglas de líquidos' },
   bubbleLiquidsDesc: {
     it: 'Scanner 3D, flaconi 100ml, busta trasparente e deroghe',
     en: '3D scanners, 100ml bottles, clear bags and exceptions'
-  },
+  , es: 'Escáneres 3D, botellas de 100ml, bolsa transparente y excepciones' },
   bubbleBaggage: {
     it: 'Regole dei bagagli',
     en: 'Baggage rules'
-  },
+  , es: 'Reglas de equipaje' },
   bubbleBaggageDesc: {
     it: 'Dispositivi elettronici, misure cabina e stiva',
     en: 'Electronic devices, cabin and hold limits'
-  },
+  , es: 'Dispositivos electrónicos, medidas en cabina y bodega' },
   bubbleGeneral: {
     it: 'Altre regole generali',
     en: 'Other general rules'
-  },
+  , es: 'Otras reglas generales' },
   bubbleGeneralDesc: {
     it: 'Droni, powerbank al litio, medicinali e duty free',
     en: 'Drones, lithium powerbanks, meds and duty free'
-  },
+  , es: 'Drones, powerbanks de litio, medicamentos y duty free' },
   bubbleMap: {
     it: 'Mappa',
     en: 'Map'
-  },
+  , es: 'Mapa' },
   bubbleMapDesc: {
     it: 'Varchi sicurezza, terminal, prese, acqua e gate',
     en: 'Security lanes, terminals, sockets, water and gates'
-  },
+  , es: 'Filtros de seguridad, terminales, enchufes, agua y puertas' },
   bubbleTapToExplore: {
     it: 'Tocca per aprire',
     en: 'Tap to open'
-  },
+  , es: 'Toca para abrir' },
   changeAirport: {
     it: 'Cambia aeroporto',
     en: 'Change airport'
-  },
+  , es: 'Cambiar aeropuerto' },
   officialSource: {
     it: 'Fonte Ufficiale',
     en: 'Official Source'
-  },
+  , es: 'Fuente Oficial' },
   viewOfficialRegulations: {
     it: 'Consulta il sito ufficiale',
     en: 'Visit official website'
-  },
+  , es: 'Consultar web oficial' },
   shareWithBuddy: {
     it: 'Invia a chi viaggia con te',
     en: 'Share with travel buddy'
-  },
+  , es: 'Compartir con compañero de viaje' },
   linkCopied: {
     it: 'Link copiato negli appunti!',
     en: 'Link copied to clipboard!'
-  },
+  , es: '¡Enlace copiado al portapapeles!' },
   bubbleClose: {
     it: 'Chiudi',
     en: 'Close'
-  },
+  , es: 'Cerrar' },
   searchPlaceholder: { 
     it: 'Cerca aeroporto (es. FCO, Malpensa, JFK, Londra, Roma)...', 
     en: 'Search airport (e.g. FCO, Malpensa, JFK, London, Rome)...' 
-  },
-  searchShortcut: { it: 'Premi / per cercare', en: 'Press / to search' },
-  popularHubs: { it: 'Aeroporti Principali', en: 'Major Hubs' },
+  , es: 'Buscar aeropuerto (ej. MAD, BCN, FCO, Madrid, Barcelona)...' },
+  searchShortcut: { it: 'Premi / per cercare', en: 'Press / to search' , es: 'Pulsa / para buscar' },
+  popularHubs: { it: 'Aeroporti Principali', en: 'Major Hubs' , es: 'Aeropuertos Principales' },
   recentSearches: { it: 'Ricerche Recenti', en: 'Recent Searches' },
-  clearRecent: { it: 'Cancella', en: 'Clear' },
-  noResults: { it: 'Nessun aeroporto trovato per', en: 'No airports found for' },
-  requestAirportTitle: { it: 'Aeroporto non ancora censito', en: 'Airport not yet indexed' },
+  clearRecent: { it: 'Cancella', en: 'Clear' , es: 'Borrar' },
+  noResults: { it: 'Nessun aeroporto trovato per', en: 'No airports found for' , es: 'No se encontraron aeropuertos para' },
+  requestAirportTitle: { it: 'Aeroporto non ancora censito', en: 'Airport not yet indexed' , es: 'Aeropuerto aún no catalogado' },
   requestAirportDesc: { 
     it: 'Questo aeroporto non è ancora presente nel nostro catalogo verificato. Puoi richiederne l\'inserimento prioritario: verificheremo le normative e i servizi sui canali ufficiali dell\'ente aeroportuale e pubblicheremo la scheda completa entro l\'aggiornamento programmato.', 
     en: 'This airport is not yet in our verified catalog. You can request priority addition: we will verify regulations and amenities through official airport channels and publish the full profile within the scheduled update.' 
-  },
-  requestAirportBtn: { it: 'Richiedi Censimento Aeroporto', en: 'Request Airport Addition' },
-  requestAirportEmailPlaceholder: { it: 'La tua email per ricevere la notifica (opzionale)', en: 'Your email for publication alert (optional)' },
-  requestAirportSubmitting: { it: 'Registrazione richiesta e verifica in corso...', en: 'Registering request and verifying...' },
+  , es: 'Este aeropuerto aún no está en nuestro catálogo verificado. Puedes solicitar su inclusión prioritaria: verificaremos normativas y servicios en canales oficiales.' },
+  requestAirportBtn: { it: 'Richiedi Censimento Aeroporto', en: 'Request Airport Addition' , es: 'Solicitar Inclusión de Aeropuerto' },
+  requestAirportEmailPlaceholder: { it: 'La tua email per ricevere la notifica (opzionale)', en: 'Your email for publication alert (optional)' , es: 'Tu correo para aviso de publicación (opcional)' },
+  requestAirportSubmitting: { it: 'Registrazione richiesta e verifica in corso...', en: 'Registering request and verifying...' , es: 'Registrando solicitud y verificando...' },
   requestAirportSuccess: { 
     it: 'La scheda ufficiale verrà presto elaborata e riceverai news all\'email indicata (controlla anche lo spam).', 
     en: 'The official dossier will soon be processed and you will receive news at the specified email (check your spam folder too).' 
-  },
+  , es: 'El informe oficial se procesará pronto y recibirás noticias por correo.' },
   
   // Already Requested & Email Subscription
-  alreadyRequestedBadge: { it: 'Verifica già in corso', en: 'Verification in Progress' },
-  alreadyRequestedTitle: { it: 'Aeroporto già in fase di verifica', en: 'Airport Already in Verification' },
+  alreadyRequestedBadge: { it: 'Verifica già in corso', en: 'Verification in Progress' , es: 'Verificación en curso' },
+  alreadyRequestedTitle: { it: 'Aeroporto già in fase di verifica', en: 'Airport Already in Verification' , es: 'Aeropuerto ya en fase de verificación' },
   alreadyRequestedDesc: {
     it: 'Questo aeroporto è già stato richiesto ed è attualmente in lavorazione per il prossimo aggiornamento programmato. Non è necessario inviare una nuova richiesta: inserisci la tua email per ricevere l\'avviso non appena la scheda ufficiale sarà online.',
     en: 'This airport has already been requested and is currently being processed for the upcoming scheduled update. No need to request it again: enter your email below to receive an alert when the official profile goes live.'
-  },
-  subscribeAlertBtn: { it: 'Avvisami alla Pubblicazione', en: 'Notify Me When Published' },
+  , es: 'Este aeropuerto ya ha sido solicitado y está en proceso. Deja tu correo para avisarte cuando esté publicado.' },
+  subscribeAlertBtn: { it: 'Avvisami alla Pubblicazione', en: 'Notify Me When Published' , es: 'Avisarme al Publicar' },
   subscribeAlertSubmitting: { it: 'Iscrizione notifica in corso...', en: 'Subscribing to alert...' },
   subscribeAlertSuccess: {
     it: 'La scheda ufficiale verrà presto elaborata e riceverai news all\'email indicata (controlla anche lo spam).',
@@ -175,10 +176,10 @@ export const translations: Translations = {
   unsubscribeBackHome: { it: 'Torna alla pagina principale', en: 'Back to Home' },
   unsubscribeSearchBarAction: { it: 'Non vuoi più ricevere questo avviso? Annulla iscrizione', en: 'Do not want to receive this alert? Unsubscribe' },
   unsubscribeSearchBarSuccess: { it: 'Iscrizione annullata: non riceverai notifiche.', en: 'Unsubscribed: you will not receive alerts.' },
-  footerUnsubscribe: { it: 'Disiscrizione notifiche', en: 'Unsubscribe alerts' },
+  footerUnsubscribe: { it: 'Disiscrizione notifiche', en: 'Unsubscribe alerts' , es: 'Darse de baja' },
   
   // Verification Badges & Modal
-  verifiedOfficial: { it: 'Fonti Ufficiali Verificate', en: 'Verified Official Sources' },
+  verifiedOfficial: { it: 'Fonti Ufficiali Verificate', en: 'Verified Official Sources' , es: 'Fuentes Oficiales' },
   verifiedDate: { it: 'Ultima verifica ufficiale', en: 'Last official verification' },
   unverifiedBadgeTitle: { it: 'Dato non verificato sul sito ufficiale', en: 'Data not verified on official site' },
   unverifiedModalHeading: { it: 'Informazione Non Verificata', en: 'Unverified Information' },
@@ -242,7 +243,7 @@ export const translations: Translations = {
   cookieAnalyticsTitle: { it: 'Cookie Analitici Anonimi (Opzionali)', en: 'Anonymous Analytics Cookies (Optional)' },
   cookieAnalyticsDesc: { it: 'Ci aiutano a capire quali aeroporti vengono consultati maggiormente per ottimizzare le prestazioni, senza tracciare la tua identità personale.', en: 'Help us understand which airports are most consulted to optimize site speed, without tracking personal identity.' },
   cookieSavePreferences: { it: 'Salva preferenze', en: 'Save preferences' },
-  cookieSettingsLink: { it: 'Gestione Cookie', en: 'Cookie Settings' },
+  cookieSettingsLink: { it: 'Gestione Cookie', en: 'Cookie Settings' , es: 'Ajustes de Cookies' },
 
   // Amenities POI & Scarcity
   amenityAvailability: { it: 'Disponibilità effettiva:', en: 'Actual availability:' },
@@ -462,23 +463,39 @@ export function LanguageProvider({
         let newPath = path;
 
         if (newLang === 'en') {
-          if (path === '/') {
+          if (path === '/' || path === '/es' || path === '/es/') {
             newPath = '/en';
           } else if (path.startsWith('/aeroporti/')) {
             newPath = path.replace(/^\/aeroporti\//, '/en/airports/');
-          } else if (path.startsWith('/scanner-3d-aeroporti')) {
+          } else if (path.startsWith('/es/airports/')) {
+            newPath = path.replace(/^\/es\/airports\//, '/en/airports/');
+          } else if (path.startsWith('/scanner-3d-aeroporti') || path.startsWith('/es/3d-scanners-airports')) {
             newPath = '/en/3d-scanners-airports';
-          } else if (path.startsWith('/guide/liquidi-bagaglio-a-mano')) {
+          } else if (path.startsWith('/guide/liquidi-bagaglio-a-mano') || path.startsWith('/es/guides/liquids-in-carry-on-baggage')) {
             newPath = '/en/guides/liquids-in-carry-on-baggage';
           }
+        } else if (newLang === 'es') {
+          if (path === '/' || path === '/en' || path === '/en/') {
+            newPath = '/es';
+          } else if (path.startsWith('/aeroporti/')) {
+            newPath = path.replace(/^\/aeroporti\//, '/es/airports/');
+          } else if (path.startsWith('/en/airports/')) {
+            newPath = path.replace(/^\/en\/airports\//, '/es/airports/');
+          } else if (path.startsWith('/scanner-3d-aeroporti') || path.startsWith('/en/3d-scanners-airports')) {
+            newPath = '/es/3d-scanners-airports';
+          } else if (path.startsWith('/guide/liquidi-bagaglio-a-mano') || path.startsWith('/en/guides/liquids-in-carry-on-baggage')) {
+            newPath = '/es/guides/liquids-in-carry-on-baggage';
+          }
         } else {
-          if (path === '/en' || path === '/en/') {
+          if (path === '/en' || path === '/en/' || path === '/es' || path === '/es/') {
             newPath = '/';
           } else if (path.startsWith('/en/airports/')) {
             newPath = path.replace(/^\/en\/airports\//, '/aeroporti/');
-          } else if (path.startsWith('/en/3d-scanners-airports')) {
+          } else if (path.startsWith('/es/airports/')) {
+            newPath = path.replace(/^\/es\/airports\//, '/aeroporti/');
+          } else if (path.startsWith('/en/3d-scanners-airports') || path.startsWith('/es/3d-scanners-airports')) {
             newPath = '/scanner-3d-aeroporti';
-          } else if (path.startsWith('/en/guides/liquids-in-carry-on-baggage')) {
+          } else if (path.startsWith('/en/guides/liquids-in-carry-on-baggage') || path.startsWith('/es/guides/liquids-in-carry-on-baggage')) {
             newPath = '/guide/liquidi-bagaglio-a-mano';
           }
         }
@@ -495,7 +512,7 @@ export function LanguageProvider({
   const t = (key: string): string => {
     const entry = translations[key];
     if (!entry) return String(key);
-    return entry[lang] || entry.it || String(key);
+    return entry[lang] || entry.en || entry.it || String(key);
   };
 
   return (

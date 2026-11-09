@@ -18,13 +18,15 @@ export function getSiteStructuredData() {
       '@id': `${SITE_URL}/#website`,
       name: 'AeroInfo',
       url: `${SITE_URL}/`,
-      inLanguage: ['it', 'en'],
+      inLanguage: ['it', 'en', 'es'],
       publisher: { '@id': `${SITE_URL}/#organization` },
     },
   };
 }
 
-export function getAirportBreadcrumbStructuredData(displayName: string, lang: 'it' | 'en') {
+export function getAirportBreadcrumbStructuredData(displayName: string, lang: Language) {
+  const rootName = lang === 'it' ? 'Aeroporti' : (lang === 'es' ? 'Aeropuertos' : 'Airports');
+  const rootItem = lang === 'it' ? `${SITE_URL}/` : (lang === 'es' ? `${SITE_URL}/es` : `${SITE_URL}/en`);
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -32,8 +34,8 @@ export function getAirportBreadcrumbStructuredData(displayName: string, lang: 'i
       {
         '@type': 'ListItem',
         position: 1,
-        name: lang === 'it' ? 'Aeroporti' : 'Airports',
-        item: lang === 'it' ? `${SITE_URL}/` : `${SITE_URL}/en`,
+        name: rootName,
+        item: rootItem,
       },
       { '@type': 'ListItem', position: 2, name: displayName },
     ],
@@ -75,7 +77,9 @@ export function getAirportStructuredData(airport: Airport, lang: Language) {
     },
     description: isItalian
       ? `Guida ufficiale e verificata su sicurezza, scanner 3D, regole liquidi, terminal e trasporti per l'aeroporto di ${displayName} (${airport.iata}).`
-      : `Official verified travel guide for security, 3D scanners, liquids rules, terminals, and ground transport at ${displayName} (${airport.iata}).`,
+      : (lang === 'es'
+        ? `Guía oficial y verificada sobre seguridad, escáneres 3D, reglas de líquidos, terminales y transporte para el aeropuerto de ${displayName} (${airport.iata}).`
+        : `Official verified travel guide for security, 3D scanners, liquids rules, terminals, and ground transport at ${displayName} (${airport.iata}).`),
   };
 }
 
@@ -265,7 +269,7 @@ export function getGuideStructuredData(
   description: string,
   path: string,
   reviewedAt: string,
-  lang: 'it' | 'en'
+  lang: Language
 ) {
   const isItalian = lang === 'it';
   const url = `${SITE_URL}${path}`;
@@ -332,16 +336,21 @@ export function getGuideStructuredData(
 
 export function getScannersHubStructuredData(airports: Airport[], lang: Language) {
   const isItalian = lang === 'it';
-  const path = isItalian ? '/scanner-3d-aeroporti' : '/en/3d-scanners-airports';
+  const isSpanish = lang === 'es';
+  const path = isItalian ? '/scanner-3d-aeroporti' : (isSpanish ? '/es/3d-scanners-airports' : '/en/3d-scanners-airports');
   const url = `${SITE_URL}${path}`;
 
   const title = isItalian
     ? 'Scanner 3D negli Aeroporti: Dove Sono Attivi e Regole Liquidi | AeroInfo'
-    : '3D Airport Scanners: Active Airports & Liquid Rules | AeroInfo';
+    : (isSpanish
+      ? 'Escáneres 3D en Aeropuertos: Dónde Están Activos y Reglas de Líquidos | AeroInfo'
+      : '3D Airport Scanners: Active Airports & Liquid Rules | AeroInfo');
 
   const description = isItalian
     ? 'Elenco aggiornato degli aeroporti con scanner tomografici 3D EDS-CB C3 in Italia ed Europa. Scopri dove puoi portare liquidi e PC nel bagaglio a mano senza estrarli.'
-    : 'Updated list of airports with next-gen EDS-CB C3 3D scanners in Italy and Europe. Check where you can leave liquids and laptops inside carry-on luggage.';
+    : (isSpanish
+      ? 'Lista actualizada de aeropuertos con escáneres 3D EDS-CB C3 en España y Europa. Descubre dónde llevar líquidos y portátiles en el equipaje de mano sin sacarlos.'
+      : 'Updated list of airports with next-gen EDS-CB C3 3D scanners in Italy and Europe. Check where you can leave liquids and laptops inside carry-on luggage.');
 
   const breadcrumbs = {
     '@type': 'BreadcrumbList',
@@ -350,13 +359,13 @@ export function getScannersHubStructuredData(airports: Airport[], lang: Language
       {
         '@type': 'ListItem',
         position: 1,
-        name: isItalian ? 'Home' : 'Home',
-        item: isItalian ? `${SITE_URL}/` : `${SITE_URL}/en`,
+        name: isItalian ? 'Home' : (isSpanish ? 'Inicio' : 'Home'),
+        item: isItalian ? `${SITE_URL}/` : (isSpanish ? `${SITE_URL}/es` : `${SITE_URL}/en`),
       },
       {
         '@type': 'ListItem',
         position: 2,
-        name: isItalian ? 'Scanner 3D Aeroporti' : '3D Airport Scanners',
+        name: isItalian ? 'Scanner 3D Aeroporti' : (isSpanish ? 'Escáneres 3D Aeropuertos' : '3D Airport Scanners'),
         item: url,
       },
     ],
@@ -368,7 +377,7 @@ export function getScannersHubStructuredData(airports: Airport[], lang: Language
     name: title,
     description,
     url,
-    inLanguage: isItalian ? 'it' : 'en',
+    inLanguage: isItalian ? 'it' : (isSpanish ? 'es' : 'en'),
     publisher: { '@id': `${SITE_URL}/#organization` },
   };
 

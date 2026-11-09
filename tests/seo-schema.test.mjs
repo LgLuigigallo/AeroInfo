@@ -136,17 +136,39 @@ assert(
 // 8. Verify SERP Meta Descriptions explicitly cite official sources and 24h updates
 const layoutItFile = readFileSync('src/app/(it)/layout.tsx', 'utf8');
 const layoutEnFile = readFileSync('src/app/en/layout.tsx', 'utf8');
+const layoutEsFile = readFileSync('src/app/es/layout.tsx', 'utf8');
 const airportPageItFile = readFileSync('src/app/(it)/aeroporti/[slug]/page.tsx', 'utf8');
 const airportPageEnFile = readFileSync('src/app/en/airports/[slug]/page.tsx', 'utf8');
+const airportPageEsFile = readFileSync('src/app/es/airports/[slug]/page.tsx', 'utf8');
 
 assert(
-  layoutItFile.includes('fonti ufficiali ogni 24h') && layoutEnFile.includes('official airport sources and updated every 24h'),
-  'Home layouts must explicitly state official sources and 24h updates in meta descriptions'
+  layoutItFile.includes('fonti ufficiali ogni 24h') && 
+  layoutEnFile.includes('official airport sources and updated every 24h') &&
+  layoutEsFile.includes('fuentes oficiales de aeropuertos cada 24h'),
+  'Home layouts must explicitly state official sources and 24h updates in meta descriptions (IT, EN, ES)'
 );
 
 assert(
-  airportPageItFile.includes('fonti ufficiali aggiornati ogni 24h') && airportPageEnFile.includes('official sources, updated every 24h'),
+  airportPageItFile.includes('fonti ufficiali aggiornati ogni 24h') && 
+  airportPageEnFile.includes('official sources, updated every 24h') &&
+  airportPageEsFile.includes('fuentes oficiales actualizados cada 24h'),
   'Airport detail pages must explicitly state official sources and 24h updates in meta descriptions'
+);
+
+// 9. Verify Trilingual Support (IT, EN, ES) & Sibling Interlinking
+assert(
+  sitemapFile.includes('hreflang="es"'),
+  'Sitemap must include Spanish alternate hreflang tags'
+);
+
+assert(
+  headerFile.includes('SpainFlagIcon') && headerFile.includes('ES'),
+  'Header must render Spanish language selector with flag icon'
+);
+
+assert(
+  bubblesFile.includes('connectedAirports') && bubblesFile.includes('rel.iata'),
+  'AirportBubblesView must render connected internal airport links for deep SEO crawlability'
 );
 
 console.log('✅ ALL SEO STRUCTURED DATA & MINIMALIST UI TESTS PASSED SUCCESSFULLY!');

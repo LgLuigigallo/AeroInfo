@@ -8,6 +8,7 @@ import {
   ShieldCheck, 
   Map as MapIcon, 
   ArrowLeft, 
+  ArrowRight,
   ExternalLink, 
   CheckCircle2, 
   AlertTriangle, 
@@ -150,6 +151,51 @@ export function AirportBubblesView({
       airline.terminal.toLowerCase().includes(q)
     );
   });
+
+  // Connected and related airports for deep internal linking & exploration
+  const connectedAirports = React.useMemo(() => {
+    const code = airport.iata.toUpperCase();
+    const seen = new Set<string>([code]);
+    const list: Airport[] = [];
+
+    // 1. Same-city/area siblings
+    if (airport.otherCityAirports && airport.otherCityAirports.length > 0) {
+      for (const other of airport.otherCityAirports) {
+        const match = airports.find((a) => a.iata.toUpperCase() === other.iata.toUpperCase());
+        if (match && !seen.has(match.iata.toUpperCase())) {
+          seen.add(match.iata.toUpperCase());
+          list.push(match);
+        }
+      }
+    }
+
+    // 2. Same-country airports
+    const sameCountry = airports.filter(
+      (a) => !seen.has(a.iata.toUpperCase()) && 
+             a.countryCode && 
+             a.countryCode.toUpperCase() === (airport.countryCode || '').toUpperCase()
+    );
+    for (const item of sameCountry) {
+      if (list.length >= 4) break;
+      seen.add(item.iata.toUpperCase());
+      list.push(item);
+    }
+
+    // 3. Major European hubs as fallback to reach 4
+    const majorHubs = ['FCO', 'MXP', 'MAD', 'BCN', 'CDG', 'AMS', 'FRA', 'LHR', 'DUB'];
+    for (const hubIata of majorHubs) {
+      if (list.length >= 4) break;
+      if (!seen.has(hubIata)) {
+        const match = airports.find((a) => a.iata.toUpperCase() === hubIata);
+        if (match) {
+          seen.add(hubIata);
+          list.push(match);
+        }
+      }
+    }
+
+    return list.slice(0, 4);
+  }, [airport, airports]);
 
   return (
     <div className="w-full space-y-6 animate-in fade-in duration-200">
@@ -488,6 +534,67 @@ export function AirportBubblesView({
 
       {/* Clean & Semantic FAQ Accordions for Travelers and Search Engines */}
       <AirportFaqSection airport={airport} lang={lang} />
+
+      {/* Related Connected Airports (100% Unframed Internal Linking) */}
+      {connectedAirports.length > 0 && (
+        <section className="rounded-3xl bg-white/95 dark:bg-zinc-900 p-5 sm:p-7 shadow-xs">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <Plane className="w-4 h-4 text-[#05668D] dark:text-[#5EAAA8] -rotate-45" />
+              <h2 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-white tracking-tight">
+                {isItalian
+                  ? `Altri aeroporti in ${country} ed Europa`
+                  : (lang === 'es'
+                    ? `Otros aeropuertos en ${country} y Europa`
+                    : `Other airports in ${country} & Europe`)}
+              </h2>
+            </div>
+            <span className="text-[11px] font-mono text-zinc-400 dark:text-zinc-500">
+              {isItalian ? 'Dossier verificati' : (lang === 'es' ? 'Informes verificados' : 'Verified dossiers')}
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            {connectedAirports.map((rel) => {
+              const relName = isItalian ? rel.name_it : (lang === 'es' ? (rel.name_es || rel.name_en) : rel.name_en);
+              const relCity = isItalian ? rel.city_it : (lang === 'es' ? (rel.city_es || rel.city_en) : rel.city_en);
+              return (
+                <Link
+                  key={rel.iata}
+                  href={airportPath(rel, lang)}
+                  onClick={(e) => {
+                    if (onSelectAirport) {
+                      e.preventDefault();
+                      onSelectAirport(rel);
+                    }
+                  }}
+                  className="group p-3.5 rounded-2xl bg-[#E8F1F2]/60 hover:bg-[#E8F1F2] dark:bg-zinc-800/60 dark:hover:bg-zinc-800 transition-all duration-200 cursor-pointer shadow-2xs hover:shadow-xs hover:-translate-y-0.5 flex flex-col justify-between"
+                  title={`${relCity} (${rel.iata})`}
+                >
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <span className="font-mono text-xs font-bold text-[#05668D] dark:text-[#5EAAA8] px-2 py-0.5 rounded-md bg-white dark:bg-zinc-900 shadow-2xs">
+                      {rel.iata}
+                    </span>
+                    {rel.securityPolicy?.has3DScanners && (
+                      <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-400">
+                        Scanner 3D
+                      </span>
+                    )}
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-[#05668D] dark:group-hover:text-[#5EAAA8] transition-colors truncate">
+                      {relCity}
+                    </p>
+                    <p className="text-[11px] text-zinc-500 dark:text-zinc-400 line-clamp-1">
+                      {relName}
+                    </p>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       {/* MODAL / SHEET DETAIL OVERLAY */}
       {activeModal && (

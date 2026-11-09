@@ -1,8 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Plane, ShieldCheck, MessageSquare } from 'lucide-react';
+import { Plane, ShieldCheck, MessageSquare, Moon, Sun } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 import { trackLanguageSwitch } from '@/lib/analytics';
 
@@ -33,8 +33,50 @@ function UKFlagIcon({ className = 'w-4 h-3' }: { className?: string }) {
   );
 }
 
+function SpainFlagIcon({ className = 'w-4 h-3' }: { className?: string }) {
+  return (
+    <svg className={`${className} rounded-[2px] shadow-2xs overflow-hidden shrink-0 inline-block`} viewBox="0 0 30 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect width="30" height="5" fill="#AA151B" />
+      <rect y="5" width="30" height="10" fill="#F1BF00" />
+      <rect y="15" width="30" height="5" fill="#AA151B" />
+    </svg>
+  );
+}
+
 export function Header({ onResetHome }: HeaderProps) {
   const { lang, setLang, t } = useLanguage();
+  const [isDark, setIsDark] = useState<boolean>(true);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('aeroinfo_theme');
+      if (saved === 'light') {
+        setIsDark(false);
+        document.documentElement.classList.remove('dark');
+      } else {
+        setIsDark(true);
+        document.documentElement.classList.add('dark');
+      }
+    } catch {
+      // safe fallback
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const next = !isDark;
+    setIsDark(next);
+    try {
+      if (next) {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('aeroinfo_theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('aeroinfo_theme', 'light');
+      }
+    } catch {
+      // safe fallback
+    }
+  };
 
   const handleBrandClick = () => {
     if (onResetHome) {
@@ -79,13 +121,14 @@ export function Header({ onResetHome }: HeaderProps) {
           {/* Feedback Link */}
           <Link
             href="/feedback"
+            rel="nofollow"
             className="hidden sm:inline-flex items-center gap-1.5 text-xs text-zinc-700 dark:text-zinc-300 hover:text-[#05668D] dark:hover:text-white font-medium px-2.5 py-1.5 rounded-full bg-[#E8F1F2]/60 hover:bg-[#E8F1F2] dark:bg-zinc-900 dark:hover:bg-zinc-800 transition-all shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#05668D]"
           >
             <MessageSquare className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
             <span className="font-mono text-[11px] tracking-tight">Feedback</span>
           </Link>
 
-          {/* Minimalist Flag-based Language Switcher */}
+          {/* Minimalist Flag-based Language Switcher (IT / ENG / ES) */}
           <div 
             className="flex items-center rounded-full bg-[#E8F1F2] dark:bg-zinc-900 p-0.5 shadow-2xs text-xs font-mono"
             role="group"
@@ -125,7 +168,35 @@ export function Header({ onResetHome }: HeaderProps) {
               <UKFlagIcon />
               <span className="text-[11px]">ENG</span>
             </button>
+            <button
+              type="button"
+              onClick={() => {
+                if (lang !== 'es') trackLanguageSwitch('es', lang);
+                setLang('es');
+              }}
+              aria-pressed={lang === 'es'}
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#05668D] ${
+                lang === 'es'
+                  ? 'bg-[#05668D] text-white font-bold shadow-xs'
+                  : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+              }`}
+              title="Español"
+            >
+              <SpainFlagIcon />
+              <span className="text-[11px]">ES</span>
+            </button>
           </div>
+
+          {/* Theme Toggle (Dark Mode Default) */}
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-[#E8F1F2] dark:bg-zinc-900 text-zinc-700 dark:text-zinc-200 hover:text-[#05668D] dark:hover:text-white transition-all shadow-2xs cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#05668D]"
+            title={isDark ? (lang === 'it' ? 'Passa alla modalità chiara' : (lang === 'es' ? 'Cambiar a modo claro' : 'Switch to light mode')) : (lang === 'it' ? 'Passa alla modalità scura' : (lang === 'es' ? 'Cambiar a modo oscuro' : 'Switch to dark mode'))}
+            aria-label="Toggle theme"
+          >
+            {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-zinc-600" />}
+          </button>
         </div>
       </div>
     </header>

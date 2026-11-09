@@ -46,9 +46,9 @@ export function trackEvent(eventName: string, params?: GtagEventParams) {
 }
 
 /**
- * 1. Tracks when a user switches the interface language (IT <-> EN)
+ * 1. Tracks when a user switches the interface language (IT <-> EN <-> ES)
  */
-export function trackLanguageSwitch(targetLang: 'it' | 'en', currentLang: 'it' | 'en') {
+export function trackLanguageSwitch(targetLang: 'it' | 'en' | 'es', currentLang: 'it' | 'en' | 'es') {
   trackEvent('language_switch', {
     target_language: targetLang,
     previous_language: currentLang,
@@ -59,7 +59,7 @@ export function trackLanguageSwitch(targetLang: 'it' | 'en', currentLang: 'it' |
 /**
  * 2. Tracks when a user clicks on the carry-on liquids guide link
  */
-export function trackGuideClick(sourceLocation: string, currentLang: 'it' | 'en') {
+export function trackGuideClick(sourceLocation: string, currentLang: 'it' | 'en' | 'es') {
   trackEvent('guide_click', {
     guide_topic: 'liquids_rules',
     source_location: sourceLocation,

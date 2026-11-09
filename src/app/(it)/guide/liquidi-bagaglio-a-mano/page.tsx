@@ -5,12 +5,13 @@ import { SITE_URL } from '@/lib/seo/airports';
 
 const content = liquidsGuide.it;
 const canonical = new URL(content.path, SITE_URL).toString();
-const alternate = new URL(liquidsGuide.en.path, SITE_URL).toString();
+const alternateEn = new URL(liquidsGuide.en.path, SITE_URL).toString();
+const alternateEs = new URL(liquidsGuide.es.path, SITE_URL).toString();
 
 export const metadata: Metadata = {
   title: `${content.title} | AeroInfo`,
   description: content.description,
-  alternates: { canonical, languages: { it: canonical, en: alternate, 'x-default': canonical } },
+  alternates: { canonical, languages: { it: canonical, en: alternateEn, es: alternateEs, 'x-default': canonical } },
   openGraph: { title: content.title, description: content.description, url: canonical, siteName: 'AeroInfo', locale: 'it_IT', type: 'article' },
 };
 

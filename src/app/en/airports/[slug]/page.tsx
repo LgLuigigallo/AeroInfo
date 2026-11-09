@@ -35,6 +35,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const canonicalUrl = new URL(airportPath(airport, 'en'), SITE_URL).toString();
   const alternateIt = new URL(airportPath(airport, 'it'), SITE_URL).toString();
+  const alternateEs = new URL(airportPath(airport, 'es'), SITE_URL).toString();
 
   return {
     title,
@@ -44,6 +45,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       languages: {
         it: alternateIt,
         en: canonicalUrl,
+        es: alternateEs,
         'x-default': alternateIt,
       },
     },
