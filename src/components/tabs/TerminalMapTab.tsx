@@ -483,9 +483,11 @@ export function TerminalMapTab({ airport }: TerminalMapTabProps) {
               </h3>
             </div>
             <p className="text-xs text-zinc-500 dark:text-zinc-400 max-w-2xl leading-relaxed">
-              {lang === 'it' 
-                ? 'Visualizzazione integrata del concourse: varchi controlli, fontanelle, prese e poli commerciali con elenco completo sottostante.'
-                : 'Integrated concourse layout: security checkpoints, water refill, power sockets, and dining hubs with detailed directory below.'}
+              {lang === 'es'
+                ? 'Diseño de terminal: controles de seguridad, fuentes de agua, enchufes y locales comerciales con directorio detallado a continuación.'
+                : (lang === 'it' 
+                  ? 'Visualizzazione integrata del concourse: varchi controlli, fontanelle, prese e poli commerciali con elenco completo sottostante.'
+                  : 'Integrated concourse layout: security checkpoints, water refill, power sockets, and dining hubs with detailed directory below.')}
             </p>
           </div>
 
@@ -496,7 +498,7 @@ export function TerminalMapTab({ airport }: TerminalMapTabProps) {
               className="inline-flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-200 font-semibold text-xs tracking-tight transition-colors cursor-pointer font-mono w-full sm:w-auto"
             >
               <Utensils className="w-3.5 h-3.5 text-orange-500" />
-              <span>{lang === 'it' ? 'Vai ai Ristoranti' : 'View Venues'}</span>
+              <span>{lang === 'es' ? 'Ver Restaurantes' : (lang === 'it' ? 'Vai ai Ristoranti' : 'View Venues')}</span>
               <ArrowDown className="w-3 h-3 opacity-60" />
             </button>
 
@@ -825,12 +827,14 @@ export function TerminalMapTab({ airport }: TerminalMapTabProps) {
             <div>
               <h3 className="text-base sm:text-lg font-bold text-zinc-900 dark:text-white tracking-tight flex items-center gap-2">
                 <Utensils className="w-4 h-4 text-orange-500" />
-                <span>{lang === 'it' ? 'Guida a Ristoranti, Bar & Negozi' : 'Dining & Commercial Directory'}</span>
+                <span>{lang === 'es' ? 'Guía de Restaurantes, Cafés y Tiendas' : (lang === 'it' ? 'Guida a Ristoranti, Bar & Negozi' : 'Dining & Commercial Directory')}</span>
               </h3>
               <p className="text-xs text-zinc-500 dark:text-zinc-400 font-sans mt-0.5">
-                {lang === 'it' 
-                  ? 'Locali aggregati in sezioni apribili per urgenza e tipologia di servizio.'
-                  : 'Venues grouped into expandable tabs tailored to your travel timing and needs.'}
+                {lang === 'es'
+                  ? 'Locales organizados en pestañas según tus horarios y necesidades de viaje.'
+                  : (lang === 'it' 
+                    ? 'Locali aggregati in sezioni apribili per urgenza e tipologia di servizio.'
+                    : 'Venues grouped into expandable tabs tailored to your travel timing and needs.')}
               </p>
             </div>
 

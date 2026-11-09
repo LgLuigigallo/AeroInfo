@@ -283,6 +283,7 @@ export interface Airport {
     iata: string;
     name_it: string;
     name_en: string;
+    name_es?: string;
     distanceInfo?: string;
   }>;
 

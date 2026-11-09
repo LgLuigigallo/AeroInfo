@@ -61,12 +61,16 @@ export function AirportBubblesView({
   const [isCopied, setIsCopied] = useState(false);
 
   const handleShare = async () => {
-    const shareTitle = isItalian
-      ? `Regole Aeroporto ${name} (${airport.iata})`
-      : `Airport Rules & Info: ${name} (${airport.iata})`;
-    const shareText = isItalian
-      ? `✈️ Controlli sicurezza, liquidi e scanner per ${name} (${airport.iata}) su AeroInfo:`
-      : `✈️ Security rules, liquids and 3D scanners for ${name} (${airport.iata}) on AeroInfo:`;
+    const shareTitle = isSpanish
+      ? `Reglas Aeropuerto ${name} (${airport.iata})`
+      : (isItalian
+        ? `Regole Aeroporto ${name} (${airport.iata})`
+        : `Airport Rules & Info: ${name} (${airport.iata})`);
+    const shareText = isSpanish
+      ? `✈️ Controles de seguridad, líquidos y escáneres para ${name} (${airport.iata}) en AeroInfo:`
+      : (isItalian
+        ? `✈️ Controlli sicurezza, liquidi e scanner per ${name} (${airport.iata}) su AeroInfo:`
+        : `✈️ Security rules, liquids and 3D scanners for ${name} (${airport.iata}) on AeroInfo:`);
     const shareUrl = typeof window !== 'undefined'
       ? window.location.href
       : `https://www.aero-info.eu${airportPath(airport, lang)}`;
@@ -113,9 +117,10 @@ export function AirportBubblesView({
   };
 
   const isItalian = lang === 'it';
-  const name = isItalian ? airport.name_it : airport.name_en;
-  const city = isItalian ? airport.city_it : airport.city_en;
-  const country = isItalian ? airport.country_it : airport.country_en;
+  const isSpanish = lang === 'es';
+  const name = isSpanish ? (airport.name_es || airport.name_en) : (isItalian ? airport.name_it : airport.name_en);
+  const city = isSpanish ? (airport.city_es || airport.city_en) : (isItalian ? airport.city_it : airport.city_en);
+  const country = isSpanish ? (airport.country_es || airport.country_en) : (isItalian ? airport.country_it : airport.country_en);
   const policy = airport.securityPolicy;
 
   // Synchronize browser URL bar instantly on language change without reloading
@@ -124,7 +129,7 @@ export function AirportBubblesView({
       const targetPath = airportPath(airport, lang);
       if (
         window.location.pathname !== targetPath &&
-        (window.location.pathname.startsWith('/aeroporti/') || window.location.pathname.startsWith('/en/airports/'))
+        (window.location.pathname.startsWith('/aeroporti/') || window.location.pathname.startsWith('/en/airports/') || window.location.pathname.startsWith('/es/airports/'))
       ) {
         window.history.replaceState(null, '', targetPath + window.location.search + window.location.hash);
       }
@@ -138,7 +143,7 @@ export function AirportBubblesView({
 
   // Verification date
   const verifiedDateFormatted = policy.lastVerifiedDate
-    ? new Intl.DateTimeFormat(isItalian ? 'it-IT' : 'en-GB', { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(`${policy.lastVerifiedDate}T00:00:00Z`))
+    ? new Intl.DateTimeFormat(isItalian ? 'it-IT' : (isSpanish ? 'es-ES' : 'en-GB'), { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(`${policy.lastVerifiedDate}T00:00:00Z`))
     : null;
 
   // Filter airlines
@@ -203,7 +208,7 @@ export function AirportBubblesView({
       {/* Top Header & Search Bar Navigation */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3">
         <Link
-          href={isItalian ? '/' : '/en'}
+          href={isSpanish ? '/es' : (isItalian ? '/' : '/en')}
           onClick={(e) => {
             e.preventDefault();
             onBack();
@@ -211,7 +216,7 @@ export function AirportBubblesView({
           className="inline-flex items-center gap-2 text-xs font-semibold text-zinc-600 dark:text-zinc-400 hover:text-[#05668D] dark:hover:text-white transition-colors cursor-pointer group"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          <span>{isItalian ? '← Cambia aeroporto' : '← Change airport'}</span>
+          <span>{isSpanish ? '← Cambiar aeropuerto' : (isItalian ? '← Cambia aeroporto' : '← Change airport')}</span>
         </Link>
 
         <div className="w-full sm:w-80">
@@ -240,7 +245,7 @@ export function AirportBubblesView({
             </div>
 
             <h1 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-white tracking-tight flex items-center gap-2.5 flex-wrap">
-              <span>{isItalian ? `Informazioni ${name.startsWith('Aeroporto') ? name : `Aeroporto ${name}`}` : `${name} — Airport Information`}</span>
+              <span>{isSpanish ? `Información ${name.startsWith('Aeropuerto') ? name : `Aeropuerto ${name}`}` : (isItalian ? `Informazioni ${name.startsWith('Aeroporto') ? name : `Aeroporto ${name}`}` : `${name} — Airport Information`)}</span>
               {airport.countryCode && (
                 <CountryFlag countryCode={airport.countryCode} countryName={country} />
               )}
@@ -251,11 +256,11 @@ export function AirportBubblesView({
 
             {airport.otherCityAirports && airport.otherCityAirports.length > 0 && (
               <div className="flex flex-wrap items-center gap-1.5 pt-1 text-xs">
-                <span className="text-zinc-400 font-medium">{isItalian ? 'Stessa area:' : 'Same area:'}</span>
+                <span className="text-zinc-400 font-medium">{isSpanish ? 'Misma área:' : (isItalian ? 'Stessa area:' : 'Same area:')}</span>
                 {airport.otherCityAirports.map((other) => {
                   const match = airports.find((a) => a.iata.toUpperCase() === other.iata.toUpperCase());
                   const href = match ? airportPath(match, lang) : undefined;
-                  const label = isItalian ? other.name_it : other.name_en;
+                  const label = isSpanish ? (other.name_es || other.name_en) : (isItalian ? other.name_it : other.name_en);
 
                   return href ? (
                     <Link
@@ -304,7 +309,7 @@ export function AirportBubblesView({
             </div>
             {verifiedDateFormatted && (
               <span className="text-[11px] text-zinc-400 font-mono">
-                {isItalian ? 'Aggiornato al' : 'Verified on'} {verifiedDateFormatted}
+                {isSpanish ? 'Actualizado el' : (isItalian ? 'Aggiornato al' : 'Verified on')} {verifiedDateFormatted}
               </span>
             )}
             <div className="flex flex-wrap items-center gap-2 pt-0.5">
@@ -315,7 +320,7 @@ export function AirportBubblesView({
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#05668D] dark:text-[#5EAAA8] hover:underline"
                 >
-                  <span>{isItalian ? 'Sito ufficiale' : 'Official website'}</span>
+                  <span>{isSpanish ? 'Sitio oficial' : (isItalian ? 'Sito ufficiale' : 'Official website')}</span>
                   <ExternalLink className="w-3 h-3" />
                 </a>
               )}
@@ -336,15 +341,19 @@ export function AirportBubblesView({
         <div className="mt-5 pt-4 bg-zinc-50/80 dark:bg-zinc-800/40 rounded-2xl p-4 sm:p-5 space-y-3">
           <div className="flex items-center gap-2">
             <span className="font-mono text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-[#05668D] text-white">
-              {isItalian ? 'Riepilogo Info' : 'Quick Facts'}
+              {isSpanish ? 'Resumen Info' : (isItalian ? 'Riepilogo Info' : 'Quick Facts')}
             </span>
             <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
-              {isItalian ? `Informazioni essenziali per chi parte da ${airport.iata}` : `Essential travel information for ${airport.iata}`}
+              {isSpanish ? `Información esencial para salir desde ${airport.iata}` : (isItalian ? `Informazioni essenziali per chi parte da ${airport.iata}` : `Essential travel information for ${airport.iata}`)}
             </h2>
           </div>
 
           <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
-            {isItalian ? (
+            {isSpanish ? (
+              <>
+                El aeropuerto de <strong>{name} ({airport.iata})</strong> da servicio al área de <strong>{city}</strong>. {policy.has3DScanners ? 'En los controles de seguridad están activos escáneres tomográficos 3D EDS-CB C3: puedes dejar líquidos y ordenadores portátiles dentro del equipaje de mano.' : 'En los controles de seguridad se aplica la normativa europea estándar: líquidos permitidos solo en envases de máximo 100 ml dentro de una única bolsa transparente de 1 litro.'} Las baterías externas (powerbanks) y baterías de litio están permitidas <strong>exclusivamente en el equipaje de mano</strong> (prohibidas en bodega). Se recomienda llegar al aeropuerto con <strong>{airport.recommendedArrivalHours?.domestic || 2} horas de antelación</strong> para vuelos nacionales/Schengen y <strong>{airport.recommendedArrivalHours?.international || 3} horas</strong> para vuelos internacionales; el tiempo medio estimado en los controles es de aprox. {airport.averageSecurityWaitMin || 15} minutos.
+              </>
+            ) : isItalian ? (
               <>
                 L&apos;aeroporto di <strong>{name} ({airport.iata})</strong> serve l&apos;area di <strong>{city}</strong>. {policy.has3DScanners ? 'Ai varchi di sicurezza sono attivi scanner tomografici 3D EDS-CB C3: puoi lasciare liquidi e computer portatili all’interno del bagaglio a mano.' : 'Ai varchi di sicurezza si applica la normativa europea standard: liquidi ammessi solo in flaconi da massimo 100 ml riposti in un unico sacchetto trasparente da 1 litro.'} Powerbank e batterie al litio sono ammesse <strong>esclusivamente nel bagaglio a mano</strong> (vietate nella stiva). Si consiglia di arrivare in aeroporto con <strong>{airport.recommendedArrivalHours?.domestic || 2} ore di anticipo</strong> per i voli nazionali/Schengen e <strong>{airport.recommendedArrivalHours?.international || 3} ore</strong> per i voli internazionali; il tempo medio stimato ai controlli è di circa {airport.averageSecurityWaitMin || 15} minuti.
               </>
@@ -358,22 +367,22 @@ export function AirportBubblesView({
           {/* Quick Metric Badges */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-xs font-mono">
             <div className="p-2.5 rounded-xl bg-white dark:bg-zinc-850 shadow-2xs">
-              <span className="text-[10px] text-zinc-400 block">{isItalian ? 'Scanner 3D' : '3D Scanners'}</span>
+              <span className="text-[10px] text-zinc-400 block">{isSpanish ? 'Escáneres 3D' : (isItalian ? 'Scanner 3D' : '3D Scanners')}</span>
               <span className={`font-bold ${policy.has3DScanners ? 'text-emerald-600 dark:text-emerald-400' : 'text-[#FD6E6E] dark:text-[#FD6E6E]'}`}>
-                {policy.has3DScanners ? 'EDS-CB C3 (Attivi)' : (isItalian ? 'Standard 100ml' : 'Standard 100ml')}
+                {policy.has3DScanners ? (isSpanish ? 'EDS-CB C3 (Activos)' : (isItalian ? 'EDS-CB C3 (Attivi)' : 'EDS-CB C3 (Active)')) : (isSpanish ? 'Estándar 100ml' : (isItalian ? 'Standard 100ml' : 'Standard 100ml'))}
               </span>
             </div>
             <div className="p-2.5 rounded-xl bg-white dark:bg-zinc-850 shadow-2xs">
-              <span className="text-[10px] text-zinc-400 block">{isItalian ? 'Anticipo' : 'Arrival'}</span>
+              <span className="text-[10px] text-zinc-400 block">{isSpanish ? 'Antelación' : (isItalian ? 'Anticipo' : 'Arrival')}</span>
               <span className="font-bold text-zinc-700 dark:text-zinc-200">{airport.recommendedArrivalHours?.domestic || 2}h / {airport.recommendedArrivalHours?.international || 3}h</span>
             </div>
             <div className="p-2.5 rounded-xl bg-white dark:bg-zinc-850 shadow-2xs">
-              <span className="text-[10px] text-zinc-400 block">{isItalian ? 'Attesa Varchi' : 'Security Wait'}</span>
+              <span className="text-[10px] text-zinc-400 block">{isSpanish ? 'Espera Control' : (isItalian ? 'Attesa Varchi' : 'Security Wait')}</span>
               <span className="font-bold text-[#05668D] dark:text-[#5EAAA8]">~{airport.averageSecurityWaitMin || 15} min</span>
             </div>
             <div className="p-2.5 rounded-xl bg-white dark:bg-zinc-850 shadow-2xs">
-              <span className="text-[10px] text-zinc-400 block">{isItalian ? 'Powerbank' : 'Powerbanks'}</span>
-              <span className="font-bold text-amber-700 dark:text-amber-400">{isItalian ? 'Solo Cabina' : 'Cabin Only'}</span>
+              <span className="text-[10px] text-zinc-400 block">{isSpanish ? 'Baterías litio' : (isItalian ? 'Powerbank' : 'Powerbanks')}</span>
+              <span className="font-bold text-amber-700 dark:text-amber-400">{isSpanish ? 'Solo Cabina' : (isItalian ? 'Solo Cabina' : 'Cabin Only')}</span>
             </div>
           </div>
         </div>
@@ -383,7 +392,7 @@ export function AirportBubblesView({
       <section aria-label="Informazioni essenziali aeroporto" className="space-y-3 w-full">
         <div className="flex items-center justify-between">
           <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
-            {isItalian ? 'Scegli cosa vuoi sapere' : 'Choose what you want to know'}
+            {isSpanish ? 'Elige lo que quieres saber' : (isItalian ? 'Scegli cosa vuoi sapere' : 'Choose what you want to know')}
           </h2>
         </div>
 
@@ -412,15 +421,15 @@ export function AirportBubblesView({
                 </h3>
                 <p className="mt-1 text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 line-clamp-3 leading-relaxed">
                   {policy.has3DScanners 
-                    ? (isItalian ? 'Scanner 3D presenti: puoi portare liquidi oltre 100ml e lasciarli nel bagaglio a mano.' : '3D scanners installed: you can bring liquids over 100ml and leave them inside your bag.')
-                    : (isItalian ? 'Norma standard: max 100ml a flacone in busta trasparente da 1 litro.' : 'Standard rule: max 100ml per container in a 1-liter clear plastic bag.')}
+                    ? (isSpanish ? 'Escáneres 3D presentes: puedes llevar líquidos de más de 100ml y dejarlos dentro del equipaje de mano.' : (isItalian ? 'Scanner 3D presenti: puoi portare liquidi oltre 100ml e lasciarli nel bagaglio a mano.' : '3D scanners installed: you can bring liquids over 100ml and leave them inside your bag.'))
+                    : (isSpanish ? 'Norma estándar: máx. 100ml por envase en bolsa transparente de 1 litro.' : (isItalian ? 'Norma standard: max 100ml a flacone in busta trasparente da 1 litro.' : 'Standard rule: max 100ml per container in a 1-liter clear plastic bag.'))}
                 </p>
               </div>
             </div>
 
             <div className="pt-2 flex items-center gap-2 text-xs font-medium text-[#FD6E6E] dark:text-[#FD6E6E]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#FD6E6E] shrink-0" />
-              <span className="truncate">{isItalian ? 'Flaconi, sacchetto trasparente, deroghe' : 'Bottles, clear bag, exemptions'}</span>
+              <span className="truncate">{isSpanish ? 'Envases, bolsa transparente, excepciones' : (isItalian ? 'Flaconi, sacchetto trasparente, deroghe' : 'Bottles, clear bag, exemptions')}</span>
             </div>
           </button>
 
@@ -447,15 +456,15 @@ export function AirportBubblesView({
                 </h3>
                 <p className="mt-1 text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 line-clamp-3 leading-relaxed">
                   {policy.electronicsInBag
-                    ? (isItalian ? 'Dispositivi elettronici: non serve estrarre laptop e tablet dal bagaglio.' : 'Electronic devices: no need to remove laptops and tablets from cabin bag.')
-                    : (isItalian ? 'Dispositivi elettronici: estrarre laptop e tablet nei vassoi ai controlli.' : 'Electronic devices: take laptops and tablets out into security trays.')}
+                    ? (isSpanish ? 'Dispositivos electrónicos: no hace falta sacar portátiles y tabletas del equipaje.' : (isItalian ? 'Dispositivi elettronici: non serve estrarre laptop e tablet dal bagaglio.' : 'Electronic devices: no need to remove laptops and tablets from cabin bag.'))
+                    : (isSpanish ? 'Dispositivos electrónicos: sacar portátiles y tabletas en las bandejas del control.' : (isItalian ? 'Dispositivi elettronici: estrarre laptop e tablet nei vassoi ai controlli.' : 'Electronic devices: take laptops and tablets out into security trays.'))}
                 </p>
               </div>
             </div>
 
             <div className="pt-2 flex items-center gap-2 text-xs font-medium text-[#05668D] dark:text-[#5EAAA8]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#05668D] shrink-0" />
-              <span className="truncate">{isItalian ? 'Elettronica, misure cabina, stiva e compagnie' : 'Electronics, cabin limits, hold & airlines'}</span>
+              <span className="truncate">{isSpanish ? 'Electrónica, medidas cabina, bodega y aerolíneas' : (isItalian ? 'Elettronica, misure cabina, stiva e compagnie' : 'Electronics, cabin limits, hold & airlines')}</span>
             </div>
           </button>
 
@@ -481,16 +490,18 @@ export function AirportBubblesView({
                   {t('bubbleGeneral')}
                 </h3>
                 <p className="mt-1 text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 line-clamp-3 leading-relaxed">
-                  {isItalian
-                    ? 'Regolamentazione droni, powerbank al litio, medicinali, cibo per neonati e duty free.'
-                    : 'Regulations for drones, lithium powerbanks, medicines, baby food and duty free.'}
+                  {isSpanish
+                    ? 'Regulación de drones, baterías de litio externas, medicamentos, alimentos infantiles y compras duty free.'
+                    : (isItalian
+                      ? 'Regolamentazione droni, powerbank al litio, medicinali, cibo per neonati e duty free.'
+                      : 'Regulations for drones, lithium powerbanks, medicines, baby food and duty free.')}
                 </p>
               </div>
             </div>
 
             <div className="pt-2 flex items-center gap-2 text-xs font-medium text-amber-800 dark:text-[#F4D35E]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#F4D35E] shrink-0" />
-              <span className="truncate">{isItalian ? 'Droni, batterie max 100Wh, farmaci essenziali' : 'Drones, 100Wh batteries, critical meds'}</span>
+              <span className="truncate">{isSpanish ? 'Drones, baterías máx 100Wh, medicamentos' : (isItalian ? 'Droni, batterie max 100Wh, farmaci essenziali' : 'Drones, 100Wh batteries, critical meds')}</span>
             </div>
           </button>
 
@@ -516,16 +527,18 @@ export function AirportBubblesView({
                   {t('bubbleMap')}
                 </h3>
                 <p className="mt-1 text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 line-clamp-3 leading-relaxed">
-                  {isItalian
-                    ? 'Mappa interattiva dei terminal, varchi sicurezza, prese di ricarica, acqua potabile e gate.'
-                    : 'Interactive terminal map with security lanes, power sockets, drinking water and gates.'}
+                  {isSpanish
+                    ? 'Mapa interactivo de terminales, controles de seguridad, enchufes, fuentes de agua potable y puertas de embarque.'
+                    : (isItalian
+                      ? 'Mappa interattiva dei terminal, varchi sicurezza, prese di ricarica, acqua potabile e gate.'
+                      : 'Interactive terminal map with security lanes, power sockets, drinking water and gates.')}
                 </p>
               </div>
             </div>
 
             <div className="pt-2 flex items-center gap-2 text-xs font-medium text-[#05668D] dark:text-[#5EAAA8]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#5EAAA8] shrink-0" />
-              <span className="truncate">{isItalian ? 'Terminal, varchi, prese, acqua e gate' : 'Terminals, checkpoints, power, water'}</span>
+              <span className="truncate">{isSpanish ? 'Terminales, controles, enchufes, agua y puertas' : (isItalian ? 'Terminal, varchi, prese, acqua e gate' : 'Terminals, checkpoints, power, water')}</span>
             </div>
           </button>
 
@@ -651,7 +664,7 @@ export function AirportBubblesView({
                   }`}
                 >
                   <Droplets className="w-3.5 h-3.5 shrink-0" />
-                  <span className="hidden sm:inline truncate">{isItalian ? 'Liquidi' : 'Liquids'}</span>
+                  <span className="hidden sm:inline truncate">{isSpanish ? 'Líquidos' : (isItalian ? 'Liquidi' : 'Liquids')}</span>
                 </button>
 
                 <button
@@ -664,7 +677,7 @@ export function AirportBubblesView({
                   }`}
                 >
                   <Luggage className="w-3.5 h-3.5 shrink-0" />
-                  <span className="hidden sm:inline truncate">{isItalian ? 'Bagagli' : 'Baggage'}</span>
+                  <span className="hidden sm:inline truncate">{isSpanish ? 'Equipaje' : (isItalian ? 'Bagagli' : 'Baggage')}</span>
                 </button>
 
                 <button
@@ -677,7 +690,7 @@ export function AirportBubblesView({
                   }`}
                 >
                   <Sparkles className="w-3.5 h-3.5 shrink-0" />
-                  <span className="hidden sm:inline truncate">{isItalian ? 'Altre Regole' : 'General'}</span>
+                  <span className="hidden sm:inline truncate">{isSpanish ? 'Otras Reglas' : (isItalian ? 'Altre Regole' : 'General')}</span>
                 </button>
 
                 <button
@@ -690,7 +703,7 @@ export function AirportBubblesView({
                   }`}
                 >
                   <MapIcon className="w-3.5 h-3.5 shrink-0" />
-                  <span className="hidden sm:inline truncate">{isItalian ? 'Mappa' : 'Map'}</span>
+                  <span className="hidden sm:inline truncate">{isSpanish ? 'Mapa' : (isItalian ? 'Mappa' : 'Map')}</span>
                 </button>
               </div>
             </div>
@@ -716,11 +729,13 @@ export function AirportBubblesView({
                       <div>
                         <h4 className="font-bold text-sm sm:text-base">
                           {policy.has3DScanners
-                            ? (isItalian ? 'Scanner 3D EDS-CB C3 Attivi' : '3D EDS-CB C3 Scanners Active')
-                            : (isItalian ? 'Limite Standard 100ml in Vigore' : 'Standard 100ml Rule in Force')}
+                            ? (isSpanish ? 'Escáneres 3D EDS-CB C3 Activos' : (isItalian ? 'Scanner 3D EDS-CB C3 Attivi' : '3D EDS-CB C3 Scanners Active'))
+                            : (isSpanish ? 'Límite Estándar 100ml Vigente' : (isItalian ? 'Limite Standard 100ml in Vigore' : 'Standard 100ml Rule in Force'))}
                         </h4>
                         <p className="mt-1 text-xs sm:text-sm leading-relaxed opacity-90">
-                          {isItalian ? policy.liquidsAllowance_it : policy.liquidsAllowance_en}
+                          {isSpanish
+                            ? (policy.has3DScanners ? 'Sin límite estricto de 100ml: puedes llevar botellas y envases de mayor tamaño dejándolos dentro del equipaje de mano.' : 'Todos los líquidos deben ir en envases individuales de máx. 100 ml dentro de una bolsa transparente de 1 litro con cierre.')
+                            : (isItalian ? policy.liquidsAllowance_it : policy.liquidsAllowance_en)}
                         </p>
                       </div>
                     </div>
@@ -730,7 +745,7 @@ export function AirportBubblesView({
                   {policy.terminalRules && policy.terminalRules.length > 0 && (
                     <div className="space-y-2">
                       <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-500">
-                        {isItalian ? 'Differenze per Terminal' : 'Differences by Terminal'}
+                        {isSpanish ? 'Diferencias por Terminal' : (isItalian ? 'Differenze per Terminal' : 'Differences by Terminal')}
                       </h4>
                       <div className="grid gap-2">
                         {policy.terminalRules.map((tr) => (
@@ -741,7 +756,7 @@ export function AirportBubblesView({
                             <div>
                               <span className="font-bold text-zinc-900 dark:text-white">{tr.terminalName}</span>
                               <p className="text-zinc-500 dark:text-zinc-400 mt-0.5">
-                                {isItalian ? tr.notes_it : tr.notes_en}
+                                {isSpanish ? (tr.notes_en || tr.notes_it) : (isItalian ? tr.notes_it : tr.notes_en)}
                               </p>
                             </div>
                             <span className={`px-2 py-0.5 rounded font-mono font-bold shrink-0 ${
@@ -749,7 +764,7 @@ export function AirportBubblesView({
                                 ? 'bg-emerald-500/15 text-emerald-800 dark:text-emerald-300'
                                 : 'bg-zinc-200/80 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-300'
                             }`}>
-                              {tr.has3DScanners ? 'Scanner 3D' : '100ml standard'}
+                              {tr.has3DScanners ? (isSpanish ? 'Escáner 3D' : 'Scanner 3D') : (isSpanish ? '100ml estándar' : (isItalian ? '100ml standard' : '100ml standard'))}
                             </span>
                           </div>
                         ))}
@@ -762,24 +777,26 @@ export function AirportBubblesView({
                     <div className="p-4 rounded-2xl bg-[#E8F1F2]/40 dark:bg-zinc-800/40 space-y-1.5 shadow-2xs">
                       <span className="font-bold text-zinc-900 dark:text-white flex items-center gap-1.5">
                         <Droplets className="w-4 h-4 text-[#FD6E6E]" />
-                        {isItalian ? 'Estrazione dal bagaglio' : 'Removal from cabin bag'}
+                        {isSpanish ? 'Extracción del equipaje' : (isItalian ? 'Estrazione dal bagaglio' : 'Removal from cabin bag')}
                       </span>
                       <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
                         {policy.liquidsMustBeRemoved
-                          ? (isItalian ? 'I liquidi vanno estratti e posizionati nei vassoi prima del varco.' : 'Liquids must be taken out of your bag into the inspection tray.')
-                          : (isItalian ? 'I liquidi possono rimanere chiusi all\'interno del tuo bagaglio a mano.' : 'Liquids can stay packed inside your cabin bag.')}
+                          ? (isSpanish ? 'Los líquidos deben sacarse y colocarse en las bandejas antes del control.' : (isItalian ? 'I liquidi vanno estratti e posizionati nei vassoi prima del varco.' : 'Liquids must be taken out of your bag into the inspection tray.'))
+                          : (isSpanish ? 'Los líquidos pueden permanecer dentro de tu equipaje de mano.' : (isItalian ? 'I liquidi possono rimanere chiusi all\'interno del tuo bagaglio a mano.' : 'Liquids can stay packed inside your cabin bag.'))}
                       </p>
                     </div>
 
                     <div className="p-4 rounded-2xl bg-[#E8F1F2]/40 dark:bg-zinc-800/40 space-y-1.5 shadow-2xs">
                       <span className="font-bold text-zinc-900 dark:text-white flex items-center gap-1.5">
                         <Pill className="w-4 h-4 text-[#5EAAA8]" />
-                        {isItalian ? 'Farmaci e latte neonati' : 'Meds & infant food'}
+                        {isSpanish ? 'Medicamentos y alimentos infantiles' : (isItalian ? 'Farmaci e latte neonati' : 'Meds & infant food')}
                       </span>
                       <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                        {isItalian 
-                          ? 'Medicinali salvavita e cibo per infanti sono sempre ammessi oltre i 100ml necessari per il viaggio.' 
-                          : 'Essential liquid medicines and infant milk are always exempt from 100ml limits.'}
+                        {isSpanish
+                          ? 'Los medicamentos esenciales y la comida para bebés están siempre exentos de los 100 ml necesarios para el viaje.'
+                          : (isItalian 
+                            ? 'Medicinali salvavita e cibo per infanti sono sempre ammessi oltre i 100ml necessari per il viaggio.' 
+                            : 'Essential liquid medicines and infant milk are always exempt from 100ml limits.')}
                       </p>
                     </div>
                   </div>
@@ -787,13 +804,13 @@ export function AirportBubblesView({
                   {/* Link to Comprehensive Liquids Guide & Suggest Edit */}
                   <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <Link
-                      href={isItalian ? '/guide/liquidi-bagaglio-a-mano' : '/en/guides/liquids-in-carry-on-baggage'}
+                      href={isSpanish ? '/es/guides/liquids-in-carry-on-baggage' : (isItalian ? '/guide/liquidi-bagaglio-a-mano' : '/en/guides/liquids-in-carry-on-baggage')}
                       onClick={() => trackGuideClick('airport_liquids_tab', lang)}
                       className="inline-flex items-center gap-1.5 text-xs text-[#FD6E6E] dark:text-[#FD6E6E] hover:underline font-semibold font-mono transition-colors"
                     >
                       <Droplets className="w-3.5 h-3.5 text-[#FD6E6E]" />
                       <span className="underline underline-offset-2">
-                        {isItalian ? 'Consulta la guida completa sui liquidi' : 'Read full carry-on liquids guide'}
+                        {isSpanish ? 'Consulta la guía completa sobre líquidos' : (isItalian ? 'Consulta la guida completa sui liquidi' : 'Read full carry-on liquids guide')}
                       </span>
                     </Link>
 
@@ -803,7 +820,7 @@ export function AirportBubblesView({
                       className="inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] hover:text-[#5EAAA8] dark:hover:text-[#B3E5E0] font-semibold transition-colors cursor-pointer self-end sm:self-auto"
                     >
                       <Edit3 className="w-3.5 h-3.5" />
-                      <span>{isItalian ? 'Suggerisci modifica' : 'Suggest edit'}</span>
+                      <span>{isSpanish ? 'Sugerir cambio' : (isItalian ? 'Suggerisci modifica' : 'Suggest edit')}</span>
                     </button>
                   </div>
                 </div>
@@ -817,10 +834,12 @@ export function AirportBubblesView({
                     <Zap className="w-5 h-5 text-[#05668D] dark:text-[#5EAAA8] shrink-0 mt-0.5" />
                     <div>
                       <h4 className="font-bold text-sm sm:text-base text-zinc-900 dark:text-white">
-                        {isItalian ? 'Laptop, Tablet e Dispositivi Elettronici' : 'Laptops, Tablets & Electronic Devices'}
+                        {isSpanish ? 'Ordenadores Portátiles, Tabletas y Electrónica' : (isItalian ? 'Laptop, Tablet e Dispositivi Elettronici' : 'Laptops, Tablets & Electronic Devices')}
                       </h4>
                       <p className="mt-1 text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
-                        {isItalian ? policy.electronicsNote_it : policy.electronicsNote_en}
+                        {isSpanish
+                          ? (policy.electronicsInBag ? 'Con los nuevos escáneres 3D, los portátiles y tabletas pueden permanecer dentro de tu equipaje de mano sin sacarlos.' : 'Debes extraer ordenadores portátiles y dispositivos electrónicos grandes depositándolos en bandejas separadas.')
+                          : (isItalian ? policy.electronicsNote_it : policy.electronicsNote_en)}
                       </p>
                     </div>
                   </div>
@@ -830,24 +849,24 @@ export function AirportBubblesView({
                     <div className="p-4 sm:p-5 rounded-2xl bg-[#E8F1F2]/30 dark:bg-zinc-800/40 space-y-2 shadow-2xs">
                       <span className="font-bold text-zinc-900 dark:text-white flex items-center gap-1.5 text-sm">
                         <Luggage className="w-4 h-4 text-[#05668D]" />
-                        {isItalian ? 'Bagaglio a Mano (Cabina)' : 'Cabin Baggage'}
+                        {isSpanish ? 'Equipaje de Mano (Cabina)' : (isItalian ? 'Bagaglio a Mano (Cabina)' : 'Cabin Baggage')}
                       </span>
                       <ul className="space-y-1 text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                        <li>• {isItalian ? 'Trolley standard:' : 'Standard trolley:'} 55 x 40 x 20-23 cm (8-10 kg)</li>
-                        <li>• {isItalian ? 'Borsa/Zaino sotto il sedile:' : 'Small personal item:'} 40 x 30 x 15-20 cm</li>
-                        <li>• {isItalian ? 'Vietati oggetti taglienti o forbici > 6cm' : 'Forbidden: blades or scissors > 6cm'}</li>
+                        <li>• {isSpanish ? 'Trolley de mano estándar:' : (isItalian ? 'Trolley standard:' : 'Standard trolley:')} 55 x 40 x 20-23 cm (8-10 kg)</li>
+                        <li>• {isSpanish ? 'Bolso / mochila bajo el asiento:' : (isItalian ? 'Borsa/Zaino sotto il sedile:' : 'Small personal item:')} 40 x 30 x 15-20 cm</li>
+                        <li>• {isSpanish ? 'Prohibidos objetos cortantes o tijeras > 6cm' : (isItalian ? 'Vietati oggetti taglienti o forbici > 6cm' : 'Forbidden: blades or scissors > 6cm')}</li>
                       </ul>
                     </div>
 
                     <div className="p-4 sm:p-5 rounded-2xl bg-[#E8F1F2]/30 dark:bg-zinc-800/40 space-y-2 shadow-2xs">
                       <span className="font-bold text-zinc-900 dark:text-white flex items-center gap-1.5 text-sm">
                         <Plane className="w-4 h-4 text-[#5EAAA8]" />
-                        {isItalian ? 'Bagaglio da Stiva (Registrato)' : 'Checked Baggage (Hold)'}
+                        {isSpanish ? 'Equipaje Facturado (Bodega)' : (isItalian ? 'Bagaglio da Stiva (Registrato)' : 'Checked Baggage (Hold)')}
                       </span>
                       <ul className="space-y-1 text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                        <li className="text-red-600 dark:text-red-400 font-semibold">• {isItalian ? 'VIETATO in stiva: Powerbank & Batterie al litio' : 'FORBIDDEN in hold: Powerbanks & Lithium batteries'}</li>
-                        <li className="text-red-600 dark:text-red-400 font-semibold">• {isItalian ? 'VIETATO in stiva: Sigarette elettroniche' : 'FORBIDDEN in hold: E-cigarettes'}</li>
-                        <li>• {isItalian ? 'Ammessi liquidi > 100ml ben protetti' : 'Liquids > 100ml allowed in hold'}</li>
+                        <li className="text-red-600 dark:text-red-400 font-semibold">• {isSpanish ? 'PROHIBIDO en bodega: Powerbanks y baterías de litio' : (isItalian ? 'VIETATO in stiva: Powerbank & Batterie al litio' : 'FORBIDDEN in hold: Powerbanks & Lithium batteries')}</li>
+                        <li className="text-red-600 dark:text-red-400 font-semibold">• {isSpanish ? 'PROHIBIDO en bodega: Cigarrillos electrónicos' : (isItalian ? 'VIETATO in stiva: Sigarette elettroniche' : 'FORBIDDEN in hold: E-cigarettes')}</li>
+                        <li>• {isSpanish ? 'Permitidos líquidos > 100ml bien protegidos' : (isItalian ? 'Ammessi liquidi > 100ml ben protetti' : 'Liquids > 100ml allowed in hold')}</li>
                       </ul>
                     </div>
                   </div>
@@ -857,13 +876,13 @@ export function AirportBubblesView({
                     <div className="space-y-2.5 pt-3">
                       <div className="flex items-center justify-between">
                         <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-500">
-                          {isItalian ? 'Compagnie aeree e Terminal' : 'Airlines & Terminals'}
+                          {isSpanish ? 'Aerolíneas y Terminales' : (isItalian ? 'Compagnie aeree e Terminal' : 'Airlines & Terminals')}
                         </h4>
                         <input
                           type="text"
                           value={airlineSearch}
                           onChange={(e) => setAirlineSearch(e.target.value)}
-                          placeholder={isItalian ? 'Filtra compagnia...' : 'Filter airline...'}
+                          placeholder={isSpanish ? 'Filtrar aerolínea...' : (isItalian ? 'Filtra compagnia...' : 'Filter airline...')}
                           className="px-3 py-1.5 text-xs rounded-xl bg-white dark:bg-zinc-800/80 w-36 sm:w-48 shadow-2xs focus:outline-none focus:ring-1 focus:ring-[#05668D]"
                         />
                       </div>
@@ -893,7 +912,7 @@ export function AirportBubblesView({
                       className="inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] hover:text-[#5EAAA8] dark:hover:text-[#B3E5E0] font-semibold transition-colors cursor-pointer"
                     >
                       <Edit3 className="w-3.5 h-3.5" />
-                      <span>{isItalian ? 'Suggerisci modifica' : 'Suggest edit'}</span>
+                      <span>{isSpanish ? 'Sugerir cambio' : (isItalian ? 'Suggerisci modifica' : 'Suggest edit')}</span>
                     </button>
                   </div>
                 </div>
@@ -907,22 +926,24 @@ export function AirportBubblesView({
                     <div className="flex items-center justify-between">
                       <span className="font-bold text-sm text-zinc-900 dark:text-white flex items-center gap-2">
                         <Plane className="w-4 h-4 text-amber-600" />
-                        {isItalian ? 'Regolamentazione Droni' : 'Drone Regulations'}
+                        {isSpanish ? 'Normativa sobre Drones' : (isItalian ? 'Regolamentazione Droni' : 'Drone Regulations')}
                       </span>
                       <span className={`px-2.5 py-0.5 rounded-lg text-xs font-mono font-bold ${
                         policy.droneAllowedInCabin
                           ? 'bg-emerald-500/15 text-emerald-800 dark:text-emerald-300'
                           : 'bg-red-500/15 text-red-800 dark:text-red-300'
                       }`}>
-                        {policy.droneAllowedInCabin ? (isItalian ? 'Ammesso in cabina' : 'Cabin allowed') : (isItalian ? 'Non in cabina' : 'No cabin')}
+                        {policy.droneAllowedInCabin ? (isSpanish ? 'Permitido en cabina' : (isItalian ? 'Ammesso in cabina' : 'Cabin allowed')) : (isSpanish ? 'No en cabina' : (isItalian ? 'Non in cabina' : 'No cabin'))}
                       </span>
                     </div>
                     <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                      {isItalian ? policy.dronePolicy_it : policy.dronePolicy_en}
+                      {isSpanish
+                        ? (policy.droneAllowedInCabin ? 'Los drones pequeños se permiten en el equipaje de mano si cumplen las medidas. Las baterías LiPo de repuesto deben viajar obligatoriamente en cabina.' : 'Los drones no se permiten en cabina y deben ir facturados en bodega, retirando previamente las baterías.')
+                        : (isItalian ? policy.dronePolicy_it : policy.dronePolicy_en)}
                     </p>
                     <div className="text-[11px] text-amber-700 dark:text-amber-400 font-medium flex items-center gap-1.5 pt-1">
                       <AlertTriangle className="w-3.5 h-3.5 shrink-0 text-amber-500" />
-                      <span>{isItalian ? 'Le batterie del drone devono essere rimosse e trasportate in cabina.' : 'Drone batteries must be detached and carried in cabin.'}</span>
+                      <span>{isSpanish ? 'Las baterías del dron deben desconectarse y transportarse obligatoriamente en cabina.' : (isItalian ? 'Le batterie del drone devono essere rimosse e trasportate in cabina.' : 'Drone batteries must be detached and carried in cabin.')}</span>
                     </div>
                   </div>
 
@@ -931,18 +952,20 @@ export function AirportBubblesView({
                     <div className="flex items-center justify-between">
                       <span className="font-bold text-sm text-zinc-900 dark:text-white flex items-center gap-2">
                         <BatteryCharging className="w-4 h-4 text-[#05668D]" />
-                        {isItalian ? 'Powerbank e Batterie al Litio' : 'Powerbanks & Lithium Batteries'}
+                        {isSpanish ? 'Baterías Externas (Powerbanks) y Litio' : (isItalian ? 'Powerbank e Batterie al Litio' : 'Powerbanks & Lithium Batteries')}
                       </span>
                       <span className="px-2.5 py-0.5 rounded-lg text-xs font-mono font-bold bg-[#05668D]/10 text-[#05668D] dark:text-[#5EAAA8]">
                         Max {policy.maxPowerbankWh || 100} Wh
                       </span>
                     </div>
                     <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                      {isItalian ? policy.powerbankPolicy_it : policy.powerbankPolicy_en}
+                      {isSpanish
+                        ? 'Las baterías externas (powerbanks) y acumuladores de litio están permitidos únicamente en cabina hasta un máximo de 100Wh (o hasta 160Wh con autorización previa de la aerolínea).'
+                        : (isItalian ? policy.powerbankPolicy_it : policy.powerbankPolicy_en)}
                     </p>
                     <div className="text-[11px] text-rose-600 dark:text-rose-400 font-semibold flex items-center gap-1.5 pt-1">
                       <AlertTriangle className="w-3.5 h-3.5 shrink-0 text-rose-500" />
-                      <span>{isItalian ? 'MAI nel bagaglio registrato in stiva: rischio di incendio a bordo.' : 'NEVER pack loose lithium batteries in checked luggage.'}</span>
+                      <span>{isSpanish ? 'NUNCA en equipaje facturado en bodega: riesgo grave de incendio en vuelo.' : (isItalian ? 'MAI nel bagaglio registrato in stiva: rischio di incendio a bordo.' : 'NEVER pack loose lithium batteries in checked luggage.')}</span>
                     </div>
                   </div>
 
@@ -950,12 +973,14 @@ export function AirportBubblesView({
                   <div className="p-4 sm:p-5 rounded-2xl bg-[#E8F1F2]/30 dark:bg-zinc-800/40 space-y-2 shadow-2xs">
                     <span className="font-bold text-sm text-zinc-900 dark:text-white flex items-center gap-2">
                       <ShoppingBag className="w-4 h-4 text-[#5EAAA8]" />
-                      {isItalian ? 'Acquisti Duty Free e Buste Sigillate (STEB)' : 'Duty Free Purchases & STEB Security Bags'}
+                      {isSpanish ? 'Compras Duty Free y Bolsas Selladas (STEB)' : (isItalian ? 'Acquisti Duty Free e Buste Sigillate (STEB)' : 'Duty Free Purchases & STEB Security Bags')}
                     </span>
                     <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                      {isItalian
-                        ? 'I liquidi e profumi acquistati nei negozi oltre i controlli devono essere sigillati dal negoziante nella busta trasparente a prova di manomissione con scontrino ben visibile all\'interno, specialmente in caso di scalo.'
-                        : 'Duty free liquids and perfumes bought airside must remain sealed inside tamper-evident STEB bags with receipt visible, especially on connecting flights.'}
+                      {isSpanish
+                        ? 'Los líquidos y perfumes comprados en las tiendas tras los controles deben sellarse por el comerciante en la bolsa transparente inviolable STEB con el recibo visible, especialmente en vuelos con escala.'
+                        : (isItalian
+                          ? 'I liquidi e profumi acquistati nei negozi oltre i controlli devono essere sigillati dal negoziante nella busta trasparente a prova di manomissione con scontrino ben visibile all\'interno, specialmente in caso di scalo.'
+                          : 'Duty free liquids and perfumes bought airside must remain sealed inside tamper-evident STEB bags with receipt visible, especially on connecting flights.')}
                     </p>
                   </div>
 
@@ -967,7 +992,7 @@ export function AirportBubblesView({
                       className="inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] hover:text-[#5EAAA8] dark:hover:text-[#B3E5E0] font-semibold transition-colors cursor-pointer"
                     >
                       <Edit3 className="w-3.5 h-3.5" />
-                      <span>{isItalian ? 'Suggerisci modifica' : 'Suggest edit'}</span>
+                      <span>{isSpanish ? 'Sugerir cambio' : (isItalian ? 'Suggerisci modifica' : 'Suggest edit')}</span>
                     </button>
                   </div>
                 </div>
@@ -977,9 +1002,11 @@ export function AirportBubblesView({
               {activeModal === 'map' && (
                 <div className="space-y-4 animate-in fade-in duration-150">
                   <div className="text-xs text-zinc-500">
-                    {isItalian
-                      ? 'Esplora i punti di interesse, varchi sicurezza, prese e fontanelle dei terminal.'
-                      : 'Explore points of interest, security checkpoints, sockets and water refill stations.'}
+                    {isSpanish
+                      ? 'Explora los puntos de interés, controles de seguridad, enchufes y fuentes de agua potable.'
+                      : (isItalian
+                        ? 'Esplora i punti di interesse, varchi sicurezza, prese e fontanelle dei terminal.'
+                        : 'Explore points of interest, security checkpoints, sockets and water refill stations.')}
                   </div>
                   {/* Interactive Terminal Map Tab */}
                   <div className="rounded-2xl overflow-hidden shadow-xs">
@@ -994,7 +1021,7 @@ export function AirportBubblesView({
                       className="inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] hover:text-[#5EAAA8] dark:hover:text-[#B3E5E0] font-semibold transition-colors cursor-pointer"
                     >
                       <Edit3 className="w-3.5 h-3.5" />
-                      <span>{isItalian ? 'Suggerisci modifica' : 'Suggest edit'}</span>
+                      <span>{isSpanish ? 'Sugerir cambio' : (isItalian ? 'Suggerisci modifica' : 'Suggest edit')}</span>
                     </button>
                   </div>
                 </div>
@@ -1011,7 +1038,7 @@ export function AirportBubblesView({
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 text-xs text-[#05668D] dark:text-[#5EAAA8] hover:text-[#5EAAA8] dark:hover:text-[#B3E5E0] font-semibold truncate transition-colors"
                 >
-                  <span>{isItalian ? 'Consulta il sito ufficiale' : 'Visit official website'}</span>
+                  <span>{isSpanish ? 'Visitar sitio oficial' : (isItalian ? 'Consulta il sito ufficiale' : 'Visit official website')}</span>
                   <ExternalLink className="w-3.5 h-3.5 shrink-0" />
                 </a>
               ) : <div />}
@@ -1021,7 +1048,7 @@ export function AirportBubblesView({
                 onClick={() => setActiveModal(null)}
                 className="w-full sm:w-auto px-6 py-2 rounded-xl bg-[#05668D] hover:bg-[#5EAAA8] text-white font-bold transition-all cursor-pointer text-center text-xs ml-auto shadow-xs shrink-0"
               >
-                {isItalian ? 'Chiudi' : 'Close'}
+                {isSpanish ? 'Cerrar' : (isItalian ? 'Chiudi' : 'Close')}
               </button>
             </div>
 

@@ -24,9 +24,10 @@ interface AirportFaqSectionProps {
  */
 export function AirportFaqSection({ airport, lang }: AirportFaqSectionProps) {
   const isItalian = lang === 'it';
-  const name = isItalian ? airport.name_it : airport.name_en;
-  const city = isItalian ? airport.city_it : airport.city_en;
-  const country = isItalian ? airport.country_it : airport.country_en;
+  const isSpanish = lang === 'es';
+  const name = isSpanish ? (airport.name_es || airport.name_en) : (isItalian ? airport.name_it : airport.name_en);
+  const city = isSpanish ? (airport.city_es || airport.city_en) : (isItalian ? airport.city_it : airport.city_en);
+  const country = isSpanish ? (airport.country_es || airport.country_en) : (isItalian ? airport.country_it : airport.country_en);
 
   const domHours = airport.recommendedArrivalHours?.domestic || 2;
   const intHours = airport.recommendedArrivalHours?.international || 3;
@@ -60,14 +61,16 @@ export function AirportFaqSection({ airport, lang }: AirportFaqSectionProps) {
               FAQ
             </span>
             <span className="text-xs sm:text-sm font-semibold text-zinc-700 dark:text-zinc-200">
-              {isItalian 
-                ? `FAQ, sicurezza liquidi e info pratiche su ${name}` 
-                : `FAQ, liquids rules & travel info for ${name}`}
+              {isSpanish
+                ? `FAQ, seguridad de líquidos e info práctica sobre ${name}`
+                : (isItalian 
+                  ? `FAQ, sicurezza liquidi e info pratiche su ${name}` 
+                  : `FAQ, liquids rules & travel info for ${name}`)}
             </span>
           </div>
           <div className="flex items-center gap-2">
             <span className="text-[11px] font-mono text-zinc-400 dark:text-zinc-500 hidden sm:inline">
-              {isItalian ? 'Tocca per aprire' : 'Tap to open'}
+              {isSpanish ? 'Toca para abrir' : (isItalian ? 'Tocca per aprire' : 'Tap to open')}
             </span>
             <span className="w-6 h-6 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-400 group-hover:bg-[#05668D] group-hover:text-white transition-colors">
               <ChevronDown className="w-3.5 h-3.5 group-open:rotate-180 transition-transform duration-200" />
@@ -84,35 +87,39 @@ export function AirportFaqSection({ airport, lang }: AirportFaqSectionProps) {
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2 text-zinc-900 dark:text-white font-bold text-xs">
                   <ShieldCheck className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
-                  <span>{isItalian ? 'Regole Liquidi & Scanner 3D' : 'Liquids & 3D Scanners'}</span>
+                  <span>{isSpanish ? 'Reglas de Líquidos y Escáneres 3D' : (isItalian ? 'Regole Liquidi & Scanner 3D' : 'Liquids & 3D Scanners')}</span>
                 </div>
                 <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full ${
                   has3D 
                     ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300' 
                     : 'bg-[#E8F1F2] dark:bg-zinc-800 text-[#05668D] dark:text-[#5EAAA8]'
                 }`}>
-                  {has3D ? 'Scanner 3D C3' : (isItalian ? 'Standard 100 ml' : 'Standard 100ml')}
+                  {has3D ? (isSpanish ? 'Escáner 3D C3' : 'Scanner 3D C3') : (isSpanish ? 'Estándar 100 ml' : (isItalian ? 'Standard 100 ml' : 'Standard 100ml'))}
                 </span>
               </div>
               <div className="space-y-1.5 text-xs text-zinc-600 dark:text-zinc-300">
                 <p>
                   {has3D ? (
-                    isItalian
-                      ? `Nello scalo sono attive corsie con scanner tomografici 3D EDS-CB C3. ${scannersNote || liquidsAllowance}`
-                      : `Checkpoints equipped with EDS-CB C3 3D scanners are operational. ${scannersNote || liquidsAllowance}`
+                    isSpanish
+                      ? `En el aeropuerto están operativos controles con escáneres tomográficos 3D EDS-CB C3: los líquidos y ordenadores portátiles pueden permanecer dentro del equipaje de mano.`
+                      : isItalian
+                        ? `Nello scalo sono attive corsie con scanner tomografici 3D EDS-CB C3. ${scannersNote || liquidsAllowance}`
+                        : `Checkpoints equipped with EDS-CB C3 3D scanners are operational. ${scannersNote || liquidsAllowance}`
                   ) : (
-                    isItalian
-                      ? `Vige la normativa standard: liquidi ammessi solo in flaconi da massimo 100 ml ciascuno, riposti in una busta trasparente da 1 litro.`
-                      : `Standard security rules apply: liquids allowed in containers of max 100ml each, inside a clear 1-litre resealable bag.`
+                    isSpanish
+                      ? `Se aplica la normativa estándar: líquidos permitidos únicamente en envases individuales de hasta 100 ml dentro de una bolsa transparente de 1 litro.`
+                      : isItalian
+                        ? `Vige la normativa standard: liquidi ammessi solo in flaconi da massimo 100 ml ciascuno, riposti in una busta trasparente da 1 litro.`
+                        : `Standard security rules apply: liquids allowed in containers of max 100ml each, inside a clear 1-litre resealable bag.`
                   )}
                 </p>
                 <p className="text-[11.5px] text-zinc-500 dark:text-zinc-400">
                   <strong className="text-zinc-700 dark:text-zinc-200">
-                    {isItalian ? 'Dispositivi elettronici:' : 'Electronic devices:'}
+                    {isSpanish ? 'Dispositivos electrónicos:' : (isItalian ? 'Dispositivi elettronici:' : 'Electronic devices:')}
                   </strong>{' '}
                   {electronicsInBag 
-                    ? (isItalian ? 'Laptop e tablet possono rimanere all’interno del bagaglio a mano.' : 'Laptops and tablets can remain inside carry-on luggage.')
-                    : (isItalian ? 'Vanno estratti e inseriti nelle apposite vaschette.' : 'Must be removed and screened in separate trays.')}
+                    ? (isSpanish ? 'Portátiles y tabletas pueden permanecer dentro del equipaje de mano.' : (isItalian ? 'Laptop e tablet possono rimanere all’interno del bagaglio a mano.' : 'Laptops and tablets can remain inside carry-on luggage.'))
+                    : (isSpanish ? 'Deben extraerse y colocarse en bandejas de inspección separadas.' : (isItalian ? 'Vanno estratti e inseriti nelle apposite vaschette.' : 'Must be removed and screened in separate trays.'))}
                 </p>
               </div>
             </div>
@@ -122,22 +129,26 @@ export function AirportFaqSection({ airport, lang }: AirportFaqSectionProps) {
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2 text-zinc-900 dark:text-white font-bold text-xs">
                   <BatteryCharging className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
-                  <span>{isItalian ? 'Powerbank & Batterie' : 'Powerbanks & Batteries'}</span>
+                  <span>{isSpanish ? 'Powerbanks y Baterías de Litio' : (isItalian ? 'Powerbank & Batterie' : 'Powerbanks & Batteries')}</span>
                 </div>
                 <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-800 dark:text-amber-300">
-                  {isItalian ? 'Solo a mano' : 'Cabin only'}
+                  {isSpanish ? 'Solo mano' : (isItalian ? 'Solo a mano' : 'Cabin only')}
                 </span>
               </div>
               <div className="space-y-1.5 text-xs text-zinc-600 dark:text-zinc-300">
                 <p>
-                  {isItalian
-                    ? 'Le powerbank, le batterie al litio sciolte e le sigarette elettroniche devono essere portate esclusivamente nel bagaglio a mano.'
-                    : 'Powerbanks, spare lithium batteries, and e-cigarettes must strictly be carried inside cabin hand baggage.'}
+                  {isSpanish
+                    ? 'Las powerbanks, baterías de litio de repuesto y cigarrillos electrónicos deben transportarse obligatoriamente en el equipaje de mano.'
+                    : (isItalian
+                      ? 'Le powerbank, le batterie al litio sciolte e le sigarette elettroniche devono essere portate esclusivamente nel bagaglio a mano.'
+                      : 'Powerbanks, spare lithium batteries, and e-cigarettes must strictly be carried inside cabin hand baggage.')}
                 </p>
                 <p className="text-[11.5px] text-zinc-500 dark:text-zinc-400">
-                  {isItalian
-                    ? 'Limite tipico: max 100 Wh (fino a 160 Wh su autorizzazione). Severamente vietate in stiva.'
-                    : 'Standard rating: up to 100 Wh (up to 160 Wh with airline permit). Strictly forbidden in checked hold luggage.'}
+                  {isSpanish
+                    ? 'Límite habitual: hasta 100 Wh (hasta 160 Wh con permiso de la aerolínea). Estrictamente prohibidas en bodega.'
+                    : (isItalian
+                      ? 'Limite tipico: max 100 Wh (fino a 160 Wh su autorizzazione). Severamente vietate in stiva.'
+                      : 'Standard rating: up to 100 Wh (up to 160 Wh with airline permit). Strictly forbidden in checked hold luggage.')}
                 </p>
               </div>
             </div>
@@ -146,19 +157,21 @@ export function AirportFaqSection({ airport, lang }: AirportFaqSectionProps) {
             <div className="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-zinc-850 shadow-2xs space-y-2.5">
               <div className="flex items-center gap-2 text-zinc-900 dark:text-white font-bold text-xs">
                 <Clock className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
-                <span>{isItalian ? 'Anticipo in Aeroporto' : 'Arrival Time & Screening'}</span>
+                <span>{isSpanish ? 'Horario de Llegada y Controles' : (isItalian ? 'Anticipo in Aeroporto' : 'Arrival Time & Screening')}</span>
               </div>
               <div className="space-y-1.5 text-xs text-zinc-600 dark:text-zinc-300">
                 <p>
-                  <strong className="text-zinc-700 dark:text-zinc-200">{isItalian ? 'Voli Nazionali / Schengen:' : 'Domestic / Schengen:'}</strong> {domHours} {isItalian ? 'ore prima' : 'hours early'}
+                  <strong className="text-zinc-700 dark:text-zinc-200">{isSpanish ? 'Vuelos Nacionales / Schengen:' : (isItalian ? 'Voli Nazionali / Schengen:' : 'Domestic / Schengen:')}</strong> {domHours} {isSpanish ? 'horas antes' : (isItalian ? 'ore prima' : 'hours early')}
                 </p>
                 <p>
-                  <strong className="text-zinc-700 dark:text-zinc-200">{isItalian ? 'Voli Internazionali:' : 'International flights:'}</strong> {intHours} {isItalian ? 'ore prima' : 'hours early'}
+                  <strong className="text-zinc-700 dark:text-zinc-200">{isSpanish ? 'Vuelos Internacionales:' : (isItalian ? 'Voli Internazionali:' : 'International flights:')}</strong> {intHours} {isSpanish ? 'horas antes' : (isItalian ? 'ore prima' : 'hours early')}
                 </p>
                 <p className="text-[11.5px] text-zinc-500 dark:text-zinc-400 pt-0.5">
-                  {isItalian
-                    ? `Attesa media ai varchi stimata in circa ${waitMin} minuti.`
-                    : `Average security screening wait is around ${waitMin} minutes.`}
+                  {isSpanish
+                    ? `Tiempo medio estimado de espera en los controles: unos ${waitMin} minutos.`
+                    : (isItalian
+                      ? `Attesa media ai varchi stimata in circa ${waitMin} minuti.`
+                      : `Average security screening wait is around ${waitMin} minutes.`)}
                 </p>
               </div>
             </div>
@@ -167,7 +180,7 @@ export function AirportFaqSection({ airport, lang }: AirportFaqSectionProps) {
             <div className="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-zinc-850 shadow-2xs space-y-2.5">
               <div className="flex items-center gap-2 text-zinc-900 dark:text-white font-bold text-xs">
                 <Navigation className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
-                <span>{isItalian ? 'Collegamenti Centro Città' : 'City Transport Links'}</span>
+                <span>{isSpanish ? 'Conexiones con el Centro Urbano' : (isItalian ? 'Collegamenti Centro Città' : 'City Transport Links')}</span>
               </div>
               <div className="space-y-1.5 text-xs text-zinc-600 dark:text-zinc-300">
                 {airport.transports && airport.transports.length > 0 ? (
@@ -175,7 +188,7 @@ export function AirportFaqSection({ airport, lang }: AirportFaqSectionProps) {
                     {airport.transports.slice(0, 2).map((t) => (
                       <li key={t.id || t.name_it} className="truncate">
                         <strong className="text-zinc-700 dark:text-zinc-200">
-                          {isItalian ? t.name_it : t.name_en}:
+                          {isSpanish ? (t.name_en || t.name_it) : (isItalian ? t.name_it : t.name_en)}:
                         </strong>{' '}
                         <span className="font-mono text-[11px] text-zinc-500 dark:text-zinc-400">
                           ~{t.duration} ({t.estimatedCost})
@@ -185,13 +198,15 @@ export function AirportFaqSection({ airport, lang }: AirportFaqSectionProps) {
                   </ul>
                 ) : (
                   <p className="text-[11.5px] text-zinc-500 dark:text-zinc-400">
-                    {isItalian
-                      ? `Servizi taxi ufficiali, navette bus e collegamenti stradali diretti per ${city}.`
-                      : `Official taxis, express airport buses, and direct road links to ${city}.`}
+                    {isSpanish
+                      ? `Taxis oficiales, autobuses lanzadera y enlaces directos por carretera hacia ${city}.`
+                      : (isItalian
+                        ? `Servizi taxi ufficiali, navette bus e collegamenti stradali diretti per ${city}.`
+                        : `Official taxis, express airport buses, and direct road links to ${city}.`)}
                   </p>
                 )}
                 <p className="text-[11px] text-zinc-400 dark:text-zinc-500 pt-0.5">
-                  {isItalian ? 'Taxi con tariffario ufficiale esposto' : 'Official taxis with posted flat fares'}
+                  {isSpanish ? 'Taxis con tarifas oficiales reguladas' : (isItalian ? 'Taxi con tariffario ufficiale esposto' : 'Official taxis with posted flat fares')}
                 </p>
               </div>
             </div>
@@ -200,16 +215,16 @@ export function AirportFaqSection({ airport, lang }: AirportFaqSectionProps) {
             <div className="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-zinc-850 shadow-2xs space-y-2.5">
               <div className="flex items-center gap-2 text-zinc-900 dark:text-white font-bold text-xs">
                 <MapPin className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
-                <span>{isItalian ? 'Indirizzo & Contatti' : 'Location & Contacts'}</span>
+                <span>{isSpanish ? 'Ubicación y Contacto' : (isItalian ? 'Indirizzo & Contatti' : 'Location & Contacts')}</span>
               </div>
               <div className="space-y-1.5 text-xs text-zinc-600 dark:text-zinc-300">
                 <p>
-                  <strong className="text-zinc-700 dark:text-zinc-200">{isItalian ? 'Indirizzo:' : 'Address:'}</strong>{' '}
+                  <strong className="text-zinc-700 dark:text-zinc-200">{isSpanish ? 'Dirección:' : (isItalian ? 'Indirizzo:' : 'Address:')}</strong>{' '}
                   <a
                     href={mapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    title={isItalian ? `Apri indicazioni stradali per ${name} su Google Maps` : `Open directions to ${name} on Google Maps`}
+                    title={isSpanish ? `Abrir cómo llegar a ${name} en Google Maps` : (isItalian ? `Apri indicazioni stradali per ${name} su Google Maps` : `Open directions to ${name} on Google Maps`)}
                     className="inline-flex items-center gap-1 font-semibold text-[#05668D] dark:text-[#5EAAA8] hover:underline cursor-pointer"
                   >
                     <span>{city}, {country}</span>
@@ -234,10 +249,10 @@ export function AirportFaqSection({ airport, lang }: AirportFaqSectionProps) {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#05668D] hover:bg-[#5EAAA8] text-white font-medium text-[11px] shadow-2xs transition-colors cursor-pointer"
-                    title={isItalian ? 'Calcola percorso su Google Maps' : 'Get directions on Google Maps'}
+                    title={isSpanish ? 'Calcular ruta en Google Maps' : (isItalian ? 'Calcola percorso su Google Maps' : 'Get directions on Google Maps')}
                   >
                     <MapPin className="w-3 h-3" />
-                    <span>{isItalian ? 'Indicazioni Maps' : 'Directions'}</span>
+                    <span>{isSpanish ? 'Cómo llegar' : (isItalian ? 'Indicazioni Maps' : 'Directions')}</span>
                     <ExternalLink className="w-2.5 h-2.5" />
                   </a>
 
@@ -248,7 +263,7 @@ export function AirportFaqSection({ airport, lang }: AirportFaqSectionProps) {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#E8F1F2] dark:bg-zinc-800 text-[#05668D] dark:text-[#5EAAA8] hover:bg-zinc-200 dark:hover:bg-zinc-700 font-medium text-[11px] transition-colors"
                     >
-                      <span>{isItalian ? 'Sito ufficiale' : 'Official website'}</span>
+                      <span>{isSpanish ? 'Sitio oficial' : (isItalian ? 'Sito ufficiale' : 'Official website')}</span>
                       <ExternalLink className="w-2.5 h-2.5" />
                     </a>
                   )}
