@@ -152,7 +152,7 @@ export function WelcomeView({ airports, onSelectAirport, children }: WelcomeView
                     <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-full ${
                       has3D 
                         ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300' 
-                        : 'bg-[#E8F1F2] dark:bg-zinc-800 text-[#05668D] dark:text-[#5EAAA8]'
+                        : 'bg-[#FD6E6E]/15 text-[#FD6E6E] dark:text-[#FD6E6E]'
                     }`}>
                       {has3D ? 'Scanner 3D' : '100 ml'}
                     </span>

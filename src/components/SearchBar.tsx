@@ -216,7 +216,7 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
     <div ref={containerRef} className="relative w-full max-w-2xl mx-auto">
       {/* Search Console Input */}
       <div className="relative group">
-        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-zinc-400 group-focus-within:text-[#05668D] dark:group-focus-within:text-[#5EAAA8] transition-colors">
+        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-zinc-400 group-focus-within:text-[#FD6E6E] transition-colors">
           <Search className="w-5 h-5" />
         </div>
 
@@ -236,7 +236,7 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
             trackSearchBarClick('home_hero', lang);
           }}
           placeholder={t('searchPlaceholder')}
-          className="w-full pl-12 pr-24 py-4 rounded-2xl bg-white dark:bg-zinc-900 border-2 border-[#B3E5E0] hover:border-[#5EAAA8] text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 text-sm sm:text-base tracking-tight focus:outline-none focus:border-[#05668D] focus:ring-4 focus:ring-[#B3E5E0]/30 shadow-sm hover:shadow-md focus:shadow-lg transition-all"
+          className="w-full pl-12 pr-24 py-4 rounded-2xl bg-white dark:bg-zinc-900 border-2 border-[#FD6E6E] hover:border-[#FD6E6E] focus:border-[#FD6E6E] text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 text-sm sm:text-base tracking-tight focus:outline-none focus:ring-4 focus:ring-[#FD6E6E]/25 shadow-md hover:shadow-lg focus:shadow-xl transition-all"
         />
 
         {/* Clear or Keyboard Hint */}
@@ -253,7 +253,7 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
               <X className="w-4 h-4" />
             </button>
           ) : (
-            <div className="hidden sm:flex items-center gap-1 text-[11px] font-mono font-medium text-[#05668D] dark:text-[#5EAAA8] bg-[#E8F1F2] dark:bg-zinc-800/80 px-2 py-0.5 rounded-lg">
+            <div className="hidden sm:flex items-center gap-1 text-[11px] font-mono font-medium text-[#FD6E6E] bg-[#FD6E6E]/15 px-2 py-0.5 rounded-lg">
               <Command className="w-3 h-3" />
               <span>K</span>
             </div>
@@ -263,7 +263,7 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
 
       {/* Autocomplete Dropdown */}
       {isOpen && (
-        <div className="absolute left-0 right-0 mt-2 bg-white dark:bg-zinc-900 rounded-2xl shadow-xl border border-[#B3E5E0]/40 dark:border-zinc-800 z-50 overflow-hidden divide-y divide-[#E8F1F2] dark:divide-zinc-800/80 animate-in fade-in-50 duration-150">
+        <div className="absolute left-0 right-0 mt-2 bg-white dark:bg-zinc-900 rounded-2xl shadow-xl border border-[#FD6E6E]/30 dark:border-[#FD6E6E]/40 z-50 overflow-hidden divide-y divide-[#E8F1F2] dark:divide-zinc-800/80 animate-in fade-in-50 duration-150">
           {/* Query Results */}
           {query.trim().length > 0 ? (
             <div className="p-1.5 max-h-84 overflow-y-auto">
@@ -277,8 +277,8 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
                       onClick={() => handleSelect(airport)}
                       className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left transition-all cursor-pointer ${
                         isSelected
-                          ? 'bg-[#E8F1F2] dark:bg-zinc-800 text-zinc-900 dark:text-white'
-                          : 'hover:bg-[#E8F1F2]/50 dark:hover:bg-zinc-800/50 text-zinc-700 dark:text-zinc-200'
+                          ? 'bg-[#FD6E6E]/15 dark:bg-[#FD6E6E]/20 text-zinc-900 dark:text-white'
+                          : 'hover:bg-[#FD6E6E]/10 dark:hover:bg-[#FD6E6E]/15 text-zinc-700 dark:text-zinc-200'
                       }`}
                     >
                       <div className="flex items-center gap-3">
@@ -510,7 +510,7 @@ export function SearchBar({ selectedAirport, onSelectAirport, airports, onRefres
                       <button
                         type="submit"
                         disabled={isSubmittingRequest}
-                        className="w-full inline-flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-[#05668D] hover:bg-[#05668D]/90 text-white text-xs font-semibold transition-all cursor-pointer disabled:opacity-50 shadow-xs"
+                        className="w-full inline-flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-[#FD6E6E] hover:bg-[#FD6E6E]/90 text-white text-xs font-bold transition-all cursor-pointer disabled:opacity-50 shadow-xs"
                       >
                         {isSubmittingRequest ? (
                           <>

@@ -359,7 +359,7 @@ export function AirportBubblesView({
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-xs font-mono">
             <div className="p-2.5 rounded-xl bg-white dark:bg-zinc-850 shadow-2xs">
               <span className="text-[10px] text-zinc-400 block">{isItalian ? 'Scanner 3D' : '3D Scanners'}</span>
-              <span className={`font-bold ${policy.has3DScanners ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-700 dark:text-zinc-200'}`}>
+              <span className={`font-bold ${policy.has3DScanners ? 'text-emerald-600 dark:text-emerald-400' : 'text-[#FD6E6E] dark:text-[#FD6E6E]'}`}>
                 {policy.has3DScanners ? 'EDS-CB C3 (Attivi)' : (isItalian ? 'Standard 100ml' : 'Standard 100ml')}
               </span>
             </div>
@@ -397,17 +397,17 @@ export function AirportBubblesView({
           >
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <div className="w-12 h-12 rounded-2xl bg-[#E8F1F2] dark:bg-zinc-800 text-[#05668D] dark:text-[#5EAAA8] flex items-center justify-center group-hover:scale-105 transition-transform">
+                <div className="w-12 h-12 rounded-2xl bg-[#FD6E6E]/15 dark:bg-[#FD6E6E]/20 text-[#FD6E6E] dark:text-[#FD6E6E] flex items-center justify-center group-hover:scale-105 transition-transform">
                   <Droplets className="w-6 h-6" />
                 </div>
-                <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#E8F1F2] dark:bg-zinc-800 text-[#05668D] dark:text-[#5EAAA8] flex items-center gap-1 group-hover:bg-[#05668D] group-hover:text-white transition-colors">
+                <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#FD6E6E]/15 dark:bg-[#FD6E6E]/20 text-[#FD6E6E] dark:text-[#FD6E6E] flex items-center gap-1 group-hover:bg-[#FD6E6E] group-hover:text-white transition-colors">
                   <span>{t('bubbleTapToExplore')}</span>
                   <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                 </span>
               </div>
 
               <div>
-                <h3 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-white group-hover:text-[#05668D] dark:group-hover:text-[#5EAAA8] transition-colors">
+                <h3 className="text-lg sm:text-xl font-bold text-[#FD6E6E] dark:text-[#FD6E6E] transition-colors">
                   {t('bubbleLiquids')}
                 </h3>
                 <p className="mt-1 text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 line-clamp-3 leading-relaxed">
@@ -418,8 +418,8 @@ export function AirportBubblesView({
               </div>
             </div>
 
-            <div className="pt-2 flex items-center gap-2 text-xs font-medium text-[#05668D] dark:text-[#5EAAA8]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#5EAAA8] shrink-0" />
+            <div className="pt-2 flex items-center gap-2 text-xs font-medium text-[#FD6E6E] dark:text-[#FD6E6E]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FD6E6E] shrink-0" />
               <span className="truncate">{isItalian ? 'Flaconi, sacchetto trasparente, deroghe' : 'Bottles, clear bag, exemptions'}</span>
             </div>
           </button>
@@ -575,9 +575,13 @@ export function AirportBubblesView({
                     <span className="font-mono text-xs font-bold text-[#05668D] dark:text-[#5EAAA8] px-2 py-0.5 rounded-md bg-white dark:bg-zinc-900 shadow-2xs">
                       {rel.iata}
                     </span>
-                    {rel.securityPolicy?.has3DScanners && (
+                    {rel.securityPolicy?.has3DScanners ? (
                       <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-400">
                         Scanner 3D
+                      </span>
+                    ) : (
+                      <span className="text-[10px] font-bold text-[#FD6E6E] dark:text-[#FD6E6E]">
+                        100ml
                       </span>
                     )}
                   </div>
@@ -642,8 +646,8 @@ export function AirportBubblesView({
                   onClick={() => setActiveModal('liquids')}
                   className={`py-2 px-2 rounded-xl font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                     activeModal === 'liquids'
-                      ? 'bg-[#05668D] text-white shadow-xs font-bold'
-                      : 'text-zinc-600 dark:text-zinc-400 hover:text-[#05668D] dark:hover:text-white hover:bg-white/50 dark:hover:bg-zinc-800/50'
+                      ? 'bg-[#FD6E6E] text-white shadow-xs font-bold'
+                      : 'text-zinc-600 dark:text-zinc-400 hover:text-[#FD6E6E] dark:hover:text-[#FD6E6E] hover:bg-white/50 dark:hover:bg-zinc-800/50'
                   }`}
                 >
                   <Droplets className="w-3.5 h-3.5 shrink-0" />
@@ -757,7 +761,7 @@ export function AirportBubblesView({
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                     <div className="p-4 rounded-2xl bg-[#E8F1F2]/40 dark:bg-zinc-800/40 space-y-1.5 shadow-2xs">
                       <span className="font-bold text-zinc-900 dark:text-white flex items-center gap-1.5">
-                        <Droplets className="w-4 h-4 text-[#05668D]" />
+                        <Droplets className="w-4 h-4 text-[#FD6E6E]" />
                         {isItalian ? 'Estrazione dal bagaglio' : 'Removal from cabin bag'}
                       </span>
                       <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
@@ -785,9 +789,9 @@ export function AirportBubblesView({
                     <Link
                       href={isItalian ? '/guide/liquidi-bagaglio-a-mano' : '/en/guides/liquids-in-carry-on-baggage'}
                       onClick={() => trackGuideClick('airport_liquids_tab', lang)}
-                      className="inline-flex items-center gap-1.5 text-xs text-zinc-500 hover:text-[#05668D] dark:hover:text-[#5EAAA8] font-mono transition-colors"
+                      className="inline-flex items-center gap-1.5 text-xs text-[#FD6E6E] dark:text-[#FD6E6E] hover:underline font-semibold font-mono transition-colors"
                     >
-                      <Droplets className="w-3.5 h-3.5 text-[#05668D] dark:text-[#5EAAA8]" />
+                      <Droplets className="w-3.5 h-3.5 text-[#FD6E6E]" />
                       <span className="underline underline-offset-2">
                         {isItalian ? 'Consulta la guida completa sui liquidi' : 'Read full carry-on liquids guide'}
                       </span>

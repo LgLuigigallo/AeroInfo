@@ -143,7 +143,7 @@ export function Header({ onResetHome }: HeaderProps) {
               aria-pressed={lang === 'it'}
               className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#05668D] ${
                 lang === 'it'
-                  ? 'bg-[#05668D] text-white font-bold shadow-xs'
+                  ? 'bg-[#05668D] dark:bg-[#FD6E6E] text-white dark:text-[#002941] font-bold shadow-xs'
                   : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
               }`}
               title="Italiano"
@@ -160,7 +160,7 @@ export function Header({ onResetHome }: HeaderProps) {
               aria-pressed={lang === 'en'}
               className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#05668D] ${
                 lang === 'en'
-                  ? 'bg-[#05668D] text-white font-bold shadow-xs'
+                  ? 'bg-[#05668D] dark:bg-[#FD6E6E] text-white dark:text-[#002941] font-bold shadow-xs'
                   : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
               }`}
               title="English"
@@ -177,7 +177,7 @@ export function Header({ onResetHome }: HeaderProps) {
               aria-pressed={lang === 'es'}
               className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#05668D] ${
                 lang === 'es'
-                  ? 'bg-[#05668D] text-white font-bold shadow-xs'
+                  ? 'bg-[#05668D] dark:bg-[#FD6E6E] text-white dark:text-[#002941] font-bold shadow-xs'
                   : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
               }`}
               title="Español"
