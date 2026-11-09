@@ -5,6 +5,7 @@ import { airportCompilerEngine } from '@/lib/compiler/engine';
 import { evaluateAirportSeoQuality, saveAirportSeoEvaluation, SITE_URL } from '@/lib/seo/airports';
 import { submitToIndexNow } from '@/lib/seo/indexnow';
 import { airportPath } from '@/lib/airport-slug';
+import { Airport } from '@/types/airport';
 
 export const maxDuration = 60;
 
@@ -32,6 +33,23 @@ export async function GET(request: NextRequest) {
     const compileReport = await airportCompilerEngine.processPendingRequests();
     console.info('✅ [CRON_SYNC] Autonomous compiler finished:', compileReport);
 
+    const urlsForIndexNow = new Set<string>();
+
+    // 1b. Autonomous Catalog Expansion: If zero user requests were processed, expand catalog with 1 certified airport
+    let autoExpandReport: { expanded: boolean; airport?: Airport; message: string; error?: string } | null = null;
+    if (compileReport.compiledAirportsCount === 0) {
+      console.info('🌱 [CRON_SYNC] Zero pending user requests found. Auto-expanding catalog by 1 certified airport...');
+      autoExpandReport = await airportCompilerEngine.autoExpandCatalog();
+      if (autoExpandReport.expanded && autoExpandReport.airport) {
+        console.info(`✅ [CRON_SYNC] Auto-expanded catalog with ${autoExpandReport.airport.iata} (${autoExpandReport.airport.name_it})`);
+        compileReport.publishedIatas.push(autoExpandReport.airport.iata);
+        compileReport.compiledAirportsCount += 1;
+        // Collect URLs for IndexNow immediate broadcast
+        urlsForIndexNow.add(`${SITE_URL}${airportPath(autoExpandReport.airport, 'it')}`);
+        urlsForIndexNow.add(`${SITE_URL}${airportPath(autoExpandReport.airport, 'en')}`);
+      }
+    }
+
     // 2. Fetch full active airport list (from Supabase or local fallback)
     const activeAirports = await getLiveAirports();
     const pendingAirports = activeAirports
@@ -48,7 +66,6 @@ export async function GET(request: NextRequest) {
 
     // 3. Persist only facts extracted from an explicit official security rule.
     const persistenceErrors: string[] = [];
-    const urlsForIndexNow = new Set<string>();
     if (supabase) {
       try {
         for (const res of syncResults) {
@@ -231,6 +248,7 @@ export async function GET(request: NextRequest) {
       success: persistenceErrors.length === 0,
       executionDate: new Date().toISOString(),
       compileReport,
+      autoExpandReport,
       airportsProcessed: syncResults.length,
       indexNowReport,
       syncResults,

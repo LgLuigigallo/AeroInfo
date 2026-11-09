@@ -13,6 +13,8 @@ const STATIC_SEO_APPROVED_IATAS = new Set([
   'VIE', 'CPH', 'ARN', 'HEL', 'LHR', 'LGW', 'HND', 'JFK', 'FUE', 'PMO', 'CTA',
   'LPA', 'TFS', 'NAP', 'BRI', 'BLQ', 'PSA', 'BER', 'VCE',
   'DXB', 'PMI', 'IBZ', 'STR', 'HKG', 'RAK', 'HER', 'NAS', 'DJG',
+  'FLR', 'TRN', 'VRN', 'CAG', 'OLB', 'BDS', 'TSF', 'AGP', 'VLC', 'SVQ',
+  'OPO', 'BRU', 'GVA', 'EDI', 'MAN', 'NCE', 'HAM', 'OSL', 'IST', 'DOH', 'SIN',
 ]);
 
 function isMeaningful(value: string | undefined, minimum = 20): boolean {
@@ -61,7 +63,7 @@ export function evaluateAirportSeoQuality(airport: Airport, now = new Date()): s
   const airportHost = airportSite?.hostname.replace(/^www\./, '');
   const sourceMatchesAirport = Boolean(sourceHost && airportHost && (
     sourceHost === airportHost || sourceHost.endsWith(`.${airportHost}`) || airportHost.endsWith(`.${sourceHost}`) ||
-    ['tsa.gov', 'caa.co.uk', 'ypa.gr', 'hcaa.gov.gr'].includes(sourceHost)
+    ['tsa.gov', 'caa.co.uk', 'ypa.gr', 'hcaa.gov.gr', 'aena.es', 'enac.gov.it', 'aeroportidipuglia.it', 'avinor.no'].includes(sourceHost)
   ));
   if (!source || source.protocol !== 'https:' || !airportSite || airportSite.protocol !== 'https:' || !sourceMatchesAirport) {
     reasons.push('Fonte ufficiale HTTPS non disponibile per la politica di sicurezza.');

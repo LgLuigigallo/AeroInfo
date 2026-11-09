@@ -1980,8 +1980,1736 @@ export const AVIATION_REGISTRY: Record<string, Airport> = {
       }
     ],
     lastUpdated: '2026-10-27'
-  }
+  },
+  // 🇮🇹 VENEZIA (VCE) - Aeroporto di Venezia Marco Polo
+  VCE: {
+    id: "vce",
+    iata: "VCE",
+    icao: "LIPZ",
+    name_it: "Aeroporto di Venezia Marco Polo",
+    name_en: "Venice Marco Polo Airport",
+    city_it: "Venezia",
+    city_en: "Venice",
+    country_it: "Italia",
+    country_en: "Italy",
+    countryCode: "IT",
+    officialWebsite: "https://www.veneziaairport.it",
+    coordinates: {
+      lat: 45.5053,
+      lng: 12.3519
+    },
+    difficultyRating: 2,
+    difficultyLabel_it: "Scorrevole con darsena e vaporetti Alilaguna",
+    difficultyLabel_en: "Smooth hub with water dock and Alilaguna boats",
+    averageSecurityWaitMin: 14,
+    recommendedArrivalHours: {
+      domestic: 2,
+      international: 2.5
+    },
+    navigationAdvice_it: "Terminal passeggeri disposto su tre livelli. I controlli di sicurezza si trovano al primo piano. La darsena vaporetti è raggiungibile tramite il percorso pedonale coperto Moving Walkway al primo piano.",
+    navigationAdvice_en: "Passenger terminal arranged on three levels. Security screening is on the first floor. The water bus dock is reachable via the covered moving walkway on the first floor.",
+    securityPolicy: {
+      has3DScanners: false,
+      scannersNote_it: "Scanner radiogeni convenzionali con corsie veloci. Obbligatorio separare liquidi ed elettronica nelle vaschette.",
+      scannersNote_en: "Standard X-ray scanners with fast-track lanes. Liquids and large electronics must be separated into trays.",
+      liquidsAllowance_it: "Massimo 100ml per singolo flacone in sacchetto trasparente richiudibile da 1 litro",
+      liquidsAllowance_en: "Max 100ml per container in a single 1-litre resealable transparent plastic bag",
+      liquidsMustBeRemoved: true,
+      liquidsNote_it: "I liquidi superiori a 100ml sono consentiti solo se acquistati al duty-free dopo i controlli o per alimenti per l’infanzia.",
+      liquidsNote_en: "Liquids larger than 100ml are permitted only if purchased at airside duty-free or for baby food.",
+      electronicsInBag: false,
+      electronicsNote_it: "Computer portatili, tablet e lettori digitali vanno estratti prima dello scanner.",
+      electronicsNote_en: "Laptops, tablets, and e-readers must be placed in separate security trays.",
+      droneAllowedInCabin: true,
+      droneAllowedInHold: false,
+      dronePolicy_it: "Ammesso nel bagaglio a mano con batterie LiPo isolate (max 100Wh).",
+      dronePolicy_en: "Permitted in cabin baggage only with batteries disconnected (max 100Wh).",
+      maxPowerbankWh: 100,
+      powerbankPolicy_it: "Ammessi esclusivamente nel bagaglio a mano fino a 100Wh (vietati in stiva).",
+      powerbankPolicy_en: "Allowed in cabin baggage only up to 100Wh (strictly prohibited in checked hold luggage).",
+      officialSourceUrl: "https://www.veneziaairport.it/in-aeroporto/controlli-di-sicurezza.html",
+      liquidsUnverified: false,
+      electronicsUnverified: false,
+      lastVerifiedDate: "2026-11-09"
+    },
+    terminals: [
+      {
+        id: "vce-t1",
+        name: "Terminal 1",
+        transferInfo_it: "Unico grande terminal passeggeri moderno su 3 piani, con area imbarchi Schengen ed Extra-Schengen.",
+        transferInfo_en: "Single modern passenger terminal on 3 levels, handling both Schengen and non-Schengen departures.",
+        isUnverified: false
+      }
+    ],
+    amenities: [
+      {
+        id: "vce-wifi",
+        category: "wifi",
+        title_it: "Wi-Fi Gratuito \"Venice Connected Free Wi-Fi\"",
+        title_en: "Free Wi-Fi \"Venice Connected Free Wi-Fi\"",
+        terminal: "Terminal 1",
+        location_it: "In tutte le aree del terminal",
+        location_en: "Available terminal-wide",
+        details_it: "Accesso internet ad alta velocità illimitato e gratuito per tutti i passeggeri.",
+        details_en: "Unlimited high-speed wireless internet access for all passengers.",
+        isUnverified: false
+      },
+      {
+        id: "vce-power",
+        category: "power_charging",
+        title_it: "Prese di ricarica USB e 230V",
+        title_en: "USB and 230V Charging Outlets",
+        terminal: "Terminal 1",
+        location_it: "Presso le sedute delle sale d’attesa gate",
+        location_en: "At waiting area seats near all departure gates",
+        details_it: "Postazioni per la ricarica rapida di smartphone, tablet e computer portatili.",
+        details_en: "Fast charging stations for smartphones, tablets, and laptops.",
+        isUnverified: false
+      }
+    ],
+    venues: [],
+    transports: [
+      {
+        id: "vce-alilaguna",
+        type: "bus",
+        name_it: "Vaporetto Alilaguna (Linee Blu, Rossa, Arancio)",
+        name_en: "Alilaguna Water Bus (Blue, Red, Orange Lines)",
+        duration: "45-75 min",
+        frequency: "Ogni 20-30 min",
+        estimatedCost: "15,00 €",
+        pickupLocation_it: "Darsena aeroportuale (collegata dal Moving Walkway al 1° piano)",
+        pickupLocation_en: "Airport boat dock (connected by 1st floor Moving Walkway)",
+        details_it: "Navigazione diretta attraverso la laguna verso San Marco, Rialto, Murano e Fondamente Nove.",
+        details_en: "Direct scenic boat transfer across the lagoon to St. Mark’s, Rialto, and Murano.",
+        isUnverified: false
+      },
+      {
+        id: "vce-bus",
+        type: "bus",
+        name_it: "ACTV Aerobus Linea 5 o ATVO Express per Piazzale Roma",
+        name_en: "ACTV Aerobus Line 5 or ATVO Express to Piazzale Roma",
+        duration: "20-25 min",
+        frequency: "Ogni 15 min",
+        estimatedCost: "10,00 €",
+        pickupLocation_it: "Corsia autobus di fronte agli Arrivi",
+        pickupLocation_en: "Bus bays directly outside Arrivals",
+        details_it: "Autobus rapidi diretti per Venezia Piazzale Roma e per la stazione ferroviaria di Mestre.",
+        details_en: "Direct express buses to Venice Piazzale Roma and Mestre Railway Station.",
+        isUnverified: false
+      }
+    ],
+    lastUpdated: "2026-11-09",
+    airlines: [
+      {
+        airlineName: "Ryanair",
+        iataCode: "FR",
+        terminal: "Terminal Passeggeri",
+        checkInZone: "Area Partenze"
+      },
+      {
+        airlineName: "EasyJet",
+        iataCode: "U2",
+        terminal: "Terminal Passeggeri",
+        checkInZone: "Area Partenze"
+      },
+      {
+        airlineName: "ITA Airways",
+        iataCode: "AZ",
+        terminal: "Terminal Passeggeri",
+        checkInZone: "Area Partenze"
+      },
+      {
+        airlineName: "Air France",
+        iataCode: "AF",
+        terminal: "Terminal Passeggeri",
+        checkInZone: "Area Partenze"
+      }
+    ]
+  },
+
+  // 🇮🇹 CATANIA (CTA) - Aeroporto di Catania-Fontanarossa Vincenzo Bellini
+  CTA: {
+    id: "cta",
+    iata: "CTA",
+    icao: "LICC",
+    name_it: "Aeroporto di Catania-Fontanarossa Vincenzo Bellini",
+    name_en: "Catania Fontanarossa Airport",
+    city_it: "Catania",
+    city_en: "Catania",
+    country_it: "Italia",
+    country_en: "Italy",
+    countryCode: "IT",
+    officialWebsite: "https://www.aeroporto.catania.it",
+    coordinates: {
+      lat: 37.4668,
+      lng: 15.0664
+    },
+    difficultyRating: 2,
+    difficultyLabel_it: "Alto flusso con varchi al primo piano",
+    difficultyLabel_en: "High traffic hub with first-floor security lanes",
+    averageSecurityWaitMin: 16,
+    recommendedArrivalHours: {
+      domestic: 2,
+      international: 2.5
+    },
+    navigationAdvice_it: "Le partenze sono concentrate al Terminal A. I banchi check-in sono al piano terra e i varchi sicurezza al primo piano. La stazione ferroviaria è collegata dalla navetta gratuita AMTS in 3 minuti.",
+    navigationAdvice_en: "Passenger departures operate from Terminal A. Check-in desks are on the ground floor with security lanes on level 1. The train station is connected by a free 3-minute AMTS shuttle.",
+    securityPolicy: {
+      has3DScanners: false,
+      scannersNote_it: "Scanner radiogeni tradizionali. Separazione obbligatoria di liquidi ed elettronica nelle vaschette.",
+      scannersNote_en: "Standard X-ray scanners. Mandatory separation of liquids and electronics into trays.",
+      liquidsAllowance_it: "Massimo 100ml per flacone in sacchetto trasparente richiudibile da 1 litro",
+      liquidsAllowance_en: "Max 100ml per container in a 1-litre clear resealable plastic bag",
+      liquidsMustBeRemoved: true,
+      liquidsNote_it: "Liquidi oltre 100ml ammessi solo per alimenti per neonati o medicinali prescritti.",
+      liquidsNote_en: "Liquids over 100ml permitted only for infant milk/food or prescribed medicines.",
+      electronicsInBag: false,
+      electronicsNote_it: "Laptop, tablet e dispositivi elettronici vanno mostrati separatamente ai varchi.",
+      electronicsNote_en: "Laptops, tablets, and electronics must be screened in separate security trays.",
+      droneAllowedInCabin: true,
+      droneAllowedInHold: false,
+      dronePolicy_it: "Ammesso in cabina con batterie LiPo isolate (max 100Wh).",
+      dronePolicy_en: "Permitted in cabin baggage with LiPo batteries isolated (max 100Wh).",
+      maxPowerbankWh: 100,
+      powerbankPolicy_it: "Ammessi solo nel bagaglio a mano fino a 100Wh (severamente vietati in stiva).",
+      powerbankPolicy_en: "Permitted in cabin baggage only up to 100Wh (strictly forbidden in checked baggage).",
+      officialSourceUrl: "https://www.aeroporto.catania.it/in-aeroporto/controlli-di-sicurezza/",
+      liquidsUnverified: false,
+      electronicsUnverified: false,
+      lastVerifiedDate: "2026-11-09"
+    },
+    terminals: [
+      {
+        id: "cta-ta",
+        name: "Terminal A",
+        transferInfo_it: "Terminal principale passeggeri per tutti i voli nazionali e internazionali.",
+        transferInfo_en: "Main passenger terminal handling all commercial domestic and international flights.",
+        isUnverified: false
+      }
+    ],
+    amenities: [
+      {
+        id: "cta-wifi",
+        category: "wifi",
+        title_it: "Wi-Fi Gratuito \"Catania Airport Free Wi-Fi\"",
+        title_en: "Free Wi-Fi \"Catania Airport Free Wi-Fi\"",
+        terminal: "Terminal A",
+        location_it: "In tutte le sale d’attesa e aree imbarchi",
+        location_en: "Across boarding gates and departures halls",
+        details_it: "Connessione Wi-Fi gratuita ad alta velocità per navigare senza registrazione.",
+        details_en: "High-speed free Wi-Fi connection accessible without registration.",
+        isUnverified: false
+      },
+      {
+        id: "cta-water",
+        category: "water_refill",
+        title_it: "Erogatori di acqua potabile gratuita",
+        title_en: "Free Drinking Water Stations",
+        terminal: "Terminal A",
+        location_it: "Area imbarchi vicino ai servizi igienici",
+        location_en: "Boarding gate area adjacent to main restrooms",
+        details_it: "Fontanelle per riempire bottiglie e borracce termiche dopo i controlli.",
+        details_en: "Drinking fountains to refill empty bottles after security screening.",
+        isUnverified: false
+      }
+    ],
+    venues: [],
+    transports: [
+      {
+        id: "cta-alibus",
+        type: "bus",
+        name_it: "Alibus AMTS Catania (per Centro Storico e Stazione Centrale)",
+        name_en: "Alibus AMTS Bus (to Historic Centre and Central Station)",
+        duration: "20-25 min",
+        frequency: "Ogni 25 min",
+        estimatedCost: "4,00 €",
+        pickupLocation_it: "Piazzale esterno livello Arrivi",
+        pickupLocation_en: "Outer curbside at Arrivals level",
+        details_it: "Collegamento rapido con Piazza Duomo, Via Etnea e la Stazione Ferroviaria Centrale.",
+        details_en: "Fast express connection to Piazza Duomo, Via Etnea, and Catania Central Train Station.",
+        isUnverified: false
+      },
+      {
+        id: "cta-train",
+        type: "train",
+        name_it: "Treno Regionale Trenitalia (Stazione Fontanarossa)",
+        name_en: "Trenitalia Regional Train (Fontanarossa Station)",
+        duration: "8-10 min",
+        frequency: "Ogni 15-30 min",
+        estimatedCost: "2,20 €",
+        pickupLocation_it: "Stazione ferroviaria collegata da navetta gratuita",
+        pickupLocation_en: "Railway station reached via free 3-minute airport shuttle",
+        details_it: "Treni regionali diretti per Catania Centrale, Siracusa, Taormina e Messina.",
+        details_en: "Direct regional trains to Catania Central, Syracuse, Taormina, and Messina.",
+        isUnverified: false
+      }
+    ],
+    lastUpdated: "2026-11-09",
+    airlines: [
+      {
+        airlineName: "Ryanair",
+        iataCode: "FR",
+        terminal: "Terminal A",
+        checkInZone: "Banchi 1-20"
+      },
+      {
+        airlineName: "ITA Airways",
+        iataCode: "AZ",
+        terminal: "Terminal A",
+        checkInZone: "Banchi 21-30"
+      },
+      {
+        airlineName: "EasyJet",
+        iataCode: "U2",
+        terminal: "Terminal A",
+        checkInZone: "Banchi 31-40"
+      },
+      {
+        airlineName: "Wizz Air",
+        iataCode: "W4",
+        terminal: "Terminal A",
+        checkInZone: "Banchi 41-50"
+      }
+    ]
+  },
+
+  // 🇮🇹 PALERMO (PMO) - Aeroporto Internazionale di Palermo Falcone Borsellino
+  PMO: {
+    id: "pmo",
+    iata: "PMO",
+    icao: "LICJ",
+    name_it: "Aeroporto Internazionale di Palermo Falcone Borsellino",
+    name_en: "Palermo Falcone Borsellino Airport",
+    city_it: "Palermo",
+    city_en: "Palermo",
+    country_it: "Italia",
+    country_en: "Italy",
+    countryCode: "IT",
+    officialWebsite: "https://www.aeroportodipalermo.it",
+    coordinates: {
+      lat: 38.176,
+      lng: 13.091
+    },
+    difficultyRating: 2,
+    difficultyLabel_it: "Terminal ristrutturato con treno al piano interrato",
+    difficultyLabel_en: "Modernized terminal with underground train station",
+    averageSecurityWaitMin: 15,
+    recommendedArrivalHours: {
+      domestic: 2,
+      international: 2.5
+    },
+    navigationAdvice_it: "Terminal recentemente rinnovato con controlli di sicurezza situati al terzo livello. La stazione ferroviaria Punta Raisi si trova al piano interrato con treni veloci per Palermo Centrale.",
+    navigationAdvice_en: "Recently renovated terminal with security checkpoints situated on the 3rd floor. The Punta Raisi train station is on the basement level with trains to Palermo Central.",
+    securityPolicy: {
+      has3DScanners: false,
+      scannersNote_it: "Scanner radiogeni convenzionali. Estrarre liquidi ed elettronica nelle apposite vaschette.",
+      scannersNote_en: "Conventional screening equipment. Remove liquids and laptops into plastic bins.",
+      liquidsAllowance_it: "Massimo 100ml per flacone in busta trasparente richiudibile da 1 litro",
+      liquidsAllowance_en: "Max 100ml per bottle in 1L transparent resealable bag",
+      liquidsMustBeRemoved: true,
+      liquidsNote_it: "I contenitori superiori a 100ml devono essere stivati nel bagaglio da stiva.",
+      liquidsNote_en: "Containers larger than 100ml must be packed in checked hold luggage.",
+      electronicsInBag: false,
+      electronicsNote_it: "Estrarre computer portatili e tablet prima dei controlli radiogeni.",
+      electronicsNote_en: "Laptops and tablet devices must be unpacked before X-ray inspection.",
+      droneAllowedInCabin: true,
+      droneAllowedInHold: false,
+      dronePolicy_it: "Consentito nel bagaglio a mano con batterie LiPo protette (max 100Wh).",
+      dronePolicy_en: "Allowed in cabin baggage with battery terminals taped (max 100Wh).",
+      maxPowerbankWh: 100,
+      powerbankPolicy_it: "Ammessi solo in cabina fino a 100Wh (vietati nel bagaglio da stiva).",
+      powerbankPolicy_en: "Allowed only in cabin baggage up to 100Wh (prohibited in checked luggage).",
+      officialSourceUrl: "https://www.aeroportodipalermo.it/in-aeroporto/controlli-di-sicurezza/",
+      liquidsUnverified: false,
+      electronicsUnverified: false,
+      lastVerifiedDate: "2026-11-09"
+    },
+    terminals: [
+      {
+        id: "pmo-t1",
+        name: "Terminal Passeggeri",
+        transferInfo_it: "Unico terminal passeggeri articolato su più livelli, con negozi e imbarchi al secondo e terzo piano.",
+        transferInfo_en: "Single multi-level terminal with boarding gates and retail concourses on levels 2 and 3.",
+        isUnverified: false
+      }
+    ],
+    amenities: [
+      {
+        id: "pmo-wifi",
+        category: "wifi",
+        title_it: "Wi-Fi Gratuito \"Palermo Airport Wi-Fi\"",
+        title_en: "Free Wi-Fi \"Palermo Airport Wi-Fi\"",
+        terminal: "Terminal Passeggeri",
+        location_it: "In tutte le sale d’imbarco",
+        location_en: "Throughout departure lounges",
+        details_it: "Rete internet Wi-Fi senza limiti di tempo disponibile per tutti i viaggiatori.",
+        details_en: "Free unlimited high-speed internet available across all passenger concourses.",
+        isUnverified: false
+      },
+      {
+        id: "pmo-power",
+        category: "power_charging",
+        title_it: "Colonnine di ricarica smartphone e tablet",
+        title_en: "Mobile Device Charging Stations",
+        terminal: "Terminal Passeggeri",
+        location_it: "Presso i gate d’imbarco A e B",
+        location_en: "Near boarding gates A and B",
+        details_it: "Prese USB ad alto amperaggio e prese standard per la ricarica dei dispositivi.",
+        details_en: "USB charging ports and AC wall sockets for passenger mobile devices.",
+        isUnverified: false
+      }
+    ],
+    venues: [],
+    transports: [
+      {
+        id: "pmo-train",
+        type: "train",
+        name_it: "Treno Regionale Trenitalia (Genio Express / Punta Raisi)",
+        name_en: "Trenitalia Regional Train (Genio Express / Punta Raisi)",
+        duration: "35-50 min",
+        frequency: "Ogni 15-30 min",
+        estimatedCost: "6,80 €",
+        pickupLocation_it: "Stazione ferroviaria al piano interrato del terminal",
+        pickupLocation_en: "Train station on the basement level of the terminal",
+        details_it: "Collegamento ferroviario diretto con Palermo Notarbartolo e Palermo Centrale.",
+        details_en: "Direct rail link connecting the airport with Palermo Notarbartolo and Central Station.",
+        isUnverified: false
+      },
+      {
+        id: "pmo-bus",
+        type: "bus",
+        name_it: "Autolinee Prestia e Comandè per Palermo Centro",
+        name_en: "Prestia e Comandè Bus to Palermo City Centre",
+        duration: "50 min",
+        frequency: "Ogni 30 min",
+        estimatedCost: "6,00 €",
+        pickupLocation_it: "Uscita piano terra fronte Arrivi",
+        pickupLocation_en: "Ground floor curbside outside Arrivals exit",
+        details_it: "Autobus espresso con fermate intermedie al Politeama, Piazza Castelnuovo e Stazione Centrale.",
+        details_en: "Express coach stopping at Piazza Castelnuovo (Politeama) and Palermo Central Railway Station.",
+        isUnverified: false
+      }
+    ],
+    lastUpdated: "2026-11-09",
+    airlines: [
+      {
+        airlineName: "Ryanair",
+        iataCode: "FR",
+        terminal: "Terminal Passeggeri",
+        checkInZone: "Banchi 1-16"
+      },
+      {
+        airlineName: "ITA Airways",
+        iataCode: "AZ",
+        terminal: "Terminal Passeggeri",
+        checkInZone: "Banchi 17-24"
+      },
+      {
+        airlineName: "EasyJet",
+        iataCode: "U2",
+        terminal: "Terminal Passeggeri",
+        checkInZone: "Banchi 25-32"
+      },
+      {
+        airlineName: "Volotea",
+        iataCode: "V7",
+        terminal: "Terminal Passeggeri",
+        checkInZone: "Banchi 33-40"
+      }
+    ]
+  },
+
+  // 🇮🇹 FIRENZE (FLR) - Aeroporto di Firenze Amerigo Vespucci
+  FLR: {
+    id: "flr",
+    iata: "FLR",
+    icao: "LIRQ",
+    name_it: "Aeroporto di Firenze Amerigo Vespucci",
+    name_en: "Florence Amerigo Vespucci Airport",
+    city_it: "Firenze",
+    city_en: "Florence",
+    country_it: "Italia",
+    country_en: "Italy",
+    countryCode: "IT",
+    officialWebsite: "https://www.aeroporto.firenze.it",
+    coordinates: {
+      lat: 43.81,
+      lng: 11.2051
+    },
+    difficultyRating: 1,
+    difficultyLabel_it: "Compatto e veloce con tramvia diretta T2",
+    difficultyLabel_en: "Compact and fast with direct T2 tramway",
+    averageSecurityWaitMin: 10,
+    recommendedArrivalHours: {
+      domestic: 1.5,
+      international: 2
+    },
+    navigationAdvice_it: "Aeroporto cittadino molto compatto. I controlli di sicurezza al primo piano si raggiungono in meno di 2 minuti dai banchi check-in. La linea T2 Vespucci della tramvia collega l’aeroporto alla stazione di Santa Maria Novella in soli 20 minuti.",
+    navigationAdvice_en: "Very compact city airport. First-floor security gates are reachable in under 2 minutes from check-in. Tramway Line T2 Vespucci links the terminal directly to Santa Maria Novella station in 20 minutes.",
+    securityPolicy: {
+      has3DScanners: false,
+      scannersNote_it: "Scanner standard. Liquidi ed elettronica vanno estratti e posti in vaschetta.",
+      scannersNote_en: "Standard X-ray scanners. Liquids and electronic devices must be removed.",
+      liquidsAllowance_it: "Massimo 100ml per contenitore in sacchetto trasparente da 1 litro",
+      liquidsAllowance_en: "Max 100ml per container in 1-litre clear plastic bag",
+      liquidsMustBeRemoved: true,
+      liquidsNote_it: "Tutti i contenitori superiori a 100ml devono essere stivati nel bagaglio da stiva.",
+      liquidsNote_en: "Containers larger than 100ml must be placed in checked hold luggage.",
+      electronicsInBag: false,
+      electronicsNote_it: "Dispositivi elettronici da estrarre prima del passaggio radiogeno.",
+      electronicsNote_en: "Electronic devices must be removed before X-ray inspection.",
+      droneAllowedInCabin: true,
+      droneAllowedInHold: false,
+      dronePolicy_it: "Ammesso in cabina con batterie LiPo protette da cortocircuito (max 100Wh).",
+      dronePolicy_en: "Permitted in cabin baggage with LiPo battery terminals taped (max 100Wh).",
+      maxPowerbankWh: 100,
+      powerbankPolicy_it: "Solo nel bagaglio a mano fino a 100Wh (vietate in stiva).",
+      powerbankPolicy_en: "Cabin baggage only up to 100Wh (prohibited in checked luggage).",
+      officialSourceUrl: "https://www.aeroporto.firenze.it/it/passeggeri/controlli-di-sicurezza.html",
+      liquidsUnverified: false,
+      electronicsUnverified: false,
+      lastVerifiedDate: "2026-11-09"
+    },
+    terminals: [
+      {
+        id: "flr-t1",
+        name: "Terminal Passeggeri",
+        transferInfo_it: "Terminal unico compatto disposto su 2 livelli.",
+        transferInfo_en: "Single compact passenger terminal on 2 levels.",
+        isUnverified: false
+      }
+    ],
+    amenities: [
+      {
+        id: "flr-wifi",
+        category: "wifi",
+        title_it: "Wi-Fi Gratuito \"Florence Airport Free Wi-Fi\"",
+        title_en: "Free Wi-Fi \"Florence Airport Free Wi-Fi\"",
+        terminal: "Terminal Passeggeri",
+        location_it: "In tutto il terminal",
+        location_en: "Throughout the airport building",
+        details_it: "Connessione Wi-Fi gratuita e senza limiti per tutti i passeggeri.",
+        details_en: "Free and unlimited Wi-Fi connection for all passengers.",
+        isUnverified: false
+      },
+      {
+        id: "flr-power",
+        category: "power_charging",
+        title_it: "Prese di ricarica per cellulari",
+        title_en: "Mobile Charging Outlets",
+        terminal: "Terminal Passeggeri",
+        location_it: "Presso le sedute delle sale d’imbarco",
+        location_en: "Near passenger seating at gates",
+        details_it: "Prese elettriche standard e porte USB per ricarica rapida.",
+        details_en: "Standard electrical sockets and USB outlets for fast charging.",
+        isUnverified: false
+      }
+    ],
+    venues: [],
+    transports: [
+      {
+        id: "flr-tram",
+        type: "train",
+        name_it: "Tramvia Linea T2 Vespucci (per Stazione SMN e Centro)",
+        name_en: "Tramway Line T2 Vespucci (to SMN Station and City Centre)",
+        duration: "20 min",
+        frequency: "Ogni 4-6 min",
+        estimatedCost: "1,70 €",
+        pickupLocation_it: "Fermata capolinea all’uscita del terminal",
+        pickupLocation_en: "Dedicated tram terminal right outside terminal exit",
+        details_it: "Mezzo più veloce ed economico per raggiungere la stazione di Santa Maria Novella e il centro storico.",
+        details_en: "Fastest and cheapest way to reach Santa Maria Novella railway station and downtown Florence.",
+        isUnverified: false
+      },
+      {
+        id: "flr-taxi",
+        type: "taxi",
+        name_it: "Taxi Ufficiale Tariffa Fissa Firenze",
+        name_en: "Official Florence Flat-Rate Taxi",
+        duration: "15-20 min",
+        frequency: "Disponibile h24 all’uscita",
+        estimatedCost: "22,00 - 28,00 €",
+        pickupLocation_it: "Corsia taxi fronte terminal Arrivi",
+        pickupLocation_en: "Taxi rank directly in front of Arrivals",
+        details_it: "Tariffa predeterminata per il centro di Firenze con supplemento notturno e festivo.",
+        details_en: "Official flat fare to downtown Florence hotels with night and holiday supplements.",
+        isUnverified: false
+      }
+    ],
+    lastUpdated: "2026-11-09",
+    airlines: [
+      {
+        airlineName: "Air France",
+        iataCode: "AF",
+        terminal: "Terminal Passeggeri",
+        checkInZone: "Banchi 1-8"
+      },
+      {
+        airlineName: "KLM",
+        iataCode: "KL",
+        terminal: "Terminal Passeggeri",
+        checkInZone: "Banchi 1-8"
+      },
+      {
+        airlineName: "Lufthansa",
+        iataCode: "LH",
+        terminal: "Terminal Passeggeri",
+        checkInZone: "Banchi 9-16"
+      },
+      {
+        airlineName: "ITA Airways",
+        iataCode: "AZ",
+        terminal: "Terminal Passeggeri",
+        checkInZone: "Banchi 17-24"
+      },
+      {
+        airlineName: "Vueling",
+        iataCode: "VY",
+        terminal: "Terminal Passeggeri",
+        checkInZone: "Banchi 25-32"
+      }
+    ]
+  },
+
+  // 🇮🇹 TORINO (TRN) - Aeroporto di Torino-Caselle Sandro Pertini
+  TRN: {
+    id: "trn",
+    iata: "TRN",
+    icao: "LIMF",
+    name_it: "Aeroporto di Torino-Caselle Sandro Pertini",
+    name_en: "Turin Airport",
+    city_it: "Torino",
+    city_en: "Turin",
+    country_it: "Italia",
+    country_en: "Italy",
+    countryCode: "IT",
+    officialWebsite: "https://www.aeroportoditorino.it",
+    coordinates: {
+      lat: 45.2008,
+      lng: 7.6496
+    },
+    difficultyRating: 1,
+    difficultyLabel_it: "Fluido con nuovo collegamento ferroviario diretto",
+    difficultyLabel_en: "Smooth with new direct train connection",
+    averageSecurityWaitMin: 12,
+    recommendedArrivalHours: {
+      domestic: 2,
+      international: 2.5
+    },
+    navigationAdvice_it: "Terminal passeggeri disposto su tre piani con controlli di sicurezza veloci al piano partenze. La nuova stazione ferroviaria integrata collega direttamente l’aeroporto alle stazioni di Torino Porta Susa e Torino Lingotto in circa 30 minuti.",
+    navigationAdvice_en: "Passenger terminal on 3 levels with fast security queues on the departures floor. The direct railway link connects the airport terminal to Torino Porta Susa and Lingotto in approximately 30 minutes.",
+    securityPolicy: {
+      has3DScanners: false,
+      scannersNote_it: "Varchi radiogeni convenzionali. Estrarre liquidi e dispositivi elettronici.",
+      scannersNote_en: "Conventional X-ray lanes. Liquids and electronics must be separated.",
+      liquidsAllowance_it: "Massimo 100ml per flacone in sacchetto trasparente richiudibile da 1 litro",
+      liquidsAllowance_en: "Max 100ml per container in 1-litre clear resealable bag",
+      liquidsMustBeRemoved: true,
+      liquidsNote_it: "Tutti i contenitori superiori a 100ml devono essere stivati nel bagaglio da stiva.",
+      liquidsNote_en: "Containers larger than 100ml must be packed in checked luggage.",
+      electronicsInBag: false,
+      electronicsNote_it: "Computer e tablet vanno estratti e mostrati separatamente.",
+      electronicsNote_en: "Laptops and tablets must be placed separately in trays.",
+      droneAllowedInCabin: true,
+      droneAllowedInHold: false,
+      dronePolicy_it: "Ammesso nel bagaglio a mano con batterie protette (max 100Wh).",
+      dronePolicy_en: "Cabin baggage only with protected batteries (max 100Wh).",
+      maxPowerbankWh: 100,
+      powerbankPolicy_it: "Ammessi solo in cabina fino a 100Wh (vietati nel bagaglio da stiva).",
+      powerbankPolicy_en: "Allowed in cabin baggage only up to 100Wh (prohibited in checked luggage).",
+      officialSourceUrl: "https://www.aeroportoditorino.it/it/passeggeri/in-aeroporto/controlli-di-sicurezza",
+      liquidsUnverified: false,
+      electronicsUnverified: false,
+      lastVerifiedDate: "2026-11-09"
+    },
+    terminals: [
+      {
+        id: "trn-t1",
+        name: "Terminal Passeggeri",
+        transferInfo_it: "Unico terminal moderno per tutte le partenze.",
+        transferInfo_en: "Single passenger terminal for all flight departures.",
+        isUnverified: false
+      }
+    ],
+    amenities: [
+      {
+        id: "trn-wifi",
+        category: "wifi",
+        title_it: "Wi-Fi Gratuito Illimitato",
+        title_en: "Free Unlimited Wi-Fi",
+        terminal: "Terminal Passeggeri",
+        location_it: "In tutto il terminal",
+        location_en: "Terminal-wide",
+        details_it: "Connessione a banda larga gratuita e senza registrazione.",
+        details_en: "Fast free broadband internet without registration.",
+        isUnverified: false
+      },
+      {
+        id: "trn-water",
+        category: "water_refill",
+        title_it: "Erogatori di acqua potabile gratuita",
+        title_en: "Free Water Refill Fountains",
+        terminal: "Terminal Passeggeri",
+        location_it: "Area partenze dopo i controlli",
+        location_en: "Airside past security gates",
+        details_it: "Fontanelle per riempire bottiglie e borracce prima di volare.",
+        details_en: "Refill fountains for reusable bottles before flights.",
+        isUnverified: false
+      }
+    ],
+    venues: [],
+    transports: [
+      {
+        id: "trn-train",
+        type: "train",
+        name_it: "Treno SFMA Diretto per Torino Porta Susa",
+        name_en: "SFMA Direct Train to Torino Porta Susa",
+        duration: "31 min",
+        frequency: "Ogni 30 min",
+        estimatedCost: "3,60 €",
+        pickupLocation_it: "Stazione ferroviaria integrata livello Arrivi",
+        pickupLocation_en: "Integrated train station directly at Arrivals",
+        details_it: "Treno veloce che collega l’aeroporto a Porta Susa, Rebaudengo e Lingotto.",
+        details_en: "Fast rail service to Porta Susa, Rebaudengo, and Lingotto stations.",
+        isUnverified: false
+      },
+      {
+        id: "trn-bus",
+        type: "bus",
+        name_it: "Bus Navetta Arriva per Porta Nuova",
+        name_en: "Arriva Express Coach to Porta Nuova",
+        duration: "45 min",
+        frequency: "Ogni 15-30 min",
+        estimatedCost: "7,50 €",
+        pickupLocation_it: "Corsia bus di fronte agli Arrivi",
+        pickupLocation_en: "Bus rank outside Arrivals level",
+        details_it: "Autobus diretto tra l’aeroporto e la stazione centrale di Porta Nuova.",
+        details_en: "Express bus connecting airport to central Porta Nuova station.",
+        isUnverified: false
+      }
+    ],
+    lastUpdated: "2026-11-09",
+    airlines: [
+      {
+        airlineName: "Ryanair",
+        iataCode: "FR",
+        terminal: "Terminal Passeggeri",
+        checkInZone: "Banchi 1-14"
+      },
+      {
+        airlineName: "Wizz Air",
+        iataCode: "W4",
+        terminal: "Terminal Passeggeri",
+        checkInZone: "Banchi 15-22"
+      },
+      {
+        airlineName: "ITA Airways",
+        iataCode: "AZ",
+        terminal: "Terminal Passeggeri",
+        checkInZone: "Banchi 23-30"
+      }
+    ]
+  },
+
+  // 🇮🇹 VERONA (VRN) - Aeroporto di Verona-Villafranca Valerio Catullo
+  VRN: {
+    id: "vrn",
+    iata: "VRN",
+    icao: "LIPX",
+    name_it: "Aeroporto di Verona-Villafranca Valerio Catullo",
+    name_en: "Verona Villafranca Valerio Catullo Airport",
+    city_it: "Verona",
+    city_en: "Verona",
+    country_it: "Italia",
+    country_en: "Italy",
+    countryCode: "IT",
+    officialWebsite: "https://www.aeroportoverona.it",
+    coordinates: {
+      lat: 45.3957,
+      lng: 10.8885
+    },
+    difficultyRating: 1,
+    difficultyLabel_it: "Nuovo Progetto Polo con navetta rapida stazione",
+    difficultyLabel_en: "Upgraded terminal with fast railway shuttle bus",
+    averageSecurityWaitMin: 12,
+    recommendedArrivalHours: {
+      domestic: 2,
+      international: 2.5
+    },
+    navigationAdvice_it: "Terminal passeggeri recentemente ampliato con l’area Progetto Polo. I controlli di sicurezza si trovano al primo piano. La navetta Airlink collega l’aeroporto alla stazione di Verona Porta Nuova ogni 20 minuti.",
+    navigationAdvice_en: "Expanded passenger terminal featuring new departures concourse. Security checkpoints are on level 1. The Airlink shuttle connects to Verona Porta Nuova station every 20 minutes.",
+    securityPolicy: {
+      has3DScanners: false,
+      scannersNote_it: "Varchi radiogeni convenzionali con scanner per bagagli a mano. Separare liquidi ed elettronica.",
+      scannersNote_en: "Conventional screening checkpoints. Separate liquids and electronic devices.",
+      liquidsAllowance_it: "Massimo 100ml per flacone in sacchetto trasparente richiudibile da 1 litro",
+      liquidsAllowance_en: "Max 100ml per container in 1-litre clear resealable bag",
+      liquidsMustBeRemoved: true,
+      liquidsNote_it: "I contenitori superiori a 100ml non sono consentiti nel bagaglio a mano.",
+      liquidsNote_en: "Containers larger than 100ml are not allowed in carry-on baggage.",
+      electronicsInBag: false,
+      electronicsNote_it: "Dispositivi elettronici da estrarre prima del passaggio radiogeno.",
+      electronicsNote_en: "Electronic devices must be removed for separate inspection.",
+      droneAllowedInCabin: true,
+      droneAllowedInHold: false,
+      dronePolicy_it: "Ammesso in cabina con batterie LiPo isolate (max 100Wh).",
+      dronePolicy_en: "Cabin baggage only with battery terminals isolated (max 100Wh).",
+      maxPowerbankWh: 100,
+      powerbankPolicy_it: "Consentite esclusivamente nel bagaglio a mano fino a 100Wh (vietate in stiva).",
+      powerbankPolicy_en: "Permitted in cabin baggage only up to 100Wh (forbidden in hold luggage).",
+      officialSourceUrl: "https://www.aeroportoverona.it/in-aeroporto/controlli-di-sicurezza.html",
+      liquidsUnverified: false,
+      electronicsUnverified: false,
+      lastVerifiedDate: "2026-11-09"
+    },
+    terminals: [
+      {
+        id: "vrn-t1",
+        name: "Terminal Partenze",
+        transferInfo_it: "Area partenze ampliata con nuovi varchi di sicurezza e gate d’imbarco.",
+        transferInfo_en: "Expanded departures terminal with new security lanes and boarding gates.",
+        isUnverified: false
+      }
+    ],
+    amenities: [
+      {
+        id: "vrn-wifi",
+        category: "wifi",
+        title_it: "Wi-Fi Gratuito Catullo Free Wi-Fi",
+        title_en: "Free Wi-Fi Catullo Free Wi-Fi",
+        terminal: "Terminal Partenze",
+        location_it: "In tutte le sale passeggeri",
+        location_en: "Across all terminal concourses",
+        details_it: "Connessione internet gratuita disponibile senza registrazione.",
+        details_en: "Free wireless internet available with no login required.",
+        isUnverified: false
+      },
+      {
+        id: "vrn-power",
+        category: "power_charging",
+        title_it: "Colonnine di ricarica per smartphone",
+        title_en: "Phone Charging Stations",
+        terminal: "Terminal Partenze",
+        location_it: "Presso le poltrone dell’area imbarchi",
+        location_en: "At waiting area gate seating",
+        details_it: "Prese USB per la ricarica dei dispositivi prima del volo.",
+        details_en: "USB charging stations for passenger electronics before flights.",
+        isUnverified: false
+      }
+    ],
+    venues: [],
+    transports: [
+      {
+        id: "vrn-airlink",
+        type: "bus",
+        name_it: "Navetta Airlink ATV per Stazione Verona Porta Nuova",
+        name_en: "ATV Airlink Shuttle to Verona Porta Nuova",
+        duration: "15 min",
+        frequency: "Ogni 20 min",
+        estimatedCost: "7,00 €",
+        pickupLocation_it: "Fronte uscita Arrivi",
+        pickupLocation_en: "Directly outside Arrivals exit",
+        details_it: "Collegamento rapido con la stazione ferroviaria principale di Verona.",
+        details_en: "Quick direct connection to Verona main railway station.",
+        isUnverified: false
+      },
+      {
+        id: "vrn-taxi",
+        type: "taxi",
+        name_it: "Taxi Ufficiale Radiotaxi Verona",
+        name_en: "Official Verona Radiotaxi",
+        duration: "15-20 min",
+        frequency: "Disponibile h24 all’uscita",
+        estimatedCost: "20,00 - 25,00 €",
+        pickupLocation_it: "Corsia taxi fronte terminal",
+        pickupLocation_en: "Taxi rank in front of terminal",
+        details_it: "Tariffa a tassametro per il centro storico e per la Fiera di Verona.",
+        details_en: "Metered fares to downtown Verona and Verona Exhibition Centre.",
+        isUnverified: false
+      }
+    ],
+    lastUpdated: "2026-11-09",
+    airlines: [
+      {
+        airlineName: "Ryanair",
+        iataCode: "FR",
+        terminal: "Terminal Partenze",
+        checkInZone: "Banchi 1-12"
+      },
+      {
+        airlineName: "Volotea",
+        iataCode: "V7",
+        terminal: "Terminal Partenze",
+        checkInZone: "Banchi 13-20"
+      },
+      {
+        airlineName: "Air Dolomiti",
+        iataCode: "EN",
+        terminal: "Terminal Partenze",
+        checkInZone: "Banchi 21-28"
+      },
+      {
+        airlineName: "Neos",
+        iataCode: "NO",
+        terminal: "Terminal Partenze",
+        checkInZone: "Banchi 29-36"
+      }
+    ]
+  },
+
+  // 🇮🇹 CAGLIARI (CAG) - Aeroporto di Cagliari-Elmas Mario Mameli
+  CAG: {
+    id: "cag",
+    iata: "CAG",
+    icao: "LIEE",
+    name_it: "Aeroporto di Cagliari-Elmas Mario Mameli",
+    name_en: "Cagliari Elmas Mario Mameli Airport",
+    city_it: "Cagliari",
+    city_en: "Cagliari",
+    country_it: "Italia",
+    country_en: "Italy",
+    countryCode: "IT",
+    officialWebsite: "https://www.sogaer.it",
+    coordinates: {
+      lat: 39.2515,
+      lng: 9.0543
+    },
+    difficultyRating: 1,
+    difficultyLabel_it: "Stazione ferroviaria integrata in 5 minuti",
+    difficultyLabel_en: "Integrated train station reachable in 5 minutes",
+    averageSecurityWaitMin: 12,
+    recommendedArrivalHours: {
+      domestic: 2,
+      international: 2.5
+    },
+    navigationAdvice_it: "Terminal passeggeri moderno su 3 livelli. I controlli di sicurezza si trovano al primo piano. La stazione ferroviaria Elmas Aeroporto dista solo 250 metri dal terminal, collegata da un percorso pedonale coperto con tapis roulant.",
+    navigationAdvice_en: "Modern terminal on 3 floors. Security gates are on the 1st floor. The Elmas Aeroporto train station is just 250m away via a covered walkway with travelators.",
+    securityPolicy: {
+      has3DScanners: false,
+      scannersNote_it: "Scanner radiogeni tradizionali con corsie veloci. Separare liquidi ed elettronica nelle vaschette.",
+      scannersNote_en: "Standard X-ray scanners with fast-track lanes. Separate liquids and electronics into trays.",
+      liquidsAllowance_it: "Massimo 100ml per flacone in sacchetto trasparente richiudibile da 1 litro",
+      liquidsAllowance_en: "Max 100ml per bottle in 1-litre clear resealable plastic bag",
+      liquidsMustBeRemoved: true,
+      liquidsNote_it: "Tutti i liquidi superiori a 100ml devono essere riposti nel bagaglio da stiva.",
+      liquidsNote_en: "Containers over 100ml must be packed into checked hold luggage.",
+      electronicsInBag: false,
+      electronicsNote_it: "Estrarre laptop e tablet prima dei controlli radiogeni.",
+      electronicsNote_en: "Extract laptops and tablets before X-ray screening.",
+      droneAllowedInCabin: true,
+      droneAllowedInHold: false,
+      dronePolicy_it: "Ammesso in cabina con batterie LiPo isolate (max 100Wh).",
+      dronePolicy_en: "Permitted in cabin with LiPo batteries isolated (max 100Wh).",
+      maxPowerbankWh: 100,
+      powerbankPolicy_it: "Ammessi solo nel bagaglio a mano fino a 100Wh (vietati in stiva).",
+      powerbankPolicy_en: "Cabin baggage only up to 100Wh (strictly prohibited in checked luggage).",
+      officialSourceUrl: "https://www.sogaer.it/it/controlli-di-sicurezza",
+      liquidsUnverified: false,
+      electronicsUnverified: false,
+      lastVerifiedDate: "2026-11-09"
+    },
+    terminals: [
+      {
+        id: "cag-t1",
+        name: "Terminal Passeggeri",
+        transferInfo_it: "Unico grande terminal con imbarchi al secondo piano.",
+        transferInfo_en: "Single passenger terminal with boarding concourse on level 2.",
+        isUnverified: false
+      }
+    ],
+    amenities: [
+      {
+        id: "cag-wifi",
+        category: "wifi",
+        title_it: "Wi-Fi Gratuito \"Cagliari Airport\"",
+        title_en: "Free Wi-Fi \"Cagliari Airport\"",
+        terminal: "Terminal Passeggeri",
+        location_it: "In tutte le aree del terminal",
+        location_en: "Available throughout the terminal",
+        details_it: "Connessione Wi-Fi gratuita ad alta velocità per tutti i viaggiatori.",
+        details_en: "High-speed wireless internet free for all travelers.",
+        isUnverified: false
+      },
+      {
+        id: "cag-water",
+        category: "water_refill",
+        title_it: "Erogatori acqua potabile gratuita",
+        title_en: "Drinking Water Refill Stations",
+        terminal: "Terminal Passeggeri",
+        location_it: "Area imbarchi vicino ai servizi igienici",
+        location_en: "Gate boarding area near restrooms",
+        details_it: "Fontanelle per riempire borracce termiche dopo i controlli.",
+        details_en: "Free water stations to refill empty reusable bottles.",
+        isUnverified: false
+      }
+    ],
+    venues: [],
+    transports: [
+      {
+        id: "cag-train",
+        type: "train",
+        name_it: "Treno Regionale Trenitalia (Stazione Elmas Aeroporto)",
+        name_en: "Trenitalia Regional Train (Elmas Aeroporto Station)",
+        duration: "6-8 min",
+        frequency: "Ogni 20 min",
+        estimatedCost: "1,30 €",
+        pickupLocation_it: "Stazione a 5 minuti a piedi tramite percorso coperto",
+        pickupLocation_en: "Station 5 min walk via covered travelator path",
+        details_it: "Collegamento diretto con Cagliari Piazza Matteotti (stazione centrale e porto).",
+        details_en: "Direct rail link to Cagliari Piazza Matteotti (central station and port).",
+        isUnverified: false
+      },
+      {
+        id: "cag-taxi",
+        type: "taxi",
+        name_it: "Taxi Ufficiale Radiotaxi Cagliari",
+        name_en: "Official Cagliari Radiotaxi",
+        duration: "10-15 min",
+        frequency: "Disponibile h24 all’uscita",
+        estimatedCost: "15,00 - 20,00 €",
+        pickupLocation_it: "Corsia taxi fronte terminal Arrivi",
+        pickupLocation_en: "Taxi stand directly outside Arrivals",
+        details_it: "Tariffa a tassametro per il centro storico di Cagliari e la spiaggia del Poetto.",
+        details_en: "Metered fares to downtown Cagliari and Poetto beach.",
+        isUnverified: false
+      }
+    ],
+    lastUpdated: "2026-11-09",
+    airlines: [
+      {
+        airlineName: "Ryanair",
+        iataCode: "FR",
+        terminal: "Terminal Passeggeri",
+        checkInZone: "Banchi 1-18"
+      },
+      {
+        airlineName: "EasyJet",
+        iataCode: "U2",
+        terminal: "Terminal Passeggeri",
+        checkInZone: "Banchi 19-28"
+      },
+      {
+        airlineName: "ITA Airways",
+        iataCode: "AZ",
+        terminal: "Terminal Passeggeri",
+        checkInZone: "Banchi 29-38"
+      },
+      {
+        airlineName: "Volotea",
+        iataCode: "V7",
+        terminal: "Terminal Passeggeri",
+        checkInZone: "Banchi 39-46"
+      }
+    ]
+  },
+
+  // 🇪🇸 LAS PALMAS DE GRAN CANARIA (LPA) - Aeroporto di Gran Canaria (Las Palmas)
+  LPA: {
+    id: "lpa",
+    iata: "LPA",
+    icao: "GCLP",
+    name_it: "Aeroporto di Gran Canaria (Las Palmas)",
+    name_en: "Gran Canaria Airport",
+    city_it: "Las Palmas de Gran Canaria",
+    city_en: "Las Palmas",
+    country_it: "Spagna",
+    country_en: "Spain",
+    countryCode: "ES",
+    officialWebsite: "https://www.aena.es",
+    coordinates: {
+      lat: 27.9319,
+      lng: -15.3866
+    },
+    difficultyRating: 2,
+    difficultyLabel_it: "Hub delle Canarie con bus Global frequenti",
+    difficultyLabel_en: "Canary Islands main hub with frequent Global buses",
+    averageSecurityWaitMin: 14,
+    recommendedArrivalHours: {
+      domestic: 2,
+      international: 2.5
+    },
+    navigationAdvice_it: "Grande terminal passeggeri suddiviso in tre zone: partenze interinsulari, partenze nazionali spagnole e partenze internazionali. Gli autobus della linea Global collegano l’aeroporto sia con Las Palmas che con le spiagge del sud (Maspalomas).",
+    navigationAdvice_en: "Large terminal divided into three sectors: inter-island flights, mainland Spain, and international departures. Global buses connect directly to Las Palmas and southern beaches (Maspalomas).",
+    securityPolicy: {
+      has3DScanners: false,
+      scannersNote_it: "Scanner radiogeni Aena tradizionali. Liquidi ed elettronica vanno estratti e posti nelle vaschette.",
+      scannersNote_en: "Standard Aena X-ray checkpoints. Liquids and electronics must be separated into trays.",
+      liquidsAllowance_it: "Massimo 100ml per flacone in sacchetto trasparente richiudibile da 1 litro",
+      liquidsAllowance_en: "Max 100ml per container in a 1-litre resealable transparent bag",
+      liquidsMustBeRemoved: true,
+      liquidsNote_it: "I contenitori superiori a 100ml non sono consentiti nel bagaglio a mano.",
+      liquidsNote_en: "Liquids in containers over 100ml are not allowed in cabin luggage.",
+      electronicsInBag: false,
+      electronicsNote_it: "Computer portatili e tablet da estrarre prima del passaggio radiogeno.",
+      electronicsNote_en: "Laptops and tablet devices must be unpacked before X-ray inspection.",
+      droneAllowedInCabin: true,
+      droneAllowedInHold: false,
+      dronePolicy_it: "Ammesso in cabina con batterie LiPo protette da cortocircuito (max 100Wh).",
+      dronePolicy_en: "Permitted in cabin baggage with battery terminals taped (max 100Wh).",
+      maxPowerbankWh: 100,
+      powerbankPolicy_it: "Ammessi solo nel bagaglio a mano fino a 100Wh (vietate in stiva per norme AESA).",
+      powerbankPolicy_en: "Cabin baggage only up to 100Wh (forbidden in checked hold baggage under AESA rules).",
+      officialSourceUrl: "https://www.aena.es",
+      liquidsUnverified: false,
+      electronicsUnverified: false,
+      lastVerifiedDate: "2026-11-09"
+    },
+    terminals: [
+      {
+        id: "lpa-t1",
+        name: "Terminal Passeggeri",
+        transferInfo_it: "Unico grande terminal con settori A (UE), B (Nazionali) e C (Isole Canarie).",
+        transferInfo_en: "Single large terminal with zones A (EU), B (Domestic Spain), and C (Canary Islands).",
+        isUnverified: false
+      }
+    ],
+    amenities: [
+      {
+        id: "lpa-wifi",
+        category: "wifi",
+        title_it: "Wi-Fi Gratuito \"Airport Free Wifi Aena\"",
+        title_en: "Free Wi-Fi \"Airport Free Wifi Aena\"",
+        terminal: "Terminal Passeggeri",
+        location_it: "In tutte le aree del terminal",
+        location_en: "Throughout the airport building",
+        details_it: "Connessione ad alta velocità gratuita offerta da Aena.",
+        details_en: "High-speed free Wi-Fi provided across the terminal by Aena.",
+        isUnverified: false
+      },
+      {
+        id: "lpa-water",
+        category: "water_refill",
+        title_it: "Fontanelle acqua potabile gratuita",
+        title_en: "Free Drinking Water Refill Points",
+        terminal: "Terminal Passeggeri",
+        location_it: "Nelle aree imbarchi vicino ai bagni",
+        location_en: "In boarding areas adjacent to restrooms",
+        details_it: "Erogatori per riempire borracce vuote prima del volo.",
+        details_en: "Refill stations for reusable water bottles past security.",
+        isUnverified: false
+      }
+    ],
+    venues: [],
+    transports: [
+      {
+        id: "lpa-bus-lp",
+        type: "bus",
+        name_it: "Bus Global Linea 60 per Las Palmas de Gran Canaria",
+        name_en: "Global Bus Line 60 to Las Palmas de Gran Canaria",
+        duration: "25-30 min",
+        frequency: "Ogni 30 min",
+        estimatedCost: "2,95 €",
+        pickupLocation_it: "Fermata bus al piano partenze/arrivi",
+        pickupLocation_en: "Bus platform outside Departures/Arrivals",
+        details_it: "Autobus diretto veloce per San Telmo e Santa Catalina a Las Palmas.",
+        details_en: "Fast direct bus to San Telmo and Santa Catalina in Las Palmas.",
+        isUnverified: false
+      },
+      {
+        id: "lpa-bus-masp",
+        type: "bus",
+        name_it: "Bus Global Linea 66 / 90 per Maspalomas e Playa del Inglés",
+        name_en: "Global Bus Line 66 / 90 to Maspalomas & Playa del Inglés",
+        duration: "35 min",
+        frequency: "Ogni 30-60 min",
+        estimatedCost: "3,50 - 4,00 €",
+        pickupLocation_it: "Fermata bus livello Arrivi",
+        pickupLocation_en: "Bus rank at Arrivals level",
+        details_it: "Collegamento diretto con le principali località turistiche del sud.",
+        details_en: "Direct coach to major southern beach resorts in Maspalomas.",
+        isUnverified: false
+      }
+    ],
+    lastUpdated: "2026-11-09",
+    airlines: [
+      {
+        airlineName: "Binter Canarias",
+        iataCode: "NT",
+        terminal: "Terminal Passeggeri (Zona Interislas)",
+        checkInZone: "Banchi 1-20"
+      },
+      {
+        airlineName: "Iberia Express",
+        iataCode: "I2",
+        terminal: "Terminal Passeggeri (Zona Nacional)",
+        checkInZone: "Banchi 21-35"
+      },
+      {
+        airlineName: "Ryanair",
+        iataCode: "FR",
+        terminal: "Terminal Passeggeri (Zona Internacional)",
+        checkInZone: "Banchi 36-50"
+      }
+    ]
+  },
+
+  // 🇹🇷 ISTANBUL (IST) - Aeroporto di Istanbul
+  IST: {
+    id: "ist",
+    iata: "IST",
+    icao: "LTFM",
+    name_it: "Aeroporto di Istanbul",
+    name_en: "Istanbul Airport",
+    city_it: "Istanbul",
+    city_en: "Istanbul",
+    country_it: "Turchia",
+    country_en: "Turkey",
+    countryCode: "TR",
+    officialWebsite: "https://www.istairport.com",
+    coordinates: {
+      lat: 41.2619,
+      lng: 28.7419
+    },
+    difficultyRating: 3,
+    difficultyLabel_it: "Mega-hub monumentale con lunghe distanze ai gate",
+    difficultyLabel_en: "Monumental mega-hub with long walking distances",
+    averageSecurityWaitMin: 18,
+    recommendedArrivalHours: {
+      domestic: 2,
+      international: 3
+    },
+    navigationAdvice_it: "Uno dei terminal aeroportuali più grandi al mondo sotto un unico tetto. Doppio controllo di sicurezza: primo varco all’ingresso dell’aerostazione e secondo varco prima della sala imbarchi. I gate d’imbarco possono richiedere fino a 20-25 minuti a piedi: seguire i cartelli con i tempi di cammino stimati.",
+    navigationAdvice_en: "One of the world’s largest single-roof terminals. Two security screenings: initial checkpoint at building entrance and second screening before boarding gates. Walking times to distant gates can take up to 20-25 minutes: check overhead walking time monitors.",
+    securityPolicy: {
+      has3DScanners: true,
+      scannersNote_it: "Nei varchi principali sono operativi moderni scanner tomografici 3D EDS-CB C3: laptop e liquidi possono rimanere all’interno del bagaglio a mano nelle corsie abilitate.",
+      scannersNote_en: "Advanced EDS-CB C3 3D scanners are operational on primary security lanes: laptops and liquids can remain inside bags on equipped lanes.",
+      liquidsAllowance_it: "Massimo 100ml per flacone in sacchetto trasparente salva-corsie 3D dove consentito",
+      liquidsAllowance_en: "Max 100ml containers in clear bag or inside luggage on designated 3D scanner lanes",
+      liquidsMustBeRemoved: false,
+      liquidsNote_it: "Nelle corsie dotate di scanner 3D C3 non è richiesta l’estrazione dei liquidi conformi.",
+      liquidsNote_en: "On lanes with 3D C3 scanners, compliant liquids can stay inside carry-on luggage.",
+      electronicsInBag: true,
+      electronicsNote_it: "Laptop e tablet possono rimanere nel bagaglio a mano sulle corsie tomografiche 3D.",
+      electronicsNote_en: "Laptops and tablets can remain inside bags on 3D tomographic scanner lanes.",
+      droneAllowedInCabin: true,
+      droneAllowedInHold: false,
+      dronePolicy_it: "Ammesso in cabina con batterie LiPo staccate e isolate (max 100Wh).",
+      dronePolicy_en: "Permitted in cabin luggage only with LiPo battery terminals taped (max 100Wh).",
+      maxPowerbankWh: 100,
+      powerbankPolicy_it: "Ammessi esclusivamente nel bagaglio a mano fino a 100Wh (severamente vietati in stiva).",
+      powerbankPolicy_en: "Allowed only in cabin baggage up to 100Wh (strictly prohibited in checked baggage).",
+      officialSourceUrl: "https://www.istairport.com",
+      liquidsUnverified: false,
+      electronicsUnverified: false,
+      lastVerifiedDate: "2026-11-09"
+    },
+    terminals: [
+      {
+        id: "ist-t1",
+        name: "Main Passenger Terminal",
+        transferInfo_it: "Mega-terminal su due livelli con moli A, B, C, D, E, F e G.",
+        transferInfo_en: "Single mega-terminal with piers A, B, C, D, E, F, and G.",
+        isUnverified: false
+      }
+    ],
+    amenities: [
+      {
+        id: "ist-wifi",
+        category: "wifi",
+        title_it: "Wi-Fi Gratuito Istanbul Airport",
+        title_en: "Free Wi-Fi Istanbul Airport",
+        terminal: "Main Passenger Terminal",
+        location_it: "In tutte le aree del terminal tramite chioschi di autenticazione",
+        location_en: "Available terminal-wide via passport authentication kiosks",
+        details_it: "Un’ora di connessione internet gratuita scansionando il passaporto ai chioschi.",
+        details_en: "One hour of free high-speed internet by scanning your passport at kiosks.",
+        isUnverified: false
+      },
+      {
+        id: "ist-water",
+        category: "water_refill",
+        title_it: "Fontanelle di acqua potabile gratuita",
+        title_en: "Free Drinking Water Dispensers",
+        terminal: "Main Passenger Terminal",
+        location_it: "Vicino a tutti i blocchi di servizi igienici airside",
+        location_en: "Next to all airside restroom facilities",
+        details_it: "Erogatori di acqua filtrata gratuita con opzione calda e fredda.",
+        details_en: "Filtered drinking water refill stations with cold/hot water.",
+        isUnverified: false
+      }
+    ],
+    venues: [],
+    transports: [
+      {
+        id: "ist-metro",
+        type: "train",
+        name_it: "Metropolitana Linea M11 Gayrettepe - Istanbul Airport",
+        name_en: "Metro Line M11 Gayrettepe - Istanbul Airport",
+        duration: "25-30 min",
+        frequency: "Ogni 10-15 min",
+        estimatedCost: "25,00 TL (circa 0,75 €)",
+        pickupLocation_it: "Stazione della metropolitana fronte terminal",
+        pickupLocation_en: "Metro station across terminal entrance",
+        details_it: "Metropolitana rapida automatizzata che collega lo scalo al centro di Istanbul (Gayrettepe).",
+        details_en: "Automated rapid metro connecting the airport directly to central Gayrettepe.",
+        isUnverified: false
+      },
+      {
+        id: "ist-havaist",
+        type: "bus",
+        name_it: "Bus Navetta Espresso HAVAIST (per Taksim e Kadikoy)",
+        name_en: "HAVAIST Express Airport Coach (to Taksim & Kadikoy)",
+        duration: "50-80 min",
+        frequency: "Ogni 20-30 min",
+        estimatedCost: "150 - 200 TL (circa 4,50 - 6,00 €)",
+        pickupLocation_it: "Piano -2 Hub Autobus",
+        pickupLocation_en: "Level -2 dedicated bus terminal hub",
+        details_it: "Autobus turistici confortevoli per Piazza Taksim, Beşiktaş e la sponda asiatica.",
+        details_en: "Luxury airport coaches with luggage holds serving Taksim Square and Kadikoy.",
+        isUnverified: false
+      }
+    ],
+    lastUpdated: "2026-11-09",
+    airlines: [
+      {
+        airlineName: "Turkish Airlines",
+        iataCode: "TK",
+        terminal: "Main Passenger Terminal",
+        checkInZone: "Isole A, B, C, D, E"
+      },
+      {
+        airlineName: "Lufthansa",
+        iataCode: "LH",
+        terminal: "Main Passenger Terminal",
+        checkInZone: "Isola F"
+      },
+      {
+        airlineName: "Emirates",
+        iataCode: "EK",
+        terminal: "Main Passenger Terminal",
+        checkInZone: "Isola G"
+      }
+    ]
+  },
+
+  // 🇪🇸 TENERIFE (TFS) - Aeroporto di Tenerife Sud Reina Sofía
+  TFS: {
+    id: "tfs",
+    iata: "TFS",
+    icao: "GCTS",
+    name_it: "Aeroporto di Tenerife Sud Reina Sofía",
+    name_en: "Tenerife South Airport",
+    city_it: "Tenerife",
+    city_en: "Tenerife",
+    country_it: "Spagna",
+    country_en: "Spain",
+    countryCode: "ES",
+    officialWebsite: "https://www.aena.es",
+    coordinates: {
+      lat: 28.0445,
+      lng: -16.5725
+    },
+    difficultyRating: 2,
+    difficultyLabel_it: "Alto afflusso turistico con bus diretti per le spiagge",
+    difficultyLabel_en: "High leisure traffic hub with direct beach buses",
+    averageSecurityWaitMin: 15,
+    recommendedArrivalHours: {
+      domestic: 2,
+      international: 2.5
+    },
+    navigationAdvice_it: "Principale scalo internazionale di Tenerife per i voli charter e di linea verso l’Europa. I controlli di sicurezza si trovano al primo piano dell’aerostazione passeggeri. Gli autobus pubblici Titsa collegano l’aeroporto a Los Cristianos, Costa Adeje e Santa Cruz.",
+    navigationAdvice_en: "Primary international airport of Tenerife handling European flights. Security screening is on the first floor. Public Titsa buses link the terminal directly with Los Cristianos, Costa Adeje, and Santa Cruz.",
+    securityPolicy: {
+      has3DScanners: false,
+      scannersNote_it: "Scanner radiogeni convenzionali Aena. Liquidi ed elettronica vanno estratti e posti nelle vaschette.",
+      scannersNote_en: "Standard Aena X-ray checkpoints. Liquids and electronics must be separated into security trays.",
+      liquidsAllowance_it: "Massimo 100ml per flacone in sacchetto trasparente richiudibile da 1 litro",
+      liquidsAllowance_en: "Max 100ml per bottle in 1L transparent resealable bag",
+      liquidsMustBeRemoved: true,
+      liquidsNote_it: "I contenitori superiori a 100ml non sono consentiti nel bagaglio a mano.",
+      liquidsNote_en: "Containers larger than 100ml must be packed in hold luggage.",
+      electronicsInBag: false,
+      electronicsNote_it: "Computer portatili e tablet vanno mostrati separatamente ai varchi.",
+      electronicsNote_en: "Laptops and tablet devices must be removed for screening.",
+      droneAllowedInCabin: true,
+      droneAllowedInHold: false,
+      dronePolicy_it: "Ammesso in cabina con batterie LiPo protette (max 100Wh).",
+      dronePolicy_en: "Cabin baggage only with protected LiPo batteries (max 100Wh).",
+      maxPowerbankWh: 100,
+      powerbankPolicy_it: "Ammesse solo nel bagaglio a mano fino a 100Wh (vietate in stiva).",
+      powerbankPolicy_en: "Permitted in cabin baggage only up to 100Wh (strictly prohibited in checked hold baggage).",
+      officialSourceUrl: "https://www.aena.es",
+      liquidsUnverified: false,
+      electronicsUnverified: false,
+      lastVerifiedDate: "2026-11-09"
+    },
+    terminals: [
+      {
+        id: "tfs-t1",
+        name: "Terminal Passeggeri",
+        transferInfo_it: "Unico grande terminal su tre livelli per partenze nazionali e internazionali.",
+        transferInfo_en: "Single large terminal on 3 levels for domestic and international flights.",
+        isUnverified: false
+      }
+    ],
+    amenities: [
+      {
+        id: "tfs-wifi",
+        category: "wifi",
+        title_it: "Wi-Fi Gratuito Aena Free",
+        title_en: "Free Wi-Fi Aena Free",
+        terminal: "Terminal Passeggeri",
+        location_it: "In tutto il terminal",
+        location_en: "Throughout the airport building",
+        details_it: "Connessione internet Wi-Fi gratuita e illimitata.",
+        details_en: "Unlimited free high-speed Wi-Fi provided by Aena.",
+        isUnverified: false
+      },
+      {
+        id: "tfs-water",
+        category: "water_refill",
+        title_it: "Fontanelle acqua potabile gratuita",
+        title_en: "Free Drinking Water Refill Stations",
+        terminal: "Terminal Passeggeri",
+        location_it: "Nelle aree imbarchi vicino ai servizi igienici",
+        location_en: "Airside boarding concourses near restrooms",
+        details_it: "Erogatori per riempire borracce vuote prima dell’imbarco.",
+        details_en: "Free refill fountains for reusable water bottles.",
+        isUnverified: false
+      }
+    ],
+    venues: [],
+    transports: [
+      {
+        id: "tfs-bus-south",
+        type: "bus",
+        name_it: "Bus Titsa Linea 40 per Los Cristianos e Costa Adeje",
+        name_en: "Titsa Bus Line 40 to Los Cristianos & Costa Adeje",
+        duration: "20-25 min",
+        frequency: "Ogni 30 min",
+        estimatedCost: "3,20 - 3,70 €",
+        pickupLocation_it: "Corsia bus fronte Arrivi",
+        pickupLocation_en: "Bus bays outside Arrivals",
+        details_it: "Autobus diretto veloce per le principali spiagge e hotel del sud.",
+        details_en: "Fast direct public bus to southern resort areas.",
+        isUnverified: false
+      },
+      {
+        id: "tfs-bus-north",
+        type: "bus",
+        name_it: "Bus Titsa Linea 111 / 711 per Santa Cruz de Tenerife",
+        name_en: "Titsa Bus Line 111 / 711 to Santa Cruz de Tenerife",
+        duration: "50-60 min",
+        frequency: "Ogni 30 min",
+        estimatedCost: "9,35 €",
+        pickupLocation_it: "Fermata bus terminal Arrivi",
+        pickupLocation_en: "Bus platform outside Arrivals",
+        details_it: "Collegamento autostradale diretto per la capitale Santa Cruz.",
+        details_en: "Direct motorway express coach to capital city Santa Cruz.",
+        isUnverified: false
+      }
+    ],
+    lastUpdated: "2026-11-09",
+    airlines: [
+      {
+        airlineName: "Ryanair",
+        iataCode: "FR",
+        terminal: "Terminal Principale",
+        checkInZone: "Banchi 1-24"
+      },
+      {
+        airlineName: "EasyJet",
+        iataCode: "U2",
+        terminal: "Terminal Principale",
+        checkInZone: "Banchi 25-40"
+      },
+      {
+        airlineName: "Jet2",
+        iataCode: "LS",
+        terminal: "Terminal Principale",
+        checkInZone: "Banchi 41-60"
+      },
+      {
+        airlineName: "TUI fly",
+        iataCode: "TB",
+        terminal: "Terminal Principale",
+        checkInZone: "Banchi 61-75"
+      }
+    ]
+  },
+
+  // 🇧🇪 BRUXELLES (BRU) - Aeroporto di Bruxelles Zaventem
+  BRU: {
+    id: "bru",
+    iata: "BRU",
+    icao: "EBBR",
+    name_it: "Aeroporto di Bruxelles Zaventem",
+    name_en: "Brussels Airport Zaventem",
+    city_it: "Bruxelles",
+    city_en: "Brussels",
+    country_it: "Belgio",
+    country_en: "Belgium",
+    countryCode: "BE",
+    officialWebsite: "https://www.brusselsairport.be",
+    coordinates: {
+      lat: 50.9014,
+      lng: 4.4844
+    },
+    difficultyRating: 2,
+    difficultyLabel_it: "Hub europeo con stazione ferroviaria integrata al piano -1",
+    difficultyLabel_en: "Major European hub with integrated rail station on level -1",
+    averageSecurityWaitMin: 12,
+    recommendedArrivalHours: {
+      domestic: 2,
+      international: 2.5
+    },
+    navigationAdvice_it: "Grande aeroporto articolato nei moli Pier A (voli Schengen) e Pier B (voli Extra-Schengen). La stazione ferroviaria Bruxelles-Nationaal-Luchthaven al piano -1 collega l’aeroporto a Bruxelles Centrale ogni 10 minuti.",
+    navigationAdvice_en: "Major European hub featuring Pier A (Schengen) and Pier B (non-Schengen). The integrated railway station on level -1 links directly to Brussels Central Station with trains every 10 minutes.",
+    securityPolicy: {
+      has3DScanners: false,
+      scannersNote_it: "Scanner radiogeni convenzionali con corsie veloci. Separare liquidi ed elettronica nelle apposite vaschette.",
+      scannersNote_en: "Standard screening lanes. Separate liquids and electronics into security trays.",
+      liquidsAllowance_it: "Massimo 100ml per flacone in sacchetto trasparente richiudibile da 1 litro",
+      liquidsAllowance_en: "Max 100ml per bottle in 1-litre clear resealable bag",
+      liquidsMustBeRemoved: true,
+      liquidsNote_it: "Liquidi superiori a 100ml consentiti solo se acquistati al duty-free dopo i controlli.",
+      liquidsNote_en: "Liquids over 100ml permitted only if purchased past security in duty-free bags.",
+      electronicsInBag: false,
+      electronicsNote_it: "Laptop e tablet devono essere estratti prima del controllo radiogeno.",
+      electronicsNote_en: "Laptops and tablet computers must be removed for separate scanning.",
+      droneAllowedInCabin: true,
+      droneAllowedInHold: false,
+      dronePolicy_it: "Consentito nel bagaglio a mano con batterie LiPo protette (max 100Wh).",
+      dronePolicy_en: "Cabin baggage only with battery terminals isolated (max 100Wh).",
+      maxPowerbankWh: 100,
+      powerbankPolicy_it: "Ammesse esclusivamente nel bagaglio a mano fino a 100Wh (vietate in stiva).",
+      powerbankPolicy_en: "Permitted in cabin baggage only up to 100Wh (forbidden in checked baggage).",
+      officialSourceUrl: "https://www.brusselsairport.be",
+      liquidsUnverified: false,
+      electronicsUnverified: false,
+      lastVerifiedDate: "2026-11-09"
+    },
+    terminals: [
+      {
+        id: "bru-t1",
+        name: "Main Passenger Terminal",
+        transferInfo_it: "Terminal unico integrato con molo A (Schengen) e molo B (Extra-Schengen).",
+        transferInfo_en: "Single integrated terminal with Pier A (Schengen) and Pier B (Non-Schengen).",
+        isUnverified: false
+      }
+    ],
+    amenities: [
+      {
+        id: "bru-wifi",
+        category: "wifi",
+        title_it: "Wi-Fi Gratuito \"Brussels Airport Free Wi-Fi\"",
+        title_en: "Free Wi-Fi \"Brussels Airport Free Wi-Fi\"",
+        terminal: "Main Passenger Terminal",
+        location_it: "In tutto il terminal",
+        location_en: "Available throughout the terminal",
+        details_it: "Accesso Wi-Fi gratuito e illimitato per tutti i viaggiatori.",
+        details_en: "Unlimited free high-speed wireless internet for all passengers.",
+        isUnverified: false
+      },
+      {
+        id: "bru-water",
+        category: "water_refill",
+        title_it: "Fontanelle di acqua potabile gratuita",
+        title_en: "Drinking Water Stations",
+        terminal: "Main Passenger Terminal",
+        location_it: "Presso i moli A e B dopo i controlli",
+        location_en: "Across Piers A and B past security",
+        details_it: "Erogatori per riempire borracce termiche prima del volo.",
+        details_en: "Refill taps for reusable bottles before boarding.",
+        isUnverified: false
+      }
+    ],
+    venues: [],
+    transports: [
+      {
+        id: "bru-train",
+        type: "train",
+        name_it: "Treno NMBS/SNCB Diretto per Bruxelles Centrale",
+        name_en: "NMBS/SNCB Direct Train to Brussels Central",
+        duration: "15-18 min",
+        frequency: "Ogni 10-15 min",
+        estimatedCost: "10,80 € (incluso supplemento Diabolo)",
+        pickupLocation_it: "Stazione ferroviaria livello -1",
+        pickupLocation_en: "Train station on level -1 directly below terminal",
+        details_it: "Collegamento ferroviario frequente per Bruxelles Nord, Centrale e Midi (Eurostar).",
+        details_en: "Fast rail connection to Brussels North, Central, and South/Midi (Eurostar).",
+        isUnverified: false
+      },
+      {
+        id: "bru-bus",
+        type: "bus",
+        name_it: "Bus STIB Linea 12 Airport Line per Quartiere Europeo",
+        name_en: "STIB Bus Line 12 Airport Line to European Quarter",
+        duration: "30 min",
+        frequency: "Ogni 12-20 min",
+        estimatedCost: "7,00 €",
+        pickupLocation_it: "Livello 0 banchina autobus",
+        pickupLocation_en: "Level 0 bus platforms",
+        details_it: "Autobus rapido per Schuman, Lussemburgo e le istituzioni dell’Unione Europea.",
+        details_en: "Express bus connecting to Schuman, Luxembourg, and EU institutions.",
+        isUnverified: false
+      }
+    ],
+    lastUpdated: "2026-11-09",
+    airlines: [
+      {
+        airlineName: "Brussels Airlines",
+        iataCode: "SN",
+        terminal: "Terminal Principale",
+        checkInZone: "File 1-4"
+      },
+      {
+        airlineName: "Ryanair",
+        iataCode: "FR",
+        terminal: "Terminal Principale",
+        checkInZone: "File 5-6"
+      },
+      {
+        airlineName: "Lufthansa",
+        iataCode: "LH",
+        terminal: "Terminal Principale",
+        checkInZone: "Fila 7"
+      }
+    ]
+  },
+
+  // 🇸🇬 SINGAPORE (SIN) - Aeroporto di Singapore-Changi
+  SIN: {
+    id: "sin",
+    iata: "SIN",
+    icao: "WSSS",
+    name_it: "Aeroporto di Singapore-Changi",
+    name_en: "Singapore Changi Airport",
+    city_it: "Singapore",
+    city_en: "Singapore",
+    country_it: "Singapore",
+    country_en: "Singapore",
+    countryCode: "SG",
+    officialWebsite: "https://www.changiairport.com",
+    coordinates: {
+      lat: 1.3644,
+      lng: 103.9915
+    },
+    difficultyRating: 1,
+    difficultyLabel_it: "Miglior aeroporto al mondo con Skytrain e Jewel",
+    difficultyLabel_en: "World-leading airport with free Skytrain and Jewel",
+    averageSecurityWaitMin: 8,
+    recommendedArrivalHours: {
+      domestic: 2,
+      international: 2.5
+    },
+    navigationAdvice_it: "Aeroporto di riferimento mondiale con 4 terminal collegati dallo Skytrain gratuito e dallo spettacolare complesso Jewel. Nei Terminal 1, 2 e 3 i controlli di sicurezza si svolgono direttamente al gate d’imbarco, mentre al Terminal 4 sono centralizzati con scanner tomografici automatizzati.",
+    navigationAdvice_en: "World-renowned airport with 4 terminals linked by free Skytrain and Jewel complex. In Terminals 1, 2, and 3 security screening takes place at individual gates, while Terminal 4 features centralized automated CT scanners.",
+    securityPolicy: {
+      has3DScanners: true,
+      scannersNote_it: "Al Terminal 4 e nelle corsie avanzate dei T2/T3 sono operativi scanner tomografici 3D: computer portatili e dispositivi elettronici possono rimanere nel bagaglio.",
+      scannersNote_en: "Terminal 4 and modernized T2/T3 lanes operate next-gen 3D CT scanners: laptops and electronic devices can stay inside carry-on luggage.",
+      liquidsAllowance_it: "Massimo 100ml per contenitore in busta trasparente da 1 litro da esibire ai gate",
+      liquidsAllowance_en: "Max 100ml per container in 1-litre clear resealable bag presented at screening",
+      liquidsMustBeRemoved: false,
+      liquidsNote_it: "I liquidi conformi possono rimanere nei bagagli sulle corsie tomografiche abilitate.",
+      liquidsNote_en: "Compliant liquids can remain inside bags on 3D tomographic scanner lanes.",
+      electronicsInBag: true,
+      electronicsNote_it: "Al Terminal 4 non è necessario estrarre laptop e tablet dal bagaglio a mano.",
+      electronicsNote_en: "At Terminal 4 laptops and tablets do not need to be removed from cabin bags.",
+      droneAllowedInCabin: true,
+      droneAllowedInHold: false,
+      dronePolicy_it: "Ammesso in cabina con batterie LiPo isolate (max 100Wh).",
+      dronePolicy_en: "Permitted in cabin baggage with battery terminals taped (max 100Wh).",
+      maxPowerbankWh: 100,
+      powerbankPolicy_it: "Ammessi esclusivamente nel bagaglio a mano fino a 100Wh (severamente vietati in stiva).",
+      powerbankPolicy_en: "Permitted in cabin baggage only up to 100Wh (strictly prohibited in hold luggage).",
+      officialSourceUrl: "https://www.changiairport.com",
+      liquidsUnverified: false,
+      electronicsUnverified: false,
+      lastVerifiedDate: "2026-11-09"
+    },
+    terminals: [
+      {
+        id: "sin-t1",
+        name: "Terminal 1, 2, 3 & 4",
+        transferInfo_it: "Quattro terminal all’avanguardia collegati da Skytrain gratuito e navette bus h24.",
+        transferInfo_en: "Four state-of-the-art terminals connected by free automated Skytrain and 24h shuttle buses.",
+        isUnverified: false
+      }
+    ],
+    amenities: [
+      {
+        id: "sin-wifi",
+        category: "wifi",
+        title_it: "Wi-Fi Gratuito \"#WiFi@Changi\"",
+        title_en: "Free Wi-Fi \"#WiFi@Changi\"",
+        terminal: "Tutti i Terminal",
+        location_it: "In tutte le aree dell’aeroporto",
+        location_en: "Available airport-wide",
+        details_it: "Connessione Wi-Fi ultra-veloce gratuita senza limiti di tempo.",
+        details_en: "Ultra-fast free Wi-Fi with unlimited access across all terminals.",
+        isUnverified: false
+      },
+      {
+        id: "sin-water",
+        category: "water_refill",
+        title_it: "Erogatori di acqua filtrata calda e fredda",
+        title_en: "Filtered Drinking Water Dispensers",
+        terminal: "Tutti i Terminal",
+        location_it: "In prossimità di tutti i gate d’imbarco e servizi",
+        location_en: "At every departure gate and restroom cluster",
+        details_it: "Acqua potabile gratuita sia refrigerata che calda per tisane e biberon.",
+        details_en: "Free filtered drinking water with chilled and hot water options.",
+        isUnverified: false
+      }
+    ],
+    venues: [],
+    transports: [
+      {
+        id: "sin-mrt",
+        type: "train",
+        name_it: "Metropolitana MRT Linea East-West (Stazione Changi Airport)",
+        name_en: "MRT East-West Line (Changi Airport Station)",
+        duration: "30-35 min",
+        frequency: "Ogni 7-10 min",
+        estimatedCost: "2,00 - 2,50 SGD (circa 1,40 - 1,75 €)",
+        pickupLocation_it: "Stazione MRT sotterranea tra Terminal 2 e 3",
+        pickupLocation_en: "Basement MRT station between Terminals 2 and 3",
+        details_it: "Metropolitana moderna ed economica con cambio a Tanah Merah per il centro città.",
+        details_en: "Fast, clean, affordable metro with easy transfer at Tanah Merah to downtown.",
+        isUnverified: false
+      },
+      {
+        id: "sin-taxi",
+        type: "taxi",
+        name_it: "Taxi Ufficiale con Tassametro Singapore",
+        name_en: "Official Metered Singapore Taxi",
+        duration: "20-25 min",
+        frequency: "Disponibile h24 a ogni terminal",
+        estimatedCost: "25 - 40 SGD (circa 18 - 28 €)",
+        pickupLocation_it: "Corsie taxi al livello Arrivi di ciascun terminal",
+        pickupLocation_en: "Taxi stands outside Arrivals at all terminals",
+        details_it: "Tariffa a tassametro con supplemento aeroportuale ufficiale.",
+        details_en: "Comfortable metered taxi with official airport surcharge.",
+        isUnverified: false
+      }
+    ],
+    lastUpdated: "2026-11-09",
+    airlines: [
+      {
+        airlineName: "Singapore Airlines",
+        iataCode: "SQ",
+        terminal: "Terminal 2 & 3",
+        checkInZone: "File 3-6"
+      },
+      {
+        airlineName: "Scoot",
+        iataCode: "TR",
+        terminal: "Terminal 1",
+        checkInZone: "File 5-7"
+      },
+      {
+        airlineName: "Emirates",
+        iataCode: "EK",
+        terminal: "Terminal 1",
+        checkInZone: "File 1-2"
+      }
+    ]
+  },
 };
+
 
 /**
  * Common city name aliases mapped strictly to official 3-letter IATA codes.

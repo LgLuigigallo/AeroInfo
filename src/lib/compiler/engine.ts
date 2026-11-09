@@ -1,4 +1,4 @@
-import { Airport } from '@/types/airport';
+import { Airport, AirportSeoStatus } from '@/types/airport';
 import { AVIATION_REGISTRY, CITY_TO_IATA } from './aviation-registry';
 import { supabase } from '@/lib/supabase';
 import { seedAllAirportsToSupabase } from '@/lib/supabase-sync';
@@ -7,6 +7,7 @@ import { airportPath } from '@/lib/airport-slug';
 import { airportsData } from '@/data/airports';
 import { sanitizePostgrestParam } from '@/lib/security/sanitize';
 import { cleanOfficialWebsiteUrl } from '@/lib/aviation-authority';
+import { evaluateAirportSeoQuality, saveAirportSeoEvaluation } from '@/lib/seo/airports';
 
 export interface CompilationReport {
   totalPendingRequests: number;
@@ -440,6 +441,105 @@ export class AirportCompilerEngine {
     }
 
     return report;
+  }
+
+  /**
+   * Autonomous Catalog Expansion:
+   * When zero pending user requests exist during a scheduled cron run,
+   * automatically selects the next unseeded, high-quality certified airport
+   * from AVIATION_REGISTRY, compiles and seeds it to Supabase, evaluates its SEO
+   * quality to ensure it is indexable, and returns the newly published airport.
+   */
+  public async autoExpandCatalog(): Promise<{
+    expanded: boolean;
+    airport?: Airport;
+    message: string;
+    error?: string;
+  }> {
+    if (!supabase) {
+      return { expanded: false, message: 'Supabase is not configured' };
+    }
+
+    try {
+      // 1. Fetch all existing airport IATA codes from database
+      const { data: existingRows, error: fetchError } = await supabase
+        .from('airports')
+        .select('iata_code');
+
+      if (fetchError) {
+        return {
+          expanded: false,
+          message: 'Failed to fetch existing airports for catalog expansion',
+          error: fetchError.message,
+        };
+      }
+
+      const existingIatas = new Set((existingRows || []).map((r) => r.iata_code.toUpperCase()));
+
+      // 2. Select the first unseeded candidate from AVIATION_REGISTRY
+      let candidateAirport: Airport | null = null;
+      for (const [iata, candidate] of Object.entries(AVIATION_REGISTRY)) {
+        const cleanIata = iata.toUpperCase();
+        // Skip general aviation / non-commercial or blocked
+        if (cleanIata === 'QUR') continue;
+        if (!existingIatas.has(cleanIata)) {
+          candidateAirport = candidate;
+          break;
+        }
+      }
+
+      if (!candidateAirport) {
+        return {
+          expanded: false,
+          message: 'All curated airports in AVIATION_REGISTRY are already present in the catalog.',
+        };
+      }
+
+      console.info(`🌱 [AUTO_EXPAND] Found unseeded candidate: ${candidateAirport.iata} (${candidateAirport.name_it})`);
+
+      // 3. Compile and publish the candidate airport
+      const compileResult = await this.compileAndPublishAirport(
+        candidateAirport.iata,
+        candidateAirport.iata
+      );
+
+      if (!compileResult.success || !compileResult.airport) {
+        return {
+          expanded: false,
+          message: `Failed to compile candidate airport ${candidateAirport.iata}`,
+          error: compileResult.error,
+        };
+      }
+
+      // 4. Audit SEO quality & save evaluation as indexable if zero defects
+      const compiledAirport = compileResult.airport;
+      const seoReasons = evaluateAirportSeoQuality(compiledAirport);
+      const isIndexable = seoReasons.length === 0;
+      const targetStatus: AirportSeoStatus = isIndexable ? 'indexable' : 'pending_quality';
+
+      await saveAirportSeoEvaluation(compiledAirport, targetStatus, seoReasons);
+
+      const finalAirport: Airport = {
+        ...compiledAirport,
+        seoStatus: targetStatus,
+      };
+
+      console.info(`✅ [AUTO_EXPAND] Successfully published ${finalAirport.iata} with SEO status: ${targetStatus}`);
+
+      return {
+        expanded: true,
+        airport: finalAirport,
+        message: `Successfully expanded catalog with ${finalAirport.iata} (${finalAirport.name_it}). Status: ${targetStatus}`,
+      };
+    } catch (err: unknown) {
+      const errorMsg = err instanceof Error ? err.message : 'Unknown auto-expand error';
+      console.error('❌ [AUTO_EXPAND] Exception during catalog expansion:', errorMsg);
+      return {
+        expanded: false,
+        message: 'Exception occurred during catalog expansion',
+        error: errorMsg,
+      };
+    }
   }
 }
 
