@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 import { AirportScraperEngine, OFFICIAL_DOMAIN_WHITELIST } from '@/lib/scraper/engine';
-import { sendRequestConfirmationEmail } from '@/lib/email';
+import { sendRequestConfirmationEmail, sendAdminAirportRequestNotification } from '@/lib/email';
 import { CITY_TO_IATA } from '@/lib/compiler/aviation-registry';
 import { getClientIp, checkRateLimit } from '@/lib/security/rate-limit';
 import { sanitizePostgrestParam, isValidEmail } from '@/lib/security/sanitize';
@@ -219,6 +219,19 @@ export async function POST(request: NextRequest) {
         emailStatus = { sent: false, error: err.message };
       }
 
+      // Notify Admin
+      try {
+        await sendAdminAirportRequestNotification({
+          query: existingRequest.query || cleanedQuery,
+          candidateIata: existingRequest.iata_code || candidateIata,
+          requesterEmail: email ? email.trim() : null,
+          isExistingSubscriber: true,
+          clientIp
+        });
+      } catch (adminErr) {
+        console.warn('Admin notification email warning for existing request subscriber.');
+      }
+
       const thankYouMsg_it = email
         ? 'La scheda ufficiale verrà presto elaborata e riceverai news alla email indicata (controlla anche lo spam).'
         : `La scheda ufficiale per "${existingRequest.query || query.trim()}" verrà presto elaborata e pubblicata nei prossimi aggiornamenti.`;
@@ -287,6 +300,19 @@ export async function POST(request: NextRequest) {
         console.error('Confirmation email failed.');
         emailStatus = { sent: false, error: err.message };
       }
+    }
+
+    // 4b. Notify Admin of new airport request
+    try {
+      await sendAdminAirportRequestNotification({
+        query: query.trim(),
+        candidateIata,
+        requesterEmail: email ? email.trim() : null,
+        isExistingSubscriber: false,
+        clientIp
+      });
+    } catch (adminErr) {
+      console.warn('Admin notification email warning for new request.');
     }
 
     // 5. Build Thank-You response without mentioning specific hours

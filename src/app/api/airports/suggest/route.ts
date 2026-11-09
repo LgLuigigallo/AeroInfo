@@ -3,7 +3,7 @@ import { supabase } from '@/lib/supabase';
 import { getClientIp, checkRateLimit } from '@/lib/security/rate-limit';
 import { sanitizePostgrestParam, isValidEmail, escapeHtml } from '@/lib/security/sanitize';
 import { isSafeOutboundUrl } from '@/lib/security/ssrf';
-import { sendEmail } from '@/lib/email';
+import { sendAdminFeedbackNotification } from '@/lib/email';
 
 export const maxDuration = 30;
 
@@ -185,24 +185,16 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // 6. Notify admin by email
-    const adminEmail = process.env.FEEDBACK_NOTIFICATION_EMAIL || 'vireontech@gmail.com';
+    // 6. Notify admin by classified email
     try {
-      await sendEmail({
-        to: adminEmail,
-        subject: `[AeroInfo Segnalazione] Modifica per ${cleanIata} (${cleanCategory})`,
-        text: `Nuova proposta di modifica aeroportuale per ${cleanIata}:\n\nCategoria: ${cleanCategory}\nDettagli:\n${cleanDetails}\nFonte: ${cleanSourceUrl || 'Nessuna fornita'}\nEmail utente: ${cleanEmail || 'Anonimo'}\nIP: ${clientIp}\nData: ${new Date().toISOString()}`,
-        html: `
-          <div style="font-family: sans-serif; max-width: 600px; padding: 20px; color: #222;">
-            <h2 style="margin-top: 0; color: #d97706;">Proposta di Modifica Aeroporto: ${escapeHtml(cleanIata)}</h2>
-            <p><strong>Categoria:</strong> ${escapeHtml(cleanCategory)}</p>
-            <p><strong>Dettagli segnalazione:</strong></p>
-            <div style="background-color: #fef3c7; color: #78350f; padding: 15px; border-radius: 8px; font-size: 14px; white-space: pre-wrap;">${escapeHtml(cleanDetails)}</div>
-            ${cleanSourceUrl ? `<p><strong>Fonte indicata:</strong> <a href="${escapeHtml(cleanSourceUrl)}">${escapeHtml(cleanSourceUrl)}</a></p>` : ''}
-            <p><strong>Segnalatore:</strong> ${escapeHtml(cleanEmail || 'Anonimo')}</p>
-            <p style="font-size: 12px; color: #71717a;">La modifica è salvata in background e verrà verificata durante il prossimo sync con le fonti ufficiali.</p>
-          </div>
-        `
+      await sendAdminFeedbackNotification({
+        type: 'suggestion',
+        category: cleanCategory,
+        airportIata: cleanIata,
+        message: cleanDetails,
+        sourceUrl: cleanSourceUrl,
+        senderEmail: cleanEmail,
+        clientIp,
       });
     } catch {
       console.warn('Admin notification email warning.');

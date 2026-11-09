@@ -2,7 +2,7 @@ import { Airport, AirportSeoStatus } from '@/types/airport';
 import { AVIATION_REGISTRY, CITY_TO_IATA } from './aviation-registry';
 import { supabase } from '@/lib/supabase';
 import { seedAllAirportsToSupabase } from '@/lib/supabase-sync';
-import { sendAirportPublishedEmail } from '@/lib/email';
+import { sendAirportPublishedEmail, sendAdminAirportAddedNotification } from '@/lib/email';
 import { airportPath } from '@/lib/airport-slug';
 import { airportsData } from '@/data/airports';
 import { sanitizePostgrestParam } from '@/lib/security/sanitize';
@@ -250,7 +250,8 @@ export class AirportCompilerEngine {
   public async compileAndPublishAirport(
     query: string,
     candidateIata?: string | null,
-    specificRequestIds?: string[]
+    specificRequestIds?: string[],
+    options?: { origin?: 'user_requests' | 'auto_expansion' | 'admin_manual'; skipAdminNotification?: boolean }
   ): Promise<{ success: boolean; airport?: Airport; error?: string; notificationsSent?: number; notificationErrors?: string[] }> {
     const airport = this.resolveAirport(query, candidateIata);
     if (!airport) {
@@ -352,6 +353,19 @@ export class AirportCompilerEngine {
         const message = err instanceof Error ? err.message : 'unknown error';
         console.warn('Error updating requests or sending notifications:', message);
         notificationErrors.push('Could not update all requests or send all notifications.');
+      }
+    }
+
+    // 3. Notify Admin of new published airport unless skipped (e.g. handled by autoExpandCatalog with final status)
+    if (!options?.skipAdminNotification) {
+      try {
+        await sendAdminAirportAddedNotification({
+          airport: publishedAirport,
+          origin: options?.origin || 'user_requests',
+          notifiedSubscribersCount: notificationsSent,
+        });
+      } catch (adminMailErr) {
+        console.warn('Admin notification for published airport failed:', adminMailErr);
       }
     }
 
@@ -500,7 +514,9 @@ export class AirportCompilerEngine {
       // 3. Compile and publish the candidate airport
       const compileResult = await this.compileAndPublishAirport(
         candidateAirport.iata,
-        candidateAirport.iata
+        candidateAirport.iata,
+        undefined,
+        { skipAdminNotification: true }
       );
 
       if (!compileResult.success || !compileResult.airport) {
@@ -525,6 +541,16 @@ export class AirportCompilerEngine {
       };
 
       console.info(`✅ [AUTO_EXPAND] Successfully published ${finalAirport.iata} with SEO status: ${targetStatus}`);
+
+      // 5. Send classified Admin notification for auto-expanded airport
+      try {
+        await sendAdminAirportAddedNotification({
+          airport: finalAirport,
+          origin: 'auto_expansion',
+        });
+      } catch (adminMailErr) {
+        console.warn('Admin notification for auto-expanded airport failed:', adminMailErr);
+      }
 
       return {
         expanded: true,

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 import { getClientIp, checkRateLimit } from '@/lib/security/rate-limit';
 import { sanitizePostgrestParam, isValidEmail, escapeHtml } from '@/lib/security/sanitize';
-import { sendEmail } from '@/lib/email';
+import { sendAdminFeedbackNotification } from '@/lib/email';
 
 export const maxDuration = 30;
 
@@ -108,26 +108,19 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // 5. Send notification email to maintainer
-    const adminEmail = process.env.FEEDBACK_NOTIFICATION_EMAIL || 'vireontech@gmail.com';
+    // 5. Send classified notification email to admin
     try {
-      await sendEmail({
-        to: adminEmail,
-        subject: `[AeroInfo Feedback] [${cleanCategory.toUpperCase()}] ${cleanSubject}`,
-        text: `Nuovo feedback ricevuto su AeroInfo:\n\nCategoria: ${cleanCategory}\nDa: ${cleanName || 'Anonimo'} (${cleanEmail || 'nessuna email'})\nOggetto: ${cleanSubject}\n\nMessaggio:\n${cleanMessage}\n\nIP: ${clientIp}\nData: ${new Date().toISOString()}`,
-        html: `
-          <div style="font-family: sans-serif; max-width: 600px; padding: 20px; color: #222;">
-            <h2 style="margin-top: 0; color: #0284c7;">Nuovo Feedback Ricevuto su AeroInfo</h2>
-            <p><strong>Categoria:</strong> ${escapeHtml(cleanCategory)}</p>
-            <p><strong>Da:</strong> ${escapeHtml(cleanName || 'Anonimo')} &lt;${escapeHtml(cleanEmail || 'nessuna email')}&gt;</p>
-            <p><strong>Oggetto:</strong> ${escapeHtml(cleanSubject)}</p>
-            <div style="background-color: #f4f4f5; padding: 15px; border-radius: 8px; margin: 20px 0; white-space: pre-wrap; font-size: 14px;">${escapeHtml(cleanMessage)}</div>
-            <p style="font-size: 12px; color: #71717a;">Inviato da IP: ${escapeHtml(clientIp)} • ${new Date().toISOString()}</p>
-          </div>
-        `
+      await sendAdminFeedbackNotification({
+        type: 'feedback',
+        category: cleanCategory,
+        subject: cleanSubject,
+        message: cleanMessage,
+        senderName: cleanName,
+        senderEmail: cleanEmail,
+        clientIp,
       });
     } catch {
-      console.warn('Email notification warning.');
+      console.warn('Email notification warning on feedback.');
     }
 
     return NextResponse.json({

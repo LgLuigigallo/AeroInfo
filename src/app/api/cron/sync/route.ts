@@ -6,6 +6,7 @@ import { evaluateAirportSeoQuality, saveAirportSeoEvaluation, SITE_URL } from '@
 import { submitToIndexNow } from '@/lib/seo/indexnow';
 import { airportPath } from '@/lib/airport-slug';
 import { Airport } from '@/types/airport';
+import { sendAdminNightlyReportNotification, NightlyReportAirportEntry } from '@/lib/email';
 
 export const maxDuration = 60;
 
@@ -34,6 +35,7 @@ export async function GET(request: NextRequest) {
     console.info('✅ [CRON_SYNC] Autonomous compiler finished:', compileReport);
 
     const urlsForIndexNow = new Set<string>();
+    const nightlyAirportEntries: NightlyReportAirportEntry[] = [];
 
     // 1b. Autonomous Catalog Expansion: If zero user requests were processed, expand catalog with 1 certified airport
     let autoExpandReport: { expanded: boolean; airport?: Airport; message: string; error?: string } | null = null;
@@ -47,6 +49,14 @@ export async function GET(request: NextRequest) {
         // Collect URLs for IndexNow immediate broadcast
         urlsForIndexNow.add(`${SITE_URL}${airportPath(autoExpandReport.airport, 'it')}`);
         urlsForIndexNow.add(`${SITE_URL}${airportPath(autoExpandReport.airport, 'en')}`);
+
+        // Register in nightly entries
+        nightlyAirportEntries.push({
+          iata: autoExpandReport.airport.iata,
+          name: autoExpandReport.airport.name_it,
+          status: 'NEWLY_ADDED',
+          seoStatus: autoExpandReport.airport.seoStatus || 'indexable',
+        });
       }
     }
 
@@ -181,6 +191,23 @@ export async function GET(request: NextRequest) {
                   : 'pending_quality';
             await saveAirportSeoEvaluation(refreshedAirport, status, reasons);
 
+            // Record in nightly report entries
+            let itemStatus: 'GREEN' | 'DISCREPANCY' | 'DEFECT' = 'GREEN';
+            if (reasons.length > 0 || !res.success) {
+              itemStatus = 'DEFECT';
+            } else if (res.discrepanciesFound && res.discrepanciesFound.length > 0) {
+              itemStatus = 'DISCREPANCY';
+            }
+
+            nightlyAirportEntries.push({
+              iata: originalAirport.iata,
+              name: originalAirport.name_it,
+              status: itemStatus,
+              seoStatus: status,
+              discrepancies: res.discrepanciesFound,
+              defects: reasons.length > 0 ? reasons : (!res.success ? [res.notes || 'Sync fallito'] : undefined),
+            });
+
             // Collect URLs for IndexNow if newly indexable, updated, or compiled this run
             if (status === 'indexable') {
               const wasNotIndexable = originalAirport.seoStatus !== 'indexable';
@@ -244,6 +271,27 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    // 7. Send Nightly Summary Email to Admin
+    let nightlyEmailSent = false;
+    try {
+      const emailResult = await sendAdminNightlyReportNotification({
+        executionDate: new Date().toISOString(),
+        airports: nightlyAirportEntries,
+        autoExpandedAirport: autoExpandReport?.expanded && autoExpandReport.airport ? {
+          iata: autoExpandReport.airport.iata,
+          name: autoExpandReport.airport.name_it
+        } : null,
+        compiledRequestsCount: compileReport.compiledAirportsCount,
+        publishedIatas: compileReport.publishedIatas,
+        indexNowCount: indexNowReport?.submittedCount || urlsForIndexNow.size,
+        persistenceErrors,
+      });
+      nightlyEmailSent = emailResult.success;
+      console.info('✉️ [CRON_SYNC] Nightly report email sent:', nightlyEmailSent);
+    } catch (mailErr) {
+      console.warn('⚠️ [CRON_SYNC] Nightly report email warning:', mailErr);
+    }
+
     return NextResponse.json({
       success: persistenceErrors.length === 0,
       executionDate: new Date().toISOString(),
@@ -251,6 +299,7 @@ export async function GET(request: NextRequest) {
       autoExpandReport,
       airportsProcessed: syncResults.length,
       indexNowReport,
+      nightlyEmailSent,
       syncResults,
       persistenceErrors,
     }, { status: persistenceErrors.length ? 500 : 200 });
