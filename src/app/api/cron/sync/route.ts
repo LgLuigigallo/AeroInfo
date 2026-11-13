@@ -192,10 +192,14 @@ export async function GET(request: NextRequest) {
             await saveAirportSeoEvaluation(refreshedAirport, status, reasons);
 
             // Record in nightly report entries
+            // A DEFECT represents genuine content/SEO degradation (reasons.length > 0).
+            // Upstream network blocks (WAF 403, transient timeouts) on otherwise 100% compliant records are marked as DISCREPANCY warnings.
             let itemStatus: 'GREEN' | 'DISCREPANCY' | 'DEFECT' = 'GREEN';
-            if (reasons.length > 0 || !res.success) {
+            if (reasons.length > 0) {
               itemStatus = 'DEFECT';
             } else if (res.discrepanciesFound && res.discrepanciesFound.length > 0) {
+              itemStatus = 'DISCREPANCY';
+            } else if (!res.success) {
               itemStatus = 'DISCREPANCY';
             }
 
@@ -204,8 +208,10 @@ export async function GET(request: NextRequest) {
               name: originalAirport.name_it,
               status: itemStatus,
               seoStatus: status,
-              discrepancies: res.discrepanciesFound,
-              defects: reasons.length > 0 ? reasons : (!res.success ? [res.notes || 'Sync fallito'] : undefined),
+              discrepancies: res.discrepanciesFound?.length
+                ? res.discrepanciesFound
+                : (!res.success ? [res.notes || 'Verifica fonte esterna non disponibile'] : undefined),
+              defects: reasons.length > 0 ? reasons : undefined,
             });
 
             // Collect URLs for IndexNow if newly indexable, updated, or compiled this run

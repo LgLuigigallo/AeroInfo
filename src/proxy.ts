@@ -49,34 +49,91 @@ async function getAirportSlug(iata: string): Promise<string | null> {
   return staticAirport ? makeAirportSlug(staticAirport, 'it') : null;
 }
 
-function hasStaticAirportSlug(slug: string, lang: 'it' | 'en'): boolean {
+function hasStaticAirportSlug(slug: string, lang: 'it' | 'en' | 'es'): boolean {
   return airportsData.some((airport) => makeAirportSlug(airport, lang) === slug);
+}
+
+function findStaticAirportByAlias(rawSlug: string): { airport: typeof airportsData[0]; iata: string } | null {
+  const norm = rawSlug.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  if (!norm) return null;
+
+  // 1. Direct IATA code (e.g. fco)
+  if (/^[a-z0-9]{3}$/i.test(norm)) {
+    const direct = airportsData.find((a) => a.iata.toLowerCase() === norm);
+    if (direct) return { airport: direct, iata: direct.iata };
+  }
+
+  // 2. Exact match in canonical slugs
+  for (const a of airportsData) {
+    if (makeAirportSlug(a, 'it') === norm || makeAirportSlug(a, 'en') === norm || makeAirportSlug(a, 'es') === norm) {
+      return { airport: a, iata: a.iata };
+    }
+  }
+
+  // 3. Ends with -iata (e.g. roma-fiumicino-fco)
+  for (const a of airportsData) {
+    const iataLower = a.iata.toLowerCase();
+    if (norm === iataLower || norm.endsWith(`-${iataLower}`)) {
+      return { airport: a, iata: a.iata };
+    }
+  }
+
+  // 4. Match airport id or city
+  for (const a of airportsData) {
+    const id = a.id?.toLowerCase();
+    const cityIt = a.city_it?.toLowerCase();
+    const cityEn = a.city_en?.toLowerCase();
+    const cityEs = a.city_es?.toLowerCase();
+    if (norm === id || norm === cityIt || norm === cityEn || norm === cityEs) {
+      return { airport: a, iata: a.iata };
+    }
+  }
+
+  // 5. Friendly substring inside canonical slugs (e.g. fiumicino, malpensa, london-heathrow)
+  for (const a of airportsData) {
+    const slugIt = makeAirportSlug(a, 'it');
+    const slugEn = makeAirportSlug(a, 'en');
+    if (slugIt.includes(norm) || slugEn.includes(norm)) {
+      return { airport: a, iata: a.iata };
+    }
+  }
+
+  return null;
 }
 
 export async function proxy(request: NextRequest) {
   const italianSlug = request.nextUrl.pathname.match(/^\/aeroporti\/([^/]+)\/?$/)?.[1];
   const englishSlug = request.nextUrl.pathname.match(/^\/en\/airports\/([^/]+)\/?$/)?.[1];
-  const slug = italianSlug || englishSlug;
+  const spanishSlug = request.nextUrl.pathname.match(/^\/es\/airports\/([^/]+)\/?$/)?.[1];
+  const slug = italianSlug || englishSlug || spanishSlug;
   if (slug) {
-    const lang = italianSlug ? 'it' : 'en';
+    const lang = italianSlug ? 'it' : (spanishSlug ? 'es' : 'en');
     if (hasStaticAirportSlug(slug, lang)) return NextResponse.next();
 
-    // Support short IATA codes or uppercase/lowercase IATA aliases (e.g. /aeroporti/fco, /aeroporti/FCO)
-    const upperSlug = slug.toUpperCase();
-    if (/^[A-Z0-9]{3}$/.test(upperSlug)) {
-      const staticAirportByIata = airportsData.find((a) => a.iata.toUpperCase() === upperSlug);
-      if (staticAirportByIata) {
-        const canonicalSlug = makeAirportSlug(staticAirportByIata, lang);
+    // Resolve alias or friendly slug (e.g. /aeroporti/fiumicino -> /aeroporti/aeroporto-internazionale-leonardo-da-vinci-fiumicino-fco)
+    const staticMatch = findStaticAirportByAlias(slug);
+    if (staticMatch) {
+      const canonicalSlug = makeAirportSlug(staticMatch.airport, lang);
+      if (canonicalSlug !== slug) {
         const destination = request.nextUrl.clone();
-        destination.pathname = lang === 'it' ? `/aeroporti/${canonicalSlug}` : `/en/airports/${canonicalSlug}`;
+        destination.pathname = lang === 'it'
+          ? `/aeroporti/${canonicalSlug}`
+          : (lang === 'es' ? `/es/airports/${canonicalSlug}` : `/en/airports/${canonicalSlug}`);
         destination.search = '';
         return NextResponse.redirect(destination, 308);
       }
+      return NextResponse.next();
+    }
 
+    // Support short IATA codes or uppercase/lowercase IATA aliases from database
+    const upperSlug = slug.toUpperCase();
+    if (/^[A-Z0-9]{3}$/.test(upperSlug)) {
       const dbSlug = await getAirportSlug(upperSlug);
       if (dbSlug) {
         const destination = request.nextUrl.clone();
-        destination.pathname = lang === 'it' ? `/aeroporti/${dbSlug}` : `/en/airports/${dbSlug}`;
+        destination.pathname = lang === 'it'
+          ? `/aeroporti/${dbSlug}`
+          : (lang === 'es' ? `/es/airports/${dbSlug}` : `/en/airports/${dbSlug}`);
         destination.search = '';
         return NextResponse.redirect(destination, 308);
       }
@@ -107,5 +164,6 @@ export const config = {
     { source: '/', has: [{ type: 'query', key: 'airport' }] },
     '/aeroporti/:slug',
     '/en/airports/:slug',
+    '/es/airports/:slug',
   ],
 };

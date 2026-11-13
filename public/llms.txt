@@ -18,28 +18,28 @@
 
 ## Key Italian Airport Profiles
 
-- [Roma Fiumicino (FCO)](https://www.aero-info.eu/aeroporti/fiumicino): Scanner 3D C3 attivi al T1 e T3, liquidi e PC possono rimanere nel bagaglio.
-- [Milano Malpensa (MXP)](https://www.aero-info.eu/aeroporti/malpensa): Scanner 3D C3 attivi al Terminal 1.
-- [Milano Linate (LIN)](https://www.aero-info.eu/aeroporti/linate): Scanner 3D C3 su tutte le linee di sicurezza.
-- [Bergamo Orio al Serio (BGY)](https://www.aero-info.eu/aeroporti/bergamo-orio-al-serio): Scanner 3D C3 attivi sui varchi principali.
-- [Bologna Guglielmo Marconi (BLQ)](https://www.aero-info.eu/aeroporti/bologna): Scanner 3D C3 attivi.
-- [Venezia Marco Polo (VCE)](https://www.aero-info.eu/aeroporti/venezia-marco-polo): Scanner 3D C3 operativi.
-- [Napoli Capodichino (NAP)](https://www.aero-info.eu/aeroporti/napoli): Regola standard 100 ml, estrazione liquidi e PC obbligatoria.
-- [Catania Fontanarossa (CTA)](https://www.aero-info.eu/aeroporti/catania): Regola standard 100 ml.
-- [Palermo Falcone Borsellino (PMO)](https://www.aero-info.eu/aeroporti/palermo): Regola standard 100 ml.
-- [Bari Karol Wojtyla (BRI)](https://www.aero-info.eu/aeroporti/bari): Regola standard 100 ml.
-- [Pisa Galileo Galilei (PSA)](https://www.aero-info.eu/aeroporti/pisa): Regola standard 100 ml.
-- [Roma Ciampino (CIA)](https://www.aero-info.eu/aeroporti/ciampino): Regola standard 100 ml.
+- [Roma Fiumicino (FCO)](https://www.aero-info.eu/aeroporti/aeroporto-internazionale-leonardo-da-vinci-fiumicino-fco): Scanner 3D C3 attivi al T1 e T3, liquidi e PC possono rimanere nel bagaglio.
+- [Milano Malpensa (MXP)](https://www.aero-info.eu/aeroporti/aeroporto-di-milano-malpensa-mxp): Scanner 3D C3 attivi al Terminal 1.
+- [Milano Linate (LIN)](https://www.aero-info.eu/aeroporti/aeroporto-di-milano-linate-enrico-forlanini-lin): Scanner 3D C3 su tutte le linee di sicurezza.
+- [Bergamo Orio al Serio (BGY)](https://www.aero-info.eu/aeroporti/aeroporto-di-milano-bergamo-orio-al-serio-il-caravaggio-bgy): Scanner 3D C3 attivi sui varchi principali.
+- [Bologna Guglielmo Marconi (BLQ)](https://www.aero-info.eu/aeroporti/aeroporto-di-bologna-guglielmo-marconi-blq): Scanner 3D C3 attivi.
+- [Venezia Marco Polo (VCE)](https://www.aero-info.eu/aeroporti/aeroporto-di-venezia-marco-polo-vce): Scanner 3D C3 operativi.
+- [Napoli Capodichino (NAP)](https://www.aero-info.eu/aeroporti/aeroporto-internazionale-di-napoli-capodichino-nap): Regola standard 100 ml, estrazione liquidi e PC obbligatoria.
+- [Catania Fontanarossa (CTA)](https://www.aero-info.eu/aeroporti/aeroporto-di-catania-fontanarossa-vincenzo-bellini-cta): Regola standard 100 ml.
+- [Palermo Falcone Borsellino (PMO)](https://www.aero-info.eu/aeroporti/aeroporto-di-palermo-falcone-e-borsellino-pmo): Regola standard 100 ml.
+- [Bari Karol Wojtyla (BRI)](https://www.aero-info.eu/aeroporti/aeroporto-di-bari-karol-wojty-a-bri): Regola standard 100 ml.
+- [Pisa Galileo Galilei (PSA)](https://www.aero-info.eu/aeroporti/aeroporto-di-pisa-galileo-galilei-psa): Regola standard 100 ml.
+- [Roma Ciampino (CIA)](https://www.aero-info.eu/aeroporti/aeroporto-di-roma-ciampino-g-b-pastine-cia): Regola standard 100 ml.
 
 ## Key International Airport Profiles
 
-- [London Heathrow (LHR)](https://www.aero-info.eu/en/airports/london-heathrow): UK security policy, next-gen CT rollout in progress.
-- [London Gatwick (LGW)](https://www.aero-info.eu/en/airports/london-gatwick): South and North terminal security checkpoints.
-- [Paris Charles de Gaulle (CDG)](https://www.aero-info.eu/en/airports/paris-charles-de-gaulle): Terminal-specific checkpoints and transfer guidance.
-- [Frankfurt Airport (FRA)](https://www.aero-info.eu/en/airports/frankfurt): Terminal 1 & 2 security screening policies.
-- [Amsterdam Schiphol (AMS)](https://www.aero-info.eu/en/airports/amsterdam-schiphol): CT security lanes active, liquids in bag.
-- [Madrid Barajas (MAD)](https://www.aero-info.eu/en/airports/madrid-barajas): Aena security regulations.
-- [Barcelona El Prat (BCN)](https://www.aero-info.eu/en/airports/barcelona-el-prat): T1 and T2 screening procedures.
-- [Prague Václav Havel (PRG)](https://www.aero-info.eu/en/airports/prague): Terminal 2 3D CT scanners (Schengen) vs Terminal 1 (Non-Schengen).
-- [Dublin Airport (DUB)](https://www.aero-info.eu/en/airports/dublin): C3 scanners operational across T1 and T2.
-- [Berlin Brandenburg (BER)](https://www.aero-info.eu/en/airports/berlin-brandenburg): T1 lanes 1 & 5 and T2 next-generation screening.
+- [London Heathrow (LHR)](https://www.aero-info.eu/en/airports/london-heathrow-airport-lhr): UK security policy, next-gen CT rollout in progress.
+- [London Gatwick (LGW)](https://www.aero-info.eu/en/airports/london-gatwick-airport-lgw): South and North terminal security checkpoints.
+- [Paris Charles de Gaulle (CDG)](https://www.aero-info.eu/en/airports/paris-charles-de-gaulle-airport-cdg): Terminal-specific checkpoints and transfer guidance.
+- [Frankfurt Airport (FRA)](https://www.aero-info.eu/en/airports/frankfurt-airport-fra): Terminal 1 & 2 security screening policies.
+- [Amsterdam Schiphol (AMS)](https://www.aero-info.eu/en/airports/amsterdam-airport-schiphol-ams): CT security lanes active, liquids in bag.
+- [Madrid Barajas (MAD)](https://www.aero-info.eu/en/airports/adolfo-suarez-madrid-barajas-airport-mad): Aena security regulations.
+- [Barcelona El Prat (BCN)](https://www.aero-info.eu/en/airports/josep-tarradellas-barcelona-el-prat-airport-bcn): T1 and T2 screening procedures.
+- [Prague Václav Havel (PRG)](https://www.aero-info.eu/en/airports/vaclav-havel-airport-prague-prg): Terminal 2 3D CT scanners (Schengen) vs Terminal 1 (Non-Schengen).
+- [Dublin Airport (DUB)](https://www.aero-info.eu/en/airports/dublin-airport-dub): C3 scanners operational across T1 and T2.
+- [Berlin Brandenburg (BER)](https://www.aero-info.eu/en/airports/berlin-brandenburg-airport-willy-brandt-ber): T1 lanes 1 & 5 and T2 next-generation screening.

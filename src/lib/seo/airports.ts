@@ -119,7 +119,7 @@ export async function getIndexableAirports(): Promise<Airport[]> {
 
 export async function getAirportBySlug(slug: string, lang: Language): Promise<Airport | null> {
   const airports = await getSeoAirports();
-  const normalizedSlug = slug.toLowerCase();
+  const normalizedSlug = slug.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   return (
     airports.find((airport) => makeAirportSlug(airport, lang) === slug) ||
     airports.find((airport) => makeAirportSlug(airport, 'it') === slug) ||
@@ -128,6 +128,22 @@ export async function getAirportBySlug(slug: string, lang: Language): Promise<Ai
     airports.find((airport) => {
       const iata = airport.iata.toLowerCase();
       return normalizedSlug === iata || normalizedSlug.endsWith(`-${iata}`);
+    }) ||
+    airports.find((airport) => {
+      const id = airport.id?.toLowerCase();
+      const cityIt = airport.city_it?.toLowerCase();
+      const cityEn = airport.city_en?.toLowerCase();
+      const cityEs = airport.city_es?.toLowerCase();
+      const slugIt = makeAirportSlug(airport, 'it');
+      const slugEn = makeAirportSlug(airport, 'en');
+      return (
+        normalizedSlug === id ||
+        normalizedSlug === cityIt ||
+        normalizedSlug === cityEn ||
+        normalizedSlug === cityEs ||
+        slugIt.includes(normalizedSlug) ||
+        slugEn.includes(normalizedSlug)
+      );
     }) ||
     null
   );

@@ -30,76 +30,92 @@ export const OFFICIAL_DOMAIN_WHITELIST: Record<string, string> = {
   NAP: 'https://www.aeroportodinapoli.it/it/controlli-di-sicurezza',
 
   // Germany
-  FRA: 'https://www.frankfurt-airport.com/en/flights-and-transfer/security-customs.html',
+  FRA: 'https://www.frankfurt-airport.com/en/travel-planning/check-in-luggage-controls.html',
   MUC: 'https://www.munich-airport.com/security-checks-262106',
   BER: 'https://ber.berlin-airport.de/en/flying/security-controls.html',
+  HAM: 'https://www.hamburg-airport.de/en/depart-arrive/security-check',
+  STR: 'https://www.stuttgart-airport.com/security-checks',
 
   // France
   CDG: 'https://www.parisaeroport.fr/passagers/passagers-preparer-vol/bagages-surete',
   ORY: 'https://www.parisaeroport.fr/passagers/passagers-preparer-vol/bagages-surete',
+  NCE: 'https://www.nice.aeroport.fr/passagers/preparer-son-voyage/bagages/surete',
 
   // Spain
   MAD: 'https://www.aena.es/es/pasajeros/equipajes-controles/equipaje-mano.html',
   BCN: 'https://www.aena.es/es/pasajeros/equipajes-controles/equipaje-mano.html',
   FUE: 'https://www.aena.es/es/pasajeros/equipajes-controles/equipaje-mano.html',
+  IBZ: 'https://www.aena.es/es/pasajeros/equipajes-controles/equipaje-mano.html',
+  LPA: 'https://www.aena.es/es/gran-canaria.html',
+  PMI: 'https://www.aena.es/es/pasajeros/equipajes-controles/equipaje-mano.html',
+  TFS: 'https://www.aena.es/es/tenerife-sur.html',
+  AGP: 'https://www.aena.es/es/pasajeros/equipajes-controles/equipaje-mano.html',
+  VLC: 'https://www.aena.es/es/pasajeros/equipajes-controles/equipaje-mano.html',
+  SVQ: 'https://www.aena.es/es/pasajeros/equipajes-controles/equipaje-mano.html',
 
-  // Netherlands
+  // Netherlands & Belgium
   AMS: 'https://www.schiphol.nl/en/prepare-for-your-flight-at-schiphol/prepare-for-security/',
+  BRU: 'https://www.brusselsairport.be/en/passengers/fly/security-checks',
 
-  // Ireland
+  // Ireland & UK
   DUB: 'https://www.dublinairport.com/at-the-airport/security',
+  LHR: 'https://www.heathrow.com/at-the-airport/airport-security',
+  LGW: 'https://www.gatwickairport.com/passenger-guide/security.html',
+  EDI: 'https://www.edinburghairport.com/prepare/airport-security',
+  MAN: 'https://www.manchesterairport.co.uk/help/passenger-guides/security/',
 
   // Portugal
   LIS: 'https://www.ana.pt/en/content-topic/plan-your-trip',
+  OPO: 'https://www.ana.pt/en/content-topic/plan-your-trip',
 
-  // Austria
+  // Austria & Switzerland
   VIE: 'https://www.viennaairport.com/passagiere/flughafen/sicherheitskontrolle',
+  ZRH: 'https://www.flughafen-zuerich.ch/en/passengers/fly/all-about-the-flight/what-is-allowed-in-your-baggage',
+  GVA: 'https://www.gva.ch/en/Site/Passagers/Preparation-voyage/Bagages/Bagages-cabine',
 
-  // Denmark
+  // Nordics
   CPH: 'https://www.cph.dk/en/practical/security',
-
-  // Sweden
   ARN: 'https://www.swedavia.com/arlanda/security-control/',
-
-  // Finland
   HEL: 'https://www.finavia.fi/en/airports/helsinki-airport/before-flight/security-control',
+  OSL: 'https://avinor.no/en/airport/oslo-airport/plan-your-trip/security/',
 
   // Poland
   WAW: 'https://airportchopin.com/en/info/security',
   KRK: 'https://krakowairport.pl/en/passenger/security-control',
 
-  // Hungary
+  // Hungary & Greece
   BUD: 'https://www.bud.hu/en/flight-and-travel-information/travel/security-screening',
-
-  // Greece
   ATH: 'https://www.aia.gr/traveler/security-information',
+  HER: 'https://www.ypa.gr',
 
-  // Switzerland
-  ZRH: 'https://www.flughafen-zuerich.ch/en/passengers/fly/all-about-the-flight/what-is-allowed-in-your-baggage',
-
-  // UK & USA & Japan
-  LHR: 'https://www.heathrow.com/at-the-airport/airport-security',
-  JFK: 'https://www.tsa.gov/travel/security-screening',
+  // Turkey & Middle East & Asia
+  IST: 'https://www.istairport.com/en/passenger/flight-departure/security/',
+  DXB: 'https://www.dubaiairports.ae/before-you-fly/security-customs',
+  DOH: 'https://dohahamadairport.com/airport-guide/at-the-airport/security-customs',
+  HKG: 'https://www.hongkongairport.com/en/passenger-guide/airport-security/',
   HND: 'https://tokyo-haneda.com/en/passenger_guide/security/index.html',
+  SIN: 'https://www.changiairport.com/en/fly/departure-guide.html',
 
-  // Additional airports already present in the live catalogue
+  // Americas & North Africa & Caribbean
+  JFK: 'https://www.tsa.gov/travel/security-screening',
+  DJG: 'https://www.egsa-alger.dz',
+  RAK: 'https://www.onda.ma',
+  NAS: 'https://nassaulpia.com/passenger-information/security-customs/',
+
+  // Additional Italian regional airports
   BLQ: 'https://www.bologna-airport.it/guida-al-viaggio/sicurezza-e-controlli/',
   BRI: 'https://www.aeroportidipuglia.it/norme-di-sicurezza',
+  BDS: 'https://www.aeroportidipuglia.it/norme-di-sicurezza',
   CTA: 'https://www.aeroporto.catania.it',
-  DJG: 'https://www.egsa-alger.dz',
-  DXB: 'https://www.dubaiairports.ae/before-you-fly/security-customs',
-  HER: 'https://www.ypa.gr',
-  HKG: 'https://www.hongkongairport.com/en/passenger-guide/airport-security/',
-  IBZ: 'https://www.aena.es/es/ibiza/equipajes-controles.html',
-  LGW: 'https://www.gatwickairport.com/passenger-guide/security.html',
-  LPA: 'https://www.aena.es/es/gran-canaria.html',
-  PMI: 'https://www.aena.es/es/pasajeros/equipajes-controles/equipaje-mano.html',
   PMO: 'https://www.aeroportodipalermo.it',
   PSA: 'https://www.pisa-airport.com/it/passeggeri/in-aeroporto/sicurezza.html',
+  FLR: 'https://www.aeroporto.firenze.it/it/passeggeri/in-aeroporto/controlli-di-sicurezza.html',
+  TRN: 'https://www.aeroportoditorino.it/it/tofly/informazioni-utili-per-il-volo/sicurezza-aeroportuale',
+  VRN: 'https://www.aeroportoverona.it/in-aeroporto/controlli-di-sicurezza.html',
+  TSF: 'https://www.trevisoairport.it/in-aeroporto/sicurezza-e-controlli.html',
+  CAG: 'https://www.sogaer.it/it/controlli-di-sicurezza',
+  OLB: 'https://www.geasar.it/it/voli/controlli-di-sicurezza',
   QUR: 'https://www.enac.gov.it',
-  RAK: 'https://www.onda.ma',
-  STR: 'https://www.stuttgart-airport.com/security-checks',
-  TFS: 'https://www.aena.es/es/tenerife-sur.html'
 };
 
 // Official venue directory endpoints (Shops, Restaurants, Duty Free, Cafes)
@@ -129,7 +145,7 @@ export const OFFICIAL_VENUES_ENDPOINTS: Record<string, { type: 'adr_portlet' | '
 };
 
 export class AirportScraperEngine {
-  private userAgent = 'AeroInfo-Intelligence-Bot/1.0 (+https://aeroinfo.vercel.app)';
+  private userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 (AeroInfo-Intelligence/2.0; +https://www.aero-info.eu)';
   private readonly maxRedirects = 5;
   private readonly maxHtmlBytes = 2_000_000;
 
@@ -167,8 +183,16 @@ export class AirportScraperEngine {
           redirect: 'manual',
           headers: {
             'User-Agent': this.userAgent,
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-            'Accept-Language': 'it,en;q=0.9,cs;q=0.8,de;q=0.8,fr;q=0.8,es;q=0.8',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+            'Accept-Language': 'it-IT,it;q=0.9,en-US;q=0.8,en;q=0.7,es;q=0.6,de;q=0.5,fr;q=0.5',
+            'Cache-Control': 'no-cache',
+            'Sec-Ch-Ua': '"Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+            'Sec-Ch-Ua-Mobile': '?0',
+            'Sec-Ch-Ua-Platform': '"macOS"',
+            'Sec-Fetch-Dest': 'document',
+            'Sec-Fetch-Mode': 'navigate',
+            'Sec-Fetch-Site': 'none',
+            'Upgrade-Insecure-Requests': '1',
           },
           signal: AbortSignal.timeout(10000),
         });
